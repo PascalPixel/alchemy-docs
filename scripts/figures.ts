@@ -7,8 +7,9 @@ import { execFileSync } from 'node:child_process';
 import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const docs = join(import.meta.dir, '..');
+const docs = fileURLToPath(new URL('..', import.meta.url));
 const repo = process.env.ALCHEMY ?? join(docs, '../alchemy');
 const release = 'https://github.com/PascalPixel/alchemy/releases/download/decomp-reports';
 const FILES = ['PROGRESS.png', 'PROGRESS_CHART.png', 'history.tsv', 'source.tsv'];
