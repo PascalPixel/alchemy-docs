@@ -24,7 +24,9 @@ const content = join(docs, 'content/docs');
 const github = 'https://github.com/PascalPixel/alchemy/blob/main';
 
 type Game = 'tbs' | 'tla';
-const GAMES: Game[] = ['tbs', 'tla'];
+// The games with pages. The Lost Age is still being decompiled: it has one
+// page saying so (content/docs/tla/index.mdx) until it is done.
+const GAMES: Game[] = ['tbs'];
 const ROOTS = ['src', 'include'];
 // A folder whose C is larger than this gets a page per file.
 const SPLIT_BYTES = 200_000;
@@ -388,17 +390,6 @@ const GUIDES: [string, string, string][] = [
   ['games/tbs/src/runtime', 'tbs/engine/runtime', ''],
   ['games/tbs/src/system', 'tbs/engine/system', ''],
   ['games/tbs/src/debug', 'tbs/engine/debug', ''],
-  ['games/tla/src/field', 'tla/world/field', 'Field'],
-  ['games/tla/src/scene', 'tla/world/scenes', 'Scenes'],
-  ['games/tla/src/battle', 'tla/battle', 'Battles and effects'],
-  ['games/tla/src/menu', 'tla/menus/menus', 'Menus and shops'],
-  ['games/tla/src/window', 'tla/menus/windows', 'Windows'],
-  ['games/tla/src/game', 'tla/game', 'Game rules'],
-  ['games/tla/src/graphics', 'tla/engine/graphics', 'Graphics'],
-  ['games/tla/src/sound', 'tla/engine/sound', 'Sound'],
-  ['games/tla/src/system', 'tla/engine/system', 'System'],
-  ['games/tla/src/lib', 'tla/engine/library', 'Library'],
-  ['games/tla/src/debug', 'tla/engine/debug', 'Debug rooms'],
 ];
 const guideOf = new Map<string, { url: string; title: string }>();
 for (const [dir, target] of GUIDES) guideOf.set(dir, { url: `/${target.replace(/\/index$/, '')}`, title: '' });
@@ -419,7 +410,7 @@ function siteLink(path: string): string {
   const guide = guideOf.get(dirname(clean));
   if (guide && basename(clean) === 'README.md') return guide.url;
   const m = clean.match(/^games\/(tbs|tla)\/((?:src|include)(?:\/.*)?)$/);
-  if (m && existsSync(join(repo, clean))) return /\.[ch]$/.test(clean) ? pageOf(clean) : `/${m[1]}/source/${m[2]}`;
+  if (m && GAMES.includes(m[1] as Game) && existsSync(join(repo, clean))) return /\.[ch]$/.test(clean) ? pageOf(clean) : `/${m[1]}/source/${m[2]}`;
   return `${github}/${clean}`;
 }
 
@@ -537,5 +528,4 @@ for (const game of GAMES) sourcePages(game, all.get(game)!);
 places(all.get('tbs')!);
 abilities(all.get('tbs')!);
 pictures();
-const count = (g: Game) => all.get(g)!.length;
-console.log(`content: ${count('tbs')} + ${count('tla')} files read, ${split.size} folders split by file, in ${((Date.now() - started) / 1000).toFixed(1)} s`);
+console.log(`content: ${all.get('tbs')!.length} files read, ${split.size} folders split by file, in ${((Date.now() - started) / 1000).toFixed(1)} s`);
