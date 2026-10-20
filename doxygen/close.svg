@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" shape-rendering="crispEdges">
-<!-- The search's close button: a 7x7 white pixel cross, with the images'
-     half-black shadow one pixel down and right, as the tree's carets. -->
-<defs>
-<path id="x" d="M0 0h2v1h-2zM5 0h2v1h-2zM1 1h2v1h-2zM4 1h2v1h-2zM2 2h3v1h-3zM3 3h1v1h-1zM2 4h3v1h-3zM1 5h2v1h-2zM4 5h2v1h-2zM0 6h2v1h-2zM5 6h2v1h-2z"/>
-</defs>
-<use href="#x" x="1" y="1" fill="#000" fill-opacity="0.5"/>
-<use href="#x" fill="#fff"/>
-</svg>

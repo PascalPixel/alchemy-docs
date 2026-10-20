@@ -1,9 +1,0 @@
-{
-  "name": "weyard-fonts",
-  "private": true,
-  "description": "Builds the Weyard fonts from Alchemy's font sheets, and Weyard Emoji from SerenityOS's emoji",
-  "dependencies": {
-    "opentype.js": "1.3.4",
-    "pngjs": "7.0.0"
-  }
-}
