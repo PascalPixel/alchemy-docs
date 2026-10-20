@@ -500,6 +500,12 @@ function abilities(files: SourceFile[]) {
       const who = c.caster && c.target ? `${c.caster} casts ${a} at ${c.target}` : `${a}`;
       return `### ${a}\n\n![${who}](/abilities/${basename(c.file)})\n\n${who}, played by [${md(fn)}](${url}).`;
     });
+  // Casts whose effect no function's Abilities line names yet.
+  for (const [a, c] of [...casts].sort(([x], [y]) => x.localeCompare(y))) {
+    if (rows.some(([b]) => b === a)) continue;
+    const who = c.caster && c.target ? `${c.caster} casts ${a} at ${c.target}` : a;
+    gallery.push(`### ${a}\n\n![${who}](/abilities/${basename(c.file)})\n\n${who}.`);
+  }
   page('tbs/abilities.md', { title: 'Abilities', description: 'Every ability with an effect of its own, and the function that plays it.' }, `The numbers that make an ability hit are in [How an ability resolves](/tbs/battle/battles#how-an-ability-resolves).\n\n| Ability | Effect |\n| --- | --- |\n${table}${gallery.length ? `\n\n## Casts\n\nEach cast is recorded from the game itself, with the battle background replaced by a plain backdrop.\n\n${gallery.join('\n\n')}` : ''}`);
 }
 
