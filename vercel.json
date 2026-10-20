@@ -3,5 +3,5 @@
   "framework": "nextjs",
   "installCommand": "bun install --frozen-lockfile",
   "buildCommand": "git clone --depth 1 https://github.com/PascalPixel/alchemy /tmp/alchemy && ALCHEMY=/tmp/alchemy bun run build",
-  "outputDirectory": "out"
+  "outputDirectory": ".next"
 }
