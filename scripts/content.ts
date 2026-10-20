@@ -479,7 +479,28 @@ function abilities(files: SourceFile[]) {
     }
   }
   rows.sort((a, b) => a[0].localeCompare(b[0]));
-  page('tbs/abilities.md', { title: 'Abilities', description: 'Every ability with an effect of its own, and the function that plays it.' }, `The numbers that make an ability hit are in [How an ability resolves](/tbs/battle/battles#how-an-ability-resolves).\n\n| Ability | Effect |\n| --- | --- |\n${rows.map(([a, fn, url]) => `| ${a} | [${md(fn)}](${url}) |`).join('\n')}`);
+  // The casts rendered from the game (alchemy-devtools render psynergy), one
+  // GIF per ability, listed by public/abilities/index.tsv.
+  const casts = new Map<string, Record<string, string>>();
+  const index = join(docs, 'public/abilities/index.tsv');
+  if (existsSync(index)) {
+    const [head, ...lines] = readFileSync(index, 'utf8').trim().split('\n');
+    const keys = head.split('\t');
+    for (const l of lines) {
+      const row = Object.fromEntries(l.split('\t').map((v, i) => [keys[i], v]));
+      if (row.name && row.file) casts.set(row.name, row);
+    }
+  }
+  const castOf = (name: string) => casts.get(name);
+  const table = rows.map(([a, fn, url]) => `| ${castOf(a) ? `[${a}](#${a.toLowerCase().replace(/[^a-z0-9 -]/g, "").replace(/ /g, "-")})` : a} | [${md(fn)}](${url}) |`).join('\n');
+  const gallery = rows
+    .filter(([a], i) => castOf(a) && rows.findIndex(([b]) => b === a) === i)
+    .map(([a, fn, url]) => {
+      const c = castOf(a)!;
+      const who = c.caster && c.target ? `${c.caster} casts ${a} at ${c.target}` : `${a}`;
+      return `### ${a}\n\n![${who}](/abilities/${basename(c.file)})\n\n${who}, played by [${md(fn)}](${url}).`;
+    });
+  page('tbs/abilities.md', { title: 'Abilities', description: 'Every ability with an effect of its own, and the function that plays it.' }, `The numbers that make an ability hit are in [How an ability resolves](/tbs/battle/battles#how-an-ability-resolves).\n\n| Ability | Effect |\n| --- | --- |\n${table}${gallery.length ? `\n\n## Casts\n\nEach cast is recorded from the game itself, with the battle background replaced by a plain backdrop.\n\n${gallery.join('\n\n')}` : ''}`);
 }
 
 // ---------------------------------------------------------------------------

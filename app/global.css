@@ -10,3 +10,11 @@ html > body[data-scroll-locked] {
   margin-right: 0px !important;
   --removed-body-scroll-bar-size: 0px !important;
 }
+
+/* The ability casts are recorded at the GBA's 240x160 and shown at twice that,
+   pixel for pixel. */
+img[src$='.gif'] {
+  image-rendering: pixelated;
+  width: min(100%, 480px);
+  height: auto;
+}
