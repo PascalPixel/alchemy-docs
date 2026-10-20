@@ -32,7 +32,7 @@ RECURSIVE              = YES
 # The READMEs come in through \includedoc of the copies make docs writes to
 # $(SRC), never as .md input: Doxygen 1.18.0 crashes (SIGBUS in its
 # comment scanner) on about half the runs that read a .md file.
-EXAMPLE_PATH           = $(SRC) .
+EXAMPLE_PATH           = $(SRC)
 
 # Sources, cross-referenced: who calls each function, not everything it uses
 SOURCE_BROWSER         = YES

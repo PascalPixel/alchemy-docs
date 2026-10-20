@@ -1,4 +1,4 @@
-# Lighthouse: the documentation site for Alchemy, the Golden Sun
+# Alchemy Docs: the documentation site for Alchemy, the Golden Sun
 # decompilation. It reads an Alchemy checkout (ALCHEMY, by default the one
 # beside this folder) and writes the site to out/site. Needs Doxygen 1.18,
 # perl and Node (for the fonts, built here from Alchemy's font sheets and

@@ -7,7 +7,7 @@
    paint). Every rule reads the tokens below; each theme only sets them.
 
    Weyard Day and Weyard Night are the progress images' look
-   (psynergy/src/progress) with Golden Sun's own letters, one game pixel
+   (alchemy-devtools/src/progress) with Golden Sun's own letters, one game pixel
    to the CSS pixel: sizes are in rem with the root at 16px, so one game
    pixel is 0.0625rem and every length is a whole number of them, and the
    pixel fonts stay crisp. All text is white with the images' half-black
