@@ -1,4 +1,4 @@
-# Alchemy Docs
+# 🌋 Alchemy Docs
 
 The documentation site for [Alchemy](https://github.com/PascalPixel/alchemy), the Golden Sun decompilation, built with [Fumadocs](https://fumadocs.dev).
 
