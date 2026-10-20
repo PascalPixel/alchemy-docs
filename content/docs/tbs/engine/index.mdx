@@ -1,10 +1,18 @@
 ---
 title: Engine
-description: What the rest of the game stands on.
+description: The runtime, graphics, sound and system code the rest of the game is built on.
 ---
 
-- [Graphics](/tbs/engine/graphics)
-- [Sound](/tbs/engine/sound)
-- [Runtime](/tbs/engine/runtime)
-- [System](/tbs/engine/system)
-- [Debug rooms](/tbs/engine/debug)
+- [Runtime](/tbs/engine/runtime): power-up and the interrupt handlers, the
+  frame wait, input, fades, the sprite lists and the other services every
+  part of the game calls.
+- [Graphics](/tbs/engine/graphics): the screens that are mostly pictures
+  (the title intro, the logos, the credits), the palette fades, and the
+  decoders that unpack tiles and frames.
+- [Sound](/tbs/engine/sound): the game's sound cues and the sound driver
+  under them, Nintendo's MusicPlayer2000 as this game links it.
+- [System](/tbs/engine/system): what ties the cartridge together. Its
+  header and entry, the RAM layout, the code kept in fast RAM, the calls
+  between the banks of the main program, and the overlays.
+- [Debug rooms](/tbs/engine/debug): three test rooms the retail game still
+  contains, built like every other scene.

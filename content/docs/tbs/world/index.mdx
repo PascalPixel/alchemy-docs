@@ -1,12 +1,23 @@
 ---
 title: World
-description: Where the party walks.
+description: The towns, dungeons and world map the party walks through, and the code that runs them.
 ---
 
-The field engine, the objects and scripts in it, the scenes and the maps they
-stand on.
+Everything outside battles and menus: walking around, talking to people,
+pushing things with Psynergy, and the maps all of it happens on.
 
-- [Field](/tbs/world/field)
-- [Field objects](/tbs/world/objects)
-- [Scenes](/tbs/world/scenes)
-- [Maps](/tbs/world/maps)
+- [Field](/tbs/world/field): the field engine. The sprites of people and
+  things, the 64 field objects and the scripts that move them, steering the
+  leader with the keys, the layered maps of towns and dungeons, and the
+  world map.
+- [Field objects](/tbs/world/objects): what runs inside a scene. The main
+  loop that moves between scenes, random encounters, a scene's people and
+  events, the leader's steps, and using items and Psynergy such as Move and
+  Reveal on the field.
+- [Scenes](/tbs/world/scenes): every place the party can walk around in,
+  one overlay each. A scene places the people and things of its map and says
+  what happens when the party talks to someone, searches a spot or casts
+  Psynergy there. [Places](/tbs/places) lists them by the game's own names.
+- [Maps](/tbs/world/maps): the maps as editable tables. The layered maps of
+  towns, dungeons and interiors, the world map's ground, and the recorded
+  paths the Colosso rivals run.
