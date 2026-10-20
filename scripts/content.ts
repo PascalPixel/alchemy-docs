@@ -521,7 +521,7 @@ for (const game of GAMES) {
   users.set(game, u);
 }
 
-prose('README.md', 'index.md', 'Golden Sun rebuilt byte for byte from readable C.', '', 'Alchemy');
+prose('README.md', 'index.md', 'Golden Sun rebuilt byte for byte from readable C.');
 prose('INSTALL.md', 'start.md', 'Build The Broken Seal, check it against the cartridge, and change it.');
 guides();
 for (const game of GAMES) sourcePages(game, all.get(game)!);
