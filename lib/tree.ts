@@ -4,7 +4,7 @@ import { isList } from './shared';
 // The sidebar a page is sent. The whole tree has a node for each of the
 // games' four thousand files, and every page carries its sidebar, so in the
 // source and reference lists a page gets only the folders on its own path
-// open, with the files beside it; every other folder there is closed, shown
+// open, with every file in them; every other folder there is closed, shown
 // as a link to its index page, and a long list of folders beside the path is
 // left out (the path's own folder pages list them). The guides stay whole.
 const LONG = 40;
@@ -33,10 +33,9 @@ function prune(nodes: Node[], url: string): Node[] {
   const folders = nodes.filter((n) => n.type === 'folder').length;
   const out: Node[] = [];
   for (const node of nodes) {
-    // The source lists show folders only; a file page shows only as itself.
-    if (node.type === 'page') {
-      if (!isList(node.url) || node.url === url) out.push(item(node));
-    }
+    // prune only opens folders on the page's own path, so every file listed
+    // here sits beside the page or in one of its folders.
+    if (node.type === 'page') out.push(item(node));
     else if (node.type === 'separator') out.push(node);
     else if (node === onPath) {
       out.push({ ...node, $ref: undefined, index: node.index && item(node.index), defaultOpen: true, children: prune(node.children, url) });

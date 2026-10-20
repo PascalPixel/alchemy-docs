@@ -357,11 +357,11 @@ function sourcePages(game: Game, files: SourceFile[]) {
     if (subdirs.length) head.push(`## Folders\n\n${subdirs.map((d) => `- [${basename(d)}](/${game}/source/${rel(d)})`).join('\n')}`);
     if (split.has(dir)) {
       head.push(`## Files\n\n${list.map((f) => `- [${basename(f.path)}](${pageOf(f.path)})${f.summary ? `: ${md(f.summary)}` : ''}`).join('\n')}`);
-      page(`${target}/index.md`, { title: rel(dir), description: '', source: dir }, head.join('\n\n'));
+      page(`${target}/index.md`, { title: basename(dir), description: '', source: dir }, head.join('\n\n'));
       for (const f of list) page(`${target}/${fileSlug(f.path)}.md`, { title: basename(f.path), description: f.summary.replace(/\\/g, ''), source: f.path }, fileBody(f, '##'));
     } else {
       const body = list.map((f) => `## ${md(basename(f.path))}\n\n[${f.path}](${github}/${f.path})\n\n${fileBody(f, '###')}`);
-      page(`${target}/index.md`, { title: rel(dir), description: '', source: dir }, [...head, ...body].join('\n\n'));
+      page(`${target}/index.md`, { title: basename(dir), description: '', source: dir }, [...head, ...body].join('\n\n'));
     }
   }
 }
