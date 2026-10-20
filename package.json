@@ -30,6 +30,8 @@
     "postcss": "^8.5.28",
     "serve": "^14.2.6",
     "tailwindcss": "^4.3.3",
-    "typescript": "^7.0.2"
+    "tree-sitter-c": "0.24.1",
+    "typescript": "^7.0.2",
+    "web-tree-sitter": "0.25.10"
   }
 }

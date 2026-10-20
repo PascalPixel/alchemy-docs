@@ -33,7 +33,10 @@ function prune(nodes: Node[], url: string): Node[] {
   const folders = nodes.filter((n) => n.type === 'folder').length;
   const out: Node[] = [];
   for (const node of nodes) {
-    if (node.type === 'page') out.push(item(node));
+    // The source lists show folders only; a file page shows only as itself.
+    if (node.type === 'page') {
+      if (!isList(node.url) || node.url === url) out.push(item(node));
+    }
     else if (node.type === 'separator') out.push(node);
     else if (node === onPath) {
       out.push({ ...node, $ref: undefined, index: node.index && item(node.index), defaultOpen: true, children: prune(node.children, url) });
