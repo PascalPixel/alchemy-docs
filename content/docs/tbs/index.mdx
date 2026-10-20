@@ -8,7 +8,7 @@ description: How the first Golden Sun works, explained from its rebuilt code.
 ## One village, two ways
 
 Golden Sun opens on a stormy night in Vale, when Isaac and Garet are still
-children. Most of the village that night isn't the Vale you'll walk around
+children. Most of the village that night isn't the Vale the player walks around in
 later. It's a stand-in, [vale_storm.c](/tbs/source/src/scene/vale_storm-c),
 with a map of its own, and the doors that lead into the village by day lead
 into it instead. When it starts, it sets a story flag, `FLAG_VALE_STORM`, that
@@ -17,13 +17,13 @@ tells the rest of Vale the storm is on.
 The rest of Vale doesn't get a copy. The part with the town gate,
 [vale_home.c](/tbs/source/src/scene/vale_home-c), is one scene for every point
 in the story: the storm, the morning three years later, the farewell and every
-visit after that. Each time you arrive, it checks the story flags and picks
+visit after that. Each time the party arrives, it checks the story flags and picks
 who stands where and what they say. So the game does both: when a place
 changes completely, it gets a scene of its own, and when only its people
 change, the scene works it out from the flags.
 
 The night ends at that gate, too. Two strangers fight the boys, and whether
-you win or lose, the battle returns to the same spot, the storm flag is
+the player wins or loses, the battle returns to the same spot, the storm flag is
 cleared, and the scene's exit leads to the title screen at the top of this
 page. When it fades out, it's three years later.
 
@@ -36,8 +36,8 @@ see them off.
 ![The people of Vale call out their farewell as Isaac and Garet leave through the town gate](/story/vale-farewell.gif)
 
 Until that moment, the gate does nothing. Stepping on it only leads out once
-`FLAG_PARTY_LEFT_VALE` is set, so the first time you leave Vale, it's the
-farewell that walks you out, by the same exit the gate uses from then on.
+`FLAG_PARTY_LEFT_VALE` is set, so the first time the party leaves Vale, it's the
+farewell that walks it out, by the same exit the gate uses from then on.
 
 ## The whole world
 
@@ -45,14 +45,14 @@ Outside Vale, the world map is drawn tilted in perspective around the party,
 on two background layers the hardware can scale and rotate: the ground, and
 the mountains, woods and towns over it. Only the squares around the party are
 in video memory at a time: `Map_UpdateCurrentTileBlock` loads the block
-around you into both layers. This picture moves that point across the whole
+around the party into both layers. This picture moves that point across the whole
 map, asks the game for every block in turn and lays them out flat, one pixel
 for each pixel of the map.
 
 <Picture src="/story/world.png" alt="The whole world map of The Broken Seal, laid out flat" style={{ width: '100%', imageRendering: 'pixelated' }} />
 
-Laid out like this, the map shows a few things the game never lets you see at
-once. Crossbone Isle is there, though in The Lost Age the map you can open says
+Laid out like this, the map shows a few things the game never shows the player at
+once. Crossbone Isle is there, though in The Lost Age the map the player can open says
 of it, “This place doesn't seem to appear on the map...”. Idejima is there
 twice, joined to the coast and adrift. And the flat green and grey blocks in
 the west and south, and the white strip beside the snow in the north, are
@@ -68,7 +68,7 @@ anyway, and the game cuts to the world map as its beacon lights up.
 
 That cut belongs to the world map scene. When the aerie sends the party to the
 world map's entrance 91, [world_map.c](/tbs/source/src/scene/world_map-c)
-plays the lighthouse sequence instead of letting you walk, then sends you
+plays the lighthouse sequence instead of letting the player walk, then sends the party
 straight back up to the aerie, at its entrance 93, for the last battle.
 Mercury Lighthouse uses the same code from entrance 90.
 
@@ -77,7 +77,7 @@ Mercury Lighthouse uses the same code from entrance 90.
 <Cards>
   <Card title="Places" href="/tbs/places">
     Every town and dungeon in story order: who stands where, and what happens
-    when you talk to someone or search a spot.
+    when the player talks to someone or searches a spot.
   </Card>
   <Card title="Abilities" href="/tbs/abilities">
     Every ability in battle, from Psynergy and Djinn to items and enemy attacks,

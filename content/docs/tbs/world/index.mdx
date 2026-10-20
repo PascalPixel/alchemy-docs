@@ -3,7 +3,7 @@ title: World
 description: How the party walks around towns, dungeons and the world map, and the code that runs it.
 ---
 
-This part covers everything you do outside battles and menus: walking around,
+This part covers everything the player does outside battles and menus: walking around,
 talking to people, pushing things with Psynergy, and the maps it all happens
 on.
 
@@ -13,15 +13,16 @@ them, steers the party leader from the pad, and draws the layered maps of
 towns and dungeons as well as the world map.
 
 [Field objects](/tbs/world/objects) is what runs inside a scene: the main loop
-that moves you from one scene to the next, random encounters, a scene's people
-and events, the leader's footsteps, and what happens when you use an item or
+that moves the party from one scene to the next, random encounters, a scene's people
+and events, the leader's footsteps, and what happens when the player uses an item or
 Psynergy such as Move or Reveal on the field.
 
-Every place you can walk around in is a scene of its own, loaded as an overlay.
-A scene places the people and things on its map and decides what happens when
-you talk to someone, search a spot or cast Psynergy there. Their code is under
-[Scenes](/tbs/world/scenes), and [Places](/tbs/places) goes through them in
-story order, by the names the game gives them.
+Every place the player can walk around in is a scene of its own, loaded as an
+overlay. A scene places the people and things on its map and decides what
+happens when the player talks to someone, searches a spot or casts Psynergy
+there. Their code is under [Scenes](/tbs/world/scenes), and
+[Places](/tbs/places) goes through them in story order, by the names the game
+gives them.
 
 [Maps](/tbs/world/maps) holds the maps themselves as tables you can open: the
 layered maps of towns, dungeons and houses, the world map's ground, and the
