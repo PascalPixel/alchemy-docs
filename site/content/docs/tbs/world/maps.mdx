@@ -1,0 +1,10 @@
+---
+title: Maps
+description: The maps are not C.
+---
+
+`games/tbs/src/map` holds one folder per map, with its grid, collision and
+shape tables as TSV files, and the assembly that places them and the shared
+map tables in the cartridge; the build encodes the tables. The code that reads
+them is the field engine ([Field](/docs/tbs/world/field)) and the map layers in
+[games/tbs/src/field](/docs/tbs/source/src/field).

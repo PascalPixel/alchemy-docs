@@ -1,0 +1,7 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
+  "installCommand": "bun install --frozen-lockfile",
+  "buildCommand": "curl -fsSL https://www.doxygen.nl/files/doxygen-1.18.0.linux.bin.tar.gz | tar xz -C /tmp && git clone --depth 1 https://github.com/PascalPixel/alchemy /tmp/alchemy && PATH=/tmp/doxygen-1.18.0/bin:$PATH ALCHEMY=/tmp/alchemy bun run build",
+  "outputDirectory": "out"
+}

@@ -1,0 +1,28 @@
+---
+title: Pictures
+description: A few of the sheets the effects load, as the indexed PNGs the build packs.
+---
+
+Each sheet below is the indexed PNG in the repository that the build packs
+into the game, shown at twice its size. Edit the PNG and its palette, and the
+next build packs the change. The page on [pictures and colours](/docs/tbs/battle/effects#pictures-and-colours)
+says how an effect finds and decodes them.
+
+<div className="not-prose grid grid-cols-2 sm:grid-cols-4 gap-6 items-start my-6">
+  <figure className="flex flex-col items-center gap-2">
+    <Picture src="/pictures/rock_wall.png" width={80} height={192} alt="The rock pillar of Quake"/>
+    <figcaption className="text-sm text-fd-muted-foreground text-center">rock_wall.png<br />[quake.c](/docs/tbs/source/src/effect/parts/quake-c)</figcaption>
+  </figure>
+  <figure className="flex flex-col items-center gap-2">
+    <Picture src="/pictures/fire_pillar_b.png" width={48} height={558} alt="A strip of fire pillar frames"/>
+    <figcaption className="text-sm text-fd-muted-foreground text-center">fire_pillar_b.png<br />[rushing_strike.c](/docs/tbs/source/src/effect/parts/rushing_strike-c), [dragon_cloud.c](/docs/tbs/source/src/effect/parts/dragon_cloud-c)</figcaption>
+  </figure>
+  <figure className="flex flex-col items-center gap-2">
+    <Picture src="/pictures/flame_column.png" width={32} height={256} alt="A column of flame"/>
+    <figcaption className="text-sm text-fd-muted-foreground text-center">flame_column.png<br />[target_motes.c](/docs/tbs/source/src/effect/parts/target_motes-c)</figcaption>
+  </figure>
+  <figure className="flex flex-col items-center gap-2">
+    <Picture src="/pictures/blue_burst.png" width={80} height={64} alt="A blue burst"/>
+    <figcaption className="text-sm text-fd-muted-foreground text-center">blue_burst.png<br />[rushing_strike.c](/docs/tbs/source/src/effect/parts/rushing_strike-c)</figcaption>
+  </figure>
+</div>
