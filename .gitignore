@@ -28,6 +28,10 @@ yarn-error.log*
 /content/docs/reference/tbs/
 /content/docs/reference/tla/
 /public/pictures/
+/public/PROGRESS.png
+/public/PROGRESS_CHART.png
+/public/history.tsv
+/public/source.tsv
 
 # others
 .env*.local

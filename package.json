@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "content": "bun scripts/content.ts",
-    "build": "bun run content && next build",
+    "build": "bun run content && bun scripts/figures.ts && next build",
     "dev": "bun run content && next dev",
     "start": "serve out",
     "types:check": "next typegen && tsc --noEmit"

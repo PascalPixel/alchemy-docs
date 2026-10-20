@@ -17,4 +17,6 @@ The site is in `out`. To read an Alchemy somewhere else, set `ALCHEMY=/path/to/a
 
 ## Publishing
 
-Vercel builds the site on every push here: it clones the latest Alchemy and runs the build (`vercel.json`). Alchemy's CI starts the same build after each verified push to its main branch.
+Vercel builds the site on every push here: it clones the latest Alchemy and runs the build (`vercel.json`). Alchemy's CI starts the same build through a Vercel deploy hook, its `VERCEL_DEPLOY_HOOK` secret, once a push to its main branch passes and its measurement is accepted.
+
+`scripts/figures.ts` puts that measurement's progress figures (`PROGRESS.png`, `PROGRESS_CHART.png`, `history.tsv`, `source.tsv`) at the site's root from Alchemy's `decomp-reports` release; Alchemy's README shows them from there. While a commit's CI is still running, the newest accepted figures are used.
