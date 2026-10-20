@@ -434,7 +434,7 @@ function prose(source: string, target: string, description = '', after = '', nam
     const first = text.split('\n\n')[0].replace(/\s+/g, ' ').trim();
     description = first.length < 200 && !first.startsWith('#') && !first.startsWith('|') ? first.replace(/[`*]|\[([^\]]*)\]\([^)]*\)/g, '$1') : '';
   }
-  page(target, { title, description, source }, text + after);
+  page(target, { title, description: description === 'none' ? '' : description, source }, text + after);
   return title;
 }
 
@@ -521,7 +521,7 @@ for (const game of GAMES) {
   users.set(game, u);
 }
 
-prose('README.md', 'index.md', 'Golden Sun rebuilt byte for byte from readable C.');
+prose('README.md', 'index.md', 'none');
 prose('INSTALL.md', 'start.md', 'Build The Broken Seal, check it against the cartridge, and change it.');
 guides();
 for (const game of GAMES) sourcePages(game, all.get(game)!);
