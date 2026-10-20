@@ -17,7 +17,6 @@ export const { staticGET: GET } = createFromSource(source, {
   language: 'english',
   buildIndex: (page) => {
     const { structuredData } = page.data;
-    const names = page.url.startsWith('/docs/reference/');
     return {
       title: page.data.title,
       description: page.data.description,
@@ -25,7 +24,7 @@ export const { staticGET: GET } = createFromSource(source, {
       id: page.url,
       structuredData: !isList(page.url)
         ? structuredData
-        : { headings: names ? [] : structuredData.headings.filter((h) => !PLACEHOLDER.test(h.content)), contents: [] },
+        : { headings: structuredData.headings.filter((h) => !PLACEHOLDER.test(h.content)), contents: [] },
     };
   },
 });

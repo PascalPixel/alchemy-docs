@@ -50,6 +50,6 @@ function prune(nodes: Node[], url: string): Node[] {
 }
 
 export function treeFor(tree: Root, slug: string[] | undefined): Root {
-  const url = ['/docs', ...(slug ?? [])].join('/');
+  const url = '/' + (slug ?? []).join('/');
   return { ...tree, children: prune(tree.children, url) };
 }

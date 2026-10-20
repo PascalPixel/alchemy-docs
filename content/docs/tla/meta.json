@@ -1,4 +1,5 @@
 {
   "title": "⚓️ The Lost Age",
-  "pages": ["index", "battle", "debug", "field", "game", "graphics", "lib", "menu", "scene", "sound", "system", "window", "source"]
+  "defaultOpen": true,
+  "pages": ["world", "battle", "menus", "game", "engine", "source"]
 }

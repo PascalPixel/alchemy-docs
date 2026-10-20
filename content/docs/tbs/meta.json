@@ -1,4 +1,5 @@
 {
   "title": "☀️ The Broken Seal",
-  "pages": ["index", "places", "abilities", "world", "battle", "menus", "game", "engine", "matching", "source"]
+  "defaultOpen": true,
+  "pages": ["places", "abilities", "world", "battle", "menus", "game", "engine", "matching", "source"]
 }

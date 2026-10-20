@@ -244,7 +244,7 @@ const split = new Set<string>(); // folders with a page per file
 function pageOf(path: string): string {
   const game = path.split('/')[1];
   const dir = dirname(path);
-  const base = `/docs/${game}/source/${rel(dir)}`;
+  const base = `/${game}/source/${rel(dir)}`;
   return split.has(dir) ? `${base}/${fileSlug(path)}` : base;
 }
 
@@ -352,7 +352,7 @@ function sourcePages(game: Game, files: SourceFile[]) {
     const guide = guideOf.get(dir);
     const head: string[] = [];
     if (guide) head.push(`The [${guide.title}](${guide.url}) guide explains this folder.`);
-    if (subdirs.length) head.push(`## Folders\n\n${subdirs.map((d) => `- [${basename(d)}](/docs/${game}/source/${rel(d)})`).join('\n')}`);
+    if (subdirs.length) head.push(`## Folders\n\n${subdirs.map((d) => `- [${basename(d)}](/${game}/source/${rel(d)})`).join('\n')}`);
     if (split.has(dir)) {
       head.push(`## Files\n\n${list.map((f) => `- [${basename(f.path)}](${pageOf(f.path)})${f.summary ? `: ${md(f.summary)}` : ''}`).join('\n')}`);
       page(`${target}/index.md`, { title: rel(dir), description: '', source: dir }, head.join('\n\n'));
@@ -368,27 +368,40 @@ function sourcePages(game: Game, files: SourceFile[]) {
 // The prose pages: the README, INSTALL and the folder guides, without their
 // first heading (the page's title) and with their repository links resolved.
 
-// The guides: each folder README, where its page sits and its title.
-const GUIDES: [string, string][] = [
-  ['games/tbs/src/field', 'tbs/world/field'],
-  ['games/tbs/src/object', 'tbs/world/objects'],
-  ['games/tbs/src/scene', 'tbs/world/scenes'],
-  ['games/tbs/src/map', 'tbs/world/maps'],
-  ['games/tbs/src/battle', 'tbs/battle/battles'],
-  ['games/tbs/src/effect', 'tbs/battle/effects/index'],
-  ['games/tbs/src/menu', 'tbs/menus/menus'],
-  ['games/tbs/src/window', 'tbs/menus/windows'],
-  ['games/tbs/src/shop', 'tbs/menus/shops'],
-  ['games/tbs/src/game', 'tbs/game'],
-  ['games/tbs/src/graphics', 'tbs/engine/graphics'],
-  ['games/tbs/src/sound', 'tbs/engine/sound'],
-  ['games/tbs/src/runtime', 'tbs/engine/runtime'],
-  ['games/tbs/src/system', 'tbs/engine/system'],
-  ['games/tbs/src/debug', 'tbs/engine/debug'],
+// The guides: each folder README, where its page sits, and its title in the
+// sidebar (empty: the README's own heading). The Lost Age's READMEs head
+// themselves "The Lost Age: battle" to stay unique in the repository; on the
+// site they sit under their game, in The Broken Seal's groups and names.
+const GUIDES: [string, string, string][] = [
+  ['games/tbs/src/field', 'tbs/world/field', ''],
+  ['games/tbs/src/object', 'tbs/world/objects', ''],
+  ['games/tbs/src/scene', 'tbs/world/scenes', ''],
+  ['games/tbs/src/map', 'tbs/world/maps', ''],
+  ['games/tbs/src/battle', 'tbs/battle/battles', ''],
+  ['games/tbs/src/effect', 'tbs/battle/effects/index', ''],
+  ['games/tbs/src/menu', 'tbs/menus/menus', ''],
+  ['games/tbs/src/window', 'tbs/menus/windows', ''],
+  ['games/tbs/src/shop', 'tbs/menus/shops', ''],
+  ['games/tbs/src/game', 'tbs/game', ''],
+  ['games/tbs/src/graphics', 'tbs/engine/graphics', ''],
+  ['games/tbs/src/sound', 'tbs/engine/sound', ''],
+  ['games/tbs/src/runtime', 'tbs/engine/runtime', ''],
+  ['games/tbs/src/system', 'tbs/engine/system', ''],
+  ['games/tbs/src/debug', 'tbs/engine/debug', ''],
+  ['games/tla/src/field', 'tla/world/field', 'Field'],
+  ['games/tla/src/scene', 'tla/world/scenes', 'Scenes'],
+  ['games/tla/src/battle', 'tla/battle', 'Battles and effects'],
+  ['games/tla/src/menu', 'tla/menus/menus', 'Menus and shops'],
+  ['games/tla/src/window', 'tla/menus/windows', 'Windows'],
+  ['games/tla/src/game', 'tla/game', 'Game rules'],
+  ['games/tla/src/graphics', 'tla/engine/graphics', 'Graphics'],
+  ['games/tla/src/sound', 'tla/engine/sound', 'Sound'],
+  ['games/tla/src/system', 'tla/engine/system', 'System'],
+  ['games/tla/src/lib', 'tla/engine/library', 'Library'],
+  ['games/tla/src/debug', 'tla/engine/debug', 'Debug rooms'],
 ];
 const guideOf = new Map<string, { url: string; title: string }>();
-for (const [dir, target] of GUIDES) guideOf.set(dir, { url: `/docs/${target.replace(/\/index$/, '')}`, title: '' });
-for (const d of walkDirs('games/tla/src')) guideOf.set(d, { url: `/docs/tla/${basename(d)}`, title: '' });
+for (const [dir, target] of GUIDES) guideOf.set(dir, { url: `/${target.replace(/\/index$/, '')}`, title: '' });
 
 function walkDirs(rel: string): string[] {
   if (!existsSync(join(repo, rel))) return [];
@@ -400,20 +413,20 @@ function walkDirs(rel: string): string[] {
 // A link in a README, pointed at the site where the site has the page.
 function siteLink(path: string): string {
   const clean = normalize(path).replace(/\/$/, '');
-  if (clean === 'README.md') return '/docs';
-  if (clean === 'INSTALL.md') return '/docs/start';
-  if (clean === 'games/tbs/src/MATCHING.md') return '/docs/tbs/matching';
+  if (clean === 'README.md') return '/';
+  if (clean === 'INSTALL.md') return '/start';
+  if (clean === 'games/tbs/src/MATCHING.md') return '/tbs/matching';
   const guide = guideOf.get(dirname(clean));
   if (guide && basename(clean) === 'README.md') return guide.url;
   const m = clean.match(/^games\/(tbs|tla)\/((?:src|include)(?:\/.*)?)$/);
-  if (m && existsSync(join(repo, clean))) return /\.[ch]$/.test(clean) ? pageOf(clean) : `/docs/${m[1]}/source/${m[2]}`;
+  if (m && existsSync(join(repo, clean))) return /\.[ch]$/.test(clean) ? pageOf(clean) : `/${m[1]}/source/${m[2]}`;
   return `${github}/${clean}`;
 }
 
-function prose(source: string, target: string, description = '', after = ''): string {
+function prose(source: string, target: string, description = '', after = '', named = ''): string {
   let text = readFileSync(join(repo, source), 'utf8');
   const heading = text.match(/^# (.+?)(?: \{#[\w-]+\})?\n+/);
-  const title = heading ? heading[1] : basename(source);
+  const title = named || (heading ? heading[1] : basename(source));
   if (heading) text = text.slice(heading[0].length);
   text = text.replace(/(!?)\[([^\]]*)\]\(([^)#\s]*)(#[^)]*)?\)/g, (all, bang: string, label: string, link: string, hash = '') => {
     if (/^[a-z]+:/.test(link) || !link) return all;
@@ -435,17 +448,13 @@ function prose(source: string, target: string, description = '', after = ''): st
 }
 
 function guides() {
-  for (const [dir, target] of GUIDES) {
+  for (const [dir, target, named] of GUIDES) {
     if (!existsSync(join(repo, dir, 'README.md'))) continue;
-    const hasCode = walk(dir).length > 0;
-    const title = prose(`${dir}/README.md`, `${target}.md`, '', hasCode ? `\n\n## Source\n\nEvery file of this folder: [${rel(dir)}](/docs/tbs/source/${rel(dir)}).\n` : '');
-    guideOf.get(dir)!.title = title;
+    const game = dir.split('/')[1];
+    const after = walk(dir).length ? `\n\n## Source\n\nEvery file of this folder: [${rel(dir)}](/${game}/source/${rel(dir)}).\n` : '';
+    guideOf.get(dir)!.title = prose(`${dir}/README.md`, `${target}.md`, '', after, named);
   }
   prose('games/tbs/src/MATCHING.md', 'tbs/matching.md');
-  for (const dir of walkDirs('games/tla/src')) {
-    const title = prose(`${dir}/README.md`, `tla/${basename(dir)}.md`, '', `\n\n## Source\n\nEvery file of this folder: [${rel(dir)}](/docs/tla/source/${rel(dir)}).\n`);
-    guideOf.get(dir)!.title = title;
-  }
 }
 
 // ---------------------------------------------------------------------------
@@ -455,7 +464,7 @@ function guides() {
 function places(files: SourceFile[]) {
   const scenes = files.filter((f) => /^games\/tbs\/src\/scene\/[^/]+\.c$/.test(f.path));
   const rows = scenes.map((f) => `| [${basename(f.path, '.c')}](${pageOf(f.path)}) | ${f.summary} |`);
-  page('tbs/places.md', { title: 'Places', description: 'Every place the party can walk around in, and what happens there.' }, `Each scene overlay is one place, or a few that share it. The [Scenes](/docs/tbs/world/scenes) guide explains how a scene runs and how to find an event in it.\n\n| Scene | What happens there |\n| --- | --- |\n${rows.join('\n')}`);
+  page('tbs/places.md', { title: 'Places', description: 'Every place the party can walk around in, and what happens there.' }, `Each scene overlay is one place, or a few that share it. The [Scenes](/tbs/world/scenes) guide explains how a scene runs and how to find an event in it.\n\n| Scene | What happens there |\n| --- | --- |\n${rows.join('\n')}`);
 }
 
 function abilities(files: SourceFile[]) {
@@ -471,7 +480,7 @@ function abilities(files: SourceFile[]) {
     }
   }
   rows.sort((a, b) => a[0].localeCompare(b[0]));
-  page('tbs/abilities.md', { title: 'Abilities', description: 'Every ability with an effect of its own, and the function that plays it.' }, `The numbers that make an ability hit are in [How an ability resolves](/docs/tbs/battle/battles#how-an-ability-resolves).\n\n| Ability | Effect |\n| --- | --- |\n${rows.map(([a, fn, url]) => `| ${a} | [${md(fn)}](${url}) |`).join('\n')}`);
+  page('tbs/abilities.md', { title: 'Abilities', description: 'Every ability with an effect of its own, and the function that plays it.' }, `The numbers that make an ability hit are in [How an ability resolves](/tbs/battle/battles#how-an-ability-resolves).\n\n| Ability | Effect |\n| --- | --- |\n${rows.map(([a, fn, url]) => `| ${a} | [${md(fn)}](${url}) |`).join('\n')}`);
 }
 
 // ---------------------------------------------------------------------------
@@ -492,7 +501,6 @@ const started = Date.now();
 for (const p of ['index.md', 'start.md', 'tbs/source', 'tla/source', 'tbs/places.md', 'tbs/abilities.md', 'tbs/matching.md', ...GUIDES.map(([, t]) => `${t}.md`)]) {
   rmSync(join(content, p), { recursive: true, force: true });
 }
-for (const f of readdirSync(join(content, 'tla'))) if (f.endsWith('.md')) rmSync(join(content, 'tla', f));
 
 const all = new Map<Game, SourceFile[]>();
 for (const game of GAMES) {
@@ -522,7 +530,7 @@ for (const game of GAMES) {
   users.set(game, u);
 }
 
-prose('README.md', 'index.md', 'Golden Sun rebuilt byte for byte from readable C.');
+prose('README.md', 'index.md', 'Golden Sun rebuilt byte for byte from readable C.', '', 'Alchemy');
 prose('INSTALL.md', 'start.md', 'Build The Broken Seal, check it against the cartridge, and change it.');
 guides();
 for (const game of GAMES) sourcePages(game, all.get(game)!);

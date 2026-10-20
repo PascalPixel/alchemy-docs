@@ -1,11 +1,3 @@
 {
-  "pages": [
-    "---Alchemy---",
-    "index",
-    "start",
-    "---☀️ The Broken Seal---",
-    "...tbs",
-    "---⚓️ The Lost Age---",
-    "...tla"
-  ]
+  "pages": ["index", "start", "tbs", "tla"]
 }
