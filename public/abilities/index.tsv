@@ -1,131 +1,131 @@
 ability	name	caster	target	frames	file
-3	Quake	Isaac	Ivan	137	quake.gif
-4	Earthquake	Isaac	Ivan	182	earthquake.gif
-5	Quake Sphere	Isaac	Ivan	198	quake-sphere.gif
-6	Spire	Isaac	Ivan	103	spire.gif
-7	Clay Spire	Isaac	Ivan	145	clay-spire.gif
-8	Stone Spire	Isaac	Ivan	167	stone-spire.gif
-9	Gaia	Isaac	Ivan	207	gaia.gif
-10	Mother Gaia	Isaac	Ivan	239	mother-gaia.gif
-11	Grand Gaia	Isaac	Ivan	238	grand-gaia.gif
-12	Growth	Isaac	Ivan	90	growth.gif
-13	Mad Growth	Isaac	Ivan	126	mad-growth.gif
-14	Wild Growth	Isaac	Ivan	178	wild-growth.gif
-15	Thorn	Isaac	Ivan	115	thorn.gif
-16	Briar	Isaac	Ivan	130	briar.gif
-17	Nettle	Isaac	Ivan	184	nettle.gif
-24	Frost	Mia	Garet	154	frost.gif
-25	Tundra	Mia	Garet	161	tundra.gif
-26	Glacier	Mia	Garet	172	glacier.gif
-27	Ice	Mia	Garet	100	ice.gif
-28	Ice Horn	Mia	Garet	138	ice-horn.gif
-29	Ice Missile	Mia	Garet	166	ice-missile.gif
-30	Prism	Mia	Garet	120	prism.gif
-31	Hail Prism	Mia	Garet	172	hail-prism.gif
-32	Freeze Prism	Mia	Garet	225	freeze-prism.gif
-33	Douse	Mia	Garet	116	douse.gif
-34	Drench	Mia	Garet	120	drench.gif
-35	Deluge	Mia	Garet	163	deluge.gif
-36	Froth	Mia	Garet	172	froth.gif
-37	Froth Sphere	Mia	Garet	219	froth-sphere.gif
-38	Froth Spiral	Mia	Garet	265	froth-spiral.gif
-45	Flare	Jenna	Mia	117	flare.gif
-46	Flare Wall	Jenna	Mia	118	flare-wall.gif
-47	Flare Storm	Jenna	Mia	121	flare-storm.gif
-48	Fire	Garet	Mia	170	fire.gif
-49	Fireball	Garet	Mia	209	fireball.gif
-50	Inferno	Garet	Mia	242	inferno.gif
-51	Volcano	Garet	Mia	118	volcano.gif
-52	Eruption	Garet	Mia	134	eruption.gif
-53	Pyroclasm	Garet	Mia	178	pyroclasm.gif
-54	Blast	Garet	Mia	125	blast-54.gif
-55	Mad Blast	Garet	Mia	138	mad-blast.gif
-56	Fiery Blast	Garet	Mia	198	fiery-blast.gif
-57	Blast	Garet	Mia	133	blast-57.gif
-58	Nova	Garet	Mia	170	nova.gif
-59	Supernova	Garet	Mia	202	supernova.gif
-66	Bolt	Ivan	Isaac	88	bolt.gif
-67	Flash Bolt	Ivan	Isaac	123	flash-bolt.gif
-68	Blue Bolt	Ivan	Isaac	133	blue-bolt.gif
-69	Ray	Ivan	Isaac	133	ray.gif
-70	Storm Ray	Ivan	Isaac	137	storm-ray.gif
-71	Destruct Ray	Ivan	Isaac	144	destruct-ray.gif
-72	Plasma	Ivan	Isaac	138	plasma.gif
-73	Shine Plasma	Ivan	Isaac	185	shine-plasma.gif
-74	Spark Plasma	Ivan	Isaac	200	spark-plasma.gif
-75	Slash	Ivan	Isaac	97	slash.gif
-76	Wind Slash	Ivan	Isaac	133	wind-slash.gif
-77	Sonic Slash	Ivan	Isaac	188	sonic-slash.gif
-78	Whirlwind	Ivan	Isaac	124	whirlwind.gif
-79	Tornado	Ivan	Isaac	159	tornado.gif
-80	Tempest	Ivan	Isaac	178	tempest.gif
-90	Cure	Isaac	Ivan	100	cure.gif
-91	Cure Well	Isaac	Ivan	101	cure-well.gif
-92	Potent Cure	Isaac	Ivan	116	potent-cure.gif
-93	Ply	Mia	Garet	100	ply.gif
-94	Ply Well	Mia	Garet	104	ply-well.gif
-95	Pure Ply	Mia	Garet	120	pure-ply.gif
-96	Wish	Mia	Garet	117	wish.gif
-97	Wish Well	Mia	Garet	129	wish-well.gif
-98	Pure Wish	Mia	Garet	132	pure-wish.gif
-99	Cure Poison	Mia	Garet	92	cure-poison.gif
-100	Restore	Mia	Garet	97	restore.gif
-101	Revive	Isaac	Ivan	120	revive.gif
-102	Impact	Ivan	Isaac	112	impact.gif
-103	High Impact	Ivan	Isaac	138	high-impact.gif
-104	Dull	Ivan	Isaac	112	dull.gif
-105	Blunt	Ivan	Isaac	140	blunt.gif
-106	Guard	Garet	Mia	112	guard.gif
-107	Protect	Garet	Mia	138	protect.gif
-108	Impair	Garet	Mia	112	impair.gif
-109	Debilitate	Garet	Mia	140	debilitate.gif
-110	Ward	Ivan	Isaac	113	ward.gif
-111	Resist	Ivan	Isaac	139	resist.gif
-112	Weaken	Ivan	Isaac	112	weaken.gif
-113	Enfeeble	Ivan	Isaac	140	enfeeble.gif
-116	Delude	Ivan	Isaac	115	delude.gif
-120	Sleep	Ivan	Isaac	137	sleep.gif
-121	Bind	Ivan	Isaac	109	bind.gif
-122	Haunt	Isaac	Ivan	149	haunt.gif
-123	Curse	Isaac	Ivan	88	curse.gif
-124	Condemn	Isaac	Ivan	148	condemn.gif
-125	Drain	Ivan	Isaac	132	drain.gif
-126	Psy Drain	Ivan	Isaac	132	psy-drain.gif
-127	Break	Mia	Garet	143	break.gif
-160	Dragon Cloud	Garet	Mia	158	dragon-cloud.gif
-161	Demon Night	Isaac	Ivan	230	demon-night.gif
-162	Helm Splitter	Isaac	Ivan	88	helm-splitter.gif
-163	Quick Strike	Ivan	Isaac	94	quick-strike.gif
-164	Rockfall	Isaac	Ivan	207	rockfall.gif
-165	Rockslide	Isaac	Ivan	238	rockslide.gif
-166	Avalanche	Isaac	Ivan	238	avalanche.gif
-167	Lava Shower	Garet	Mia	119	lava-shower.gif
-168	Molten Bath	Garet	Mia	134	molten-bath.gif
-169	Magma Storm	Garet	Mia	179	magma-storm.gif
-170	Demon Spear	Ivan	Isaac	112	demon-spear.gif
-171	Angel Spear	Ivan	Isaac	138	angel-spear.gif
-172	Guardian	Garet	Mia	112	guardian.gif
-173	Protector	Garet	Mia	138	protector.gif
-174	Magic Shell	Ivan	Isaac	113	magic-shell.gif
-175	Magic Shield	Ivan	Isaac	140	magic-shield.gif
-176	Death Plunge	Ivan	Isaac	145	death-plunge.gif
-177	Shuriken	Ivan	Isaac	113	shuriken.gif
-178	Annihilation	Isaac	Ivan	115	annihilation.gif
-179	Punji	Isaac	Ivan	110	punji.gif
-180	Punji Trap	Isaac	Ivan	122	punji-trap.gif
-181	Punji Strike	Isaac	Ivan	154	punji-strike.gif
-182	Fire Bomb	Garet	Mia	133	fire-bomb.gif
-183	Cluster Bomb	Garet	Mia	171	cluster-bomb.gif
-184	Carpet Bomb	Garet	Mia	203	carpet-bomb.gif
-185	Gale	Ivan	Isaac	124	gale.gif
-186	Typhoon	Ivan	Isaac	159	typhoon.gif
-187	Hurricane	Ivan	Isaac	178	hurricane.gif
-188	Thunderclap	Ivan	Isaac	138	thunderclap.gif
-189	Thunderbolt	Ivan	Isaac	185	thunderbolt.gif
-190	Thunderstorm	Ivan	Isaac	200	thunderstorm.gif
-191	Mist	Ivan	Isaac	115	mist.gif
-192	Ragnarok	Isaac	Ivan	146	ragnarok.gif
-193	Cutting Edge	Mia	Garet	80	cutting-edge.gif
-194	Heat Wave	Garet	Mia	136	heat-wave.gif
-195	Astral Blast	Ivan	Isaac	111	astral-blast.gif
-196	Planet Diver	Garet	Mia	109	planet-diver.gif
+3	Quake	Isaac	Ivan	131	quake.gif
+4	Earthquake	Isaac	Ivan	176	earthquake.gif
+5	Quake Sphere	Isaac	Ivan	192	quake-sphere.gif
+6	Spire	Isaac	Ivan	97	spire.gif
+7	Clay Spire	Isaac	Ivan	139	clay-spire.gif
+8	Stone Spire	Isaac	Ivan	161	stone-spire.gif
+9	Gaia	Isaac	Ivan	201	gaia.gif
+10	Mother Gaia	Isaac	Ivan	233	mother-gaia.gif
+11	Grand Gaia	Isaac	Ivan	232	grand-gaia.gif
+12	Growth	Isaac	Ivan	84	growth.gif
+13	Mad Growth	Isaac	Ivan	120	mad-growth.gif
+14	Wild Growth	Isaac	Ivan	172	wild-growth.gif
+15	Thorn	Isaac	Ivan	109	thorn.gif
+16	Briar	Isaac	Ivan	124	briar.gif
+17	Nettle	Isaac	Ivan	178	nettle.gif
+24	Frost	Mia	Garet	148	frost.gif
+25	Tundra	Mia	Garet	155	tundra.gif
+26	Glacier	Mia	Garet	166	glacier.gif
+27	Ice	Mia	Garet	94	ice.gif
+28	Ice Horn	Mia	Garet	132	ice-horn.gif
+29	Ice Missile	Mia	Garet	160	ice-missile.gif
+30	Prism	Mia	Garet	114	prism.gif
+31	Hail Prism	Mia	Garet	166	hail-prism.gif
+32	Freeze Prism	Mia	Garet	219	freeze-prism.gif
+33	Douse	Mia	Garet	110	douse.gif
+34	Drench	Mia	Garet	114	drench.gif
+35	Deluge	Mia	Garet	157	deluge.gif
+36	Froth	Mia	Garet	166	froth.gif
+37	Froth Sphere	Mia	Garet	213	froth-sphere.gif
+38	Froth Spiral	Mia	Garet	259	froth-spiral.gif
+45	Flare	Jenna	Mia	111	flare.gif
+46	Flare Wall	Jenna	Mia	112	flare-wall.gif
+47	Flare Storm	Jenna	Mia	115	flare-storm.gif
+48	Fire	Garet	Mia	164	fire.gif
+49	Fireball	Garet	Mia	203	fireball.gif
+50	Inferno	Garet	Mia	236	inferno.gif
+51	Volcano	Garet	Mia	112	volcano.gif
+52	Eruption	Garet	Mia	128	eruption.gif
+53	Pyroclasm	Garet	Mia	172	pyroclasm.gif
+54	Blast	Garet	Mia	119	blast-54.gif
+55	Mad Blast	Garet	Mia	132	mad-blast.gif
+56	Fiery Blast	Garet	Mia	192	fiery-blast.gif
+57	Blast	Garet	Mia	127	blast-57.gif
+58	Nova	Garet	Mia	164	nova.gif
+59	Supernova	Garet	Mia	196	supernova.gif
+66	Bolt	Ivan	Isaac	82	bolt.gif
+67	Flash Bolt	Ivan	Isaac	117	flash-bolt.gif
+68	Blue Bolt	Ivan	Isaac	127	blue-bolt.gif
+69	Ray	Ivan	Isaac	127	ray.gif
+70	Storm Ray	Ivan	Isaac	131	storm-ray.gif
+71	Destruct Ray	Ivan	Isaac	138	destruct-ray.gif
+72	Plasma	Ivan	Isaac	132	plasma.gif
+73	Shine Plasma	Ivan	Isaac	179	shine-plasma.gif
+74	Spark Plasma	Ivan	Isaac	194	spark-plasma.gif
+75	Slash	Ivan	Isaac	91	slash.gif
+76	Wind Slash	Ivan	Isaac	127	wind-slash.gif
+77	Sonic Slash	Ivan	Isaac	182	sonic-slash.gif
+78	Whirlwind	Ivan	Isaac	118	whirlwind.gif
+79	Tornado	Ivan	Isaac	153	tornado.gif
+80	Tempest	Ivan	Isaac	172	tempest.gif
+90	Cure	Isaac	Ivan	95	cure.gif
+91	Cure Well	Isaac	Ivan	95	cure-well.gif
+92	Potent Cure	Isaac	Ivan	110	potent-cure.gif
+93	Ply	Mia	Garet	94	ply.gif
+94	Ply Well	Mia	Garet	98	ply-well.gif
+95	Pure Ply	Mia	Garet	115	pure-ply.gif
+96	Wish	Mia	Garet	112	wish.gif
+97	Wish Well	Mia	Garet	124	wish-well.gif
+98	Pure Wish	Mia	Garet	127	pure-wish.gif
+99	Cure Poison	Mia	Garet	87	cure-poison.gif
+100	Restore	Mia	Garet	91	restore.gif
+101	Revive	Isaac	Ivan	114	revive.gif
+102	Impact	Ivan	Isaac	107	impact.gif
+103	High Impact	Ivan	Isaac	133	high-impact.gif
+104	Dull	Ivan	Isaac	106	dull.gif
+105	Blunt	Ivan	Isaac	134	blunt.gif
+106	Guard	Garet	Mia	107	guard.gif
+107	Protect	Garet	Mia	133	protect.gif
+108	Impair	Garet	Mia	106	impair.gif
+109	Debilitate	Garet	Mia	134	debilitate.gif
+110	Ward	Ivan	Isaac	107	ward.gif
+111	Resist	Ivan	Isaac	133	resist.gif
+112	Weaken	Ivan	Isaac	106	weaken.gif
+113	Enfeeble	Ivan	Isaac	134	enfeeble.gif
+116	Delude	Ivan	Isaac	109	delude.gif
+120	Sleep	Ivan	Isaac	131	sleep.gif
+121	Bind	Ivan	Isaac	103	bind.gif
+122	Haunt	Isaac	Ivan	143	haunt.gif
+123	Curse	Isaac	Ivan	82	curse.gif
+124	Condemn	Isaac	Ivan	142	condemn.gif
+125	Drain	Ivan	Isaac	126	drain.gif
+126	Psy Drain	Ivan	Isaac	126	psy-drain.gif
+127	Break	Mia	Garet	137	break.gif
+160	Dragon Cloud	Garet	Mia	152	dragon-cloud.gif
+161	Demon Night	Isaac	Ivan	224	demon-night.gif
+162	Helm Splitter	Isaac	Ivan	82	helm-splitter.gif
+163	Quick Strike	Ivan	Isaac	88	quick-strike.gif
+164	Rockfall	Isaac	Ivan	201	rockfall.gif
+165	Rockslide	Isaac	Ivan	232	rockslide.gif
+166	Avalanche	Isaac	Ivan	232	avalanche.gif
+167	Lava Shower	Garet	Mia	113	lava-shower.gif
+168	Molten Bath	Garet	Mia	128	molten-bath.gif
+169	Magma Storm	Garet	Mia	173	magma-storm.gif
+170	Demon Spear	Ivan	Isaac	107	demon-spear.gif
+171	Angel Spear	Ivan	Isaac	133	angel-spear.gif
+172	Guardian	Garet	Mia	107	guardian.gif
+173	Protector	Garet	Mia	133	protector.gif
+174	Magic Shell	Ivan	Isaac	107	magic-shell.gif
+175	Magic Shield	Ivan	Isaac	134	magic-shield.gif
+176	Death Plunge	Ivan	Isaac	139	death-plunge.gif
+177	Shuriken	Ivan	Isaac	107	shuriken.gif
+178	Annihilation	Isaac	Ivan	109	annihilation.gif
+179	Punji	Isaac	Ivan	104	punji.gif
+180	Punji Trap	Isaac	Ivan	116	punji-trap.gif
+181	Punji Strike	Isaac	Ivan	148	punji-strike.gif
+182	Fire Bomb	Garet	Mia	127	fire-bomb.gif
+183	Cluster Bomb	Garet	Mia	165	cluster-bomb.gif
+184	Carpet Bomb	Garet	Mia	197	carpet-bomb.gif
+185	Gale	Ivan	Isaac	118	gale.gif
+186	Typhoon	Ivan	Isaac	153	typhoon.gif
+187	Hurricane	Ivan	Isaac	172	hurricane.gif
+188	Thunderclap	Ivan	Isaac	132	thunderclap.gif
+189	Thunderbolt	Ivan	Isaac	179	thunderbolt.gif
+190	Thunderstorm	Ivan	Isaac	194	thunderstorm.gif
+191	Mist	Ivan	Isaac	109	mist.gif
+192	Ragnarok	Isaac	Ivan	140	ragnarok.gif
+193	Cutting Edge	Mia	Garet	74	cutting-edge.gif
+194	Heat Wave	Garet	Mia	130	heat-wave.gif
+195	Astral Blast	Ivan	Isaac	105	astral-blast.gif
+196	Planet Diver	Garet	Mia	103	planet-diver.gif
