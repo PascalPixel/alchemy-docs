@@ -419,8 +419,16 @@ function prose(source: string, target: string, description = '', after = '', nam
   const heading = text.match(/^# (.+?)(?: \{#[\w-]+\})?\n+/);
   const title = named || (heading ? heading[1] : basename(source));
   if (heading) text = text.slice(heading[0].length);
+  // The pages are Markdown, which drops raw HTML: an <img> becomes an image,
+  // and the site's own files are served from its root.
+  text = text.replace(/<img\s+([^>]*?)\/?>/g, (all, attrs: string) => {
+    const src = attrs.match(/src="([^"]*)"/)?.[1];
+    if (!src) return all;
+    const alt = attrs.match(/alt="([^"]*)"/)?.[1] ?? '';
+    return `![${alt}](${src.replace(/^https:\/\/alchemy\.pascalpixel\.com\//, '/')})`;
+  });
   text = text.replace(/(!?)\[([^\]]*)\]\(([^)#\s]*)(#[^)]*)?\)/g, (all, bang: string, label: string, link: string, hash = '') => {
-    if (/^[a-z]+:/.test(link) || !link) return all;
+    if (/^[a-z]+:/.test(link) || link.startsWith('/') || !link) return all;
     const resolved = normalize(join(dirname(source), link));
     if (bang) return `![${label}](${github.replace('/blob/', '/raw/')}/${resolved}${hash})`;
     return `[${label}](${siteLink(resolved)}${hash})`;

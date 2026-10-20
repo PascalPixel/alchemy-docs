@@ -11,6 +11,8 @@ const config = {
   output: 'export',
   reactStrictMode: true,
   basePath: basePath || undefined,
+  // A static site has no image server: pictures are served as they are.
+  images: { unoptimized: true },
   env: { NEXT_PUBLIC_DOCS_BASE_PATH: basePath },
 };
 
