@@ -1,0 +1,110 @@
+/**
+\page tbs ☀️ The Broken Seal
+
+\htmlonly<p class="game-banner game-tbs"><span class="mark">&#x2600;&#xFE0F;</span>Golden Sun: The Broken Seal, built entirely from <code>games/tbs</code>. Code inside <code>#if</code> follows the English edition (<code>TBS_EDITION_EN</code>): what only another edition builds, such as the Spanish and Italian <code>System_GetLanguage</code>, is in the source files but not on these pages.</p>\endhtmlonly
+
+The questions people bring, and where each is answered:
+- Where is the code for a move? \ref tbs_abilities "Abilities" names the
+  function that plays it; \ref how-to-find-an-effect "Finding an effect" shows
+  how to read and change it.
+- How does a battle run, from the first menu to the spoils?
+  \ref how-a-battle-runs "How a battle runs".
+- How much damage does a move do, and what decides it?
+  \ref how-an-ability-resolves "How an ability resolves".
+- Where does something happen in a town or dungeon? \ref tbs_places "Places"
+  names the scene; \ref how-to-find-a-scene-and-an-event-in-it "Finding a scene and an event in it"
+  finds the event, and \ref how-a-scene-runs "How a scene runs" explains it.
+- How does a field Psynergy such as Move or Reveal work?
+  \ref how-to-find-a-field-psynergy "Finding a field Psynergy".
+- How do I change a menu screen or a shop?
+  \ref how-to-change-a-screen "Changing a menu screen" and
+  \ref how-to-change-a-counter "Changing a shop counter".
+
+Each folder of the code has a guide, grouped by what it covers, and each
+links to its folder under Source:
+
+- \subpage guide_world
+- \subpage guide_battle
+- \subpage guide_menus
+- \subpage tbs_game
+- \subpage guide_engine
+
+To find code by what you see in the game:
+
+- \subpage tbs_places lists every place, with what happens there.
+- \subpage tbs_abilities lists every ability with an effect of its own, and
+  the function that plays it.
+
+For the matching underneath:
+
+- \subpage tbs_marks lists every original bug, dead branch and compiler
+  device, each linked to its line.
+- \subpage tbs_asm lists the assembly that is code rather than a picture's
+  wrapper.
+- \subpage tbs_matching explains how the build is judged and what the markers in the code mean.
+
+In the cartridge the code sits in one bank per folder, in this order:
+\ref games/tbs/src/runtime "runtime", \ref games/tbs/src/field "field",
+\ref games/tbs/src/window "window", \ref games/tbs/src/game "game",
+\ref games/tbs/src/menu "menu", \ref games/tbs/src/shop "shop",
+\ref games/tbs/src/battle "battle", \ref games/tbs/src/effect "effect" and
+\ref games/tbs/src/object "object", beside \ref games/tbs/src/graphics "graphics",
+maps, \ref games/tbs/src/sound "sound", \ref games/tbs/src/system "system",
+\ref games/tbs/src/debug "debug" and \ref games/tbs/src/scene "scene".
+*/
+
+
+/** \page guide_world World
+Where the party walks: the field engine, the objects and scripts in it, the
+scenes and the maps they stand on.
+- \subpage tbs_field
+- \subpage tbs_object
+- \subpage tbs_scene
+- \subpage tbs_map
+*/
+/** \page guide_battle Battle
+- \subpage tbs_battle
+- \subpage tbs_effect
+*/
+/** \page guide_menus Menus
+- \subpage tbs_menu
+- \subpage tbs_window
+- \subpage tbs_shop
+*/
+/** \page guide_engine Engine
+- \subpage tbs_graphics
+- \subpage tbs_sound
+- \subpage tbs_runtime
+- \subpage tbs_system
+- \subpage tbs_debug
+*/
+
+
+/** \dir games/tbs/src/runtime
+\brief The code the rest of the game stands on. Guide: \ref tbs_runtime */
+/** \dir games/tbs/src/field
+\brief The field engine. Guide: \ref tbs_field */
+/** \dir games/tbs/src/window
+\brief The window system and the screens built on it. Guide: \ref tbs_window */
+/** \dir games/tbs/src/game
+\brief The game rules and the tables they read. Guide: \ref tbs_game */
+/** \dir games/tbs/src/menu
+\brief The field menu and its screens. Guide: \ref tbs_menu */
+/** \dir games/tbs/src/shop
+\brief The counters: shops, the artifact counter and the sanctum. Guide: \ref tbs_shop */
+/** \dir games/tbs/src/battle
+\brief Battles, from their opening transition to their spoils. Guide: \ref tbs_battle */
+/** \dir games/tbs/src/effect
+\brief Everything drawn over a battle while an ability plays. Guide: \ref tbs_effect */
+/** \dir games/tbs/src/object
+\brief A field scene and what plays in it. Guide: \ref tbs_object */
+/** \dir games/tbs/src/graphics
+\brief The pictures and the screens that are mostly pictures. Guide: \ref tbs_graphics */
+/** \dir games/tbs/src/sound
+\brief The sound cue layer and the sound driver. Guide: \ref tbs_sound */
+/** \dir games/tbs/src/system
+\brief What ties the image together: header, IWRAM code, BIOS calls, far calls. Guide: \ref tbs_system */
+/** \dir games/tbs/src/debug
+\brief The three debug rooms the retail game keeps. Guide: \ref tbs_debug */
+/** \dir games/tbs/src/scene
+\brief Every place the party can walk around in, one overlay each. Guide: \ref tbs_scene */

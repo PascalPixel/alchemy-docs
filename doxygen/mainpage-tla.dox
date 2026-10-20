@@ -1,0 +1,35 @@
+/**
+\mainpage ⚓️ The Lost Age
+
+\htmlonly<p class="game-banner game-tla"><span class="mark">&#x2693;&#xFE0F;</span>Golden Sun: The Lost Age, still being matched. Code inside <code>#if</code> follows the English edition (<code>TLA_EDITION_EN</code>); what only another edition builds is in the source files but not on these pages.</p>\endhtmlonly
+
+About a third of The Lost Age's code is C so far, and nearly all of its data
+is placed from source; the README's progress chart has the current figures.
+These pages show that C, in \c games/tla. The rest still comes from the
+cartridge through the scaffold in \c recon/tla, with drafts of the functions
+being matched; neither is shown here.
+
+Most of its C has not been read for meaning yet. A function or global named
+by its address, such as \c Func_02001140, is a placeholder until evidence
+gives it a name, and so is a field named by its offset. Each folder's guide says what differs from The Broken Seal's, whose guides
+describe the same engine; most of its names carry over.
+
+Its folders, each with its guide (the maps are tables and assembly, with no C):
+
+- \subpage tla_battle
+- \subpage tla_debug
+- \subpage tla_field
+- \subpage tla_game
+- \subpage tla_graphics
+- \subpage tla_lib
+- \subpage tla_menu
+- \subpage tla_scene
+- \subpage tla_sound
+- \subpage tla_system
+- \subpage tla_window
+
+- \subpage tla_marks lists every original bug, dead branch and compiler
+  device, each linked to its line.
+- \subpage tla_asm lists the assembly that is code rather than a picture's
+  wrapper.
+*/

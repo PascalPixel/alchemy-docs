@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" shape-rendering="crispEdges">
+<!-- A member's permalink, in place of Doxygen's ◆ (which our fonts lack):
+     a 7x7 white pixel diamond with the half-black shadow, as the carets. -->
+<defs>
+<path id="d" d="M3 0h1v1h-1zM2 1h3v1h-3zM1 2h5v1h-5zM0 3h7v1h-7zM1 4h5v1h-5zM2 5h3v1h-3zM3 6h1v1h-1z"/>
+</defs>
+<use href="#d" x="1" y="1" fill="#000" fill-opacity="0.5"/>
+<use href="#d" fill="#fff"/>
+</svg>

@@ -1,0 +1,19 @@
+# The Broken Seal, and the site's home: $(SITE). Its sidebar lists The
+# Lost Age as a link to that game's own run (Doxyfile.tla), $(SITE)/tla.
+@INCLUDE               = $(DOCS)/Doxyfile
+OUTPUT_DIRECTORY       = $(SITE)
+WARN_LOGFILE           = $(SITE)/warnings.log
+INPUT                  = $(DOCS)/home.dox \
+                         $(DOCS)/tutorial.dox \
+                         $(DOCS)/mainpage-tbs.dox \
+                         $(SRC)/tbs \
+                         games/tbs/src \
+                         games/tbs/include
+# Paths read from the game's folder down: src/battle/battle.c.
+STRIP_FROM_PATH        = games/tbs $(SRC)/tbs $(SRC) $(DOCS) .
+STRIP_FROM_INC_PATH    = games/tbs/include
+# Who calls each function. Function names are unique in this game apart from
+# a few file statics, so the lists are true.
+REFERENCED_BY_RELATION = YES
+PREDEFINED            += TBS_EDITION_EN=1 GAME_TLA=0 TBS_PATCH_LEVEL=1 \
+                         TBS_PATCH_1=1 TBS_PATCH_2=0 TBS_PATCH_3=0 TBS_PATCH_4=0

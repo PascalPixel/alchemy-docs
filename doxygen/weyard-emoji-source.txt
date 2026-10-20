@@ -1,0 +1,12 @@
+Weyard Emoji (weyard-emoji.otf) is a COLRv0 colour font built from
+SerenityOS's emoji pictures, one square per pixel and one layer per colour:
+
+  U+1F30B, U+2600 and U+2693 from
+  https://github.com/SerenityOS/serenity/tree/31ed5be3770a30cd70b2d83af7047aa65408ba90/Base/res/emoji
+  (SerenityOS commit 31ed5be3770a30cd70b2d83af7047aa65408ba90)
+
+search-glass.png is SerenityOS's U+1F50D picture from the same commit,
+shown as it is (7 by 10 pixels) in the search field of the Weyard themes.
+
+The pictures are SerenityOS's, under its BSD 2-Clause License, copied
+beside this file as weyard-emoji-LICENSE.
