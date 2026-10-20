@@ -25,6 +25,7 @@ yarn-error.log*
 /content/docs/**/*.md
 /content/docs/tbs/source/
 /content/docs/tla/source/
+/content/docs/tbs/abilities/
 /content/docs/reference/tbs/
 /content/docs/reference/tla/
 /public/pictures/
