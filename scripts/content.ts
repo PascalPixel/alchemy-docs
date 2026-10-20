@@ -428,6 +428,9 @@ function prose(source: string, target: string, description = '', after = '', nam
     const alt = attrs.match(/alt="([^"]*)"/)?.[1] ?? '';
     return `![${alt}](${src.replace(/^https:\/\/alchemy\.pascalpixel\.com\//, '/')})`;
   });
+  // A Markdown image of the site's own is served from its root too, so the
+  // build reads it from public/ rather than from the live site.
+  text = text.replace(/(!\[[^\]]*\]\()https:\/\/alchemy\.pascalpixel\.com\//g, '$1/');
   text = text.replace(/(!?)\[([^\]]*)\]\(([^)#\s]*)(#[^)]*)?\)/g, (all, bang: string, label: string, link: string, hash = '') => {
     if (/^[a-z]+:/.test(link) || link.startsWith('/') || !link) return all;
     const resolved = normalize(join(dirname(source), link));
