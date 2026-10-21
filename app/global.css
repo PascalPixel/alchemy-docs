@@ -23,7 +23,7 @@ img[src$='.gif'] {
    #gba-colour filter in app/layout.tsx), unless the reader picked the raw
    colours. The games' picture files keep the colours their palettes store. */
 :root:not([data-colours='raw']) img:is([src*='/places/'], [src*='/abilities/'], [src*='/story/'], [src*='/guides/']):not([src*='/pictures/']) {
-  filter: url(#gba-colour) brightness(0.92);
+  filter: url(#gba-colour);
 }
 img:is([src*='/places/'], [src*='/abilities/'], [src*='/story/'], [src*='/guides/']):not([src*='/pictures/']) {
   image-rendering: pixelated;
