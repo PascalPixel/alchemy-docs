@@ -526,6 +526,14 @@ function placePages(scenes: SourceFile[]): Place[] {
     if (!alone && !p.whole) body.push(p.file.doc.split('\n\n')[0].replace(/\s*[^.:]*:\s*$/, ''));
     body.push(p.text);
     for (const m of maps) body.push(`![The whole of ${p.title}, as the game draws it](/places/${p.slug}/${m})`);
+    // A place drawn more than one way (Kolima Forest before and after Tret
+    // lifts the curse) has a folder for each, named after the place and the way.
+    const variants = existsSync(pub) ? readdirSync(pub).filter((n) => n.startsWith(`${p.slug}_`)).sort().reverse() : [];
+    for (const v of variants) {
+      const way = v.slice(p.slug.length + 1);
+      for (const m of readdirSync(join(pub, v)).filter((n) => /^map-\d+\.png$/.test(n)).sort())
+        body.push(`![The whole of ${p.title}, ${way}, as the game draws it](/places/${v}/${m})`);
+    }
     // Its events: the functions whose comments name the place, or every
     // documented function when the overlay holds this place alone.
     const named = new RegExp(`\\b${p.scene}\\b`);
