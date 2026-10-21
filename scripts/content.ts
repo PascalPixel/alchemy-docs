@@ -392,6 +392,15 @@ const GUIDES: [string, string, string][] = [
   ['games/tbs/src/system', 'tbs/engine/system', ''],
   ['games/tbs/src/debug', 'tbs/engine/debug', ''],
 ];
+// The section pages: each one a page in the game's folder, beside its README,
+// with the title it has in the sidebar and its description.
+const SECTIONS: [string, string, string, string][] = [
+  ['games/tbs/world.md', 'tbs/world/index', 'World', 'How the party walks around towns, dungeons and the world map, and the code that runs it.'],
+  ['games/tbs/battle.md', 'tbs/battle/index', 'Battle', 'How a battle runs from the first menu to the spoils, and the effects drawn over it.'],
+  ['games/tbs/menus.md', 'tbs/menus/index', 'Menus', "The field menu and its screens, the windows they're drawn in, and the shops and inns."],
+  ['games/tbs/engine.md', 'tbs/engine/index', 'Engine', 'The runtime, graphics, sound and system code the rest of the game is built on.'],
+];
+
 const guideOf = new Map<string, { url: string; title: string }>();
 for (const [dir, target] of GUIDES) guideOf.set(dir, { url: `/${target.replace(/\/index$/, '')}`, title: '' });
 
@@ -409,6 +418,7 @@ function siteLink(path: string): string {
   if (clean === 'INSTALL.md') return '/start';
   if (clean === 'games/tbs/README.md') return '/tbs';
   if (clean === 'games/tbs/src/MATCHING.md') return '/tbs/matching';
+  for (const [file, target] of SECTIONS) if (clean === file) return `/${target.replace(/\/index$/, '')}`;
   const guide = guideOf.get(dirname(clean));
   if (guide && basename(clean) === 'README.md') return guide.url;
   const m = clean.match(/^games\/(tbs|tla)\/((?:src|include)(?:\/.*)?)$/);
@@ -1305,7 +1315,7 @@ function pictures() {
 // ---------------------------------------------------------------------------
 
 const started = Date.now();
-for (const p of ['index.md', 'tbs/index.md', 'start.md', 'tbs/source', 'tla/source', 'tbs/places.md', 'tbs/abilities.md', 'tbs/abilities', 'tbs/matching.md', ...GUIDES.map(([, t]) => `${t}.md`)]) {
+for (const p of ['index.md', 'tbs/index.md', 'start.md', 'tbs/source', 'tla/source', 'tbs/places.md', 'tbs/abilities.md', 'tbs/abilities', 'tbs/matching.md', ...GUIDES.map(([, t]) => `${t}.md`), ...SECTIONS.map(([, t]) => `${t}.md`)]) {
   rmSync(join(content, p), { recursive: true, force: true });
 }
 
@@ -1343,6 +1353,7 @@ prose('README.md', 'index.md', 'none');
 prose('games/tbs/README.md', 'tbs/index.md', 'How the first Golden Sun works, explained from its rebuilt code.');
 prose('INSTALL.md', 'start.md', 'Build The Broken Seal, check it against the cartridge, and change it.');
 guides();
+for (const [file, target, named, description] of SECTIONS) prose(file, `${target}.md`, description, '', named);
 for (const game of GAMES) sourcePages(game, all.get(game)!);
 places(all.get('tbs')!);
 abilities(all.get('tbs')!);
