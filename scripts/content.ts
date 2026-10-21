@@ -531,6 +531,9 @@ function placePages(scenes: SourceFile[]): Place[] {
     const alone = out.filter((q) => q.file === p.file).length === 1;
     if (!alone && !p.whole) body.push(p.file.doc.split('\n\n')[0].replace(/\s*[^.:]*:\s*$/, ''));
     body.push(p.text);
+    // The world map has no map render of its own: it is the whole world laid
+    // flat, which the front page shows.
+    if (p.scene === 'WorldMap') body.push('![The whole world map of The Broken Seal, laid out flat](/story/world.png)');
     // Its maps, a place drawn more than one way (Kolima Forest before and
     // after Tret lifts the curse) once for each way.
     for (const m of mine.filter((r) => r.kind === 'map').sort((a, b) => (a.variant < b.variant ? 1 : -1) || (a.file < b.file ? -1 : 1)))
