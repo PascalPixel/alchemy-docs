@@ -403,8 +403,9 @@ const users = new Map<Game, Map<string, Set<string>>>();
 // actflags.tsv dispatches to the group's effect: kind in bits 0 to 11, bit 15
 // for a summon's scene, bit 14 for the effects dispatched by id range, the
 // casting impacts among them at kind 100 and up. A field Psynergy group is
-// matched by actions.tsv's type column, and shows no recording: the casts are
-// recorded in battle, which its battle effect's handler plays.
+// matched by actions.tsv's type column. A recording made in a field scene (its
+// index row names the scene) shows beside the field handler, and one made in
+// battle beside the battle effect's handler.
 
 const recordings = (() => {
   let rows: Row[] = [];
@@ -477,8 +478,9 @@ function recordingsOf(file: SourceFile, d: Decl): string {
   const { ids, field } = reachedIds(d, `${file.path}:${d.line} ${d.name}`);
   for (const id of [...ids, ...field]) if (!handlerOf.has(id)) handlerOf.set(id, `${pageOf(file.path)}#${anchor(d.name)}`);
   const shown: string[] = [];
-  for (const id of ids) {
-    const r = recordings.get().find((x) => int(x.ability) === id);
+  const cast = (id: number, inField: boolean) => recordings.get().find((x) => int(x.ability) === id && !!x.scene === inField);
+  for (const [id, inField] of [...ids.map((i) => [i, false] as const), ...field.map((i) => [i, true] as const)]) {
+    const r = cast(id, inField);
     if (!r) continue;
     placedRecordings.set(id, [...(placedRecordings.get(id) ?? []), `${pageOf(file.path)}#${anchor(d.name)}`]);
     shown.push(`![${md(r.name)}](/abilities/${r.file})\\\n${md(r.name)}`);
