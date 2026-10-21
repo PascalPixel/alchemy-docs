@@ -51,5 +51,19 @@ h3,
 h4,
 #nd-toc a,
 #nd-tocnav a {
-  overflow-wrap: anywhere;
+  /* break-word, not anywhere: anywhere also lets a table's columns shrink to
+     one character, where break-word keeps their width and the table scrolls. */
+  overflow-wrap: break-word;
+}
+main table {
+  display: block;
+  overflow-x: auto;
+}
+main th,
+main td {
+  min-width: 6ch;
+}
+main td:first-child,
+main th:first-child {
+  white-space: nowrap;
 }
