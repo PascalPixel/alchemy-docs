@@ -549,8 +549,12 @@ function placePages(scenes: SourceFile[]): Place[] {
     if (events.length || unmatched.length) {
       body.push('## Events');
       for (const d of events) {
-        const first = d.doc.split(/(?<=[.!?])\s/)[0].replace(/\n/g, ' ');
-        body.push(`### \`${d.name}\`\n\n${first} [Read the code](${pageOf(p.file.path)}#${anchor(d.name)}).`);
+        // An event the game never plays opens its comment with "Unused:";
+        // its heading says so, and the page gives the comment's reasons whole.
+        const unused = /^Unused:\s*/.test(d.doc);
+        const doc = d.doc.replace(/^Unused:\s*/, '');
+        const text = unused ? doc.charAt(0).toUpperCase() + doc.slice(1) : doc.split(/(?<=[.!?])\s/)[0].replace(/\n/g, ' ');
+        body.push(`### \`${d.name}\`${unused ? ' (unused)' : ''}\n\n${text} [Read the code](${pageOf(p.file.path)}#${anchor(d.name)}).`);
         for (const f of clips(d.name)) body.push(`![${d.name} as it plays](/places/${f})`);
       }
       // Recordings of events whose functions have since been renamed.
