@@ -489,10 +489,160 @@ function places(files: SourceFile[]) {
   write(join(content, 'tbs/places/meta.json'), JSON.stringify({ title: 'Places', pages: pages.map((p) => p.slug) }, null, 2) + '\n');
 }
 
+// The English catalog's messages as the player first reads them, by symbol,
+// and each number's symbol: the first page, its line breaks as spaces, the
+// names it prints in place of their codes ({actor_name:n} is character n - 1,
+// {protagonist_name} Isaac by default) and its other codes gone.
+function firstPages() {
+  const characters = [...text('games/tbs/include/game/character_ids.h').matchAll(/^#define ([A-Z]+) (\d)\b/gm)].map((m) => m[1][0] + m[1].slice(1).toLowerCase());
+  const words = new Map<string, string>();
+  const symbol = new Map<number, string>();
+  for (const m of text('games/tbs/text/en.po').matchAll(/msgctxt "(\w+)"\nmsgid "(\d+)"\nmsgstr ((?:"(?:[^"\\]|\\.)*"\n?)+)/g)) {
+    if (m[1] === 'message') continue;
+    const raw = [...m[3].matchAll(/"((?:[^"\\]|\\.)*)"/g)].map((x) => x[1]).join('').replace(/\\n/g, ' ').replace(/\\(.)/g, '$1');
+    const pages = raw.split(/\{(?:page_break|end_wait|end_now)\}/).map((page) =>
+      page
+        .replace(/\{actor_name:(\d+)\}/g, (_, n: string) => characters[Number(n) - 1] ?? '')
+        .replace(/\{protagonist_name\}/g, characters[0] ?? '')
+        .replace(/\{possessive_suffix\}/g, "'s")
+        .replace(/\{em_dash\}/g, '—')
+        .replace(/\{[^}]*\}/g, '')
+        .replace(/\s+/g, ' ')
+        .trim(),
+    );
+    // A first page that stops mid-sentence says the message goes on.
+    const shown = pages.filter(Boolean);
+    words.set(m[1], (shown[0] ?? '') + (shown.length > 1 && !/[.!?…"')]$/.test(shown[0]) ? ' …' : ''));
+    symbol.set(Number(m[2]), m[1]);
+  }
+  return { words, symbol };
+}
+
+// The rows of a scene overlay's event tables that show a message, by the
+// message's symbol: each row's table, line, kind and trigger as written,
+// with the rows a macro of the file writes (lunpa.c's TALK and MIND_READ);
+// and the tables its event getter returns for a scene it names
+// (`if (scene == (s32)&SceneId_BilibinBarricade) { return gBilibinEvents3; }`).
+type MessageRow = { table: string; line: number; control: string; trigger: string };
+function messageRows(path: string): { rows: Map<string, MessageRow[]>; tablesOf: Map<string, Set<string>> } {
+  const source = readFileSync(join(repo, path), 'utf8').replace(/\/\*[\s\S]*?\*\/|\/\/[^\n]*/g, (c) => c.replace(/[^\n]/g, ' '));
+  const splitTop = (s: string) => {
+    const parts = [''];
+    let depth = 0;
+    for (const c of s.replace(/\\\n/g, ' ')) {
+      if (c === '(') depth++;
+      if (c === ')') depth--;
+      if (c === ',' && depth === 0) parts.push('');
+      else parts[parts.length - 1] += c;
+    }
+    return parts.map((p) => oneLine(p).replace(/^\(\s*([\s\S]*?)\s*\)$/, '$1')).filter(Boolean);
+  };
+  const tables = [...source.matchAll(/struct SceneEvent\s+(\w+)\s*\[\s*\]\s*=\s*\{/g)].map((m) => ({ name: m[1], start: m.index!, end: source.indexOf('\n};', m.index!) }));
+  const rows = new Map<string, MessageRow[]>();
+  const add = (parts: string[], at: number) => {
+    const msg = parts.length === 4 && /^(EVENT_|SEARCH\(|PSYNERGY|TOUCH_|USE_ITEM|0x[0-9a-f]+$|\d+$)/i.test(parts[0]) ? parts[3].match(/\b(Msg\w+)\b/) : null;
+    if (!msg) return;
+    const table = tables.find((t) => t.start < at && at < t.end)?.name ?? '';
+    rows.set(msg[1], [...(rows.get(msg[1]) ?? []), { table, line: source.slice(0, at).split('\n').length, control: parts[0], trigger: parts[1] }]);
+  };
+  for (const m of source.matchAll(/\{([^{}]*)\}/g)) add(splitTop(m[1]), m.index!);
+  for (const d of source.matchAll(/^#define (\w+)\(([\w\s,]*)\)((?:[^\n]*\\\n)*[^\n]*)/gm)) {
+    const body = d[3].replace(/\\\n/g, ' ').trim().match(/^\{([^{}]*)\}$/);
+    if (!body) continue;
+    const params = d[2].split(',').map((p) => p.trim());
+    const shape = splitTop(body[1]);
+    for (const call of source.matchAll(new RegExp(`(?<!#define )\\b${d[1]}\\s*\\(`, 'g'))) {
+      let depth = 0;
+      let end = call.index! + call[0].length - 1;
+      for (; end < source.length; end++) {
+        if (source[end] === '(') depth++;
+        else if (source[end] === ')' && --depth === 0) break;
+      }
+      const args = splitTop(source.slice(call.index! + call[0].length, end));
+      add(shape.map((part) => part.replace(/\b\w+\b/g, (w) => (params.includes(w) ? (args[params.indexOf(w)] ?? w) : w))), call.index!);
+    }
+  }
+  const tablesOf = new Map<string, Set<string>>();
+  for (const getter of source.matchAll(/struct SceneEvent\s*\*\s*\w+\s*\(\s*void\s*\)\s*\{/g)) {
+    const start = getter.index! + getter[0].length;
+    const body = source.slice(start, source.indexOf('\n}', start));
+    for (const m of body.matchAll(/\bif\s*\(/g)) {
+      let depth = 1;
+      let i = m.index! + m[0].length;
+      for (; i < body.length && depth; i++) depth += body[i] === '(' ? 1 : body[i] === ')' ? -1 : 0;
+      const condition = body.slice(m.index! + m[0].length, i - 1);
+      const table = body.slice(i).match(/^\s*\{?\s*return\s+(\w+)\s*;/)?.[1];
+      if (!table || condition.includes('!=')) continue;
+      for (const s of condition.matchAll(/SceneId_(\w+)/g)) tablesOf.set(s[1], new Set([...(tablesOf.get(s[1]) ?? []), table]));
+    }
+  }
+  return { rows, tablesOf };
+}
+
+// What the player does to start an event table row, from its kind and
+// trigger as written: `{EVENT_TALK, ACTOR_DORA, ...}` is talking to
+// ACTOR_DORA, `PSYNERGY_ON_ACTOR(ABILITY_MIND_READ)` casting Mind Read on its
+// actor, and a search names what it searches, by its SearchTarget (control
+// bits 8..4).
+function rowTrigger(row: MessageRow): { verb: string; target: string } | undefined {
+  const title = (w: string) => w.toLowerCase().replace(/_/g, ' ').replace(/\b[a-z]/g, (c) => c.toUpperCase());
+  const target = /^\d+$/.test(row.trigger) ? row.trigger : `\`${row.trigger}\``;
+  const value = /^(0x[0-9a-f]+|\d+)$/i.test(row.control) ? Number(row.control) : undefined;
+  const search = row.control.match(/^SEARCH\(\s*(\w+)\s*\)$/)?.[1] ?? (value !== undefined && (value & 0xf) === 3 ? enumOf('SearchTarget').find((e) => e.value === ((value >> 4) & 0x1f))?.name : undefined);
+  if (search) {
+    const thing = search === 'SEARCH_UNNAMED' ? 'spot' : search.replace(/^SEARCH_/, '').toLowerCase().replace(/_/g, ' ');
+    return { verb: `searching ${/^[aeiou]/.test(thing) ? 'an' : 'a'} ${thing}`, target: '' };
+  }
+  if (row.control === 'EVENT_TALK' || (value !== undefined && (value & 0xf) === 0)) return { verb: 'talking to', target };
+  const ability = row.control.match(/^PSYNERGY(?:_PHASE)?_ON_ACTOR\(\s*ABILITY_(\w+)/)?.[1];
+  if (ability) return { verb: `casting ${title(ability)} on`, target };
+  return undefined;
+}
+
+// The triggers of an event's rows as one phrase: "talking to `ACTOR_DORA`",
+// "talking to any of actors 11 to 18", "searching a bookcase". Actors that
+// follow one another (`ACTOR_FIRST_ROCK` to `ACTOR_FIRST_ROCK + 7`) are a run.
+function triggerPhrase(rows: MessageRow[]): string {
+  const orList = (items: string[]) => (items.length < 2 ? items.join('') : `${items.slice(0, -1).join(', ')} or ${items[items.length - 1]}`);
+  const byVerb = new Map<string, string[]>();
+  for (const t of rows.map(rowTrigger)) if (t) byVerb.set(t.verb, [...new Set([...(byVerb.get(t.verb) ?? []), t.target])]);
+  return orList(
+    [...byVerb].map(([verb, targets]) => {
+      // Each target as a base and a count after it: `X + 2` is X and 2, an
+      // actor number its number after none.
+      const bases = new Map<string, number[]>();
+      const others: string[] = [];
+      for (const t of targets.filter(Boolean)) {
+        const m = t.match(/^(?:`(\w+)(?: \+ (\d+))?`|(\d+))$/);
+        if (!m) others.push(t);
+        else bases.set(m[3] !== undefined ? '' : m[1], [...(bases.get(m[3] !== undefined ? '' : m[1]) ?? []), Number(m[3] ?? m[2] ?? 0)]);
+      }
+      const all = [...others];
+      let runs = 0;
+      for (const [base, counts] of bases) {
+        const name = (n: number) => (base ? `\`${base}${n ? ` + ${n}` : ''}\`` : String(n));
+        const sorted = [...new Set(counts)].sort((a, b) => a - b);
+        const parts: string[] = [];
+        for (let i = 0; i < sorted.length; ) {
+          let j = i;
+          while (j + 1 < sorted.length && sorted[j + 1] === sorted[j] + 1) j++;
+          if (j - i >= 2) {
+            parts.push(`${name(sorted[i])} to ${name(sorted[j])}`);
+            runs++;
+          } else for (let k = i; k <= j; k++) parts.push(name(sorted[k]));
+          i = j + 1;
+        }
+        all.push(base ? orList(parts) : `${sorted.length > 1 ? 'actors' : 'actor'} ${orList(parts)}`);
+      }
+      return all.length ? `${verb} ${runs && all.length === 1 && !/ or /.test(all[0]) ? 'any of ' : ''}${orList(all)}` : verb;
+    }),
+  );
+}
+
 // A page for each place: the paragraph its overlay's opening comment gives it
 // (`- SceneName (scene N), ...`), or the whole comment when the overlay holds
 // one place; the place's maps as the game draws them, where public/places
-// has them; and the events whose comments name it, each with its recordings.
+// has them; and the events whose comments name it, each with its recording.
 // The pages follow the scene numbers, which run in story order.
 type Place = { file: SourceFile; scene: string; id: number; slug: string; title: string };
 function placePages(scenes: SourceFile[]): Place[] {
@@ -518,11 +668,13 @@ function placePages(scenes: SourceFile[]): Place[] {
   // entrance shot and recording with the scene it was made in and the way the
   // place was drawn (cursed, cured), so a scene renamed since keeps its renders.
   const pub = join(docs, 'public/places');
-  type Render = { number: number; variant: string; kind: string; event: string; file: string };
+  type Render = { number: number; variant: string; kind: string; event: string; messages: string; file: string };
   const renders = existsSync(join(pub, 'index.tsv'))
     ? readFileSync(join(pub, 'index.tsv'), 'utf8').trim().split('\n').slice(1).map((l) => l.split('\t'))
-        .map((r) => ({ number: +r[1], variant: r[3], kind: r[4], event: r[6], file: r[14] }) as Render)
+        .map((r) => ({ number: +r[1], variant: r[3], kind: r[4], event: r[6], messages: r[13], file: r[14] }) as Render)
     : [];
+  const catalogPages = firstPages();
+  const rowsOfFile = new Map<string, ReturnType<typeof messageRows>>();
   for (const p of out) {
     const mine = renders.filter((r) => r.number === p.id && existsSync(join(pub, r.file)));
     const body: string[] = [];
@@ -542,25 +694,68 @@ function placePages(scenes: SourceFile[]): Place[] {
     // documented function when the overlay holds this place alone, and every
     // event recorded there, by the name it was recorded under.
     const named = new RegExp(`\\b${p.scene}\\b`);
-    const clips = (name: string) => mine.filter((r) => r.event === name && (r.kind === 'event-gif' || r.kind === 'event-segment')).map((r) => r.file).sort();
+    // An event's recording: the GIF of the whole event, the first of the
+    // names it was recorded under that has one, else, from renders made
+    // before there was one, the GIFs of its pieces between messages.
+    const recording = (names: string[]) => {
+      const whole = names.flatMap((n) => mine.filter((r) => r.event === n && r.kind === 'event-gif').map((r) => r.file).sort());
+      if (whole.length) return whole.slice(0, 1);
+      const pieces = names.map((n) => mine.filter((r) => r.event === n && r.kind === 'event-segment').map((r) => r.file).sort()).find((l) => l.length);
+      return pieces ?? [];
+    };
     const recordedNames = [...new Set(mine.filter((r) => r.kind === 'event-gif' || r.kind === 'event-segment').map((r) => r.event))];
     const events = p.file.decls.filter((d) => d.kind === 'function' && d.doc && ((alone ? /^Event_|_Event|Event[A-Z]/.test(d.name) : named.test(d.doc)) || recordedNames.includes(d.name)));
     const unmatched = recordedNames.filter((n) => !events.some((d) => d.name === n));
+    // The events with no function of their own are table rows that show a
+    // message, recorded under the message's symbol or, before the rows were
+    // named, as their table and index (`gValeStorm_Events[26]`) with the
+    // messages they showed. The rest are functions renamed since.
+    const shown = new Map<string, string[]>();
+    const renamed: string[] = [];
+    for (const n of unmatched) {
+      const first = mine.find((r) => r.event === n && r.messages)?.messages.split(',')[0];
+      const symbol = catalogPages.words.has(n) ? n : /^\w+\[\d+\]$/.test(n) && first ? catalogPages.symbol.get(Number(first)) : undefined;
+      if (symbol) shown.set(symbol, [...(shown.get(symbol) ?? []), n]);
+      else renamed.push(n);
+    }
+    if (!rowsOfFile.has(p.file.path)) rowsOfFile.set(p.file.path, messageRows(p.file.path));
+    const messageEvents = [...shown]
+      .map(([symbol, names]) => {
+        // The rows of the place's own tables: the ones its getter returns for
+        // it, else the ones named after it (gValeStorm_Events), else all.
+        const file = rowsOfFile.get(p.file.path)!;
+        const all = file.rows.get(symbol) ?? [];
+        const own = file.tablesOf.get(p.scene);
+        const here = [own ? all.filter((r) => own.has(r.table)) : [], all.filter((r) => r.table.includes(p.scene))].find((l) => l.length) ?? [];
+        return { symbol, names: [...names].sort((a, b) => +(b === symbol) - +(a === symbol)), rows: here.length ? here : all };
+      })
+      .sort((a, b) => (a.rows[0]?.line ?? Infinity) - (b.rows[0]?.line ?? Infinity) || (a.symbol < b.symbol ? -1 : 1));
     if (events.length || unmatched.length) {
       body.push('## Events');
       for (const d of events) {
         // An event the game never plays opens its comment with "Unused:";
         // its heading says so, and the page gives the comment's reasons whole.
+        // A first sentence runs on past an abbreviation's full stop (Mt. Aleph).
         const unused = /^Unused:\s*/.test(d.doc);
         const doc = d.doc.replace(/^Unused:\s*/, '');
-        const text = unused ? doc.charAt(0).toUpperCase() + doc.slice(1) : doc.split(/(?<=[.!?])\s/)[0].replace(/\n/g, ' ');
+        const text = unused ? doc.charAt(0).toUpperCase() + doc.slice(1) : doc.split(/(?<=(?<!\b(?:Mt|Mr|Mrs|Ms|Dr|St))[.!?])\s/)[0].replace(/\n/g, ' ');
         body.push(`### \`${d.name}\`${unused ? ' (unused)' : ''}\n\n${text} [Read the code](${pageOf(p.file.path)}#${anchor(d.name)}).`);
-        for (const f of clips(d.name)) body.push(`![${d.name} as it plays](/places/${f})`);
+        for (const f of recording([d.name])) body.push(`![${d.name} as it plays](/places/${f})`);
+      }
+      // A message event is headed by what the player first reads, the
+      // message's first page, with its symbol; then what the player does to
+      // see it, from its rows in the code.
+      for (const e of messageEvents) {
+        const words = catalogPages.words.get(e.symbol) ?? '';
+        const how = triggerPhrase(e.rows);
+        const said = [how ? `${how.charAt(0).toUpperCase()}${how.slice(1)} shows it.` : '', e.rows.length ? `[Read the code](${github}/${p.file.path}#L${e.rows[0].line}).` : ''].filter(Boolean).join(' ');
+        body.push(`### ${words ? `“${md(words)}” ` : ''}\`${e.symbol}\`${said ? `\n\n${said}` : ''}`);
+        for (const f of recording(e.names)) body.push(`![${e.symbol} as it plays](/places/${f})`);
       }
       // Recordings of events whose functions have since been renamed.
-      for (const n of unmatched) {
+      for (const n of renamed) {
         body.push(`### \`${n}\``);
-        for (const f of clips(n)) body.push(`![${n} as it plays](/places/${f})`);
+        for (const f of recording([n])) body.push(`![${n} as it plays](/places/${f})`);
       }
     }
     body.push(`Its code is in [${basename(p.file.path)}](${pageOf(p.file.path)}).`);
