@@ -4535,205 +4535,205 @@ tunnel-ruins2	173	1,2,3=Babi Lighthouse; *=Tunnel Ruins		map	17									tunnel-r
 tunnel-ruins2	173	1,2,3=Babi Lighthouse; *=Tunnel Ruins		map	4									tunnel-ruins2/map-4.png
 tunnel-ruins2	173	1,2,3=Babi Lighthouse; *=Tunnel Ruins		map	6									tunnel-ruins2/map-6.png
 tunnel-ruins2	173	1,2,3=Babi Lighthouse; *=Tunnel Ruins		map	8									tunnel-ruins2/map-8.png
-vale-babi	8	19=Babi's Palace; *=Vale		entrance	0									vale-babi/entrance.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	Event_AskIsaacHisBusiness	2		03932				03931, 03932, 03934, 03933	vale-babi/events/Event_AskIsaacHisBusiness-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	Event_AskIsaacHisBusiness	3		03933				03931, 03932, 03934, 03933	vale-babi/events/Event_AskIsaacHisBusiness-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event-gif	0	Event_AskIsaacHisBusiness						251	03931, 03932, 03934, 03933	vale-babi/events/Event_AskIsaacHisBusiness.gif
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	Event_AskIsaacHisBusiness	1		03931				03931, 03932, 03934, 03933	vale-babi/events/Event_AskIsaacHisBusiness.png
-vale-babi	8	19=Babi's Palace; *=Vale		event-segment	0	Event_AskIsaacHisBusiness		1		03931 MsgValeHeyBoy	03932	98	03931, 03932, 03934, 03933	vale-babi/events/Event_AskIsaacHisBusiness_1.gif
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	Event_AskWhetherMaskedManWasFelix	2		04523				04522, 04523, 04524, 04525, 04526	vale-babi/events/Event_AskWhetherMaskedManWasFelix-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	Event_AskWhetherMaskedManWasFelix	1		04522				04522, 04523, 04524, 04525, 04526	vale-babi/events/Event_AskWhetherMaskedManWasFelix.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	Event_NeighborSeesIsaacHasGrown	2		07187				07187	vale-babi/events/Event_NeighborSeesIsaacHasGrown-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	Event_NeighborSeesIsaacHasGrown	1		07187				07187	vale-babi/events/Event_NeighborSeesIsaacHasGrown.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	Event_ReadThoughtsAboutDorasIllness	2						07194	vale-babi/events/Event_ReadThoughtsAboutDorasIllness-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	Event_ReadThoughtsAboutDorasIllness	1						07194	vale-babi/events/Event_ReadThoughtsAboutDorasIllness.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	Event_TalkToDora	2		07290				07287, 07289, 07290	vale-babi/events/Event_TalkToDora-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event-gif	0	Event_TalkToDora						186	07287, 07289, 07290	vale-babi/events/Event_TalkToDora.gif
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	Event_TalkToDora	1		07289				07287, 07289, 07290	vale-babi/events/Event_TalkToDora.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	Event_TalkToInnkeeper	2		03928				07188, 07189, 07190, 07191, 04521, 03928	vale-babi/events/Event_TalkToInnkeeper-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	Event_TalkToInnkeeper	1		03928				07188, 07189, 07190, 07191, 04521, 03928	vale-babi/events/Event_TalkToInnkeeper.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	Event_VisitSickDora	2		07271				07270, 07271, 07272, 07273, 07274, 07275, 07276, 07278, 07277, 07279, 07281, 07280, 07282, 07283, 07284, 07285, 07286	vale-babi/events/Event_VisitSickDora-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	Event_VisitSickDora	3		07272				07270, 07271, 07272, 07273, 07274, 07275, 07276, 07278, 07277, 07279, 07281, 07280, 07282, 07283, 07284, 07285, 07286	vale-babi/events/Event_VisitSickDora-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	Event_VisitSickDora	4		07273				07270, 07271, 07272, 07273, 07274, 07275, 07276, 07278, 07277, 07279, 07281, 07280, 07282, 07283, 07284, 07285, 07286	vale-babi/events/Event_VisitSickDora-4.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	Event_VisitSickDora	1		07270				07270, 07271, 07272, 07273, 07274, 07275, 07276, 07278, 07277, 07279, 07281, 07280, 07282, 07283, 07284, 07285, 07286	vale-babi/events/Event_VisitSickDora.png
-vale-babi	8	19=Babi's Palace; *=Vale		event-segment	0	Event_VisitSickDora		0			07270 MsgValeCoughCoughWho	102	07270, 07271, 07272, 07273, 07274, 07275, 07276, 07278, 07277, 07279, 07281, 07280, 07282, 07283, 07284, 07285, 07286	vale-babi/events/Event_VisitSickDora_0.gif
-vale-babi	8	19=Babi's Palace; *=Vale		event-segment	0	Event_VisitSickDora		1		07270 MsgValeCoughCoughWho	07271	122	07270, 07271, 07272, 07273, 07274, 07275, 07276, 07278, 07277, 07279, 07281, 07280, 07282, 07283, 07284, 07285, 07286	vale-babi/events/Event_VisitSickDora_1.gif
-vale-babi	8	19=Babi's Palace; *=Vale		event-segment	0	Event_VisitSickDora		2		07271	07272	181	07270, 07271, 07272, 07273, 07274, 07275, 07276, 07278, 07277, 07279, 07281, 07280, 07282, 07283, 07284, 07285, 07286	vale-babi/events/Event_VisitSickDora_2.gif
-vale-babi	8	19=Babi's Palace; *=Vale		event-segment	0	Event_VisitSickDora		3		07272	07273	90	07270, 07271, 07272, 07273, 07274, 07275, 07276, 07278, 07277, 07279, 07281, 07280, 07282, 07283, 07284, 07285, 07286	vale-babi/events/Event_VisitSickDora_3.gif
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[0]	2		03926				03926	vale-babi/events/gValeBabi_Events-0-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[0]	1		03926				03926	vale-babi/events/gValeBabi_Events-0.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[1]	2		03927				03927	vale-babi/events/gValeBabi_Events-1-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[1]	1		03927				03927	vale-babi/events/gValeBabi_Events-1.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[2]	2		03929				03929	vale-babi/events/gValeBabi_Events-2-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[2]	1		03929				03929	vale-babi/events/gValeBabi_Events-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[20]	2		10698				10698	vale-babi/events/gValeBabi_Events-20-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[20]	3		10698				10698	vale-babi/events/gValeBabi_Events-20-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[20]	4		10698				10698	vale-babi/events/gValeBabi_Events-20-4.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[20]	1						10698	vale-babi/events/gValeBabi_Events-20.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[21]	2		10699				10699	vale-babi/events/gValeBabi_Events-21-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[21]	1						10699	vale-babi/events/gValeBabi_Events-21.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[22]	2		10700				10700	vale-babi/events/gValeBabi_Events-22-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[22]	3		10700				10700	vale-babi/events/gValeBabi_Events-22-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[22]	1						10700	vale-babi/events/gValeBabi_Events-22.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[23]	2		10701				10701	vale-babi/events/gValeBabi_Events-23-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[23]	3		10701				10701	vale-babi/events/gValeBabi_Events-23-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[23]	1						10701	vale-babi/events/gValeBabi_Events-23.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[24]	2		10702				10702	vale-babi/events/gValeBabi_Events-24-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[24]	3		10702				10702	vale-babi/events/gValeBabi_Events-24-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[24]	1						10702	vale-babi/events/gValeBabi_Events-24.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[25]	2		10703				10703	vale-babi/events/gValeBabi_Events-25-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[25]	3		10703				10703	vale-babi/events/gValeBabi_Events-25-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[25]	1						10703	vale-babi/events/gValeBabi_Events-25.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[26]	2		10704				10704	vale-babi/events/gValeBabi_Events-26-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[26]	3		10704				10704	vale-babi/events/gValeBabi_Events-26-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[26]	1						10704	vale-babi/events/gValeBabi_Events-26.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[3]	1		03930				03930	vale-babi/events/gValeBabi_Events-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[0]	2		07179				07179	vale-babi/events/gValeBabi_EventsAfterKalay-0-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[0]	1		07179				07179	vale-babi/events/gValeBabi_EventsAfterKalay-0.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[1]	2		07180				07180	vale-babi/events/gValeBabi_EventsAfterKalay-1-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[1]	1		07180				07180	vale-babi/events/gValeBabi_EventsAfterKalay-1.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[10]	1		07197				07197	vale-babi/events/gValeBabi_EventsAfterKalay-10.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[18]	2						07291	vale-babi/events/gValeBabi_EventsAfterKalay-18-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[18]	3						07291	vale-babi/events/gValeBabi_EventsAfterKalay-18-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[18]	4						07291	vale-babi/events/gValeBabi_EventsAfterKalay-18-4.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[18]	1						07291	vale-babi/events/gValeBabi_EventsAfterKalay-18.png
-vale-babi	8	19=Babi's Palace; *=Vale		event-segment	0	gValeBabi_EventsAfterKalay[18]		1		00960	07270 MsgValeCoughCoughWho	103	07291	vale-babi/events/gValeBabi_EventsAfterKalay-18_1.gif
-vale-babi	8	19=Babi's Palace; *=Vale		event-segment	0	gValeBabi_EventsAfterKalay[18]		2		07270 MsgValeCoughCoughWho	07271	122	07291	vale-babi/events/gValeBabi_EventsAfterKalay-18_2.gif
-vale-babi	8	19=Babi's Palace; *=Vale		event-segment	0	gValeBabi_EventsAfterKalay[18]		3		07271	07272	181	07291	vale-babi/events/gValeBabi_EventsAfterKalay-18_3.gif
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[19]	2						07288	vale-babi/events/gValeBabi_EventsAfterKalay-19-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[19]	3						07288	vale-babi/events/gValeBabi_EventsAfterKalay-19-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[19]	4						07288	vale-babi/events/gValeBabi_EventsAfterKalay-19-4.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[19]	1						07288	vale-babi/events/gValeBabi_EventsAfterKalay-19.png
-vale-babi	8	19=Babi's Palace; *=Vale		event-segment	0	gValeBabi_EventsAfterKalay[19]		1		00960	07270 MsgValeCoughCoughWho	103	07288	vale-babi/events/gValeBabi_EventsAfterKalay-19_1.gif
-vale-babi	8	19=Babi's Palace; *=Vale		event-segment	0	gValeBabi_EventsAfterKalay[19]		2		07270 MsgValeCoughCoughWho	07271	122	07288	vale-babi/events/gValeBabi_EventsAfterKalay-19_2.gif
-vale-babi	8	19=Babi's Palace; *=Vale		event-segment	0	gValeBabi_EventsAfterKalay[19]		3		07271	07272	181	07288	vale-babi/events/gValeBabi_EventsAfterKalay-19_3.gif
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[2]	2		07192				07192	vale-babi/events/gValeBabi_EventsAfterKalay-2-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[2]	1		07192				07192	vale-babi/events/gValeBabi_EventsAfterKalay-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[3]	1		07193				07193	vale-babi/events/gValeBabi_EventsAfterKalay-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[34]	2		10698				10698	vale-babi/events/gValeBabi_EventsAfterKalay-34-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[34]	3		10698				10698	vale-babi/events/gValeBabi_EventsAfterKalay-34-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[34]	4		10698				10698	vale-babi/events/gValeBabi_EventsAfterKalay-34-4.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[34]	1						10698	vale-babi/events/gValeBabi_EventsAfterKalay-34.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[35]	2		10699				10699	vale-babi/events/gValeBabi_EventsAfterKalay-35-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[35]	1						10699	vale-babi/events/gValeBabi_EventsAfterKalay-35.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[36]	2		10700				10700	vale-babi/events/gValeBabi_EventsAfterKalay-36-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[36]	3		10700				10700	vale-babi/events/gValeBabi_EventsAfterKalay-36-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[36]	1						10700	vale-babi/events/gValeBabi_EventsAfterKalay-36.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[37]	2		10701				10701	vale-babi/events/gValeBabi_EventsAfterKalay-37-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[37]	3		10701				10701	vale-babi/events/gValeBabi_EventsAfterKalay-37-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[37]	1						10701	vale-babi/events/gValeBabi_EventsAfterKalay-37.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[38]	2		10702				10702	vale-babi/events/gValeBabi_EventsAfterKalay-38-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[38]	3		10702				10702	vale-babi/events/gValeBabi_EventsAfterKalay-38-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[38]	1						10702	vale-babi/events/gValeBabi_EventsAfterKalay-38.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[39]	2		10703				10703	vale-babi/events/gValeBabi_EventsAfterKalay-39-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[39]	3		10703				10703	vale-babi/events/gValeBabi_EventsAfterKalay-39-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[39]	1						10703	vale-babi/events/gValeBabi_EventsAfterKalay-39.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[40]	2		10704				10704	vale-babi/events/gValeBabi_EventsAfterKalay-40-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[40]	3		10704				10704	vale-babi/events/gValeBabi_EventsAfterKalay-40-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[40]	1						10704	vale-babi/events/gValeBabi_EventsAfterKalay-40.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[6]	2		07187				07187	vale-babi/events/gValeBabi_EventsAfterKalay-6-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[6]	1		07187				07187	vale-babi/events/gValeBabi_EventsAfterKalay-6.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[7]	2		07184				07184	vale-babi/events/gValeBabi_EventsAfterKalay-7-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[7]	1		07184				07184	vale-babi/events/gValeBabi_EventsAfterKalay-7.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[8]	1		07185				07185	vale-babi/events/gValeBabi_EventsAfterKalay-8.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[9]	1		07196				07196	vale-babi/events/gValeBabi_EventsAfterKalay-9.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[0]	2		04519				04519	vale-babi/events/gValeBabi_EventsAfterLeaving-0-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[0]	1		04519				04519	vale-babi/events/gValeBabi_EventsAfterLeaving-0.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[1]	2		04520				04520	vale-babi/events/gValeBabi_EventsAfterLeaving-1-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[1]	1		04520				04520	vale-babi/events/gValeBabi_EventsAfterLeaving-1.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[24]	2		10698				10698	vale-babi/events/gValeBabi_EventsAfterLeaving-24-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[24]	3		10698				10698	vale-babi/events/gValeBabi_EventsAfterLeaving-24-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[24]	4		10698				10698	vale-babi/events/gValeBabi_EventsAfterLeaving-24-4.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[24]	1						10698	vale-babi/events/gValeBabi_EventsAfterLeaving-24.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[25]	2		10699				10699	vale-babi/events/gValeBabi_EventsAfterLeaving-25-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[25]	1						10699	vale-babi/events/gValeBabi_EventsAfterLeaving-25.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[26]	2		10700				10700	vale-babi/events/gValeBabi_EventsAfterLeaving-26-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[26]	3		10700				10700	vale-babi/events/gValeBabi_EventsAfterLeaving-26-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[26]	1						10700	vale-babi/events/gValeBabi_EventsAfterLeaving-26.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[27]	2		10701				10701	vale-babi/events/gValeBabi_EventsAfterLeaving-27-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[27]	3		10701				10701	vale-babi/events/gValeBabi_EventsAfterLeaving-27-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[27]	1						10701	vale-babi/events/gValeBabi_EventsAfterLeaving-27.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[28]	2		10702				10702	vale-babi/events/gValeBabi_EventsAfterLeaving-28-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[28]	3		10702				10702	vale-babi/events/gValeBabi_EventsAfterLeaving-28-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[28]	1						10702	vale-babi/events/gValeBabi_EventsAfterLeaving-28.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[29]	2		10703				10703	vale-babi/events/gValeBabi_EventsAfterLeaving-29-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[29]	3		10703				10703	vale-babi/events/gValeBabi_EventsAfterLeaving-29-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[29]	1						10703	vale-babi/events/gValeBabi_EventsAfterLeaving-29.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[3]	2		04527				04527	vale-babi/events/gValeBabi_EventsAfterLeaving-3-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[3]	1		04527				04527	vale-babi/events/gValeBabi_EventsAfterLeaving-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[30]	2		10704				10704	vale-babi/events/gValeBabi_EventsAfterLeaving-30-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[30]	3		10704				10704	vale-babi/events/gValeBabi_EventsAfterLeaving-30-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[30]	1						10704	vale-babi/events/gValeBabi_EventsAfterLeaving-30.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[5]	2		04574				04574	vale-babi/events/gValeBabi_EventsAfterLeaving-5-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[5]	1		04574				04574	vale-babi/events/gValeBabi_EventsAfterLeaving-5.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[6]	1		04575				04575	vale-babi/events/gValeBabi_EventsAfterLeaving-6.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[7]	2		04577				04577	vale-babi/events/gValeBabi_EventsAfterLeaving-7-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[7]	1		04577				04577	vale-babi/events/gValeBabi_EventsAfterLeaving-7.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[8]	2		04578				04578	vale-babi/events/gValeBabi_EventsAfterLeaving-8-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[8]	1		04578				04578	vale-babi/events/gValeBabi_EventsAfterLeaving-8.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[9]	2		04576				04576	vale-babi/events/gValeBabi_EventsAfterLeaving-9-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[9]	1		04576				04576	vale-babi/events/gValeBabi_EventsAfterLeaving-9.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsEvents[12]	2						10679	vale-babi/events/gValeBabi_ScholarsEvents-12-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsEvents[12]	1						10679	vale-babi/events/gValeBabi_ScholarsEvents-12.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsEvents[13]	2						10680	vale-babi/events/gValeBabi_ScholarsEvents-13-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsEvents[13]	3						10680	vale-babi/events/gValeBabi_ScholarsEvents-13-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsEvents[13]	1						10680	vale-babi/events/gValeBabi_ScholarsEvents-13.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsEvents[14]	2						10681	vale-babi/events/gValeBabi_ScholarsEvents-14-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsEvents[14]	3						10681	vale-babi/events/gValeBabi_ScholarsEvents-14-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsEvents[14]	1						10681	vale-babi/events/gValeBabi_ScholarsEvents-14.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsEvents[3]	2						08218	vale-babi/events/gValeBabi_ScholarsEvents-3-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsEvents[3]	1						08218	vale-babi/events/gValeBabi_ScholarsEvents-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsEvents[4]	2						08219	vale-babi/events/gValeBabi_ScholarsEvents-4-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsEvents[4]	1						08219	vale-babi/events/gValeBabi_ScholarsEvents-4.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsLaterEvents[12]	2						10679	vale-babi/events/gValeBabi_ScholarsLaterEvents-12-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsLaterEvents[12]	1						10679	vale-babi/events/gValeBabi_ScholarsLaterEvents-12.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsLaterEvents[13]	2						10680	vale-babi/events/gValeBabi_ScholarsLaterEvents-13-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsLaterEvents[13]	3						10680	vale-babi/events/gValeBabi_ScholarsLaterEvents-13-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsLaterEvents[13]	1						10680	vale-babi/events/gValeBabi_ScholarsLaterEvents-13.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsLaterEvents[14]	2						10681	vale-babi/events/gValeBabi_ScholarsLaterEvents-14-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsLaterEvents[14]	3						10681	vale-babi/events/gValeBabi_ScholarsLaterEvents-14-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsLaterEvents[14]	1						10681	vale-babi/events/gValeBabi_ScholarsLaterEvents-14.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsLaterEvents[3]	2						08893	vale-babi/events/gValeBabi_ScholarsLaterEvents-3-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsLaterEvents[3]	1						08893	vale-babi/events/gValeBabi_ScholarsLaterEvents-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsLaterEvents[4]	2						08894	vale-babi/events/gValeBabi_ScholarsLaterEvents-4-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsLaterEvents[4]	1						08894	vale-babi/events/gValeBabi_ScholarsLaterEvents-4.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[11]	2		02389				02389	vale-babi/events/gValeBabi_StormEvents-11-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[11]	1						02389	vale-babi/events/gValeBabi_StormEvents-11.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[12]	2		02378				02378	vale-babi/events/gValeBabi_StormEvents-12-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[12]	1						02378	vale-babi/events/gValeBabi_StormEvents-12.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[13]	2		02379				02379	vale-babi/events/gValeBabi_StormEvents-13-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[13]	1						02379	vale-babi/events/gValeBabi_StormEvents-13.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[14]	2		10698				10698	vale-babi/events/gValeBabi_StormEvents-14-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[14]	3		10698				10698	vale-babi/events/gValeBabi_StormEvents-14-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[14]	4		10698				10698	vale-babi/events/gValeBabi_StormEvents-14-4.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[14]	1						10698	vale-babi/events/gValeBabi_StormEvents-14.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[15]	2		10699				10699	vale-babi/events/gValeBabi_StormEvents-15-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[15]	1						10699	vale-babi/events/gValeBabi_StormEvents-15.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[16]	2		10700				10700	vale-babi/events/gValeBabi_StormEvents-16-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[16]	3		10700				10700	vale-babi/events/gValeBabi_StormEvents-16-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[16]	1						10700	vale-babi/events/gValeBabi_StormEvents-16.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[17]	2		10701				10701	vale-babi/events/gValeBabi_StormEvents-17-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[17]	3		10701				10701	vale-babi/events/gValeBabi_StormEvents-17-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[17]	1						10701	vale-babi/events/gValeBabi_StormEvents-17.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[18]	2		10702				10702	vale-babi/events/gValeBabi_StormEvents-18-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[18]	3		10702				10702	vale-babi/events/gValeBabi_StormEvents-18-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[18]	1						10702	vale-babi/events/gValeBabi_StormEvents-18.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[19]	2		10703				10703	vale-babi/events/gValeBabi_StormEvents-19-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[19]	3		10703				10703	vale-babi/events/gValeBabi_StormEvents-19-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[19]	1						10703	vale-babi/events/gValeBabi_StormEvents-19.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[20]	2		10704				10704	vale-babi/events/gValeBabi_StormEvents-20-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[20]	3		10704				10704	vale-babi/events/gValeBabi_StormEvents-20-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[20]	1						10704	vale-babi/events/gValeBabi_StormEvents-20.png
-vale-babi	8	19=Babi's Palace; *=Vale		map	0									vale-babi/map-0.png
-vale-babi	8	19=Babi's Palace; *=Vale		map	1									vale-babi/map-1.png
-vale-babi	8	19=Babi's Palace; *=Vale		map	11									vale-babi/map-11.png
-vale-babi	8	19=Babi's Palace; *=Vale		map	19									vale-babi/map-19.png
-vale-babi	8	19=Babi's Palace; *=Vale		map	2									vale-babi/map-2.png
-vale-babi	8	19=Babi's Palace; *=Vale		map	3									vale-babi/map-3.png
-vale-babi	8	19=Babi's Palace; *=Vale		map	4									vale-babi/map-4.png
-vale-babi	8	19=Babi's Palace; *=Vale		map	6									vale-babi/map-6.png
-vale-babi	8	19=Babi's Palace; *=Vale		map	8									vale-babi/map-8.png
-vale-babi	8	19=Babi's Palace; *=Vale		map	9									vale-babi/map-9.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		entrance	0									vale-interiors2/entrance.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	Event_AskIsaacHisBusiness	2		03932				03931, 03932, 03934, 03933	vale-interiors2/events/Event_AskIsaacHisBusiness-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	Event_AskIsaacHisBusiness	3		03933				03931, 03932, 03934, 03933	vale-interiors2/events/Event_AskIsaacHisBusiness-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event-gif	0	Event_AskIsaacHisBusiness						251	03931, 03932, 03934, 03933	vale-interiors2/events/Event_AskIsaacHisBusiness.gif
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	Event_AskIsaacHisBusiness	1		03931				03931, 03932, 03934, 03933	vale-interiors2/events/Event_AskIsaacHisBusiness.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event-segment	0	Event_AskIsaacHisBusiness		1		03931 MsgValeHeyBoy	03932	98	03931, 03932, 03934, 03933	vale-interiors2/events/Event_AskIsaacHisBusiness_1.gif
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	Event_AskWhetherMaskedManWasFelix	2		04523				04522, 04523, 04524, 04525, 04526	vale-interiors2/events/Event_AskWhetherMaskedManWasFelix-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	Event_AskWhetherMaskedManWasFelix	1		04522				04522, 04523, 04524, 04525, 04526	vale-interiors2/events/Event_AskWhetherMaskedManWasFelix.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	Event_NeighborSeesIsaacHasGrown	2		07187				07187	vale-interiors2/events/Event_NeighborSeesIsaacHasGrown-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	Event_NeighborSeesIsaacHasGrown	1		07187				07187	vale-interiors2/events/Event_NeighborSeesIsaacHasGrown.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	Event_ReadThoughtsAboutDorasIllness	2						07194	vale-interiors2/events/Event_ReadThoughtsAboutDorasIllness-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	Event_ReadThoughtsAboutDorasIllness	1						07194	vale-interiors2/events/Event_ReadThoughtsAboutDorasIllness.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	Event_TalkToDora	2		07290				07287, 07289, 07290	vale-interiors2/events/Event_TalkToDora-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event-gif	0	Event_TalkToDora						186	07287, 07289, 07290	vale-interiors2/events/Event_TalkToDora.gif
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	Event_TalkToDora	1		07289				07287, 07289, 07290	vale-interiors2/events/Event_TalkToDora.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	Event_TalkToInnkeeper	2		03928				07188, 07189, 07190, 07191, 04521, 03928	vale-interiors2/events/Event_TalkToInnkeeper-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	Event_TalkToInnkeeper	1		03928				07188, 07189, 07190, 07191, 04521, 03928	vale-interiors2/events/Event_TalkToInnkeeper.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	Event_VisitSickDora	2		07271				07270, 07271, 07272, 07273, 07274, 07275, 07276, 07278, 07277, 07279, 07281, 07280, 07282, 07283, 07284, 07285, 07286	vale-interiors2/events/Event_VisitSickDora-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	Event_VisitSickDora	3		07272				07270, 07271, 07272, 07273, 07274, 07275, 07276, 07278, 07277, 07279, 07281, 07280, 07282, 07283, 07284, 07285, 07286	vale-interiors2/events/Event_VisitSickDora-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	Event_VisitSickDora	4		07273				07270, 07271, 07272, 07273, 07274, 07275, 07276, 07278, 07277, 07279, 07281, 07280, 07282, 07283, 07284, 07285, 07286	vale-interiors2/events/Event_VisitSickDora-4.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	Event_VisitSickDora	1		07270				07270, 07271, 07272, 07273, 07274, 07275, 07276, 07278, 07277, 07279, 07281, 07280, 07282, 07283, 07284, 07285, 07286	vale-interiors2/events/Event_VisitSickDora.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event-segment	0	Event_VisitSickDora		0			07270 MsgValeCoughCoughWho	102	07270, 07271, 07272, 07273, 07274, 07275, 07276, 07278, 07277, 07279, 07281, 07280, 07282, 07283, 07284, 07285, 07286	vale-interiors2/events/Event_VisitSickDora_0.gif
+vale-interiors2	8	19=Babi's Palace; *=Vale		event-segment	0	Event_VisitSickDora		1		07270 MsgValeCoughCoughWho	07271	122	07270, 07271, 07272, 07273, 07274, 07275, 07276, 07278, 07277, 07279, 07281, 07280, 07282, 07283, 07284, 07285, 07286	vale-interiors2/events/Event_VisitSickDora_1.gif
+vale-interiors2	8	19=Babi's Palace; *=Vale		event-segment	0	Event_VisitSickDora		2		07271	07272	181	07270, 07271, 07272, 07273, 07274, 07275, 07276, 07278, 07277, 07279, 07281, 07280, 07282, 07283, 07284, 07285, 07286	vale-interiors2/events/Event_VisitSickDora_2.gif
+vale-interiors2	8	19=Babi's Palace; *=Vale		event-segment	0	Event_VisitSickDora		3		07272	07273	90	07270, 07271, 07272, 07273, 07274, 07275, 07276, 07278, 07277, 07279, 07281, 07280, 07282, 07283, 07284, 07285, 07286	vale-interiors2/events/Event_VisitSickDora_3.gif
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[0]	2		03926				03926	vale-interiors2/events/gValeBabi_Events-0-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[0]	1		03926				03926	vale-interiors2/events/gValeBabi_Events-0.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[1]	2		03927				03927	vale-interiors2/events/gValeBabi_Events-1-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[1]	1		03927				03927	vale-interiors2/events/gValeBabi_Events-1.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[2]	2		03929				03929	vale-interiors2/events/gValeBabi_Events-2-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[2]	1		03929				03929	vale-interiors2/events/gValeBabi_Events-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[20]	2		10698				10698	vale-interiors2/events/gValeBabi_Events-20-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[20]	3		10698				10698	vale-interiors2/events/gValeBabi_Events-20-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[20]	4		10698				10698	vale-interiors2/events/gValeBabi_Events-20-4.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[20]	1						10698	vale-interiors2/events/gValeBabi_Events-20.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[21]	2		10699				10699	vale-interiors2/events/gValeBabi_Events-21-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[21]	1						10699	vale-interiors2/events/gValeBabi_Events-21.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[22]	2		10700				10700	vale-interiors2/events/gValeBabi_Events-22-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[22]	3		10700				10700	vale-interiors2/events/gValeBabi_Events-22-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[22]	1						10700	vale-interiors2/events/gValeBabi_Events-22.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[23]	2		10701				10701	vale-interiors2/events/gValeBabi_Events-23-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[23]	3		10701				10701	vale-interiors2/events/gValeBabi_Events-23-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[23]	1						10701	vale-interiors2/events/gValeBabi_Events-23.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[24]	2		10702				10702	vale-interiors2/events/gValeBabi_Events-24-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[24]	3		10702				10702	vale-interiors2/events/gValeBabi_Events-24-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[24]	1						10702	vale-interiors2/events/gValeBabi_Events-24.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[25]	2		10703				10703	vale-interiors2/events/gValeBabi_Events-25-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[25]	3		10703				10703	vale-interiors2/events/gValeBabi_Events-25-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[25]	1						10703	vale-interiors2/events/gValeBabi_Events-25.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[26]	2		10704				10704	vale-interiors2/events/gValeBabi_Events-26-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[26]	3		10704				10704	vale-interiors2/events/gValeBabi_Events-26-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[26]	1						10704	vale-interiors2/events/gValeBabi_Events-26.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_Events[3]	1		03930				03930	vale-interiors2/events/gValeBabi_Events-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[0]	2		07179				07179	vale-interiors2/events/gValeBabi_EventsAfterKalay-0-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[0]	1		07179				07179	vale-interiors2/events/gValeBabi_EventsAfterKalay-0.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[1]	2		07180				07180	vale-interiors2/events/gValeBabi_EventsAfterKalay-1-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[1]	1		07180				07180	vale-interiors2/events/gValeBabi_EventsAfterKalay-1.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[10]	1		07197				07197	vale-interiors2/events/gValeBabi_EventsAfterKalay-10.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[18]	2						07291	vale-interiors2/events/gValeBabi_EventsAfterKalay-18-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[18]	3						07291	vale-interiors2/events/gValeBabi_EventsAfterKalay-18-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[18]	4						07291	vale-interiors2/events/gValeBabi_EventsAfterKalay-18-4.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[18]	1						07291	vale-interiors2/events/gValeBabi_EventsAfterKalay-18.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event-segment	0	gValeBabi_EventsAfterKalay[18]		1		00960	07270 MsgValeCoughCoughWho	103	07291	vale-interiors2/events/gValeBabi_EventsAfterKalay-18_1.gif
+vale-interiors2	8	19=Babi's Palace; *=Vale		event-segment	0	gValeBabi_EventsAfterKalay[18]		2		07270 MsgValeCoughCoughWho	07271	122	07291	vale-interiors2/events/gValeBabi_EventsAfterKalay-18_2.gif
+vale-interiors2	8	19=Babi's Palace; *=Vale		event-segment	0	gValeBabi_EventsAfterKalay[18]		3		07271	07272	181	07291	vale-interiors2/events/gValeBabi_EventsAfterKalay-18_3.gif
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[19]	2						07288	vale-interiors2/events/gValeBabi_EventsAfterKalay-19-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[19]	3						07288	vale-interiors2/events/gValeBabi_EventsAfterKalay-19-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[19]	4						07288	vale-interiors2/events/gValeBabi_EventsAfterKalay-19-4.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[19]	1						07288	vale-interiors2/events/gValeBabi_EventsAfterKalay-19.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event-segment	0	gValeBabi_EventsAfterKalay[19]		1		00960	07270 MsgValeCoughCoughWho	103	07288	vale-interiors2/events/gValeBabi_EventsAfterKalay-19_1.gif
+vale-interiors2	8	19=Babi's Palace; *=Vale		event-segment	0	gValeBabi_EventsAfterKalay[19]		2		07270 MsgValeCoughCoughWho	07271	122	07288	vale-interiors2/events/gValeBabi_EventsAfterKalay-19_2.gif
+vale-interiors2	8	19=Babi's Palace; *=Vale		event-segment	0	gValeBabi_EventsAfterKalay[19]		3		07271	07272	181	07288	vale-interiors2/events/gValeBabi_EventsAfterKalay-19_3.gif
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[2]	2		07192				07192	vale-interiors2/events/gValeBabi_EventsAfterKalay-2-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[2]	1		07192				07192	vale-interiors2/events/gValeBabi_EventsAfterKalay-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[3]	1		07193				07193	vale-interiors2/events/gValeBabi_EventsAfterKalay-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[34]	2		10698				10698	vale-interiors2/events/gValeBabi_EventsAfterKalay-34-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[34]	3		10698				10698	vale-interiors2/events/gValeBabi_EventsAfterKalay-34-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[34]	4		10698				10698	vale-interiors2/events/gValeBabi_EventsAfterKalay-34-4.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[34]	1						10698	vale-interiors2/events/gValeBabi_EventsAfterKalay-34.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[35]	2		10699				10699	vale-interiors2/events/gValeBabi_EventsAfterKalay-35-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[35]	1						10699	vale-interiors2/events/gValeBabi_EventsAfterKalay-35.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[36]	2		10700				10700	vale-interiors2/events/gValeBabi_EventsAfterKalay-36-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[36]	3		10700				10700	vale-interiors2/events/gValeBabi_EventsAfterKalay-36-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[36]	1						10700	vale-interiors2/events/gValeBabi_EventsAfterKalay-36.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[37]	2		10701				10701	vale-interiors2/events/gValeBabi_EventsAfterKalay-37-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[37]	3		10701				10701	vale-interiors2/events/gValeBabi_EventsAfterKalay-37-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[37]	1						10701	vale-interiors2/events/gValeBabi_EventsAfterKalay-37.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[38]	2		10702				10702	vale-interiors2/events/gValeBabi_EventsAfterKalay-38-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[38]	3		10702				10702	vale-interiors2/events/gValeBabi_EventsAfterKalay-38-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[38]	1						10702	vale-interiors2/events/gValeBabi_EventsAfterKalay-38.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[39]	2		10703				10703	vale-interiors2/events/gValeBabi_EventsAfterKalay-39-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[39]	3		10703				10703	vale-interiors2/events/gValeBabi_EventsAfterKalay-39-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[39]	1						10703	vale-interiors2/events/gValeBabi_EventsAfterKalay-39.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[40]	2		10704				10704	vale-interiors2/events/gValeBabi_EventsAfterKalay-40-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[40]	3		10704				10704	vale-interiors2/events/gValeBabi_EventsAfterKalay-40-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[40]	1						10704	vale-interiors2/events/gValeBabi_EventsAfterKalay-40.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[6]	2		07187				07187	vale-interiors2/events/gValeBabi_EventsAfterKalay-6-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[6]	1		07187				07187	vale-interiors2/events/gValeBabi_EventsAfterKalay-6.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[7]	2		07184				07184	vale-interiors2/events/gValeBabi_EventsAfterKalay-7-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[7]	1		07184				07184	vale-interiors2/events/gValeBabi_EventsAfterKalay-7.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[8]	1		07185				07185	vale-interiors2/events/gValeBabi_EventsAfterKalay-8.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterKalay[9]	1		07196				07196	vale-interiors2/events/gValeBabi_EventsAfterKalay-9.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[0]	2		04519				04519	vale-interiors2/events/gValeBabi_EventsAfterLeaving-0-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[0]	1		04519				04519	vale-interiors2/events/gValeBabi_EventsAfterLeaving-0.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[1]	2		04520				04520	vale-interiors2/events/gValeBabi_EventsAfterLeaving-1-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[1]	1		04520				04520	vale-interiors2/events/gValeBabi_EventsAfterLeaving-1.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[24]	2		10698				10698	vale-interiors2/events/gValeBabi_EventsAfterLeaving-24-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[24]	3		10698				10698	vale-interiors2/events/gValeBabi_EventsAfterLeaving-24-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[24]	4		10698				10698	vale-interiors2/events/gValeBabi_EventsAfterLeaving-24-4.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[24]	1						10698	vale-interiors2/events/gValeBabi_EventsAfterLeaving-24.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[25]	2		10699				10699	vale-interiors2/events/gValeBabi_EventsAfterLeaving-25-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[25]	1						10699	vale-interiors2/events/gValeBabi_EventsAfterLeaving-25.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[26]	2		10700				10700	vale-interiors2/events/gValeBabi_EventsAfterLeaving-26-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[26]	3		10700				10700	vale-interiors2/events/gValeBabi_EventsAfterLeaving-26-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[26]	1						10700	vale-interiors2/events/gValeBabi_EventsAfterLeaving-26.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[27]	2		10701				10701	vale-interiors2/events/gValeBabi_EventsAfterLeaving-27-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[27]	3		10701				10701	vale-interiors2/events/gValeBabi_EventsAfterLeaving-27-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[27]	1						10701	vale-interiors2/events/gValeBabi_EventsAfterLeaving-27.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[28]	2		10702				10702	vale-interiors2/events/gValeBabi_EventsAfterLeaving-28-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[28]	3		10702				10702	vale-interiors2/events/gValeBabi_EventsAfterLeaving-28-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[28]	1						10702	vale-interiors2/events/gValeBabi_EventsAfterLeaving-28.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[29]	2		10703				10703	vale-interiors2/events/gValeBabi_EventsAfterLeaving-29-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[29]	3		10703				10703	vale-interiors2/events/gValeBabi_EventsAfterLeaving-29-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[29]	1						10703	vale-interiors2/events/gValeBabi_EventsAfterLeaving-29.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[3]	2		04527				04527	vale-interiors2/events/gValeBabi_EventsAfterLeaving-3-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[3]	1		04527				04527	vale-interiors2/events/gValeBabi_EventsAfterLeaving-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[30]	2		10704				10704	vale-interiors2/events/gValeBabi_EventsAfterLeaving-30-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[30]	3		10704				10704	vale-interiors2/events/gValeBabi_EventsAfterLeaving-30-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[30]	1						10704	vale-interiors2/events/gValeBabi_EventsAfterLeaving-30.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[5]	2		04574				04574	vale-interiors2/events/gValeBabi_EventsAfterLeaving-5-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[5]	1		04574				04574	vale-interiors2/events/gValeBabi_EventsAfterLeaving-5.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[6]	1		04575				04575	vale-interiors2/events/gValeBabi_EventsAfterLeaving-6.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[7]	2		04577				04577	vale-interiors2/events/gValeBabi_EventsAfterLeaving-7-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[7]	1		04577				04577	vale-interiors2/events/gValeBabi_EventsAfterLeaving-7.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[8]	2		04578				04578	vale-interiors2/events/gValeBabi_EventsAfterLeaving-8-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[8]	1		04578				04578	vale-interiors2/events/gValeBabi_EventsAfterLeaving-8.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[9]	2		04576				04576	vale-interiors2/events/gValeBabi_EventsAfterLeaving-9-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_EventsAfterLeaving[9]	1		04576				04576	vale-interiors2/events/gValeBabi_EventsAfterLeaving-9.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsEvents[12]	2						10679	vale-interiors2/events/gValeBabi_ScholarsEvents-12-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsEvents[12]	1						10679	vale-interiors2/events/gValeBabi_ScholarsEvents-12.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsEvents[13]	2						10680	vale-interiors2/events/gValeBabi_ScholarsEvents-13-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsEvents[13]	3						10680	vale-interiors2/events/gValeBabi_ScholarsEvents-13-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsEvents[13]	1						10680	vale-interiors2/events/gValeBabi_ScholarsEvents-13.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsEvents[14]	2						10681	vale-interiors2/events/gValeBabi_ScholarsEvents-14-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsEvents[14]	3						10681	vale-interiors2/events/gValeBabi_ScholarsEvents-14-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsEvents[14]	1						10681	vale-interiors2/events/gValeBabi_ScholarsEvents-14.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsEvents[3]	2						08218	vale-interiors2/events/gValeBabi_ScholarsEvents-3-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsEvents[3]	1						08218	vale-interiors2/events/gValeBabi_ScholarsEvents-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsEvents[4]	2						08219	vale-interiors2/events/gValeBabi_ScholarsEvents-4-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsEvents[4]	1						08219	vale-interiors2/events/gValeBabi_ScholarsEvents-4.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsLaterEvents[12]	2						10679	vale-interiors2/events/gValeBabi_ScholarsLaterEvents-12-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsLaterEvents[12]	1						10679	vale-interiors2/events/gValeBabi_ScholarsLaterEvents-12.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsLaterEvents[13]	2						10680	vale-interiors2/events/gValeBabi_ScholarsLaterEvents-13-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsLaterEvents[13]	3						10680	vale-interiors2/events/gValeBabi_ScholarsLaterEvents-13-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsLaterEvents[13]	1						10680	vale-interiors2/events/gValeBabi_ScholarsLaterEvents-13.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsLaterEvents[14]	2						10681	vale-interiors2/events/gValeBabi_ScholarsLaterEvents-14-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsLaterEvents[14]	3						10681	vale-interiors2/events/gValeBabi_ScholarsLaterEvents-14-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsLaterEvents[14]	1						10681	vale-interiors2/events/gValeBabi_ScholarsLaterEvents-14.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsLaterEvents[3]	2						08893	vale-interiors2/events/gValeBabi_ScholarsLaterEvents-3-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsLaterEvents[3]	1						08893	vale-interiors2/events/gValeBabi_ScholarsLaterEvents-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsLaterEvents[4]	2						08894	vale-interiors2/events/gValeBabi_ScholarsLaterEvents-4-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_ScholarsLaterEvents[4]	1						08894	vale-interiors2/events/gValeBabi_ScholarsLaterEvents-4.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[11]	2		02389				02389	vale-interiors2/events/gValeBabi_StormEvents-11-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[11]	1						02389	vale-interiors2/events/gValeBabi_StormEvents-11.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[12]	2		02378				02378	vale-interiors2/events/gValeBabi_StormEvents-12-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[12]	1						02378	vale-interiors2/events/gValeBabi_StormEvents-12.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[13]	2		02379				02379	vale-interiors2/events/gValeBabi_StormEvents-13-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[13]	1						02379	vale-interiors2/events/gValeBabi_StormEvents-13.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[14]	2		10698				10698	vale-interiors2/events/gValeBabi_StormEvents-14-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[14]	3		10698				10698	vale-interiors2/events/gValeBabi_StormEvents-14-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[14]	4		10698				10698	vale-interiors2/events/gValeBabi_StormEvents-14-4.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[14]	1						10698	vale-interiors2/events/gValeBabi_StormEvents-14.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[15]	2		10699				10699	vale-interiors2/events/gValeBabi_StormEvents-15-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[15]	1						10699	vale-interiors2/events/gValeBabi_StormEvents-15.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[16]	2		10700				10700	vale-interiors2/events/gValeBabi_StormEvents-16-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[16]	3		10700				10700	vale-interiors2/events/gValeBabi_StormEvents-16-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[16]	1						10700	vale-interiors2/events/gValeBabi_StormEvents-16.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[17]	2		10701				10701	vale-interiors2/events/gValeBabi_StormEvents-17-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[17]	3		10701				10701	vale-interiors2/events/gValeBabi_StormEvents-17-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[17]	1						10701	vale-interiors2/events/gValeBabi_StormEvents-17.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[18]	2		10702				10702	vale-interiors2/events/gValeBabi_StormEvents-18-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[18]	3		10702				10702	vale-interiors2/events/gValeBabi_StormEvents-18-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[18]	1						10702	vale-interiors2/events/gValeBabi_StormEvents-18.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[19]	2		10703				10703	vale-interiors2/events/gValeBabi_StormEvents-19-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[19]	3		10703				10703	vale-interiors2/events/gValeBabi_StormEvents-19-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[19]	1						10703	vale-interiors2/events/gValeBabi_StormEvents-19.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[20]	2		10704				10704	vale-interiors2/events/gValeBabi_StormEvents-20-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[20]	3		10704				10704	vale-interiors2/events/gValeBabi_StormEvents-20-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		event	0	gValeBabi_StormEvents[20]	1						10704	vale-interiors2/events/gValeBabi_StormEvents-20.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		map	0									vale-interiors2/map-0.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		map	1									vale-interiors2/map-1.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		map	11									vale-interiors2/map-11.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		map	19									vale-interiors2/map-19.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		map	2									vale-interiors2/map-2.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		map	3									vale-interiors2/map-3.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		map	4									vale-interiors2/map-4.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		map	6									vale-interiors2/map-6.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		map	8									vale-interiors2/map-8.png
+vale-interiors2	8	19=Babi's Palace; *=Vale		map	9									vale-interiors2/map-9.png
 vale-cave1	93	Vale		entrance	0									vale-cave1/entrance.png
 vale-cave1	93	Vale		map	0									vale-cave1/map-0.png
 vale-cave2	94	Vale Cave		entrance	0									vale-cave2/entrance.png
@@ -4745,138 +4745,138 @@ vale-cave3	95	Vale Cave		entrance	0									vale-cave3/entrance.png
 vale-cave3	95	Vale Cave		map	0									vale-cave3/map-0.png
 vale-cave3	95	Vale Cave		map	1									vale-cave3/map-1.png
 vale-cave3	95	Vale Cave		map	4									vale-cave3/map-4.png
-vale-home	5	Vale		entrance	0									vale-home/entrance.png
-vale-home	5	Vale		event	0	Event_AskAboutJourney	2		03753				07144, 07145, 07146, 07147, 07148, 04497, 04498, 04499, 03752, 03753, 03754	vale-home/events/Event_AskAboutJourney-2.png
-vale-home	5	Vale		event-gif	0	Event_AskAboutJourney						144	07144, 07145, 07146, 07147, 07148, 04497, 04498, 04499, 03752, 03753, 03754	vale-home/events/Event_AskAboutJourney.gif
-vale-home	5	Vale		event	0	Event_AskAboutJourney	1		03752				07144, 07145, 07146, 07147, 07148, 04497, 04498, 04499, 03752, 03753, 03754	vale-home/events/Event_AskAboutJourney.png
-vale-home	5	Vale		event	0	Event_AskAboutMeditation	2		03901				03900, 03901, 03902	vale-home/events/Event_AskAboutMeditation-2.png
-vale-home	5	Vale		event	0	Event_AskAboutMeditation	3		03901				03900, 03901, 03902	vale-home/events/Event_AskAboutMeditation-3.png
-vale-home	5	Vale		event	0	Event_AskAboutMeditation	1		03900				03900, 03901, 03902	vale-home/events/Event_AskAboutMeditation.png
-vale-home	5	Vale		event	0	Event_AskAboutTheTravelers	2		03909				03908, 03909, 03910	vale-home/events/Event_AskAboutTheTravelers-2.png
-vale-home	5	Vale		event	0	Event_AskAboutTheTravelers	3		03909				03908, 03909, 03910	vale-home/events/Event_AskAboutTheTravelers-3.png
-vale-home	5	Vale		event	0	Event_AskAboutTheTravelers	1		03908				03908, 03909, 03910	vale-home/events/Event_AskAboutTheTravelers.png
-vale-home	5	Vale		event	0	Event_DemonstrateLevitation	2		03759				03758, 03759	vale-home/events/Event_DemonstrateLevitation-2.png
-vale-home	5	Vale		event	0	Event_DemonstrateLevitation	3		03759				03758, 03759	vale-home/events/Event_DemonstrateLevitation-3.png
-vale-home	5	Vale		event-gif	0	Event_DemonstrateLevitation						253	03758, 03759	vale-home/events/Event_DemonstrateLevitation.gif
-vale-home	5	Vale		event	0	Event_DemonstrateLevitation	1		03758				03758, 03759	vale-home/events/Event_DemonstrateLevitation.png
-vale-home	5	Vale		event-segment	0	Event_DemonstrateLevitation		0			03758 MsgValeIHaveSomePsynergyLeft	59	03758, 03759	vale-home/events/Event_DemonstrateLevitation_0.gif
-vale-home	5	Vale		event-segment	0	Event_DemonstrateLevitation		1		03758 MsgValeIHaveSomePsynergyLeft	03759	166	03758, 03759	vale-home/events/Event_DemonstrateLevitation_1.gif
-vale-home	5	Vale		event	0	Event_DemonstratePsynergy	2		03913				04505, 04504, 04503, 04506, 04507, 03912, 03913, 03914, 03915	vale-home/events/Event_DemonstratePsynergy-2.png
-vale-home	5	Vale		event	0	Event_DemonstratePsynergy	3		03915				04505, 04504, 04503, 04506, 04507, 03912, 03913, 03914, 03915	vale-home/events/Event_DemonstratePsynergy-3.png
-vale-home	5	Vale		event	0	Event_DemonstratePsynergy	1		03912				04505, 04504, 04503, 04506, 04507, 03912, 03913, 03914, 03915	vale-home/events/Event_DemonstratePsynergy.png
-vale-home	5	Vale		event-segment	0	Event_DemonstratePsynergy		2		03913	03915 MsgValeBeholdPowerPsynergy	200	04505, 04504, 04503, 04506, 04507, 03912, 03913, 03914, 03915	vale-home/events/Event_DemonstratePsynergy_2.gif
-vale-home	5	Vale		event	0	Event_PsynergyStoneIsGone	2		07317				07316, 07317	vale-home/events/Event_PsynergyStoneIsGone-2.png
-vale-home	5	Vale		event	0	Event_PsynergyStoneIsGone	3		07317				07316, 07317	vale-home/events/Event_PsynergyStoneIsGone-3.png
-vale-home	5	Vale		event	0	Event_PsynergyStoneIsGone	1		07316				07316, 07317	vale-home/events/Event_PsynergyStoneIsGone.png
-vale-home	5	Vale		event	0	Event_RecallThreeYearsAgo	2		03904				03903, 03904, 03905	vale-home/events/Event_RecallThreeYearsAgo-2.png
-vale-home	5	Vale		event	0	Event_RecallThreeYearsAgo	3		03904				03903, 03904, 03905	vale-home/events/Event_RecallThreeYearsAgo-3.png
-vale-home	5	Vale		event	0	Event_RecallThreeYearsAgo	1		03903				03903, 03904, 03905	vale-home/events/Event_RecallThreeYearsAgo.png
-vale-home	5	Vale		event	0	Event_SentToAidElders	2		03767				03766, 03767, 03768, 03769, 03770, 03771, 03772, 03773, 03774, 03775, 03776, 03777, 03778, 03779, 03780, 03781	vale-home/events/Event_SentToAidElders-2.png
-vale-home	5	Vale		event	0	Event_SentToAidElders	3		03768				03766, 03767, 03768, 03769, 03770, 03771, 03772, 03773, 03774, 03775, 03776, 03777, 03778, 03779, 03780, 03781	vale-home/events/Event_SentToAidElders-3.png
-vale-home	5	Vale		event	0	Event_SentToAidElders	4		03769				03766, 03767, 03768, 03769, 03770, 03771, 03772, 03773, 03774, 03775, 03776, 03777, 03778, 03779, 03780, 03781	vale-home/events/Event_SentToAidElders-4.png
-vale-home	5	Vale		event	0	Event_SentToAidElders	1		03766				03766, 03767, 03768, 03769, 03770, 03771, 03772, 03773, 03774, 03775, 03776, 03777, 03778, 03779, 03780, 03781	vale-home/events/Event_SentToAidElders.png
-vale-home	5	Vale		event-segment	0	Event_SentToAidElders		1		03766 MsgValeGoAidElders	03767	127	03766, 03767, 03768, 03769, 03770, 03771, 03772, 03773, 03774, 03775, 03776, 03777, 03778, 03779, 03780, 03781	vale-home/events/Event_SentToAidElders_1.gif
-vale-home	5	Vale		event-segment	0	Event_SentToAidElders		3		03768	03769	62	03766, 03767, 03768, 03769, 03770, 03771, 03772, 03773, 03774, 03775, 03776, 03777, 03778, 03779, 03780, 03781	vale-home/events/Event_SentToAidElders_3.gif
-vale-home	5	Vale		event-segment	0	Event_SentToAidElders		4		03769	03770	107	03766, 03767, 03768, 03769, 03770, 03771, 03772, 03773, 03774, 03775, 03776, 03777, 03778, 03779, 03780, 03781	vale-home/events/Event_SentToAidElders_4.gif
-vale-home	5	Vale		event-segment	0	Event_SentToAidElders		5		03770	03771	62	03766, 03767, 03768, 03769, 03770, 03771, 03772, 03773, 03774, 03775, 03776, 03777, 03778, 03779, 03780, 03781	vale-home/events/Event_SentToAidElders_5.gif
-vale-home	5	Vale		event-segment	0	Event_SentToAidElders		6		03771	03772	79	03766, 03767, 03768, 03769, 03770, 03771, 03772, 03773, 03774, 03775, 03776, 03777, 03778, 03779, 03780, 03781	vale-home/events/Event_SentToAidElders_6.gif
-vale-home	5	Vale		event	0	Event_TalkAboutFallenStone	2		04552				04551, 04552	vale-home/events/Event_TalkAboutFallenStone-2.png
-vale-home	5	Vale		event-gif	0	Event_TalkAboutFallenStone						228	04551, 04552	vale-home/events/Event_TalkAboutFallenStone.gif
-vale-home	5	Vale		event	0	Event_TalkAboutFallenStone	1		04551				04551, 04552	vale-home/events/Event_TalkAboutFallenStone.png
-vale-home	5	Vale		event-segment	0	Event_TalkAboutFallenStone		1		04551 MsgValeTheStoneFellOnThe	04552	96	04551, 04552	vale-home/events/Event_TalkAboutFallenStone_1.gif
-vale-home	5	Vale		event-gif	0	Event_TalkAboutHelping						62	03761, 03760	vale-home/events/Event_TalkAboutHelping.gif
-vale-home	5	Vale		event	0	Event_TalkAboutHelping	1		03760				03761, 03760	vale-home/events/Event_TalkAboutHelping.png
-vale-home	5	Vale		event	0	Event_UsePsynergyStone	2		02420				04383, 02420	vale-home/events/Event_UsePsynergyStone-2.png
-vale-home	5	Vale		event	0	Event_UsePsynergyStone	1		04383				04383, 02420	vale-home/events/Event_UsePsynergyStone.png
-vale-home	5	Vale		event-gif	0	Event_WelcomeIsaacHome						77	07140, 07139	vale-home/events/Event_WelcomeIsaacHome.gif
-vale-home	5	Vale		event	0	Event_WelcomeIsaacHome	1		07139				07140, 07139	vale-home/events/Event_WelcomeIsaacHome.png
-vale-home	5	Vale		event	0	gValeHome_Events[0]	1		03898				03898	vale-home/events/gValeHome_Events-0.png
-vale-home	5	Vale		event	0	gValeHome_Events[1]	2		03899				03899	vale-home/events/gValeHome_Events-1-2.png
-vale-home	5	Vale		event	0	gValeHome_Events[1]	1		03899				03899	vale-home/events/gValeHome_Events-1.png
-vale-home	5	Vale		event	0	gValeHome_Events[10]	2		03963				03963	vale-home/events/gValeHome_Events-10-2.png
-vale-home	5	Vale		event	0	gValeHome_Events[10]	1		03963				03963	vale-home/events/gValeHome_Events-10.png
-vale-home	5	Vale		event	0	gValeHome_Events[4]	2		03906				03906	vale-home/events/gValeHome_Events-4-2.png
-vale-home	5	Vale		event	0	gValeHome_Events[4]	1		03906				03906	vale-home/events/gValeHome_Events-4.png
-vale-home	5	Vale		event	0	gValeHome_Events[5]	1		03907				03907	vale-home/events/gValeHome_Events-5.png
-vale-home	5	Vale		event	0	gValeHome_Events[7]	2						03911	vale-home/events/gValeHome_Events-7-2.png
-vale-home	5	Vale		event	0	gValeHome_Events[7]	3						03911	vale-home/events/gValeHome_Events-7-3.png
-vale-home	5	Vale		event	0	gValeHome_Events[7]	1						03911	vale-home/events/gValeHome_Events-7.png
-vale-home	5	Vale		event	0	gValeHome_Events[9]	1		03916				03916	vale-home/events/gValeHome_Events-9.png
-vale-home	5	Vale		event-gif	0	gValeHome_EventsAfterKalay[1]						66	07141	vale-home/events/gValeHome_EventsAfterKalay-1.gif
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[1]	1		07141				07141	vale-home/events/gValeHome_EventsAfterKalay-1.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[11]	1		07154				07154	vale-home/events/gValeHome_EventsAfterKalay-11.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[12]	1		07155				07155	vale-home/events/gValeHome_EventsAfterKalay-12.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[13]	2		07156				07156	vale-home/events/gValeHome_EventsAfterKalay-13-2.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[13]	1		07156				07156	vale-home/events/gValeHome_EventsAfterKalay-13.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[14]	1		07157				07157	vale-home/events/gValeHome_EventsAfterKalay-14.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[15]	2		07158				07158	vale-home/events/gValeHome_EventsAfterKalay-15-2.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[15]	1		07158				07158	vale-home/events/gValeHome_EventsAfterKalay-15.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[16]	1		07159				07159	vale-home/events/gValeHome_EventsAfterKalay-16.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[17]	1		07160				07160	vale-home/events/gValeHome_EventsAfterKalay-17.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[18]	1		07161				07161	vale-home/events/gValeHome_EventsAfterKalay-18.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[19]	1		07162				07162	vale-home/events/gValeHome_EventsAfterKalay-19.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[2]	2		07142				07142	vale-home/events/gValeHome_EventsAfterKalay-2-2.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[2]	1		07142				07142	vale-home/events/gValeHome_EventsAfterKalay-2.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[20]	2		07163				07163	vale-home/events/gValeHome_EventsAfterKalay-20-2.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[20]	1		07163				07163	vale-home/events/gValeHome_EventsAfterKalay-20.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[22]	2						07333	vale-home/events/gValeHome_EventsAfterKalay-22-2.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[22]	3						07333	vale-home/events/gValeHome_EventsAfterKalay-22-3.png
-vale-home	5	Vale		event-gif	0	gValeHome_EventsAfterKalay[22]						246	07333	vale-home/events/gValeHome_EventsAfterKalay-22.gif
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[22]	1						07333	vale-home/events/gValeHome_EventsAfterKalay-22.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[3]	2		07143				07143	vale-home/events/gValeHome_EventsAfterKalay-3-2.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[3]	3		07143				07143	vale-home/events/gValeHome_EventsAfterKalay-3-3.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[3]	1		07143				07143	vale-home/events/gValeHome_EventsAfterKalay-3.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[5]	1		07149				07149	vale-home/events/gValeHome_EventsAfterKalay-5.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[6]	1		07150				07150	vale-home/events/gValeHome_EventsAfterKalay-6.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[7]	2		07151				07151	vale-home/events/gValeHome_EventsAfterKalay-7-2.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[7]	1		07151				07151	vale-home/events/gValeHome_EventsAfterKalay-7.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[8]	1		07152				07152	vale-home/events/gValeHome_EventsAfterKalay-8.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterKalay[9]	1		07153				07153	vale-home/events/gValeHome_EventsAfterKalay-9.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[0]	2		04493				04493	vale-home/events/gValeHome_EventsAfterLeaving-0-2.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[0]	1		04493				04493	vale-home/events/gValeHome_EventsAfterLeaving-0.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[1]	2		04494				04494	vale-home/events/gValeHome_EventsAfterLeaving-1-2.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[1]	1		04494				04494	vale-home/events/gValeHome_EventsAfterLeaving-1.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[11]	1		04558				04558	vale-home/events/gValeHome_EventsAfterLeaving-11.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[12]	1		04559				04559	vale-home/events/gValeHome_EventsAfterLeaving-12.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[13]	2		04560				04560	vale-home/events/gValeHome_EventsAfterLeaving-13-2.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[13]	1		04560				04560	vale-home/events/gValeHome_EventsAfterLeaving-13.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[14]	2		04561				04561	vale-home/events/gValeHome_EventsAfterLeaving-14-2.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[14]	3		04561				04561	vale-home/events/gValeHome_EventsAfterLeaving-14-3.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[14]	1		04561				04561	vale-home/events/gValeHome_EventsAfterLeaving-14.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[15]	2		04562				04562	vale-home/events/gValeHome_EventsAfterLeaving-15-2.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[15]	1		04562				04562	vale-home/events/gValeHome_EventsAfterLeaving-15.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[16]	2		04563				04563	vale-home/events/gValeHome_EventsAfterLeaving-16-2.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[16]	1		04563				04563	vale-home/events/gValeHome_EventsAfterLeaving-16.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[17]	2		04564				04564	vale-home/events/gValeHome_EventsAfterLeaving-17-2.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[17]	1		04564				04564	vale-home/events/gValeHome_EventsAfterLeaving-17.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[18]	1		04565				04565	vale-home/events/gValeHome_EventsAfterLeaving-18.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[19]	2		04566				04566	vale-home/events/gValeHome_EventsAfterLeaving-19-2.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[19]	1		04566				04566	vale-home/events/gValeHome_EventsAfterLeaving-19.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[2]	1		04495				04495	vale-home/events/gValeHome_EventsAfterLeaving-2.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[20]	2		04567				04567	vale-home/events/gValeHome_EventsAfterLeaving-20-2.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[20]	1		04567				04567	vale-home/events/gValeHome_EventsAfterLeaving-20.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[21]	2		04596				04596	vale-home/events/gValeHome_EventsAfterLeaving-21-2.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[21]	1		04596				04596	vale-home/events/gValeHome_EventsAfterLeaving-21.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[3]	2		04496				04496	vale-home/events/gValeHome_EventsAfterLeaving-3-2.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[3]	1		04496				04496	vale-home/events/gValeHome_EventsAfterLeaving-3.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[5]	1		04500				04500	vale-home/events/gValeHome_EventsAfterLeaving-5.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[6]	1		04501				04501	vale-home/events/gValeHome_EventsAfterLeaving-6.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[7]	2		04502				04502	vale-home/events/gValeHome_EventsAfterLeaving-7-2.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[7]	1		04502				04502	vale-home/events/gValeHome_EventsAfterLeaving-7.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[9]	2		04508				04508	vale-home/events/gValeHome_EventsAfterLeaving-9-2.png
-vale-home	5	Vale		event	0	gValeHome_EventsAfterLeaving[9]	1		04508				04508	vale-home/events/gValeHome_EventsAfterLeaving-9.png
-vale-home	5	Vale		event	0	gValeHome_StormEvents[1]	2		03755				03755	vale-home/events/gValeHome_StormEvents-1-2.png
-vale-home	5	Vale		event-gif	0	gValeHome_StormEvents[1]						97	03755	vale-home/events/gValeHome_StormEvents-1.gif
-vale-home	5	Vale		event	0	gValeHome_StormEvents[1]	1		03755				03755	vale-home/events/gValeHome_StormEvents-1.png
-vale-home	5	Vale		event	0	gValeHome_StormEvents[2]	2		03756				03756	vale-home/events/gValeHome_StormEvents-2-2.png
-vale-home	5	Vale		event-gif	0	gValeHome_StormEvents[2]						96	03756	vale-home/events/gValeHome_StormEvents-2.gif
-vale-home	5	Vale		event	0	gValeHome_StormEvents[2]	1		03756				03756	vale-home/events/gValeHome_StormEvents-2.png
-vale-home	5	Vale		event	0	gValeHome_StormEvents[3]	2		03757				03757	vale-home/events/gValeHome_StormEvents-3-2.png
-vale-home	5	Vale		event-gif	0	gValeHome_StormEvents[3]						109	03757	vale-home/events/gValeHome_StormEvents-3.gif
-vale-home	5	Vale		event	0	gValeHome_StormEvents[3]	1		03757				03757	vale-home/events/gValeHome_StormEvents-3.png
-vale-home	5	Vale		event-gif	0	gValeHome_StormEvents[6]						65	03781	vale-home/events/gValeHome_StormEvents-6.gif
-vale-home	5	Vale		event	0	gValeHome_StormEvents[6]	1		03781				03781	vale-home/events/gValeHome_StormEvents-6.png
-vale-home	5	Vale		map	0									vale-home/map-0.png
+vale-gate	5	Vale		entrance	0									vale-gate/entrance.png
+vale-gate	5	Vale		event	0	Event_AskAboutJourney	2		03753				07144, 07145, 07146, 07147, 07148, 04497, 04498, 04499, 03752, 03753, 03754	vale-gate/events/Event_AskAboutJourney-2.png
+vale-gate	5	Vale		event-gif	0	Event_AskAboutJourney						144	07144, 07145, 07146, 07147, 07148, 04497, 04498, 04499, 03752, 03753, 03754	vale-gate/events/Event_AskAboutJourney.gif
+vale-gate	5	Vale		event	0	Event_AskAboutJourney	1		03752				07144, 07145, 07146, 07147, 07148, 04497, 04498, 04499, 03752, 03753, 03754	vale-gate/events/Event_AskAboutJourney.png
+vale-gate	5	Vale		event	0	Event_AskAboutMeditation	2		03901				03900, 03901, 03902	vale-gate/events/Event_AskAboutMeditation-2.png
+vale-gate	5	Vale		event	0	Event_AskAboutMeditation	3		03901				03900, 03901, 03902	vale-gate/events/Event_AskAboutMeditation-3.png
+vale-gate	5	Vale		event	0	Event_AskAboutMeditation	1		03900				03900, 03901, 03902	vale-gate/events/Event_AskAboutMeditation.png
+vale-gate	5	Vale		event	0	Event_AskAboutTheTravelers	2		03909				03908, 03909, 03910	vale-gate/events/Event_AskAboutTheTravelers-2.png
+vale-gate	5	Vale		event	0	Event_AskAboutTheTravelers	3		03909				03908, 03909, 03910	vale-gate/events/Event_AskAboutTheTravelers-3.png
+vale-gate	5	Vale		event	0	Event_AskAboutTheTravelers	1		03908				03908, 03909, 03910	vale-gate/events/Event_AskAboutTheTravelers.png
+vale-gate	5	Vale		event	0	Event_DemonstrateLevitation	2		03759				03758, 03759	vale-gate/events/Event_DemonstrateLevitation-2.png
+vale-gate	5	Vale		event	0	Event_DemonstrateLevitation	3		03759				03758, 03759	vale-gate/events/Event_DemonstrateLevitation-3.png
+vale-gate	5	Vale		event-gif	0	Event_DemonstrateLevitation						253	03758, 03759	vale-gate/events/Event_DemonstrateLevitation.gif
+vale-gate	5	Vale		event	0	Event_DemonstrateLevitation	1		03758				03758, 03759	vale-gate/events/Event_DemonstrateLevitation.png
+vale-gate	5	Vale		event-segment	0	Event_DemonstrateLevitation		0			03758 MsgValeIHaveSomePsynergyLeft	59	03758, 03759	vale-gate/events/Event_DemonstrateLevitation_0.gif
+vale-gate	5	Vale		event-segment	0	Event_DemonstrateLevitation		1		03758 MsgValeIHaveSomePsynergyLeft	03759	166	03758, 03759	vale-gate/events/Event_DemonstrateLevitation_1.gif
+vale-gate	5	Vale		event	0	Event_DemonstratePsynergy	2		03913				04505, 04504, 04503, 04506, 04507, 03912, 03913, 03914, 03915	vale-gate/events/Event_DemonstratePsynergy-2.png
+vale-gate	5	Vale		event	0	Event_DemonstratePsynergy	3		03915				04505, 04504, 04503, 04506, 04507, 03912, 03913, 03914, 03915	vale-gate/events/Event_DemonstratePsynergy-3.png
+vale-gate	5	Vale		event	0	Event_DemonstratePsynergy	1		03912				04505, 04504, 04503, 04506, 04507, 03912, 03913, 03914, 03915	vale-gate/events/Event_DemonstratePsynergy.png
+vale-gate	5	Vale		event-segment	0	Event_DemonstratePsynergy		2		03913	03915 MsgValeBeholdPowerPsynergy	200	04505, 04504, 04503, 04506, 04507, 03912, 03913, 03914, 03915	vale-gate/events/Event_DemonstratePsynergy_2.gif
+vale-gate	5	Vale		event	0	Event_PsynergyStoneIsGone	2		07317				07316, 07317	vale-gate/events/Event_PsynergyStoneIsGone-2.png
+vale-gate	5	Vale		event	0	Event_PsynergyStoneIsGone	3		07317				07316, 07317	vale-gate/events/Event_PsynergyStoneIsGone-3.png
+vale-gate	5	Vale		event	0	Event_PsynergyStoneIsGone	1		07316				07316, 07317	vale-gate/events/Event_PsynergyStoneIsGone.png
+vale-gate	5	Vale		event	0	Event_RecallThreeYearsAgo	2		03904				03903, 03904, 03905	vale-gate/events/Event_RecallThreeYearsAgo-2.png
+vale-gate	5	Vale		event	0	Event_RecallThreeYearsAgo	3		03904				03903, 03904, 03905	vale-gate/events/Event_RecallThreeYearsAgo-3.png
+vale-gate	5	Vale		event	0	Event_RecallThreeYearsAgo	1		03903				03903, 03904, 03905	vale-gate/events/Event_RecallThreeYearsAgo.png
+vale-gate	5	Vale		event	0	Event_SentToAidElders	2		03767				03766, 03767, 03768, 03769, 03770, 03771, 03772, 03773, 03774, 03775, 03776, 03777, 03778, 03779, 03780, 03781	vale-gate/events/Event_SentToAidElders-2.png
+vale-gate	5	Vale		event	0	Event_SentToAidElders	3		03768				03766, 03767, 03768, 03769, 03770, 03771, 03772, 03773, 03774, 03775, 03776, 03777, 03778, 03779, 03780, 03781	vale-gate/events/Event_SentToAidElders-3.png
+vale-gate	5	Vale		event	0	Event_SentToAidElders	4		03769				03766, 03767, 03768, 03769, 03770, 03771, 03772, 03773, 03774, 03775, 03776, 03777, 03778, 03779, 03780, 03781	vale-gate/events/Event_SentToAidElders-4.png
+vale-gate	5	Vale		event	0	Event_SentToAidElders	1		03766				03766, 03767, 03768, 03769, 03770, 03771, 03772, 03773, 03774, 03775, 03776, 03777, 03778, 03779, 03780, 03781	vale-gate/events/Event_SentToAidElders.png
+vale-gate	5	Vale		event-segment	0	Event_SentToAidElders		1		03766 MsgValeGoAidElders	03767	127	03766, 03767, 03768, 03769, 03770, 03771, 03772, 03773, 03774, 03775, 03776, 03777, 03778, 03779, 03780, 03781	vale-gate/events/Event_SentToAidElders_1.gif
+vale-gate	5	Vale		event-segment	0	Event_SentToAidElders		3		03768	03769	62	03766, 03767, 03768, 03769, 03770, 03771, 03772, 03773, 03774, 03775, 03776, 03777, 03778, 03779, 03780, 03781	vale-gate/events/Event_SentToAidElders_3.gif
+vale-gate	5	Vale		event-segment	0	Event_SentToAidElders		4		03769	03770	107	03766, 03767, 03768, 03769, 03770, 03771, 03772, 03773, 03774, 03775, 03776, 03777, 03778, 03779, 03780, 03781	vale-gate/events/Event_SentToAidElders_4.gif
+vale-gate	5	Vale		event-segment	0	Event_SentToAidElders		5		03770	03771	62	03766, 03767, 03768, 03769, 03770, 03771, 03772, 03773, 03774, 03775, 03776, 03777, 03778, 03779, 03780, 03781	vale-gate/events/Event_SentToAidElders_5.gif
+vale-gate	5	Vale		event-segment	0	Event_SentToAidElders		6		03771	03772	79	03766, 03767, 03768, 03769, 03770, 03771, 03772, 03773, 03774, 03775, 03776, 03777, 03778, 03779, 03780, 03781	vale-gate/events/Event_SentToAidElders_6.gif
+vale-gate	5	Vale		event	0	Event_TalkAboutFallenStone	2		04552				04551, 04552	vale-gate/events/Event_TalkAboutFallenStone-2.png
+vale-gate	5	Vale		event-gif	0	Event_TalkAboutFallenStone						228	04551, 04552	vale-gate/events/Event_TalkAboutFallenStone.gif
+vale-gate	5	Vale		event	0	Event_TalkAboutFallenStone	1		04551				04551, 04552	vale-gate/events/Event_TalkAboutFallenStone.png
+vale-gate	5	Vale		event-segment	0	Event_TalkAboutFallenStone		1		04551 MsgValeTheStoneFellOnThe	04552	96	04551, 04552	vale-gate/events/Event_TalkAboutFallenStone_1.gif
+vale-gate	5	Vale		event-gif	0	Event_TalkAboutHelping						62	03761, 03760	vale-gate/events/Event_TalkAboutHelping.gif
+vale-gate	5	Vale		event	0	Event_TalkAboutHelping	1		03760				03761, 03760	vale-gate/events/Event_TalkAboutHelping.png
+vale-gate	5	Vale		event	0	Event_UsePsynergyStone	2		02420				04383, 02420	vale-gate/events/Event_UsePsynergyStone-2.png
+vale-gate	5	Vale		event	0	Event_UsePsynergyStone	1		04383				04383, 02420	vale-gate/events/Event_UsePsynergyStone.png
+vale-gate	5	Vale		event-gif	0	Event_WelcomeIsaacHome						77	07140, 07139	vale-gate/events/Event_WelcomeIsaacHome.gif
+vale-gate	5	Vale		event	0	Event_WelcomeIsaacHome	1		07139				07140, 07139	vale-gate/events/Event_WelcomeIsaacHome.png
+vale-gate	5	Vale		event	0	gValeHome_Events[0]	1		03898				03898	vale-gate/events/gValeHome_Events-0.png
+vale-gate	5	Vale		event	0	gValeHome_Events[1]	2		03899				03899	vale-gate/events/gValeHome_Events-1-2.png
+vale-gate	5	Vale		event	0	gValeHome_Events[1]	1		03899				03899	vale-gate/events/gValeHome_Events-1.png
+vale-gate	5	Vale		event	0	gValeHome_Events[10]	2		03963				03963	vale-gate/events/gValeHome_Events-10-2.png
+vale-gate	5	Vale		event	0	gValeHome_Events[10]	1		03963				03963	vale-gate/events/gValeHome_Events-10.png
+vale-gate	5	Vale		event	0	gValeHome_Events[4]	2		03906				03906	vale-gate/events/gValeHome_Events-4-2.png
+vale-gate	5	Vale		event	0	gValeHome_Events[4]	1		03906				03906	vale-gate/events/gValeHome_Events-4.png
+vale-gate	5	Vale		event	0	gValeHome_Events[5]	1		03907				03907	vale-gate/events/gValeHome_Events-5.png
+vale-gate	5	Vale		event	0	gValeHome_Events[7]	2						03911	vale-gate/events/gValeHome_Events-7-2.png
+vale-gate	5	Vale		event	0	gValeHome_Events[7]	3						03911	vale-gate/events/gValeHome_Events-7-3.png
+vale-gate	5	Vale		event	0	gValeHome_Events[7]	1						03911	vale-gate/events/gValeHome_Events-7.png
+vale-gate	5	Vale		event	0	gValeHome_Events[9]	1		03916				03916	vale-gate/events/gValeHome_Events-9.png
+vale-gate	5	Vale		event-gif	0	gValeHome_EventsAfterKalay[1]						66	07141	vale-gate/events/gValeHome_EventsAfterKalay-1.gif
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[1]	1		07141				07141	vale-gate/events/gValeHome_EventsAfterKalay-1.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[11]	1		07154				07154	vale-gate/events/gValeHome_EventsAfterKalay-11.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[12]	1		07155				07155	vale-gate/events/gValeHome_EventsAfterKalay-12.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[13]	2		07156				07156	vale-gate/events/gValeHome_EventsAfterKalay-13-2.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[13]	1		07156				07156	vale-gate/events/gValeHome_EventsAfterKalay-13.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[14]	1		07157				07157	vale-gate/events/gValeHome_EventsAfterKalay-14.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[15]	2		07158				07158	vale-gate/events/gValeHome_EventsAfterKalay-15-2.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[15]	1		07158				07158	vale-gate/events/gValeHome_EventsAfterKalay-15.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[16]	1		07159				07159	vale-gate/events/gValeHome_EventsAfterKalay-16.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[17]	1		07160				07160	vale-gate/events/gValeHome_EventsAfterKalay-17.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[18]	1		07161				07161	vale-gate/events/gValeHome_EventsAfterKalay-18.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[19]	1		07162				07162	vale-gate/events/gValeHome_EventsAfterKalay-19.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[2]	2		07142				07142	vale-gate/events/gValeHome_EventsAfterKalay-2-2.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[2]	1		07142				07142	vale-gate/events/gValeHome_EventsAfterKalay-2.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[20]	2		07163				07163	vale-gate/events/gValeHome_EventsAfterKalay-20-2.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[20]	1		07163				07163	vale-gate/events/gValeHome_EventsAfterKalay-20.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[22]	2						07333	vale-gate/events/gValeHome_EventsAfterKalay-22-2.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[22]	3						07333	vale-gate/events/gValeHome_EventsAfterKalay-22-3.png
+vale-gate	5	Vale		event-gif	0	gValeHome_EventsAfterKalay[22]						246	07333	vale-gate/events/gValeHome_EventsAfterKalay-22.gif
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[22]	1						07333	vale-gate/events/gValeHome_EventsAfterKalay-22.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[3]	2		07143				07143	vale-gate/events/gValeHome_EventsAfterKalay-3-2.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[3]	3		07143				07143	vale-gate/events/gValeHome_EventsAfterKalay-3-3.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[3]	1		07143				07143	vale-gate/events/gValeHome_EventsAfterKalay-3.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[5]	1		07149				07149	vale-gate/events/gValeHome_EventsAfterKalay-5.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[6]	1		07150				07150	vale-gate/events/gValeHome_EventsAfterKalay-6.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[7]	2		07151				07151	vale-gate/events/gValeHome_EventsAfterKalay-7-2.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[7]	1		07151				07151	vale-gate/events/gValeHome_EventsAfterKalay-7.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[8]	1		07152				07152	vale-gate/events/gValeHome_EventsAfterKalay-8.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterKalay[9]	1		07153				07153	vale-gate/events/gValeHome_EventsAfterKalay-9.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[0]	2		04493				04493	vale-gate/events/gValeHome_EventsAfterLeaving-0-2.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[0]	1		04493				04493	vale-gate/events/gValeHome_EventsAfterLeaving-0.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[1]	2		04494				04494	vale-gate/events/gValeHome_EventsAfterLeaving-1-2.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[1]	1		04494				04494	vale-gate/events/gValeHome_EventsAfterLeaving-1.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[11]	1		04558				04558	vale-gate/events/gValeHome_EventsAfterLeaving-11.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[12]	1		04559				04559	vale-gate/events/gValeHome_EventsAfterLeaving-12.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[13]	2		04560				04560	vale-gate/events/gValeHome_EventsAfterLeaving-13-2.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[13]	1		04560				04560	vale-gate/events/gValeHome_EventsAfterLeaving-13.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[14]	2		04561				04561	vale-gate/events/gValeHome_EventsAfterLeaving-14-2.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[14]	3		04561				04561	vale-gate/events/gValeHome_EventsAfterLeaving-14-3.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[14]	1		04561				04561	vale-gate/events/gValeHome_EventsAfterLeaving-14.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[15]	2		04562				04562	vale-gate/events/gValeHome_EventsAfterLeaving-15-2.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[15]	1		04562				04562	vale-gate/events/gValeHome_EventsAfterLeaving-15.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[16]	2		04563				04563	vale-gate/events/gValeHome_EventsAfterLeaving-16-2.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[16]	1		04563				04563	vale-gate/events/gValeHome_EventsAfterLeaving-16.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[17]	2		04564				04564	vale-gate/events/gValeHome_EventsAfterLeaving-17-2.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[17]	1		04564				04564	vale-gate/events/gValeHome_EventsAfterLeaving-17.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[18]	1		04565				04565	vale-gate/events/gValeHome_EventsAfterLeaving-18.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[19]	2		04566				04566	vale-gate/events/gValeHome_EventsAfterLeaving-19-2.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[19]	1		04566				04566	vale-gate/events/gValeHome_EventsAfterLeaving-19.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[2]	1		04495				04495	vale-gate/events/gValeHome_EventsAfterLeaving-2.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[20]	2		04567				04567	vale-gate/events/gValeHome_EventsAfterLeaving-20-2.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[20]	1		04567				04567	vale-gate/events/gValeHome_EventsAfterLeaving-20.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[21]	2		04596				04596	vale-gate/events/gValeHome_EventsAfterLeaving-21-2.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[21]	1		04596				04596	vale-gate/events/gValeHome_EventsAfterLeaving-21.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[3]	2		04496				04496	vale-gate/events/gValeHome_EventsAfterLeaving-3-2.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[3]	1		04496				04496	vale-gate/events/gValeHome_EventsAfterLeaving-3.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[5]	1		04500				04500	vale-gate/events/gValeHome_EventsAfterLeaving-5.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[6]	1		04501				04501	vale-gate/events/gValeHome_EventsAfterLeaving-6.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[7]	2		04502				04502	vale-gate/events/gValeHome_EventsAfterLeaving-7-2.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[7]	1		04502				04502	vale-gate/events/gValeHome_EventsAfterLeaving-7.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[9]	2		04508				04508	vale-gate/events/gValeHome_EventsAfterLeaving-9-2.png
+vale-gate	5	Vale		event	0	gValeHome_EventsAfterLeaving[9]	1		04508				04508	vale-gate/events/gValeHome_EventsAfterLeaving-9.png
+vale-gate	5	Vale		event	0	gValeHome_StormEvents[1]	2		03755				03755	vale-gate/events/gValeHome_StormEvents-1-2.png
+vale-gate	5	Vale		event-gif	0	gValeHome_StormEvents[1]						97	03755	vale-gate/events/gValeHome_StormEvents-1.gif
+vale-gate	5	Vale		event	0	gValeHome_StormEvents[1]	1		03755				03755	vale-gate/events/gValeHome_StormEvents-1.png
+vale-gate	5	Vale		event	0	gValeHome_StormEvents[2]	2		03756				03756	vale-gate/events/gValeHome_StormEvents-2-2.png
+vale-gate	5	Vale		event-gif	0	gValeHome_StormEvents[2]						96	03756	vale-gate/events/gValeHome_StormEvents-2.gif
+vale-gate	5	Vale		event	0	gValeHome_StormEvents[2]	1		03756				03756	vale-gate/events/gValeHome_StormEvents-2.png
+vale-gate	5	Vale		event	0	gValeHome_StormEvents[3]	2		03757				03757	vale-gate/events/gValeHome_StormEvents-3-2.png
+vale-gate	5	Vale		event-gif	0	gValeHome_StormEvents[3]						109	03757	vale-gate/events/gValeHome_StormEvents-3.gif
+vale-gate	5	Vale		event	0	gValeHome_StormEvents[3]	1		03757				03757	vale-gate/events/gValeHome_StormEvents-3.png
+vale-gate	5	Vale		event-gif	0	gValeHome_StormEvents[6]						65	03781	vale-gate/events/gValeHome_StormEvents-6.gif
+vale-gate	5	Vale		event	0	gValeHome_StormEvents[6]	1		03781				03781	vale-gate/events/gValeHome_StormEvents-6.png
+vale-gate	5	Vale		map	0									vale-gate/map-0.png
 vale-kraden	6	Vale		entrance	0									vale-kraden/entrance.png
 vale-kraden	6	Vale		event	0	Event_KradenPlansSanctumVisit	2		04007				04006, 04007, 04008, 04009, 04010, 04011, 04012, 04013, 04014, 04015, 04016, 04017, 04018, 04019, 04020, 04021, 04022, 04023, 04024, 04025, 04026, 04027, 04028, 04029, 04030, 04031, 04032, 04033, 04034, 04035, 04036, 04037, 04038, 04041, 04039, 04042, 04040, 04043	vale-kraden/events/Event_KradenPlansSanctumVisit-2.png
 vale-kraden	6	Vale		event	0	Event_KradenPlansSanctumVisit	3		04008				04006, 04007, 04008, 04009, 04010, 04011, 04012, 04013, 04014, 04015, 04016, 04017, 04018, 04019, 04020, 04021, 04022, 04023, 04024, 04025, 04026, 04027, 04028, 04029, 04030, 04031, 04032, 04033, 04034, 04035, 04036, 04037, 04038, 04041, 04039, 04042, 04040, 04043	vale-kraden/events/Event_KradenPlansSanctumVisit-3.png
