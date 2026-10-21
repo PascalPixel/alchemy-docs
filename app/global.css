@@ -19,6 +19,16 @@ img[src$='.gif'] {
   height: auto;
 }
 
+/* The renders of the game, shown as the GBA's screen showed them (the
+   #gba-colour filter in app/layout.tsx), unless the reader picked the raw
+   colours. The games' picture files keep the colours their palettes store. */
+:root:not([data-colours='raw']) img:is([src*='/places/'], [src*='/abilities/'], [src*='/story/'], [src*='/guides/']):not([src*='/pictures/']) {
+  filter: url(#gba-colour) brightness(0.92);
+}
+img:is([src*='/places/'], [src*='/abilities/'], [src*='/story/'], [src*='/guides/']):not([src*='/pictures/']) {
+  image-rendering: pixelated;
+}
+
 /* The games' own picture files, such as an effect's sheet with its palette,
    shown side by side at twice their size, pixel for pixel. */
 img[src*='/pictures/'] {
