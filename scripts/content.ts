@@ -22,6 +22,10 @@ const docs = fileURLToPath(new URL('..', import.meta.url));
 const repo = process.env.ALCHEMY ?? join(docs, '../alchemy');
 const content = join(docs, 'content/docs');
 const github = 'https://github.com/PascalPixel/alchemy/blob/main';
+// The Broken Seal's scenes by symbol, numbered as field/scenes.s lists them.
+const sceneIds = new Map(
+  [...readFileSync(join(repo, 'games/tbs/src/field/scenes.s'), 'utf8').matchAll(/^\tscene (\w*),/gm)].map((m, i) => [m[1], i] as const),
+);
 
 type Game = 'tbs' | 'tla';
 // The games with pages. The Lost Age is still being decompiled: it has one
@@ -476,8 +480,69 @@ function guides() {
 
 function places(files: SourceFile[]) {
   const scenes = files.filter((f) => /^games\/tbs\/src\/scene\/[^/]+\.c$/.test(f.path));
-  const rows = scenes.map((f) => `| [${basename(f.path, '.c')}](${pageOf(f.path)}) | ${f.summary} |`);
-  page('tbs/places.md', { title: 'Places', description: 'Every place the party can walk around in, and what happens there.' }, `Each scene overlay is one place, or a few that share it. The [Scenes](/tbs/world/scenes) guide explains how a scene runs and how to find an event in it.\n\n| Scene | What happens there |\n| --- | --- |\n${rows.join('\n')}`);
+  const pages = placePages(scenes);
+  const rows = scenes.map((f) => {
+    const here = pages.filter((p) => p.file === f).map((p) => `[${p.title}](/tbs/places/${p.slug})`);
+    return `| [${basename(f.path, '.c')}](${pageOf(f.path)}) | ${here.join(', ')} | ${f.summary} |`;
+  });
+  page('tbs/places/index.md', { title: 'Places', description: 'Every place the party can walk around in, and what happens there.' }, `Each scene overlay is one place, or a few that share it, and each place has a page of its own with its map and its events. The [Scenes](/tbs/world/scenes) guide explains how a scene runs and how to find an event in it.\n\n| Scene | Places | What happens there |\n| --- | --- | --- |\n${rows.join('\n')}`);
+  write(join(content, 'tbs/places/meta.json'), JSON.stringify({ title: 'Places', pages: pages.map((p) => p.slug) }, null, 2) + '\n');
+}
+
+// A page for each place: the paragraph its overlay's opening comment gives it
+// (`- SceneName (scene N), ...`), or the whole comment when the overlay holds
+// one place; the place's maps as the game draws them, where public/places
+// has them; and the events whose comments name it, each with its recordings.
+// The pages follow the scene numbers, which run in story order.
+type Place = { file: SourceFile; scene: string; id: number; slug: string; title: string };
+function placePages(scenes: SourceFile[]): Place[] {
+  const kebab = (s: string) => s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+  const words = (s: string) => s.replace(/([a-z])([A-Z0-9])/g, '$1 $2').replace(/([0-9])([A-Z])/g, '$1 $2');
+  const out: (Place & { text: string; whole?: boolean })[] = [];
+  for (const f of scenes) {
+    const bullets = [...f.doc.matchAll(/^- (\w+) \(scene (\d+)\),?\s*([\s\S]*?)(?=\n- \w+ \(scene \d+\)|\n\n|(?![\s\S]))/gm)];
+    if (bullets.length) {
+      for (const b of bullets) out.push({ file: f, scene: b[1], id: +b[2], slug: kebab(b[1]), title: words(b[1]), text: `\`${b[1]}\` (scene ${b[2]}), ${b[3].replace(/\n\s*/g, ' ')}` });
+      continue;
+    }
+    // An overlay whose comment lists no places: a page for each scene its
+    // exit tables are for, each with the whole comment.
+    const own = [...new Set([...readFileSync(join(repo, f.path), 'utf8').matchAll(/SCENE_EXITS\((\w+)\)/g)].map((m) => m[1]))];
+    for (const s of own) {
+      const id = sceneIds.get(s);
+      if (id !== undefined) out.push({ file: f, scene: s, id, slug: kebab(s), title: words(s), text: f.doc, whole: true });
+    }
+  }
+  out.sort((a, b) => a.id - b.id);
+  const pub = join(docs, 'public/places');
+  for (const p of out) {
+    const dir = join(pub, p.slug);
+    const shown = existsSync(dir) ? readdirSync(dir).sort() : [];
+    const maps = shown.filter((n) => /^map-\d+\.png$/.test(n));
+    const body: string[] = [];
+    // A place that shares its overlay opens with what the overlay's comment
+    // says of them all (their doors, their area name).
+    const alone = out.filter((q) => q.file === p.file).length === 1;
+    if (!alone && !p.whole) body.push(p.file.doc.split('\n\n')[0].replace(/\s*[^.:]*:\s*$/, ''));
+    body.push(p.text);
+    for (const m of maps) body.push(`![The whole of ${p.title}, as the game draws it](/places/${p.slug}/${m})`);
+    // Its events: the functions whose comments name the place, or every
+    // documented function when the overlay holds this place alone.
+    const named = new RegExp(`\\b${p.scene}\\b`);
+    const events = p.file.decls.filter((d) => d.kind === 'function' && d.doc && (alone ? /^Event_|_Event|Event[A-Z]/.test(d.name) : named.test(d.doc)));
+    const recorded = existsSync(join(dir, 'events')) ? readdirSync(join(dir, 'events')).sort() : [];
+    if (events.length) {
+      body.push('## Events');
+      for (const d of events) {
+        const first = d.doc.split(/(?<=[.!?])\s/)[0].replace(/\n/g, ' ');
+        body.push(`### \`${d.name}\`\n\n${first} [Read the code](${pageOf(p.file.path)}#${anchor(d.name)}).`);
+        for (const r of recorded.filter((n) => n.startsWith(`${d.name}_`) && n.endsWith('.gif'))) body.push(`![${d.name} as it plays](/places/${p.slug}/events/${r})`);
+      }
+    }
+    body.push(`Its code is in [${basename(p.file.path)}](${pageOf(p.file.path)}).`);
+    page(`tbs/places/${p.slug}.md`, { title: p.title, description: `${basename(p.file.path)}, scene ${p.id}.`, source: p.file.path }, body.join('\n\n'));
+  }
+  return out;
 }
 
 // ---------------------------------------------------------------------------
@@ -1315,7 +1380,7 @@ function pictures() {
 // ---------------------------------------------------------------------------
 
 const started = Date.now();
-for (const p of ['index.md', 'tbs/index.md', 'start.md', 'tbs/source', 'tla/source', 'tbs/places.md', 'tbs/abilities.md', 'tbs/abilities', 'tbs/matching.md', ...GUIDES.map(([, t]) => `${t}.md`), ...SECTIONS.map(([, t]) => `${t}.md`)]) {
+for (const p of ['index.md', 'tbs/index.md', 'start.md', 'tbs/source', 'tla/source', 'tbs/places.md', 'tbs/places', 'tbs/abilities.md', 'tbs/abilities', 'tbs/matching.md', ...GUIDES.map(([, t]) => `${t}.md`), ...SECTIONS.map(([, t]) => `${t}.md`)]) {
   rmSync(join(content, p), { recursive: true, force: true });
 }
 
