@@ -2546,44 +2546,44 @@ lunpa2	159	Lunpa Fortress Gates		event	0	Event_ReadRightGuardsThoughts	1						09
 lunpa2	159	Lunpa Fortress Gates		event	0	Event_TalkToLeftGuard	1						09435, 09233, 09436, 07093	lunpa2/events/Event_TalkToLeftGuard.png
 lunpa2	159	Lunpa Fortress Gates		event	0	Event_TalkToRightGuard	1						09234, 09437, 07094	lunpa2/events/Event_TalkToRightGuard.png
 lunpa2	159	Lunpa Fortress Gates		map	0									lunpa2/map-0.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	Event_SearchWell	2		10718				02375, 10718	mc-coy-palace-garden/events/Event_SearchWell-2.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	Event_SearchWell	1		02375				02375, 10718	mc-coy-palace-garden/events/Event_SearchWell.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	Event_TalkToEastGuard	2		05133				05140, 05141, 05142, 05139, 05133, 05135, 05136, 05137, 05138, 05134	mc-coy-palace-garden/events/Event_TalkToEastGuard-2.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	Event_TalkToEastGuard	3		05135				05140, 05141, 05142, 05139, 05133, 05135, 05136, 05137, 05138, 05134	mc-coy-palace-garden/events/Event_TalkToEastGuard-3.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	Event_TalkToEastGuard	4		05136				05140, 05141, 05142, 05139, 05133, 05135, 05136, 05137, 05138, 05134	mc-coy-palace-garden/events/Event_TalkToEastGuard-4.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	Event_TalkToEastGuard	1		05133				05140, 05141, 05142, 05139, 05133, 05135, 05136, 05137, 05138, 05134	mc-coy-palace-garden/events/Event_TalkToEastGuard.png
-mc-coy-palace-garden	34	McCoy's Palace		event-segment	1	Event_TalkToEastGuard		5		05138	05139 MsgBilibinLordMccoyDifficult	110	05140, 05141, 05142, 05139, 05133, 05135, 05136, 05137, 05138, 05134	mc-coy-palace-garden/events/Event_TalkToEastGuard_5.gif
-mc-coy-palace-garden	34	McCoy's Palace		event	1	Event_TalkToMcCoy	2		05060				05059, 05060, 05061	mc-coy-palace-garden/events/Event_TalkToMcCoy-2.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	Event_TalkToMcCoy	3		05060				05059, 05060, 05061	mc-coy-palace-garden/events/Event_TalkToMcCoy-3.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	Event_TalkToMcCoy	1		05059				05059, 05060, 05061	mc-coy-palace-garden/events/Event_TalkToMcCoy.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	Event_TalkToNorthWorker	2		05057				05056, 05057, 05058	mc-coy-palace-garden/events/Event_TalkToNorthWorker-2.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	Event_TalkToNorthWorker	3		05057				05056, 05057, 05058	mc-coy-palace-garden/events/Event_TalkToNorthWorker-3.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	Event_TalkToNorthWorker	1		05056				05056, 05057, 05058	mc-coy-palace-garden/events/Event_TalkToNorthWorker.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	Event_TalkToWestGuard	2		05970				05969, 05970, 05971	mc-coy-palace-garden/events/Event_TalkToWestGuard-2.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	Event_TalkToWestGuard	1		05969				05969, 05970, 05971	mc-coy-palace-garden/events/Event_TalkToWestGuard.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[12]	1		05225				05225	mc-coy-palace-garden/events/gMcCoyPalaceGardenEvents-12.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[13]	2		05972				05972	mc-coy-palace-garden/events/gMcCoyPalaceGardenEvents-13-2.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[13]	1		05972				05972	mc-coy-palace-garden/events/gMcCoyPalaceGardenEvents-13.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[14]	2		05072				05072	mc-coy-palace-garden/events/gMcCoyPalaceGardenEvents-14-2.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[14]	1		05072				05072	mc-coy-palace-garden/events/gMcCoyPalaceGardenEvents-14.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[16]	2		05073				05073	mc-coy-palace-garden/events/gMcCoyPalaceGardenEvents-16-2.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[16]	1		05073				05073	mc-coy-palace-garden/events/gMcCoyPalaceGardenEvents-16.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[18]	2		05074				05074	mc-coy-palace-garden/events/gMcCoyPalaceGardenEvents-18-2.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[18]	1		05074				05074	mc-coy-palace-garden/events/gMcCoyPalaceGardenEvents-18.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[2]	1		05055				05055	mc-coy-palace-garden/events/gMcCoyPalaceGardenEvents-2.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[20]	1		05143				05143	mc-coy-palace-garden/events/gMcCoyPalaceGardenEvents-20.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[21]	2		05228				05228	mc-coy-palace-garden/events/gMcCoyPalaceGardenEvents-21-2.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[21]	1		05228				05228	mc-coy-palace-garden/events/gMcCoyPalaceGardenEvents-21.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[22]	1		05975				05975	mc-coy-palace-garden/events/gMcCoyPalaceGardenEvents-22.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[23]	1		05144				05144	mc-coy-palace-garden/events/gMcCoyPalaceGardenEvents-23.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[24]	1		05145				05145	mc-coy-palace-garden/events/gMcCoyPalaceGardenEvents-24.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[25]	1		05229				05229	mc-coy-palace-garden/events/gMcCoyPalaceGardenEvents-25.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[26]	1		05976				05976	mc-coy-palace-garden/events/gMcCoyPalaceGardenEvents-26.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[8]	1		05132				05132	mc-coy-palace-garden/events/gMcCoyPalaceGardenEvents-8.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[9]	2		05224				05224	mc-coy-palace-garden/events/gMcCoyPalaceGardenEvents-9-2.png
-mc-coy-palace-garden	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[9]	1		05224				05224	mc-coy-palace-garden/events/gMcCoyPalaceGardenEvents-9.png
-mc-coy-palace-garden	34	McCoy's Palace	cursed	entrance	1									mc-coy-palace-garden_cursed/entrance.png
-mc-coy-palace-garden	34	McCoy's Palace	cursed	map	1									mc-coy-palace-garden_cursed/map-1.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	Event_SearchWell	2		10718				02375, 10718	mc-coy-palace-grounds/events/Event_SearchWell-2.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	Event_SearchWell	1		02375				02375, 10718	mc-coy-palace-grounds/events/Event_SearchWell.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	Event_TalkToEastGuard	2		05133				05140, 05141, 05142, 05139, 05133, 05135, 05136, 05137, 05138, 05134	mc-coy-palace-grounds/events/Event_TalkToEastGuard-2.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	Event_TalkToEastGuard	3		05135				05140, 05141, 05142, 05139, 05133, 05135, 05136, 05137, 05138, 05134	mc-coy-palace-grounds/events/Event_TalkToEastGuard-3.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	Event_TalkToEastGuard	4		05136				05140, 05141, 05142, 05139, 05133, 05135, 05136, 05137, 05138, 05134	mc-coy-palace-grounds/events/Event_TalkToEastGuard-4.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	Event_TalkToEastGuard	1		05133				05140, 05141, 05142, 05139, 05133, 05135, 05136, 05137, 05138, 05134	mc-coy-palace-grounds/events/Event_TalkToEastGuard.png
+mc-coy-palace-grounds	34	McCoy's Palace		event-segment	1	Event_TalkToEastGuard		5		05138	05139 MsgBilibinLordMccoyDifficult	110	05140, 05141, 05142, 05139, 05133, 05135, 05136, 05137, 05138, 05134	mc-coy-palace-grounds/events/Event_TalkToEastGuard_5.gif
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	Event_TalkToMcCoy	2		05060				05059, 05060, 05061	mc-coy-palace-grounds/events/Event_TalkToMcCoy-2.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	Event_TalkToMcCoy	3		05060				05059, 05060, 05061	mc-coy-palace-grounds/events/Event_TalkToMcCoy-3.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	Event_TalkToMcCoy	1		05059				05059, 05060, 05061	mc-coy-palace-grounds/events/Event_TalkToMcCoy.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	Event_TalkToNorthWorker	2		05057				05056, 05057, 05058	mc-coy-palace-grounds/events/Event_TalkToNorthWorker-2.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	Event_TalkToNorthWorker	3		05057				05056, 05057, 05058	mc-coy-palace-grounds/events/Event_TalkToNorthWorker-3.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	Event_TalkToNorthWorker	1		05056				05056, 05057, 05058	mc-coy-palace-grounds/events/Event_TalkToNorthWorker.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	Event_TalkToWestGuard	2		05970				05969, 05970, 05971	mc-coy-palace-grounds/events/Event_TalkToWestGuard-2.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	Event_TalkToWestGuard	1		05969				05969, 05970, 05971	mc-coy-palace-grounds/events/Event_TalkToWestGuard.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[12]	1		05225				05225	mc-coy-palace-grounds/events/gMcCoyPalaceGardenEvents-12.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[13]	2		05972				05972	mc-coy-palace-grounds/events/gMcCoyPalaceGardenEvents-13-2.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[13]	1		05972				05972	mc-coy-palace-grounds/events/gMcCoyPalaceGardenEvents-13.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[14]	2		05072				05072	mc-coy-palace-grounds/events/gMcCoyPalaceGardenEvents-14-2.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[14]	1		05072				05072	mc-coy-palace-grounds/events/gMcCoyPalaceGardenEvents-14.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[16]	2		05073				05073	mc-coy-palace-grounds/events/gMcCoyPalaceGardenEvents-16-2.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[16]	1		05073				05073	mc-coy-palace-grounds/events/gMcCoyPalaceGardenEvents-16.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[18]	2		05074				05074	mc-coy-palace-grounds/events/gMcCoyPalaceGardenEvents-18-2.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[18]	1		05074				05074	mc-coy-palace-grounds/events/gMcCoyPalaceGardenEvents-18.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[2]	1		05055				05055	mc-coy-palace-grounds/events/gMcCoyPalaceGardenEvents-2.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[20]	1		05143				05143	mc-coy-palace-grounds/events/gMcCoyPalaceGardenEvents-20.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[21]	2		05228				05228	mc-coy-palace-grounds/events/gMcCoyPalaceGardenEvents-21-2.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[21]	1		05228				05228	mc-coy-palace-grounds/events/gMcCoyPalaceGardenEvents-21.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[22]	1		05975				05975	mc-coy-palace-grounds/events/gMcCoyPalaceGardenEvents-22.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[23]	1		05144				05144	mc-coy-palace-grounds/events/gMcCoyPalaceGardenEvents-23.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[24]	1		05145				05145	mc-coy-palace-grounds/events/gMcCoyPalaceGardenEvents-24.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[25]	1		05229				05229	mc-coy-palace-grounds/events/gMcCoyPalaceGardenEvents-25.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[26]	1		05976				05976	mc-coy-palace-grounds/events/gMcCoyPalaceGardenEvents-26.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[8]	1		05132				05132	mc-coy-palace-grounds/events/gMcCoyPalaceGardenEvents-8.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[9]	2		05224				05224	mc-coy-palace-grounds/events/gMcCoyPalaceGardenEvents-9-2.png
+mc-coy-palace-grounds	34	McCoy's Palace		event	1	gMcCoyPalaceGardenEvents[9]	1		05224				05224	mc-coy-palace-grounds/events/gMcCoyPalaceGardenEvents-9.png
+mc-coy-palace-grounds	34	McCoy's Palace	cursed	entrance	1									mc-coy-palace-grounds_cursed/entrance.png
+mc-coy-palace-grounds	34	McCoy's Palace	cursed	map	1									mc-coy-palace-grounds_cursed/map-1.png
 mc-coy-palace	33	McCoy's Palace		event	0	Event_AskAboutGoingToKolima	2		05153				05152, 05153, 05154	mc-coy-palace/events/Event_AskAboutGoingToKolima-2.png
 mc-coy-palace	33	McCoy's Palace		event	0	Event_AskAboutGoingToKolima	3		05153				05152, 05153, 05154	mc-coy-palace/events/Event_AskAboutGoingToKolima-3.png
 mc-coy-palace	33	McCoy's Palace		event	0	Event_AskAboutGoingToKolima	1		05152				05152, 05153, 05154	mc-coy-palace/events/Event_AskAboutGoingToKolima.png
