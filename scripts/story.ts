@@ -19,9 +19,9 @@
 // - flags.tsv: every game flag the code names, with who sets, clears and tests
 //   it. Flags 0x200 to 0x2ff belong to one scene and 0x300 to 0x3ff to one
 //   place group, so those are keyed by their scene or group.
-// - events.tsv: every scene event: its trigger and table condition, the flags
-//   all it does requires, the flags it tests, sets and clears, and the
-//   messages it shows.
+// - events.tsv: every scene event: its name (its function, or the message a
+//   table row shows), its trigger and table condition, the flags all it does
+//   requires, the flags it tests, sets and clears, and the messages it shows.
 // - places.tsv (only without a place table): each scene's area name and exits.
 // - glossary.tsv: the proper nouns and game terms of the text, each with its
 //   kind, its name-table message, the actor constants that name it, and the
@@ -1835,13 +1835,24 @@ for (const r of roots) {
     line: r.fn.line,
   });
 }
+// An event table row with no function of its own only shows a message, and is
+// named by it (MsgValeRockCannotBeMoved), an unnamed message by its named
+// neighbour and the count after it. The rows of a scene that show the same
+// message are one event with several triggers (the eight rocks of the stormy
+// night), so they share the name, and the renderer records that event once.
+const messageName = (n: number) => {
+  const m = messageById.get(n);
+  if (m && m.symbol !== 'message') return m.symbol;
+  const base = baseOf(n);
+  return base ? `${base.symbol}+${n - base.id}` : msgNo(n);
+};
 for (const t of tableRows) {
   if (t.message === undefined) continue;
   events.push({
     file: shortFile(t.tu.file),
     tu: t.tu,
     scenes: t.scenes,
-    event: `${t.table}[${t.index}]`,
+    event: messageName(t.message),
     trigger: t.trigger,
     condition: condText(t.lits, t.tu),
     rowLits: t.lits,
