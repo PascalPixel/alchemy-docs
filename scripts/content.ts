@@ -67,9 +67,12 @@ function page(path: string, front: Record<string, string>, body: string) {
 // Text from the source, safe in Markdown outside code: the characters MDX
 // and Markdown would read as syntax are escaped, code spans kept as written.
 // A name the code uses, written bare in a comment: anything with an
-// underscore (KALAY_TO_WORLD_MAP, SceneId_Kalay, Event_TakeExit) or a file
-// name (kalay_interiors.c). Prose shows it as code, which linkNames links.
-const CODE_NAME = /(?<![\w`\\])((?:[a-z][a-z0-9_]*\.(?:c|h|s|S|tsv|po|png|md)|[A-Za-z][A-Za-z0-9]*_[A-Za-z0-9_]*[A-Za-z0-9])(?:\(\))?)(?![\w`])/g;
+// underscore (KALAY_TO_WORLD_MAP, SceneId_Kalay, Event_TakeExit), a global
+// and the fields it is read through (gGameState.scene), a message
+// (MsgKalayWelcomeInPeace) or a file name (kalay_interiors.c). Prose shows it
+// as code, which linkNames links; codeDeclared catches the other names the
+// code declares once every file is read.
+const CODE_NAME = /(?<![\w`\\])((?:[a-z][a-z0-9_]*\.(?:c|h|s|S|tsv|po|png|md)|[A-Za-z][A-Za-z0-9]*_[A-Za-z0-9_]*[A-Za-z0-9]|g[A-Z][A-Za-z0-9]*(?:(?:\.|->)[a-z][A-Za-z0-9]*)*|Msg[A-Z][A-Za-z0-9]*)(?:\(\))?)(?![\w`])/g;
 function md(text: string): string {
   return text
     .split(/(`[^`]*`)/)
@@ -372,6 +375,38 @@ function place(game: Game, file: SourceFile, d: Decl) {
   if (!known || rank(d) > rank(known.decl)) index.set(d.name, { url: documented(d) ? `${pageOf(file.path)}#${anchor(d.name)}` : `${github}/${file.path}#L${d.line}`, decl: d, file });
 }
 
+// The names a game declares that md() could not know while the files were
+// read, written bare in a comment, shown as code once the index has them: a
+// CamelCase name with no underscore (B5Context, a function or a type), an
+// upper-case macro with none (UNUSED), and a scene by the name
+// field/scenes.s gives it (KalayTunnelTreasureRoom).
+function codeDeclared(text: string, game: Game): string {
+  const index = where.get(game)!;
+  const known = (name: string) => name.length > 3 && (index.has(name) || (sceneIds.has(name) && index.has(`SceneId_${name}`))) && ((/[a-z0-9][A-Z]/.test(name) && /[a-z]/.test(name)) || /^[A-Z][A-Z0-9]+$/.test(name));
+  return text
+    .split(/(```[\s\S]*?```|`[^`]*`|\]\([^)]*\))/)
+    .map((part, i) => (i % 2 ? part : part.replace(/(?<![\w`\\.])([A-Za-z][A-Za-z0-9]*)((?:(?:\.|-\\?>)[a-z][A-Za-z0-9]*)*)(\(\))?(?![\w`])/g, (all, name: string, chain: string, call = '') => (known(name) ? `\`${name}${chain.replace(/\\/g, '')}${call}\`` : all))))
+    .join('');
+}
+
+// Alchemy's Markdown with the code names it writes bare shown as code, as
+// md() and codeDeclared show a comment's: outside code, link targets,
+// pictures, HTML and headings, a name with an underscore, a file name or a
+// name the game declares.
+function codeProse(text: string, game: Game): string {
+  return text
+    .split(/(```[\s\S]*?```|`[^`]*`|!\[[^\]]*\]\([^)]*\)|\]\([^)]*\)|<[^>\n]*>|^#[^\n]*$)/m)
+    .map((part, i) =>
+      i % 2
+        ? part
+        : codeDeclared(
+            part.replace(/(?<![\w`\\/.-])((?:[a-z][a-z0-9_]*\.(?:c|h|s|S|tsv|po|png|md)|[A-Za-z][A-Za-z0-9]*_[A-Za-z0-9_]*[A-Za-z0-9])(?:\(\))?)(?![\w`/])/g, '`$1`'),
+            game,
+          ),
+    )
+    .join('');
+}
+
 // Names in comments that a game declares become links to them.
 function linkNames(text: string, game: Game, self: string): string {
   const index = where.get(game)!;
@@ -379,8 +414,8 @@ function linkNames(text: string, game: Game, self: string): string {
     .split(/(```[\s\S]*?```|`[^`]*`|\]\([^)]*\))/)
     .map((part, i) => {
       if (i % 2) {
-        const m = part.match(/^`(\w+)(?:\(\))?`$/);
-        const hit = m && m[1] !== self ? index.get(m[1]) : undefined;
+        const m = part.match(/^`(\w+)(?:(?:\.|->)\w+)*(?:\(\))?`$/);
+        const hit = m && m[1] !== self ? (index.get(m[1]) ?? (sceneIds.has(m[1]) ? index.get(`SceneId_${m[1]}`) : undefined)) : undefined;
         return hit ? `[${part}](${hit.url})` : part;
       }
       return part.replace(/\b([A-Za-z_][A-Za-z0-9_]*)(\\_[A-Za-z0-9_\\]+)*\b/g, (word) => {
@@ -518,7 +553,7 @@ function declSection(file: SourceFile, d: Decl, level: string): string {
   const by = users.get(file.game)!.get(d.name);
   const index = where.get(file.game)!;
   if (d.kind !== 'prototype' && by?.size) {
-    const list = [...by].sort().slice(0, 40).map((n) => (index.get(n) ? `[${md(n)}](${index.get(n)!.url})` : md(n)));
+    const list = [...by].sort().slice(0, 40).map((n) => (index.get(n) ? `[\`${n}\`](${index.get(n)!.url})` : `\`${n}\``));
     parts.push(`Used by ${list.join(', ')}${by.size > 40 ? ` and ${by.size - 40} more` : ''}.`);
   }
   parts.push(`[Line ${d.line}](${github}/${file.path}#L${d.line})`);
@@ -570,7 +605,7 @@ function sourcePages(game: Game, files: SourceFile[]) {
     const subdirs = [...byDir.keys()].filter((d) => dirname(d) === dir).sort();
     const own = list.filter((f) => !pageless.has(f.path));
     const head: string[] = [];
-    if (subdirs.length) head.push(`## Folders\n\n${subdirs.map((d) => `- [${basename(d)}](/${game}/source/${rel(d)})`).join('\n')}`);
+    if (subdirs.length) head.push(`## Folders\n\n${subdirs.map((d) => `- [\`${basename(d)}\`](/${game}/source/${rel(d)})`).join('\n')}`);
     // Every file by name, each linked to its page, or its section below, or,
     // with no /// comment, its code; a file page's summary beside its name.
     const link = (f: SourceFile) => (pageless.has(f.path) || split.has(dir) ? pageOf(f.path) : `#${anchor(basename(f.path))}`);
@@ -767,6 +802,7 @@ function prose(source: string, target: string) {
     return `![${alt}](${src.replace(/^https:\/\/alchemy\.pascalpixel\.com\//, '/')})`;
   });
   const description = firstSentence(text);
+  text = codeProse(text, 'tbs');
   // A Markdown image of the site's own is served from its root too, so the
   // build reads it from public/ rather than from the live site.
   text = text.replace(/(!\[[^\]]*\]\()https:\/\/alchemy\.pascalpixel\.com\//g, '$1/');
@@ -1324,6 +1360,14 @@ for (const game of GAMES) {
   for (const [d, s] of size) if (s.bytes > SPLIT_BYTES) split.add(d);
   where.set(game, new Map());
   for (const f of files) for (const d of f.decls) place(game, f, d);
+  for (const f of files) {
+    f.doc = codeDeclared(f.doc, game);
+    f.summary = codeDeclared(f.summary, game);
+    for (const d of f.decls) {
+      d.doc = codeDeclared(d.doc, game);
+      for (const x of d.fields) x.doc = codeDeclared(x.doc, game);
+    }
+  }
   const u = new Map<string, Set<string>>();
   for (const f of files)
     for (const d of f.decls) {
