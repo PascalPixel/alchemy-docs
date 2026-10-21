@@ -20,14 +20,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# made by `bun run content` (scripts/content.ts) from the repository
+# made by `bun run content` (scripts/content.ts) from the repository: every
+# page and every meta.json
 /.doxygen/
-/content/docs/**/*.md
-/content/docs/tbs/source/
-/content/docs/tla/source/
-/content/docs/tbs/abilities/
-/content/docs/reference/tbs/
-/content/docs/reference/tla/
+/content/docs/
 /public/pictures/
 /public/PROGRESS.png
 /public/PROGRESS_CHART.png

@@ -5,6 +5,16 @@
   "buildCommand": "git clone --depth 1 https://github.com/PascalPixel/alchemy /tmp/alchemy && ALCHEMY=/tmp/alchemy bun run build",
   "outputDirectory": ".next",
   "redirects": [
-    { "source": "/tbs/battle/effects/pictures", "destination": "/tbs/battle/effects#pictures-and-colours", "permanent": true }
+    { "source": "/tbs/world/objects", "destination": "/tbs/world/object", "permanent": true },
+    { "source": "/tbs/world/scenes", "destination": "/tbs/world/scene", "permanent": true },
+    { "source": "/tbs/world/maps", "destination": "/tbs/world/map", "permanent": true },
+    { "source": "/tbs/battle/battles", "destination": "/tbs/battle/battle", "permanent": true },
+    { "source": "/tbs/battle/effects", "destination": "/tbs/battle/effect", "permanent": true },
+    { "source": "/tbs/battle/effects/pictures", "destination": "/tbs/battle/effect#pictures-and-colours", "permanent": true },
+    { "source": "/tbs/menus/menus", "destination": "/tbs/menus/menu", "permanent": true },
+    { "source": "/tbs/menus/windows", "destination": "/tbs/menus/window", "permanent": true },
+    { "source": "/tbs/menus/shops", "destination": "/tbs/menus/shop", "permanent": true },
+    { "source": "/tbs/game", "destination": "/tbs/battle/game", "permanent": true },
+    { "source": "/tla", "destination": "/", "permanent": false }
   ]
 }

@@ -1,9 +1,8 @@
-// Builds the generated part of the site from an Alchemy checkout: the home
-// page from the README, the guides from the folder READMEs, and the source
-// pages from the games' C, read with tree-sitter. Everything it writes is
-// ignored by git; `bun run content` rebuilds it, and `bun run build` runs it
-// first. The hand-written pages (.mdx) and the sidebar's order (meta.json)
-// around them are tracked.
+// Builds the whole of content/docs from an Alchemy checkout: the home page
+// from the README, the front page, section pages and folder guides from their
+// Markdown, the sidebar from the links between them, and the source pages
+// from the games' C, read with tree-sitter. Everything it writes is ignored by
+// git; `bun run content` rebuilds it, and `bun run build` runs it first.
 //
 // A source page is a folder of one game: its files, each with its summary
 // (the file's /// @file comment) and every function, macro, type, struct and
@@ -20,7 +19,7 @@
 // opening sentence, a file's /// @file summary.
 
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
-import { basename, dirname, join, normalize } from 'node:path';
+import { basename, dirname, join, normalize, relative } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { Language, type Node, Parser } from 'web-tree-sitter';
@@ -50,7 +49,10 @@ function write(path: string, text: string) {
   writeFileSync(path, text);
 }
 
+// The URL of every page written, for the redirects' check.
+const pagesWritten = new Set<string>();
 function page(path: string, front: Record<string, string>, body: string) {
+  pagesWritten.add(`/${path.replace(/\.mdx?$/, '').replace(/(^|\/)index$/, '')}`.replace(/(.)\/$/, '$1'));
   const head = Object.entries(front)
     .filter(([, v]) => v)
     .map(([k, v]) => `${k}: ${yaml(v)}`)
@@ -567,53 +569,129 @@ function sourcePages(game: Game, files: SourceFile[]) {
 // the folder guides, without their first heading (the page's title) and with
 // their repository links resolved.
 
-// The guides: each folder README and where its page sits. The Lost Age's
-// READMEs head themselves "The Lost Age: battle" to stay unique in the
-// repository; on the site they would sit under their game.
-const GUIDES: [string, string][] = [
-  ['games/tbs/src/field', 'tbs/world/field'],
-  ['games/tbs/src/object', 'tbs/world/objects'],
-  ['games/tbs/src/scene', 'tbs/world/scenes'],
-  ['games/tbs/src/map', 'tbs/world/maps'],
-  ['games/tbs/src/battle', 'tbs/battle/battles'],
-  ['games/tbs/src/effect', 'tbs/battle/effects/index'],
-  ['games/tbs/src/menu', 'tbs/menus/menus'],
-  ['games/tbs/src/window', 'tbs/menus/windows'],
-  ['games/tbs/src/shop', 'tbs/menus/shops'],
-  ['games/tbs/src/game', 'tbs/game'],
-  ['games/tbs/src/graphics', 'tbs/engine/graphics'],
-  ['games/tbs/src/sound', 'tbs/engine/sound'],
-  ['games/tbs/src/runtime', 'tbs/engine/runtime'],
-  ['games/tbs/src/system', 'tbs/engine/system'],
-  ['games/tbs/src/debug', 'tbs/engine/debug'],
+// The site's arrangement comes from Alchemy's own links. README.md is the
+// root; it places the games' front pages, INSTALL.md and each game's
+// MATCHING.md. A game's front page places its section pages (the other
+// Markdown files beside it), its places and its source. Both order what they
+// place by their last link to each: a front page tells the game's story,
+// mentioning its pages as it goes, and ends with the list of them. A section
+// page places the folder READMEs it links, in the order it first links them,
+// the first placement winning, and each folder README becomes the parent of
+// its folder's source pages. Every other link is a cross-reference. A page is
+// titled by its # heading and described by its first sentence (prose()).
+//
+// A page's URL is its parent's and then the section page's name or the
+// folder's (/tbs/battle/effect), except for the few that have fixed URLs.
+const SITE = 'https://alchemy.pascalpixel.com';
+// Site settings: the pages with fixed URLs, by what links to them. A game's
+// places are its scene list and its source its src folder.
+const FIXED: [string, string][] = [
+  ['README.md', '/'],
+  ['INSTALL.md', '/start'],
+  ['games/tbs/src/MATCHING.md', '/tbs/matching'],
+  ['games/tbs/src/field/scenes.s', '/tbs/places'],
+  ['games/tbs/src', '/tbs/source'],
 ];
-// The section pages: each one a page in the game's folder, beside its README.
-const SECTIONS: [string, string][] = [
-  ['games/tbs/world.md', 'tbs/world/index'],
-  ['games/tbs/battle.md', 'tbs/battle/index'],
-  ['games/tbs/menus.md', 'tbs/menus/index'],
-  ['games/tbs/engine.md', 'tbs/engine/index'],
-];
-// The source tree's own page, at /tbs/source: how the code is laid out.
-const SOURCE_README = 'games/tbs/src/README.md';
+// The root's sidebar label: the README's own heading is the site's name.
+const ROOT_LABEL = 'Introduction';
 
-const guideOf = new Map<string, string>();
-for (const [dir, target] of GUIDES) guideOf.set(dir, `/${target.replace(/\/index$/, '')}`);
+type Placed = { key: string; url: string; children: Placed[]; parent?: Placed; kind: 'root' | 'game' | 'section' | 'guide' | 'fixed' };
+const placed = new Map<string, Placed>();
+const redirects: { source: string; destination: string }[] = JSON.parse(readFileSync(join(docs, 'vercel.json'), 'utf8')).redirects ?? [];
 
-// A link in a README, pointed at the site where the site has the page.
+// What a link in an Alchemy Markdown file points at: a repository path, as
+// the arrangement names it, or nothing for a link elsewhere. A link to the
+// site itself is read back to the page it shows.
+function linkTarget(from: string, href: string): string | undefined {
+  let link = href.replace(/#.*$/, '');
+  if (link.startsWith(`${SITE}/`) || link === SITE) {
+    let path = link.slice(SITE.length).replace(/\/$/, '') || '/';
+    path = redirects.find((r) => r.source === path)?.destination.replace(/#.*$/, '') ?? path;
+    const fixed = FIXED.find(([, url]) => url === path);
+    if (fixed) return fixed[0];
+    const m = path.match(/^\/(\w+)(?:\/(\w+))?$/);
+    if (m && existsSync(join(repo, `games/${m[1]}/${m[2] ?? 'README'}.md`))) return `games/${m[1]}/${m[2] ?? 'README'}.md`;
+    const node = [...placed.values()].find((p) => p.url === path);
+    return node?.key;
+  }
+  if (!link || /^[a-z]+:/.test(link) || link.startsWith('/')) return undefined;
+  const clean = normalize(join(dirname(from), link)).replace(/\/$/, '');
+  return clean.replace(/^(games\/\w+\/src)\/README\.md$/, '$1');
+}
+
+// What a file links, each once, in the order of its first link to each or
+// of its last.
+function linksOf(file: string, order: 'first' | 'last' = 'first'): string[] {
+  const text = readFileSync(join(repo, file), 'utf8').replace(/```[\s\S]*?```/g, '');
+  const out: string[] = [];
+  for (const m of text.matchAll(/(?<!!)\[[^\]]*\]\(([^)\s]+)[^)]*\)/g)) {
+    const t = linkTarget(file, m[1]);
+    if (!t) continue;
+    if (out.includes(t) && order === 'last') out.splice(out.indexOf(t), 1);
+    if (!out.includes(t)) out.push(t);
+  }
+  return out;
+}
+
+const isFrontPage = (k: string) => GAMES.some((g) => k === `games/${g}/README.md`);
+const sectionPages = (game: Game) => readdirSync(join(repo, 'games', game)).filter((f) => f.endsWith('.md') && f !== 'README.md').map((f) => `games/${game}/${f}`);
+const guideReadmes = (game: Game) => readdirSync(join(repo, 'games', game, 'src'), { withFileTypes: true }).filter((e) => e.isDirectory() && existsSync(join(repo, 'games', game, 'src', e.name, 'README.md'))).map((e) => `games/${game}/src/${e.name}/README.md`);
+const fixedUrl = (k: string) => FIXED.find(([key]) => key === k)?.[1];
+const notes: string[] = [];
+
+function arrange(): Placed {
+  const root: Placed = { key: 'README.md', url: '/', children: [], kind: 'root' };
+  placed.set(root.key, root);
+  const add = (parent: Placed, key: string, kind: Placed['kind'], url: string) => {
+    const node: Placed = { key, url, children: [], parent, kind };
+    parent.children.push(node);
+    placed.set(key, node);
+    return node;
+  };
+  // What the root places: the front pages, INSTALL.md and MATCHING.md.
+  const rootWants = [...GAMES.map((g) => `games/${g}/README.md`), 'INSTALL.md', ...GAMES.map((g) => `games/${g}/src/MATCHING.md`)];
+  const rootLinks = linksOf('README.md', 'last').filter((k) => rootWants.includes(k));
+  for (const k of rootWants) if (!rootLinks.includes(k) && existsSync(join(repo, k))) notes.push(`README.md doesn't link ${k}: placed after its links`);
+  for (const k of [...rootLinks, ...rootWants.filter((k) => !rootLinks.includes(k) && existsSync(join(repo, k)))]) {
+    add(root, k, isFrontPage(k) ? 'game' : 'fixed', fixedUrl(k) ?? `/${k.split('/')[1]}`);
+  }
+  // What each front page places: its section pages, places and source.
+  for (const game of root.children.filter((n) => n.kind === 'game')) {
+    const g = game.key.split('/')[1] as Game;
+    const wants = [...sectionPages(g), `games/${g}/src/field/scenes.s`, `games/${g}/src`];
+    const links = linksOf(game.key, 'last').filter((k) => wants.includes(k));
+    for (const k of wants) if (!links.includes(k) && (fixedUrl(k) || existsSync(join(repo, k)))) notes.push(`${game.key} doesn't link ${k}: placed after its links`);
+    for (const k of [...links, ...wants.filter((k) => !links.includes(k) && (fixedUrl(k) || existsSync(join(repo, k))))]) {
+      if (fixedUrl(k)) add(game, k, 'fixed', fixedUrl(k)!);
+      else add(game, k, 'section', `${game.url}/${basename(k, '.md')}`);
+    }
+    // What each section page places, in the front page's order: the folder
+    // READMEs it links that no section page before it placed.
+    const guides = guideReadmes(g);
+    for (const section of game.children.filter((n) => n.kind === 'section'))
+      for (const k of linksOf(section.key)) if (guides.includes(k) && !placed.has(k)) add(section, k, 'guide', `${section.url}/${basename(dirname(k))}`);
+  }
+  return root;
+}
+
+// The derived tree, as the build prints it.
+function printTree(node: Placed, depth = 0): string[] {
+  const title = node.kind === 'root' ? ROOT_LABEL : (headingOf(node.key) ?? headingOf(`${node.key}/README.md`) ?? (node.key.endsWith('scenes.s') ? 'Places' : node.key));
+  return [`${'  '.repeat(depth)}${title}  ${node.url}`, ...node.children.flatMap((c) => printTree(c, depth + 1))];
+}
+function headingOf(key: string): string | undefined {
+  const file = join(repo, key);
+  if (!existsSync(file) || !statSync(file).isFile() || !key.endsWith('.md')) return undefined;
+  return readFileSync(file, 'utf8').match(/^# (.+?)(?: \{#[\w-]+\})?\n/)?.[1];
+}
+
+// The page a link in a README goes to: the arranged page, a source page for
+// C and the folders that hold it, and GitHub for anything else.
 function siteLink(path: string): string {
-  const clean = normalize(path).replace(/\/$/, '');
-  if (clean === 'README.md') return '/';
-  if (clean === 'INSTALL.md') return '/start';
-  if (clean === 'games/tbs/README.md') return '/tbs';
-  if (clean === 'games/tbs/src/MATCHING.md') return '/tbs/matching';
-  if (clean === SOURCE_README) return '/tbs/source';
-  for (const [file, target] of SECTIONS) if (clean === file) return `/${target.replace(/\/index$/, '')}`;
-  const guide = guideOf.get(dirname(clean));
-  if (guide && basename(clean) === 'README.md') return guide;
+  const clean = normalize(path).replace(/\/$/, '').replace(/^(games\/\w+\/src)\/README\.md$/, '$1');
+  const node = placed.get(clean);
+  if (node) return node.url;
   const m = clean.match(/^games\/(tbs|tla)\/((?:src|include)(?:\/.*)?)$/);
-  // The source pages show C and the folders that hold it; anything else is
-  // read on GitHub.
   if (m && GAMES.includes(m[1] as Game) && existsSync(join(repo, clean))) {
     if (/\.[ch]$/.test(clean)) return pageOf(clean);
     if (statSync(join(repo, clean)).isDirectory() && walk(clean).length) return `/${m[1]}/source/${m[2]}`;
@@ -661,6 +739,12 @@ function prose(source: string, target: string) {
   // build reads it from public/ rather than from the live site.
   text = text.replace(/(!\[[^\]]*\]\()https:\/\/alchemy\.pascalpixel\.com\//g, '$1/');
   text = text.replace(/(!?)\[([^\]]*)\]\(([^)#\s]*)(#[^)]*)?\)/g, (all, bang: string, label: string, link: string, hash = '') => {
+    // A link to the site itself stays on the site, past any redirect.
+    if (!bang && link.startsWith(`${SITE}/`)) {
+      const path = link.slice(SITE.length).replace(/(.)\/$/, '$1');
+      const to = redirects.find((r) => r.source === path)?.destination;
+      return `[${label}](${to ?? `${path}${hash}`})`;
+    }
     if (/^[a-z]+:/.test(link) || link.startsWith('/') || !link) return all;
     const resolved = normalize(join(dirname(source), link));
     if (bang) return `![${label}](${picture(resolved) ?? `${github.replace('/blob/', '/raw/')}/${resolved}`}${hash})`;
@@ -674,9 +758,57 @@ function prose(source: string, target: string) {
   page(target, { title, description, source }, text);
 }
 
-function guides() {
-  for (const [dir, target] of GUIDES) if (existsSync(join(repo, dir, 'README.md'))) prose(`${dir}/README.md`, `${target}.md`);
-  prose('games/tbs/src/MATCHING.md', 'tbs/matching.md');
+// Where an arranged page's file goes: its URL as a path, a folder with an
+// index for every page that holds others.
+const fileOf = (node: Placed) => (node.kind === 'fixed' && !node.children.length && !/^games\/\w+\/src(\/field\/scenes\.s)?$/.test(node.key) ? `${node.url.slice(1)}.md` : `${node.url.slice(1) || '.'}/index.md`.replace(/^\.\//, ''));
+const folderOf = (node: Placed) => dirname(fileOf(node));
+const relativeTo = (from: string, to: string) => relative(from === '.' ? '' : from, to) || '.';
+
+// Writes every arranged page from its Markdown, except the places and the
+// source index, which places() and sourcePages() write.
+function arrangedPages(root: Placed) {
+  const walkTree = (n: Placed): Placed[] => [n, ...n.children.flatMap(walkTree)];
+  for (const node of walkTree(root)) if (node.key.endsWith('.md')) prose(node.key, fileOf(node));
+}
+
+// The sidebar: a meta.json for every folder the arrangement made, listing its
+// children in order. A folder README lists its folder's source pages
+// (src/field, include/field and include/unit/field), which stay where their
+// URLs put them.
+function arrangedSidebar(root: Placed) {
+  const meta = (folder: string, data: object) => write(join(content, folder, 'meta.json'), JSON.stringify(data, null, 2) + '\n');
+  const pagesOf = (node: Placed) => node.children.map((c) => relativeTo(folderOf(node), fileOf(c).replace(/(\/index)?\.md$/, '')));
+  meta('.', { pages: [`[${ROOT_LABEL}](/)`, ...pagesOf(root)] });
+  const walkTree = (n: Placed): Placed[] => [n, ...n.children.flatMap(walkTree)];
+  for (const node of walkTree(root)) {
+    if (node.kind === 'game') meta(folderOf(node), { defaultOpen: true, pages: pagesOf(node) });
+    if (node.kind === 'section') meta(folderOf(node), { pages: pagesOf(node) });
+    if (node.kind === 'guide') {
+      const [, game, , name] = node.key.split('/');
+      const sources = ['src', 'include', 'include/unit'].map((r) => `${game}/source/${r}/${name}`).filter((f) => existsSync(join(content, f, 'index.md')));
+      meta(folderOf(node), { pages: sources.map((f) => relativeTo(folderOf(node), f)) });
+    }
+  }
+}
+
+// The checks the build fails on: every folder README of a game with pages
+// sits under one of that game's section pages, and every redirect leads to a
+// page the build writes, which no redirect leaves from.
+function checkArrangement() {
+  const failures: string[] = [];
+  for (const game of GAMES)
+    for (const k of guideReadmes(game)) {
+      const node = placed.get(k);
+      if (!node) failures.push(`${k} is placed nowhere: no section page of ${game} links it`);
+      else if (node.parent?.kind !== 'section' || !node.parent.key.startsWith(`games/${game}/`)) failures.push(`${k} sits under ${node.parent?.key}, not a section page of ${game}`);
+    }
+  for (const r of redirects) {
+    const to = r.destination.replace(/#.*$/, '');
+    if (!/^https?:/.test(to) && !pagesWritten.has(to)) failures.push(`the redirect from ${r.source} leads to ${r.destination}, which the build doesn't write`);
+    if (pagesWritten.has(r.source)) failures.push(`the redirect from ${r.source} hides a page the build writes`);
+    if (redirects.some((s) => s.source === to)) failures.push(`the redirect from ${r.source} leads to another redirect, ${to}`);
+  }
+  return failures;
 }
 
 // ---------------------------------------------------------------------------
@@ -689,7 +821,7 @@ function places(files: SourceFile[]) {
     const here = pages.filter((p) => p.file === f).map((p) => `[${p.title}](/tbs/places/${p.slug})`);
     return `| [${basename(f.path, '.c')}](${pageOf(f.path)}) | ${here.join(', ')} | ${f.summary} |`;
   });
-  page('tbs/places/index.md', { title: 'Places', description: 'Every place the party can walk around in, and what happens there.' }, `Each scene overlay is one place, or a few that share it, and each place has a page of its own with its map and its events. The [Scenes](/tbs/world/scenes) guide explains how a scene runs and how to find an event in it.\n\n| Scene | Places | What happens there |\n| --- | --- | --- |\n${rows.join('\n')}`);
+  page('tbs/places/index.md', { title: 'Places', description: 'Every place the party can walk around in, and what happens there.' }, `Each scene overlay is one place, or a few that share it, and each place has a page of its own with its map and its events. The [Scenes](${siteLink('games/tbs/src/scene/README.md')}) guide explains how a scene runs and how to find an event in it.\n\n| Scene | Places | What happens there |\n| --- | --- | --- |\n${rows.join('\n')}`);
   write(join(content, 'tbs/places/meta.json'), JSON.stringify({ title: 'Places', pages: pages.map((p) => p.slug) }, null, 2) + '\n');
 }
 
@@ -1712,7 +1844,7 @@ function abilities(files: SourceFile[]) {
     if (how.length) parts.push(how.join(' '));
     const tidy = (s: string) => s.replace(/ {2,}/g, ' ').trim();
     parts.push(`## Targets\n\n${tidy(targetsDetail(a))}`);
-    parts.push(`## What it does to each target\n\n${amountDetail(a).map(tidy).join('\n\n')}\n\n[How an ability resolves](/tbs/battle/battles#how-an-ability-resolves) follows the whole calculation, from the command to the damage.`);
+    parts.push(`## What it does to each target\n\n${amountDetail(a).map(tidy).join('\n\n')}\n\n[How an ability resolves](${siteLink('games/tbs/src/battle/README.md')}#how-an-ability-resolves) follows the whole calculation, from the command to the damage.`);
     const effect = effectDetail(a);
     if (effect.length) parts.push(`## Its added effect\n\n${effect.map(tidy).join('\n\n')}`);
     parts.push(`## Where it can be used\n\n${tidy(useDetail(a))}`);
@@ -1762,7 +1894,7 @@ function abilities(files: SourceFile[]) {
   page(
     'tbs/abilities/index.mdx',
     { title: 'Abilities', description: 'Every ability in the game, grouped by how the battle works out what it does to each target.', source: 'games/tbs/src/game/actions.tsv' },
-    `<AnchorRedirect map={${JSON.stringify(old)}} />\n\nEverything a unit does on its turn is an ability: Psynergy, a Djinni’s unleash, a summon, an item used in battle, a weapon’s unleash and every enemy attack. Each one is a row of the ability table, \`games/tbs/src/game/actions.tsv\`, and its row number is its ability id. The id finds its name and description in the game’s text, and the same row of \`games/tbs/src/battle/actflags.tsv\` picks the effect that draws it.\n\nEach row also has a kind, which decides how the battle works out what the ability does to each target: whether it deals damage from its own power, adds to a weapon attack, heals HP or PP, or only causes an effect. The tables below are grouped by kind, and [how an ability resolves](/tbs/battle/battles#how-an-ability-resolves) follows the calculation from the command to the damage. The tables give each ability’s PP cost, its power, and how many it reaches: the aimed unit and, for a range above 1, the units beside it.\n\n${tables.join('\n\n')}`,
+    `<AnchorRedirect map={${JSON.stringify(old)}} />\n\nEverything a unit does on its turn is an ability: Psynergy, a Djinni’s unleash, a summon, an item used in battle, a weapon’s unleash and every enemy attack. Each one is a row of the ability table, \`games/tbs/src/game/actions.tsv\`, and its row number is its ability id. The id finds its name and description in the game’s text, and the same row of \`games/tbs/src/battle/actflags.tsv\` picks the effect that draws it.\n\nEach row also has a kind, which decides how the battle works out what the ability does to each target: whether it deals damage from its own power, adds to a weapon attack, heals HP or PP, or only causes an effect. The tables below are grouped by kind, and [how an ability resolves](${siteLink('games/tbs/src/battle/README.md')}#how-an-ability-resolves) follows the calculation from the command to the damage. The tables give each ability’s PP cost, its power, and how many it reaches: the aimed unit and, for a range above 1, the units beside it.\n\n${tables.join('\n\n')}`,
   );
   write(join(content, 'tbs/abilities/meta.json'), JSON.stringify({ title: 'Abilities', pages: groups.map((k) => `(${k.slug})`) }, null, 2) + '\n');
   // A name several rows share is listed with its id.
@@ -1813,9 +1945,8 @@ function picture(path: string): string | undefined {
 // ---------------------------------------------------------------------------
 
 const started = Date.now();
-for (const p of ['index.md', 'tbs/index.md', 'start.md', 'tbs/source', 'tla/source', 'tbs/places.md', 'tbs/places', 'tbs/abilities.md', 'tbs/abilities', 'tbs/matching.md', ...GUIDES.map(([, t]) => `${t}.md`), ...SECTIONS.map(([, t]) => `${t}.md`)]) {
-  rmSync(join(content, p), { recursive: true, force: true });
-}
+// Everything under content/docs is made here.
+rmSync(content, { recursive: true, force: true });
 
 const all = new Map<Game, SourceFile[]>();
 for (const game of GAMES) {
@@ -1848,13 +1979,12 @@ for (const game of GAMES) {
   for (const f of files) if (!f.doc && kindsOf(f).every((k) => !k.full.length)) pageless.add(f.path);
 }
 
-prose('README.md', 'index.md');
-// The game's front page is its README in the source, so the story it tells
-// stays with the code it explains.
-prose('games/tbs/README.md', 'tbs/index.md');
-prose('INSTALL.md', 'start.md');
-guides();
-for (const [file, target] of SECTIONS) prose(file, `${target}.md`);
+// The arrangement, from Alchemy's links; the game's front page is its README
+// in the source, so the story it tells stays with the code it explains.
+const site = arrange();
+console.log(`arrangement:\n${printTree(site).map((l) => `  ${l}`).join('\n')}`);
+for (const n of notes) console.log(`  ${n}`);
+arrangedPages(site);
 recordings.load();
 for (const game of GAMES) sourcePages(game, all.get(game)!);
 // What the reach lines leave out: recordings no line names, and names or
@@ -1866,8 +1996,15 @@ for (const [id, at] of placedRecordings) if (at.length > 1) console.log(`  abili
 for (const p of reachProblems) console.log(`  ${p}`);
 // The source tree's page, or, until Alchemy has its README, the game's two
 // folders.
-if (existsSync(join(repo, SOURCE_README))) prose(SOURCE_README, 'tbs/source/index.md');
-else page('tbs/source/index.md', { title: 'games/tbs', source: 'games/tbs' }, `## Folders\n\n${ROOTS.map((r) => `- [${r}](/tbs/source/${r})`).join('\n')}`);
+for (const game of GAMES) {
+  const readme = `games/${game}/src/README.md`;
+  if (existsSync(join(repo, readme))) prose(readme, `${game}/source/index.md`);
+  else page(`${game}/source/index.md`, { title: `games/${game}`, source: `games/${game}` }, `## Folders\n\n${ROOTS.map((r) => `- [${r}](/${game}/source/${r})`).join('\n')}`);
+}
 places(all.get('tbs')!);
 abilities(all.get('tbs')!);
+arrangedSidebar(site);
+const failures = checkArrangement();
+for (const f of failures) console.error(`content: ${f}`);
+if (failures.length) process.exit(1);
 console.log(`content: ${all.get('tbs')!.length} files read, ${split.size} folders split by file, in ${((Date.now() - started) / 1000).toFixed(1)} s`);

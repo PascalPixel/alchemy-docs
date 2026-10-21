@@ -2,7 +2,7 @@
 
 The documentation site for [Alchemy](https://github.com/PascalPixel/alchemy), the Golden Sun decompilation, built with [Fumadocs](https://fumadocs.dev).
 
-The words live in Alchemy: its README, its folder guides and the `///` comments in its C. `scripts/content.ts` reads them from an Alchemy checkout, the C with [tree-sitter](https://tree-sitter.github.io), and writes the site's pages; the hand-written pages around them are in `content/docs`.
+The words live in Alchemy: its README, its front page and section pages, its folder guides and the `///` comments in its C. `scripts/content.ts` reads them from an Alchemy checkout, the C with [tree-sitter](https://tree-sitter.github.io), and writes every page in `content/docs`, with the sidebar arranged by the links between Alchemy's pages. This repository keeps the pictures in `public`, the site itself, and the redirects from old addresses in `vercel.json`.
 
 ## Build it
 
