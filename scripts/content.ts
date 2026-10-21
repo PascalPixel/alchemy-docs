@@ -66,10 +66,21 @@ function page(path: string, front: Record<string, string>, body: string) {
 
 // Text from the source, safe in Markdown outside code: the characters MDX
 // and Markdown would read as syntax are escaped, code spans kept as written.
+// A name the code uses, written bare in a comment: anything with an
+// underscore (KALAY_TO_WORLD_MAP, SceneId_Kalay, Event_TakeExit) or a file
+// name (kalay_interiors.c). Prose shows it as code, which linkNames links.
+const CODE_NAME = /(?<![\w`\\])((?:[a-z][a-z0-9_]*\.(?:c|h|s|S|tsv|po|png|md)|[A-Za-z][A-Za-z0-9]*_[A-Za-z0-9_]*[A-Za-z0-9])(?:\(\))?)(?![\w`])/g;
 function md(text: string): string {
   return text
     .split(/(`[^`]*`)/)
-    .map((part, i) => (i % 2 ? part : part.replace(/[\\<>{}[\]*_#|~]/g, (c) => `\\${c}`)))
+    .map((part, i) =>
+      i % 2
+        ? part
+        : part
+            .split(CODE_NAME)
+            .map((piece, j) => (j % 2 ? `\`${piece}\`` : piece.replace(/[\\<>{}[\]*_#|~]/g, (c) => `\\${c}`)))
+            .join(''),
+    )
     .join('');
 }
 
@@ -104,7 +115,9 @@ function docText(lines: string[]): string {
   let para: string[] = [];
   const flush = () => {
     if (!para.length) return;
-    const laidOut = para.some((l) => /^ {2,}\S/.test(l)) && !/^\s*- /.test(para[0]);
+    // Laid out: columns (a run of spaces inside a line), deep indentation or
+    // box drawing. Prose indented two spaces continues the list item above it.
+    const laidOut = !/^\s*- /.test(para[0]) && para.some((l) => /\S {2,}\S/.test(l.trim()) || /^ {4,}\S/.test(l) || /[│┌└├┐┘┤─]/.test(l));
     out.push(laidOut ? '```text\n' + para.join('\n') + '\n```' : md(para.join('\n')));
     para = [];
   };
@@ -711,6 +724,16 @@ function siteLink(path: string): string {
 // A page's description: the first sentence of its opening paragraph, past
 // any picture above it, as plain text. A page that opens with a heading, a
 // table or a list has none.
+// A place's own bullet in its overlay's opening ("- Kalay (SceneId_Kalay), a
+// town…"), else the whole text.
+function placeBullet(text: string, title: string): string {
+  const lines = text.split('\n');
+  const at = lines.findIndex((l) => l.replace(/\\/g, '').startsWith(`- ${title} (`) || l.replace(/\\/g, '').startsWith(`- ${title},`));
+  if (at < 0) return text;
+  const out = [lines[at]];
+  for (const l of lines.slice(at + 1)) { if (/^ {2}\S/.test(l)) out.push(l); else break; }
+  return out.join(' ');
+}
 function firstSentence(text: string): string {
   for (const block of text.split(/\n\s*\n/)) {
     const b = block.trim();
@@ -996,6 +1019,20 @@ function triggerPhrase(rows: MessageRow[]): string {
 // have them, at each story moment they were drawn at; and the events whose
 // comments name it, each with its recording.
 // The pages follow the scene numbers, which run in story order.
+// A place's first sentence, plain, for its subtitle: the code names in
+// parentheses left out.
+function placeSentence(text: string): string {
+  const plain = text
+    .replace(/^\s*- /, '')
+    .replace(/\s*\([^()]*_[^()]*\)/g, '')
+    .replace(/\\(.)/g, '$1')
+    .replace(/`([^`]*)`/g, '$1')
+    .replace(/\s+/g, ' ')
+    .trim();
+  const end = plain.search(/[.!?](\s|$)/);
+  return end > 0 ? plain.slice(0, end + 1) : plain;
+}
+
 type Place = { file: SourceFile; scene: string; id: number; slug: string; title: string };
 function placePages(scenes: SourceFile[]): Place[] {
   const kebab = (s: string) => s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
@@ -1121,7 +1158,7 @@ function placePages(scenes: SourceFile[]): Place[] {
       }
     }
     body.push(`Its code is in [${basename(p.file.path)}](${pageOf(p.file.path)}).`);
-    page(`tbs/places/${p.slug}.md`, { title: p.title, description: `${basename(p.file.path)}, scene ${p.id}.`, source: p.file.path }, body.join('\n\n'));
+    page(`tbs/places/${p.slug}.md`, { title: p.title, description: placeSentence(placeBullet(p.text, p.title)), source: p.file.path }, body.join('\n\n'));
   }
   return out;
 }
