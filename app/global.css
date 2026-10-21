@@ -39,3 +39,17 @@ img[src*='/pictures/'] {
   zoom: 2;
   border-radius: 0;
 }
+
+/* The code's names run long (Event_LeaveToValeInteriorsShopsWestBySecondDoor),
+   so inline code, headings and the on-page table of contents may break a name
+   anywhere rather than run off a phone's screen. Code blocks keep scrolling. */
+main,
+:not(pre) > code,
+h1,
+h2,
+h3,
+h4,
+#nd-toc a,
+#nd-tocnav a {
+  overflow-wrap: anywhere;
+}
