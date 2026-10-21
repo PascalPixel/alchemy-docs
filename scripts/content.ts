@@ -514,37 +514,46 @@ function placePages(scenes: SourceFile[]): Place[] {
     }
   }
   out.sort((a, b) => a.id - b.id);
+  // The renders, by scene number: public/places/index.tsv lists every map,
+  // entrance shot and recording with the scene it was made in and the way the
+  // place was drawn (cursed, cured), so a scene renamed since keeps its renders.
   const pub = join(docs, 'public/places');
+  type Render = { number: number; variant: string; kind: string; event: string; file: string };
+  const renders = existsSync(join(pub, 'index.tsv'))
+    ? readFileSync(join(pub, 'index.tsv'), 'utf8').trim().split('\n').slice(1).map((l) => l.split('\t'))
+        .map((r) => ({ number: +r[1], variant: r[3], kind: r[4], event: r[6], file: r[14] }) as Render)
+    : [];
   for (const p of out) {
-    const dir = join(pub, p.slug);
-    const shown = existsSync(dir) ? readdirSync(dir).sort() : [];
-    const maps = shown.filter((n) => /^map-\d+\.png$/.test(n));
+    const mine = renders.filter((r) => r.number === p.id && existsSync(join(pub, r.file)));
     const body: string[] = [];
     // A place that shares its overlay opens with what the overlay's comment
     // says of them all (their doors, their area name).
     const alone = out.filter((q) => q.file === p.file).length === 1;
     if (!alone && !p.whole) body.push(p.file.doc.split('\n\n')[0].replace(/\s*[^.:]*:\s*$/, ''));
     body.push(p.text);
-    for (const m of maps) body.push(`![The whole of ${p.title}, as the game draws it](/places/${p.slug}/${m})`);
-    // A place drawn more than one way (Kolima Forest before and after Tret
-    // lifts the curse) has a folder for each, named after the place and the way.
-    const variants = existsSync(pub) ? readdirSync(pub).filter((n) => n.startsWith(`${p.slug}_`)).sort().reverse() : [];
-    for (const v of variants) {
-      const way = v.slice(p.slug.length + 1);
-      for (const m of readdirSync(join(pub, v)).filter((n) => /^map-\d+\.png$/.test(n)).sort())
-        body.push(`![The whole of ${p.title}, ${way}, as the game draws it](/places/${v}/${m})`);
-    }
+    // Its maps, a place drawn more than one way (Kolima Forest before and
+    // after Tret lifts the curse) once for each way.
+    for (const m of mine.filter((r) => r.kind === 'map').sort((a, b) => (a.variant < b.variant ? 1 : -1) || (a.file < b.file ? -1 : 1)))
+      body.push(`![The whole of ${p.title}${m.variant ? `, ${m.variant},` : ''} as the game draws it](/places/${m.file})`);
     // Its events: the functions whose comments name the place, or every
-    // documented function when the overlay holds this place alone.
+    // documented function when the overlay holds this place alone, and every
+    // event recorded there, by the name it was recorded under.
     const named = new RegExp(`\\b${p.scene}\\b`);
-    const events = p.file.decls.filter((d) => d.kind === 'function' && d.doc && (alone ? /^Event_|_Event|Event[A-Z]/.test(d.name) : named.test(d.doc)));
-    const recorded = existsSync(join(dir, 'events')) ? readdirSync(join(dir, 'events')).sort() : [];
-    if (events.length) {
+    const clips = (name: string) => mine.filter((r) => r.event === name && (r.kind === 'event-gif' || r.kind === 'event-segment')).map((r) => r.file).sort();
+    const recordedNames = [...new Set(mine.filter((r) => r.kind === 'event-gif' || r.kind === 'event-segment').map((r) => r.event))];
+    const events = p.file.decls.filter((d) => d.kind === 'function' && d.doc && ((alone ? /^Event_|_Event|Event[A-Z]/.test(d.name) : named.test(d.doc)) || recordedNames.includes(d.name)));
+    const unmatched = recordedNames.filter((n) => !events.some((d) => d.name === n));
+    if (events.length || unmatched.length) {
       body.push('## Events');
       for (const d of events) {
         const first = d.doc.split(/(?<=[.!?])\s/)[0].replace(/\n/g, ' ');
         body.push(`### \`${d.name}\`\n\n${first} [Read the code](${pageOf(p.file.path)}#${anchor(d.name)}).`);
-        for (const r of recorded.filter((n) => n.startsWith(`${d.name}_`) && n.endsWith('.gif'))) body.push(`![${d.name} as it plays](/places/${p.slug}/events/${r})`);
+        for (const f of clips(d.name)) body.push(`![${d.name} as it plays](/places/${f})`);
+      }
+      // Recordings of events whose functions have since been renamed.
+      for (const n of unmatched) {
+        body.push(`### \`${n}\``);
+        for (const f of clips(n)) body.push(`![${n} as it plays](/places/${f})`);
       }
     }
     body.push(`Its code is in [${basename(p.file.path)}](${pageOf(p.file.path)}).`);

@@ -912,13 +912,13 @@ crossbone-isle-pillar-rooms1	115	Crossbone Isle Cave		entrance	1									crossbo
 crossbone-isle-pillar-rooms1	115	Crossbone Isle Cave		map	1									crossbone-isle-pillar-rooms1/map-1.png
 crossbone-isle-pillar-rooms2	116	Crossbone Isle Cave		entrance	1									crossbone-isle-pillar-rooms2/entrance.png
 crossbone-isle-pillar-rooms2	116	Crossbone Isle Cave		map	1									crossbone-isle-pillar-rooms2/map-1.png
-crossbone-isle-pillar-rooms3	119	Crossbone Isle Cave		entrance	1									crossbone-isle-pillar-rooms3/entrance.png
-crossbone-isle-pillar-rooms3	119	Crossbone Isle Cave		event	1	Event_FlipWaterSwitch	2		05416				05416	crossbone-isle-pillar-rooms3/events/Event_FlipWaterSwitch-2.png
-crossbone-isle-pillar-rooms3	119	Crossbone Isle Cave		event	1	Event_FlipWaterSwitch	1		05416				05416	crossbone-isle-pillar-rooms3/events/Event_FlipWaterSwitch.png
-crossbone-isle-pillar-rooms3	119	Crossbone Isle Cave		event-segment	1	Event_FlipWaterSwitch		0			05416 MsgFieldFlippedSwitch	63	05416	crossbone-isle-pillar-rooms3/events/Event_FlipWaterSwitch_0.gif
-crossbone-isle-pillar-rooms3	119	Crossbone Isle Cave		event-segment	1	Event_FlipWaterSwitch		1		05416 MsgFieldFlippedSwitch	05416 MsgFieldFlippedSwitch	179	05416	crossbone-isle-pillar-rooms3/events/Event_FlipWaterSwitch_1.gif
-crossbone-isle-pillar-rooms3	119	Crossbone Isle Cave		event-segment	1	Event_FlipWaterSwitch		2		05416 MsgFieldFlippedSwitch		112	05416	crossbone-isle-pillar-rooms3/events/Event_FlipWaterSwitch_2.gif
-crossbone-isle-pillar-rooms3	119	Crossbone Isle Cave		map	1									crossbone-isle-pillar-rooms3/map-1.png
+crossbone-isle-floodgate	119	Crossbone Isle Cave		entrance	1									crossbone-isle-floodgate/entrance.png
+crossbone-isle-floodgate	119	Crossbone Isle Cave		event	1	Event_FlipWaterSwitch	2		05416				05416	crossbone-isle-floodgate/events/Event_FlipWaterSwitch-2.png
+crossbone-isle-floodgate	119	Crossbone Isle Cave		event	1	Event_FlipWaterSwitch	1		05416				05416	crossbone-isle-floodgate/events/Event_FlipWaterSwitch.png
+crossbone-isle-floodgate	119	Crossbone Isle Cave		event-segment	1	Event_FlipWaterSwitch		0			05416 MsgFieldFlippedSwitch	63	05416	crossbone-isle-floodgate/events/Event_FlipWaterSwitch_0.gif
+crossbone-isle-floodgate	119	Crossbone Isle Cave		event-segment	1	Event_FlipWaterSwitch		1		05416 MsgFieldFlippedSwitch	05416 MsgFieldFlippedSwitch	179	05416	crossbone-isle-floodgate/events/Event_FlipWaterSwitch_1.gif
+crossbone-isle-floodgate	119	Crossbone Isle Cave		event-segment	1	Event_FlipWaterSwitch		2		05416 MsgFieldFlippedSwitch		112	05416	crossbone-isle-floodgate/events/Event_FlipWaterSwitch_2.gif
+crossbone-isle-floodgate	119	Crossbone Isle Cave		map	1									crossbone-isle-floodgate/map-1.png
 crossbone-isle-pillar-rooms4	121	Crossbone Isle Cave		entrance	1									crossbone-isle-pillar-rooms4/entrance.png
 crossbone-isle-pillar-rooms4	121	Crossbone Isle Cave		map	1									crossbone-isle-pillar-rooms4/map-1.png
 crossbone-isle-pillar-rooms5	122	Crossbone Isle Cave		entrance	1									crossbone-isle-pillar-rooms5/entrance.png
@@ -1821,27 +1821,27 @@ kalay6	156	Kalay Tunnel		event	0	gKalay_TunnelEvents[5]	1		09654				09654	kalay6
 kalay6	156	Kalay Tunnel		map	0									kalay6/map-0.png
 kalay6	156	Kalay Tunnel		map	1									kalay6/map-1.png
 kalay6	156	Kalay Tunnel		map	3									kalay6/map-3.png
-kolima-forest-bend	43	Kolima Forest		event-gif	0	KolimaForestBend_FlipFloodgateSwitch						175	05416	kolima-forest-bend/events/KolimaForestBend_FlipFloodgateSwitch.gif
-kolima-forest-bend	43	Kolima Forest		event	0	KolimaForestBend_FlipFloodgateSwitch	1		05416				05416	kolima-forest-bend/events/KolimaForestBend_FlipFloodgateSwitch.png
-kolima-forest-bend	43	Kolima Forest		event-segment	0	KolimaForestBend_FlipFloodgateSwitch		0			05416 MsgFieldFlippedSwitch	63	05416	kolima-forest-bend/events/KolimaForestBend_FlipFloodgateSwitch_0.gif
-kolima-forest-bend	43	Kolima Forest		event-segment	0	KolimaForestBend_FlipFloodgateSwitch		1		05416 MsgFieldFlippedSwitch		112	05416	kolima-forest-bend/events/KolimaForestBend_FlipFloodgateSwitch_1.gif
-kolima-forest-bend	43	Kolima Forest		event	0	gKolimaForestBendEvents[6]	1		05414				05414	kolima-forest-bend/events/gKolimaForestBendEvents-6.png
-kolima-forest-bend	43	Kolima Forest	cured	entrance	0									kolima-forest-bend_cured/entrance.png
-kolima-forest-bend	43	Kolima Forest	cured	map	0									kolima-forest-bend_cured/map-0.png
-kolima-forest-bend	43	Kolima Forest	cursed	entrance	0									kolima-forest-bend_cursed/entrance.png
-kolima-forest-bend	43	Kolima Forest	cursed	map	0									kolima-forest-bend_cursed/map-0.png
-kolima-forest-bridge	40	Kolima Forest	cured	entrance	0									kolima-forest-bridge_cured/entrance.png
-kolima-forest-bridge	40	Kolima Forest	cured	map	0									kolima-forest-bridge_cured/map-0.png
-kolima-forest-bridge	40	Kolima Forest	cursed	entrance	0									kolima-forest-bridge_cursed/entrance.png
-kolima-forest-bridge	40	Kolima Forest	cursed	map	0									kolima-forest-bridge_cursed/map-0.png
-kolima-forest-clearing	41	Kolima Forest	cured	entrance	0									kolima-forest-clearing_cured/entrance.png
-kolima-forest-clearing	41	Kolima Forest	cured	map	0									kolima-forest-clearing_cured/map-0.png
-kolima-forest-clearing	41	Kolima Forest	cursed	entrance	0									kolima-forest-clearing_cursed/entrance.png
-kolima-forest-clearing	41	Kolima Forest	cursed	map	0									kolima-forest-clearing_cursed/map-0.png
-kolima-forest-river	42	Kolima Forest	cured	entrance	0									kolima-forest-river_cured/entrance.png
-kolima-forest-river	42	Kolima Forest	cured	map	0									kolima-forest-river_cured/map-0.png
-kolima-forest-river	42	Kolima Forest	cursed	entrance	0									kolima-forest-river_cursed/entrance.png
-kolima-forest-river	42	Kolima Forest	cursed	map	0									kolima-forest-river_cursed/map-0.png
+kolima-forest-floodgate	43	Kolima Forest		event-gif	0	KolimaForestFloodgate_FlipFloodgateSwitch						175	05416	kolima-forest-floodgate/events/KolimaForestFloodgate_FlipFloodgateSwitch.gif
+kolima-forest-floodgate	43	Kolima Forest		event	0	KolimaForestFloodgate_FlipFloodgateSwitch	1		05416				05416	kolima-forest-floodgate/events/KolimaForestFloodgate_FlipFloodgateSwitch.png
+kolima-forest-floodgate	43	Kolima Forest		event-segment	0	KolimaForestFloodgate_FlipFloodgateSwitch		0			05416 MsgFieldFlippedSwitch	63	05416	kolima-forest-floodgate/events/KolimaForestFloodgate_FlipFloodgateSwitch_0.gif
+kolima-forest-floodgate	43	Kolima Forest		event-segment	0	KolimaForestFloodgate_FlipFloodgateSwitch		1		05416 MsgFieldFlippedSwitch		112	05416	kolima-forest-floodgate/events/KolimaForestFloodgate_FlipFloodgateSwitch_1.gif
+kolima-forest-floodgate	43	Kolima Forest		event	0	gKolimaForestFloodgateEvents[6]	1		05414				05414	kolima-forest-floodgate/events/gKolimaForestFloodgateEvents-6.png
+kolima-forest-floodgate	43	Kolima Forest	cured	entrance	0									kolima-forest-floodgate_cured/entrance.png
+kolima-forest-floodgate	43	Kolima Forest	cured	map	0									kolima-forest-floodgate_cured/map-0.png
+kolima-forest-floodgate	43	Kolima Forest	cursed	entrance	0									kolima-forest-floodgate_cursed/entrance.png
+kolima-forest-floodgate	43	Kolima Forest	cursed	map	0									kolima-forest-floodgate_cursed/map-0.png
+kolima-forest1	40	Kolima Forest	cured	entrance	0									kolima-forest1_cured/entrance.png
+kolima-forest1	40	Kolima Forest	cured	map	0									kolima-forest1_cured/map-0.png
+kolima-forest1	40	Kolima Forest	cursed	entrance	0									kolima-forest1_cursed/entrance.png
+kolima-forest1	40	Kolima Forest	cursed	map	0									kolima-forest1_cursed/map-0.png
+kolima-forest2	41	Kolima Forest	cured	entrance	0									kolima-forest2_cured/entrance.png
+kolima-forest2	41	Kolima Forest	cured	map	0									kolima-forest2_cured/map-0.png
+kolima-forest2	41	Kolima Forest	cursed	entrance	0									kolima-forest2_cursed/entrance.png
+kolima-forest2	41	Kolima Forest	cursed	map	0									kolima-forest2_cursed/map-0.png
+kolima-forest3	42	Kolima Forest	cured	entrance	0									kolima-forest3_cured/entrance.png
+kolima-forest3	42	Kolima Forest	cured	map	0									kolima-forest3_cured/map-0.png
+kolima-forest3	42	Kolima Forest	cursed	entrance	0									kolima-forest3_cursed/entrance.png
+kolima-forest3	42	Kolima Forest	cursed	map	0									kolima-forest3_cursed/map-0.png
 kolima-forest-tree	44	Kolima Forest		event	0	KolimaForestTree_ReadLaurelThoughts	2		05320				05407, 05320	kolima-forest-tree/events/KolimaForestTree_ReadLaurelThoughts-2.png
 kolima-forest-tree	44	Kolima Forest		event	0	KolimaForestTree_ReadLaurelThoughts	1		05320				05407, 05320	kolima-forest-tree/events/KolimaForestTree_ReadLaurelThoughts.png
 kolima-forest-tree	44	Kolima Forest		event	0	KolimaForestTree_ReadTretThoughts	2						05406, 05356	kolima-forest-tree/events/KolimaForestTree_ReadTretThoughts-2.png
