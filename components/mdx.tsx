@@ -3,23 +3,18 @@ import type { MDXComponents } from 'mdx/types';
 import type { ComponentProps } from 'react';
 import { AnchorRedirect } from './anchor-redirect';
 
-// A picture from public/, drawn with square pixels and found under the
-// site's base path.
-function Picture({ src, ...props }: ComponentProps<'img'>) {
-  return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={`${process.env.NEXT_PUBLIC_DOCS_BASE_PATH}${src}`}
-      style={{ imageRendering: 'pixelated' }}
-      {...props}
-    />
-  );
+const DefaultImage = defaultMdxComponents.img;
+
+// A picture from public/, found under the site's base path.
+function Image({ src, ...props }: ComponentProps<typeof DefaultImage>) {
+  const base = process.env.NEXT_PUBLIC_DOCS_BASE_PATH ?? '';
+  return <DefaultImage src={typeof src === 'string' && src.startsWith('/') ? `${base}${src}` : src} {...props} />;
 }
 
 export function getMDXComponents(components?: MDXComponents) {
   return {
     ...defaultMdxComponents,
-    Picture,
+    img: Image,
     AnchorRedirect,
     ...components,
   } satisfies MDXComponents;

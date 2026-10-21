@@ -3,5 +3,8 @@
   "framework": "nextjs",
   "installCommand": "bun install --frozen-lockfile",
   "buildCommand": "git clone --depth 1 https://github.com/PascalPixel/alchemy /tmp/alchemy && ALCHEMY=/tmp/alchemy bun run build",
-  "outputDirectory": ".next"
+  "outputDirectory": ".next",
+  "redirects": [
+    { "source": "/tbs/battle/effects/pictures", "destination": "/tbs/battle/effects#pictures-and-colours", "permanent": true }
+  ]
 }

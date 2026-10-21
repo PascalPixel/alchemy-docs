@@ -21,6 +21,7 @@
 
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, normalize } from 'node:path';
+import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { Language, type Node, Parser } from 'web-tree-sitter';
 
@@ -662,7 +663,7 @@ function prose(source: string, target: string) {
   text = text.replace(/(!?)\[([^\]]*)\]\(([^)#\s]*)(#[^)]*)?\)/g, (all, bang: string, label: string, link: string, hash = '') => {
     if (/^[a-z]+:/.test(link) || link.startsWith('/') || !link) return all;
     const resolved = normalize(join(dirname(source), link));
-    if (bang) return `![${label}](${github.replace('/blob/', '/raw/')}/${resolved}${hash})`;
+    if (bang) return `![${label}](${picture(resolved) ?? `${github.replace('/blob/', '/raw/')}/${resolved}`}${hash})`;
     return `[${label}](${siteLink(resolved)}${hash})`;
   });
   // MDX would read a bare < or { as markup.
@@ -1788,15 +1789,25 @@ function abilities(files: SourceFile[]) {
 }
 
 // ---------------------------------------------------------------------------
-// Pictures: a few of the effects' sheets, copied from the tracked PNGs.
+// Pictures a README links by relative path: an asset of the games, such as an
+// effect's sheet, served from public/pictures at its path in the repository.
+// Only files git tracks under a game's src or include are copied, so nothing
+// from roms/ or out/ can reach the site.
 
-const PICTURES = ['games/tbs/src/graphics/battle_fx/rock_wall.png', 'games/tbs/src/graphics/battle_fx/flame_column.png'];
+const tracked = new Set(
+  execFileSync('git', ['-C', repo, 'ls-files', '-z', '--', 'games'], { encoding: 'utf8', maxBuffer: 1 << 28 })
+    .split('\0')
+    .filter((p) => /^games\/[^/]+\/(src|include)\//.test(p)),
+);
+const PICTURES = join(docs, 'public/pictures');
+rmSync(PICTURES, { recursive: true, force: true });
 
-function pictures() {
-  const out = join(docs, 'public/pictures');
-  rmSync(out, { recursive: true, force: true });
-  mkdirSync(out, { recursive: true });
-  for (const p of PICTURES) if (existsSync(join(repo, p))) copyFileSync(join(repo, p), join(out, basename(p)));
+function picture(path: string): string | undefined {
+  if (!tracked.has(path) || !/\.(png|gif|jpe?g|webp|svg)$/i.test(path)) return undefined;
+  const to = path.replace(/^games\//, '');
+  mkdirSync(dirname(join(PICTURES, to)), { recursive: true });
+  copyFileSync(join(repo, path), join(PICTURES, to));
+  return `/pictures/${to}`;
 }
 
 // ---------------------------------------------------------------------------
@@ -1859,5 +1870,4 @@ if (existsSync(join(repo, SOURCE_README))) prose(SOURCE_README, 'tbs/source/inde
 else page('tbs/source/index.md', { title: 'games/tbs', source: 'games/tbs' }, `## Folders\n\n${ROOTS.map((r) => `- [${r}](/tbs/source/${r})`).join('\n')}`);
 places(all.get('tbs')!);
 abilities(all.get('tbs')!);
-pictures();
 console.log(`content: ${all.get('tbs')!.length} files read, ${split.size} folders split by file, in ${((Date.now() - started) / 1000).toFixed(1)} s`);

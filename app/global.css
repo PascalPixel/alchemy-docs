@@ -18,3 +18,14 @@ img[src$='.gif'] {
   width: min(100%, 480px);
   height: auto;
 }
+
+/* The games' own picture files, such as an effect's sheet with its palette,
+   shown side by side at twice their size, pixel for pixel. */
+img[src*='/pictures/'] {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 1rem 1rem 0;
+  image-rendering: pixelated;
+  zoom: 2;
+  border-radius: 0;
+}
