@@ -1,0 +1,1369 @@
+scene	what	reason
+#10	event ValeEruption_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+#12	event Event_BlockCenterTriggerCells	no message
+#12	event Event_BlockLeftTriggerCell	no message
+#12	event Event_BlockRightTriggerCell	no message
+#12	event Event_CenterStatueMoved	Move needs a direction held after the cast
+#12	event Event_CheckAheadFacingNorth	no message
+#12	event Event_CheckAheadFacingSouth	no message
+#12	event Event_LeftBeamStatueMoved	no message
+#12	event Event_NortheastStatueMoved	no message
+#12	event Event_NorthwestStatueMoved	no message
+#12	event Event_PushCenterStatueNorth	no message
+#12	event Event_PushLeftBeamStatueEast	no message
+#12	event Event_PushLeftBeamStatueNorth	no message
+#12	event Event_PushLeftBeamStatueSouth	no message
+#12	event Event_PushNortheastStatue	no message
+#12	event Event_PushNorthwestStatue	no message
+#12	event Event_PushRightBeamStatueNorth	no message
+#12	event Event_PushRightBeamStatueSouth	no message
+#12	event Event_PushRightBeamStatueWest	no message
+#12	event Event_PushSoutheastStatue	no message
+#12	event Event_PushSouthwestStatue	no message
+#12	event Event_RightBeamStatueMoved	no message
+#12	event Event_SoutheastStatueMoved	no message
+#12	event Event_SouthwestStatueMoved	no message
+#12	event SolSanctumStatue_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+#12	event SolSanctumStatue_MoveUnusedNorthwestStatue	no message
+#13	event Scene_Initialize	no message
+#188	event LeaveTheShip	no message
+#188	event LemurianShip_SetupScene	no message
+#188	event RaiseTheShip	"use black orb 10" is not a talk, search, touch or Psynergy-on-actor trigger
+#188	event Ripple_Start	no message
+#188	event Ripple_StopForReveal	no message
+#191	place	a debug test room
+#192	place	a debug test room
+#193	place	a debug test room
+#194	place	a debug test room
+#195	place	a debug test room
+#196	place	a debug test room
+#197	place	a debug test room
+#198	place	a debug test room
+#199	place	a debug test room
+#200	place	a debug test room
+#24	event Event_ReadMindAndWelcomeIsaacBack	the trigger is in none of its scenes
+#24	event Scene_Initialize	no message
+#24	event Vault_UpdateBoneProximityFlag	no message
+#31	event BilibinInteriors_Initialize	no message
+#37	event KolimaInteriors_Initialize	no message
+#7	event Event_LeaveByDoor1	no message
+#7	event Event_LeaveByDoor2	no message
+#7	event Event_LeaveByDoor3	no message
+#7	event Event_LeaveByDoor4	no message
+#7	event Event_LeaveByDoor5	no message
+#7	event Event_LeaveByDoor6	no message
+#7	event Event_LeaveByDoor7	no message
+#7	event Event_LeaveByDoor8	no message
+#7	event ValeInteriors_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+#7	event gValeInteriors_StormEvents[14]	the trigger is in none of its scenes
+#7	event gValeInteriors_StormEvents[15]	the trigger is in none of its scenes
+#7	event gValeInteriors_StormEvents[16]	the trigger is in none of its scenes
+#7	event gValeInteriors_StormEvents[17]	the trigger is in none of its scenes
+#7	event gValeInteriors_StormEvents[18]	the trigger is in none of its scenes
+#7	event gValeInteriors_StormEvents[19]	the trigger is in none of its scenes
+#7	event gValeInteriors_StormEvents[22]	the trigger is in none of its scenes
+#73	event XianInteriors_Initialize	no message
+#73	event gXianInteriors_Events[65]	the trigger is in none of its scenes
+AlpineCrossingLamaTemple1	event AlpineCrossing_FeizhiArrives	its GIFs stop at 20 seconds
+AlpineCrossingLamaTemple1	event AlpineCrossing_FreezePuddle	no message
+AlpineCrossingLamaTemple1	event AlpineCrossing_GrowSprout	no message
+AlpineCrossingLamaTemple1	event AlpineCrossing_HidePath	no message
+AlpineCrossingLamaTemple1	event AlpineCrossing_PrepareFrost	no message
+AlpineCrossingLamaTemple1	event AlpineCrossing_RevealPath	no message
+AlpineCrossingLamaTemple1	event LamaTemple_EnterHamasRoom	no message
+AlpineCrossingLamaTemple1	event LamaTemple_RevealPassage	no message
+AlpineCrossingLamaTemple1	event LamaTemple_ShowFalseWall	no message
+AlpineCrossingLamaTemple1	event Scene_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+Altin1	event Scene_Initialize	no message
+Altin1	event Village_CheckBlockMoved	no message
+Altin1	event Village_EnterDoor	no message
+Altin1	event Village_ScareOffBeast	no message
+Altin1	event Village_WalkThroughDoorway	no message
+AltinPeak1	event AltinPeak_FightRoom1Beast	no message
+AltinPeak1	event AltinPeak_FightRoom3Beast	no message
+AltinPeak1	event AltinPeak_FightRoom5Beast	no message
+AltinPeak1	event AltinPeak_ForceRockOver	no message
+AltinPeak1	event AltinPeak_FreezeRoom1Puddle	no message
+AltinPeak1	event AltinPeak_FreezeRoom1WidePuddle	no message
+AltinPeak1	event AltinPeak_FreezeRoom5Puddle	no message
+AltinPeak1	event AltinPeak_FreezeRoom6Puddle	no message
+AltinPeak1	event AltinPeak_FreezeRoom7Puddle	no message
+AltinPeak1	event AltinPeak_FreezeRoom7SecondPuddle	no message
+AltinPeak1	event AltinPeak_FreezeRoom7ThirdPuddle	no message
+AltinPeak1	event AltinPeak_PlaceBlockUnderLeader	no message
+AltinPeak1	event AltinPeak_PushRoom7Block	no message
+AltinPeak1	event AltinPeak_RestoreBlockAutomaticPriority	no message
+AltinPeak1	event AltinPeak_RideLog	no message
+AltinPeak1	event AltinPeak_SettleRoom7Block	no message
+AltinPeak1	event AltinPeak_ShowFirstBeastRoute	no message
+AltinPeak1	event AltinPeak_ShowSecondBeastRoute	no message
+AltinPeak1	event AltinPeak_StartHydrosBattle	no message
+AltinPeak1	event AltinPeak_TalkToDjinni	no message
+AltinPeak1	event Scene_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+AltinPeak9	event AltinPeak_ReadFallingRockSign	its GIFs stop at 20 seconds
+AltmillerCave1	event AltmillerCave_BeginRetreat	no message
+AltmillerCave1	event AltmillerCave_DarkenToLevel0	no message
+AltmillerCave1	event AltmillerCave_DarkenToLevel1	no message
+AltmillerCave1	event AltmillerCave_DarkenToLevel2	no message
+AltmillerCave1	event AltmillerCave_DarkenToLevel3	no message
+AltmillerCave1	event AltmillerCave_DarkenToLevel4	no message
+AltmillerCave1	event AltmillerCave_DarkenToLevel5	no message
+AltmillerCave1	event AltmillerCave_EndReveal	no message
+AltmillerCave1	event AltmillerCave_Initialize	no message
+AltmillerCave1	event AltmillerCave_StartReveal	no message
+AltmillerCave2	event AltmillerCave_MeetInvisibleBabi	its GIFs stop at 20 seconds
+AltmillerCave2	event AltmillerCave_RestoreBabiAndInviteParty	its GIFs stop at 20 seconds
+AltmillerCave2	event gAltmillerCave_Events2[7]	its GIFs stop at 20 seconds
+AltmillerCave4	event AltmillerCave_AdvanceObstacleAndCheckPassage	no message
+AltmillerCave4	event AltmillerCave_CheckFrostTargetCollision	no message
+AltmillerCave4	event AltmillerCave_FreezePuddle	no message
+AltmillerCave4	event AltmillerCave_HopSelectedActor	no message
+AltmillerCave4	event AltmillerCave_MoveStagedActorToClearPosition	no message
+AltmillerCave4	event AltmillerCave_StartDjinnBattle	no message
+AltmillerCave4	event AltmillerCave_UpdateMovedObstacle	no message
+BabiLighthouse1	event BabiLighthouse_CloseTruthDoor	no message
+BabiLighthouse1	event BabiLighthouse_DiscussPursuit	its GIFs stop at 20 seconds
+BabiLighthouse1	event BabiLighthouse_HideTruthDoorSwitch	no message
+BabiLighthouse1	event BabiLighthouse_OpenTruthDoor	its GIFs stop at 20 seconds
+BabiLighthouse1	event BabiLighthouse_RefreshTruthDoorTiles	no message
+BabiLighthouse1	event BabiLighthouse_SetupScene	no message
+BabiLighthouse1	event gBabiLighthouse_Events1[11]	no page waited for the button
+BabiLighthouse1	event gBabiLighthouse_Events1[16]	no page waited for the button
+BabiLighthouse1	event gBabiLighthouse_Events1[21]	no page waited for the button
+BabiLighthouse1	event gBabiLighthouse_Events1[6]	no page waited for the button
+BabiLighthouse2	event BabiLighthouse_RisePastPairedEffects	no message
+BabiLighthouse2	event BabiLighthouse_RisePastSingleEffect	no message
+BabiLighthouse2	event BabiLighthouse_RiseToAlternateExit	no message
+BabiLighthouse2	event BabiLighthouse_RiseToExit	no message
+BabiLighthouse2	event BabiLighthouse_StartDjinnBattle	no message
+BabiLighthouse3	event BabiLighthouse_AdvancePairAndJump	no message
+BabiLighthouse3	event BabiLighthouse_ClimbDownOrAdvancePair	no message
+BabiLighthouse3	event BabiLighthouse_JumpFromLedge	no message
+BabiLighthouse3	event BabiLighthouse_OpenGrowthPassage	no message
+BabiLighthouse4	event BabiLighthouse_AdvanceNearbyPair	no message
+BabiLighthouse4	event BabiLighthouse_ClimbOrAdvancePair	no message
+BabiLighthouse4	event BabiLighthouse_EnableChildOption	no message
+BabiLighthouse4	event BabiLighthouse_UpdateMovedBlock	no message
+BabiPalace1	event BabiPalace_ApplyEntryState	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+BabiPalace1	event BabiPalace_HearSoldiersReport	its GIFs stop at 20 seconds
+BabiPalace1	event BabiPalace_LeaveThroughDoor	no message
+BabiPalace1	event BabiPalace_RestInPalaceBeds	its GIFs stop at 20 seconds
+BabiPalace2	event BabiPalace_AskAboutRemainingWarriors	the trigger is in none of its scenes
+BabiPalace2	event BabiPalace_ExamineWell	the trigger is in none of its scenes
+BabiPalace2	event BabiPalace_LeaveThroughAnimatedDoor	no message
+BabiPalace2	event BabiPalace_PassOnBabisWord	the trigger is in none of its scenes
+BabiPalace2	event BabiPalace_ThankForSavingBabi	the trigger is in none of its scenes
+BabiPalace2	event gBabiPalace_Events2AfterColosso[2]	the trigger is in none of its scenes
+BabiPalace2	event gBabiPalace_Events2AfterColosso[4]	the trigger is in none of its scenes
+BabiPalace2	event gBabiPalace_Events2AfterColosso[5]	the trigger is in none of its scenes
+BabiPalace2	event gBabiPalace_Events2Colosso[6]	the trigger is in none of its scenes
+BabiPalace2	event gBabiPalace_Events2Colosso[8]	the trigger is in none of its scenes
+BabiPalace2	event gBabiPalace_Events2Colosso[9]	the trigger is in none of its scenes
+BabiPalace2	event gBabiPalace_Events2[2]	the trigger is in none of its scenes
+BabiPalace2	event gBabiPalace_Events2[3]	the trigger is in none of its scenes
+BabiPalace2	event gBabiPalace_Events2[4]	the trigger is in none of its scenes
+BabiPalace2	event gBabiPalace_Events2[5]	the trigger is in none of its scenes
+Bilibin1	event Bilibin_Initialize	no message
+Bilibin1	event Bilibin_UpdateVillageBlockCells	no message
+Bilibin1	event Event_OpenDoorAndLeave	no message
+Bilibin1	event Event_PushBlock	no message
+Bilibin2	event Bilibin_UpdateRaisedBlockCells	no message
+Bilibin2	event Event_CheckAhead	no message
+Bilibin2	event Event_GustJoins	no message
+Bilibin3	event Bilibin_UpdateRiverBlockCells	no message
+Bilibin3	event Event_JillGivesHardNut	its GIFs stop at 20 seconds
+Bilibin3	event Event_PullJillFromRiver	Move needs a direction held after the cast
+BilibinCave1	event BilibinCave_Initialize	no message
+BilibinCave1	event BilibinCave_UpdateFrostTargetFromMovableActors	no message
+BilibinCave1	event Event_ClearMapTriggerFlag	no message
+BilibinCave1	event Event_DouseExitSectionTarget	no message
+BilibinCave1	event Event_FreezeFirstTarget	no message
+BilibinCave1	event Event_FreezeSecondTarget	no message
+BilibinCave1	event Event_FreezeThirdTarget	no message
+BilibinCave1	event Event_PushActorAhead	no message
+BilibinCave1	event Event_SetMapTriggerFlag	no message
+BilibinCave2	event Event_DouseMiddleSectionTarget	no message
+BilibinCave2	event Event_HideRevealedPath	no message
+BilibinCave2	event Event_RevealHiddenPath	no message
+BilibinCave3	event Event_AlterCrossingCell	no message
+BilibinCave3	event Event_GrowPlant	no message
+BilibinCave3	event Event_RestoreCrossingCell	no message
+Clear	place	a menu, not a place
+ColosseumEntrance1	colosseum-entrance1 room of entrance 65	the scene went on to scene 143 before the player had control
+ColosseumEntrance1	colosseum-entrance1 room of entrance 66	the scene went on to scene 143 before the player had control
+ColosseumEntrance1	event ColosseumEntrance_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+ColosseumEntrance1	event Event_AskIfReadyForFinals	no page waited for the button
+ColosseumEntrance1	event Event_FinalsBegin	no page waited for the button
+ColosseumEntrance1	event Event_RearmFinalsStart	no message
+ColosseumEntrance1	event Event_TalkToAzart	actor 13 is not in the scene
+ColosseumEntrance1	event Event_TalkToBuford	actor 18 is not in the scene
+ColosseumEntrance1	event Event_TalkToDekka	actor 16 is not in the scene
+ColosseumEntrance1	event Event_TalkToGalahad	actor 14 is not in the scene
+ColosseumEntrance1	event Event_TalkToNavampa	actor 17 is not in the scene
+ColosseumEntrance1	event Event_TalkToSatrage	actor 15 is not in the scene
+ColosseumEntrance1	event Event_TalkToTrialAttendant	actor 17 is not in the scene
+ColosseumEntrance1	event gColosseumEntranceEvents1Entrance12[0]	actor 12 is not in the scene
+ColosseumEntrance1	event gColosseumEntranceEvents1Entrance12[10]	actor 11 is not in the scene
+ColosseumEntrance1	event gColosseumEntranceEvents1Entrance12[8]	no page waited for the button
+ColosseumEntrance1	event gColosseumEntranceEvents1Entrance12[9]	no page waited for the button
+ColosseumEntrance1	event gColosseumEntranceEvents1[10]	actor 13 is not in the scene
+ColosseumEntrance1	event gColosseumEntranceEvents1[11]	actor 14 is not in the scene
+ColosseumEntrance1	event gColosseumEntranceEvents1[12]	actor 15 is not in the scene
+ColosseumEntrance1	event gColosseumEntranceEvents1[13]	actor 16 is not in the scene
+ColosseumEntrance1	event gColosseumEntranceEvents1[14]	actor 17 is not in the scene
+ColosseumEntrance1	event gColosseumEntranceEvents1[5]	actor 13 is not in the scene
+ColosseumEntrance1	event gColosseumEntranceEvents1[6]	actor 14 is not in the scene
+ColosseumEntrance1	event gColosseumEntranceEvents1[7]	actor 15 is not in the scene
+ColosseumEntrance1	event gColosseumEntranceEvents1[8]	actor 16 is not in the scene
+ColosseumEntrance3	event Event_CrowdRecognizesIsaac	its GIFs stop at 20 seconds
+ColossoLog	event ColossoLog_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+ColossoLog	event Colosso_AskReadyToRace	no page waited for the button
+ColossoLog	event Colosso_DrawGauge	no message
+ColossoLog	event Colosso_RaiseTakePlaceOnPsynergy	no message
+ColossoLog	event Colosso_TakePlaceForMatch	"raised 99" is not a talk, search, touch or Psynergy-on-actor trigger
+ColossoLog	event Colosso_UpdatePathRival	no message
+ColossoLog	event Event_CheckAhead	no message
+ColossoLog	event Event_ForceSidewalkBlock	no message
+ColossoLog	event Event_FreezeOnScales	no message
+ColossoLog	event Event_GrowPlant	no message
+ColossoLog	event Event_HaltWall	no message
+ColossoLog	event Event_IgnoreMove	no message
+ColossoLog	event Event_MoveStone	no message
+ColossoLog	event Event_PassNorthWallOpening	no message
+ColossoLog	event Event_PassSouthWallOpening	no message
+ColossoLog	event Event_PushRock	no message
+ColossoLog	event Event_PushWeight	no message
+ColossoLog	event Event_PushWeightOrCheckAhead	no message
+ColossoLog	event Event_ReachArena	no page waited for the button
+ColossoLog	event Event_RideMovingSidewalk	no message
+ColossoLog	event Event_RollLongLog	no message
+ColossoLog	event Event_SetWeightOnScales	no message
+ColossoLog	event Event_SettleRocks	no message
+ColossoLog	event Event_StepOffScales	no message
+ColossoLog	event Event_StepOnScales	no message
+ColossoLog	event Event_TalkToFreeClimbAttendant	no page waited for the button
+ColossoLog	event Event_TalkToLogRollingAttendant	no page waited for the button
+ColossoLog	event Event_TalkToMovingSidewalkAttendant	no page waited for the button
+ColossoLog	event Event_TalkToScalesAttendant	no page waited for the button
+ColossoLog	event Event_TalkToSteppingStoneAttendant	no page waited for the button
+ColossoLog	event Event_TalkToWallWedgeAttendant	no page waited for the button
+ColossoLog	event gColossoLogEvents[31]	no page waited for the button
+ColossoLog	event gColossoLogEvents[32]	no page waited for the button
+ColossoLog	event gColossoLogEvents[33]	no page waited for the button
+ColossoLog	event gColossoLogEvents[34]	no page waited for the button
+ColossoLog	event gColossoLogEvents[35]	no page waited for the button
+ColossoLog	event gColossoLogEvents[36]	no page waited for the button
+ColossoLog	event gColossoLogEvents[37]	no page waited for the button
+ColossoRiver	event ColossoRiver_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+ColossoRiver	event ColossoRiver_SetCourseFlag	no message
+ColossoRiver	event Colosso_AskReadyToRace	no page waited for the button
+ColossoRiver	event Colosso_DrawGauge	no message
+ColossoRiver	event Colosso_RaiseTakePlaceOnPsynergy	no message
+ColossoRiver	event Colosso_TakePlaceForMatch	"raised 99" is not a talk, search, touch or Psynergy-on-actor trigger
+ColossoRiver	event Colosso_UpdatePathRival	no message
+ColossoRiver	event Event_DousePipe	no message
+ColossoRiver	event Event_GrowPlant	no message
+ColossoRiver	event Event_PushPipeworksBlock	no message
+ColossoRiver	event Event_PushRock	no message
+ColossoRiver	event Event_PushRockOrCheckAhead	no message
+ColossoRiver	event Event_ReachArena	no page waited for the button
+ColossoRiver	event Event_RollLogEastWest	no message
+ColossoRiver	event Event_RollLogNorthSouth	no message
+ColossoRiver	event Event_SettleRocks	no message
+ColossoRiver	event Event_TalkToBridgeAttendant	no page waited for the button
+ColossoRiver	event Event_TalkToLumberAttendant	no page waited for the button
+ColossoRiver	event Event_TalkToPipeworksAttendant	no page waited for the button
+ColossoRiver	event Event_TalkToRockAttendant	no page waited for the button
+ColossoRiver	event gColossoRiver_Events[22]	no page waited for the button
+ColossoRiver	event gColossoRiver_Events[23]	no page waited for the button
+ColossoRiver	event gColossoRiver_Events[24]	no page waited for the button
+ColossoRiver	event gColossoRiver_Events[25]	no page waited for the button
+ColossoRiver	event gColossoRiver_Events[26]	no page waited for the button
+ColossoWall	event ColossoWall_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+ColossoWall	event ColossoWall_UpdateMovingPlatforms	no message
+ColossoWall	event Colosso_AskReadyToRace	actor 34 is not in the scene
+ColossoWall	event Colosso_DrawGauge	no message
+ColossoWall	event Colosso_RaiseTakePlaceOnPsynergy	no message
+ColossoWall	event Colosso_TakePlaceForMatch	"raised 99" is not a talk, search, touch or Psynergy-on-actor trigger
+ColossoWall	event Colosso_UpdatePathRival	no message
+ColossoWall	event Event_CheckAhead	no message
+ColossoWall	event Event_FreezeEastTarget	no message
+ColossoWall	event Event_FreezeWestTarget	no message
+ColossoWall	event Event_GrowPlant	no message
+ColossoWall	event Event_HaltLifts	no message
+ColossoWall	event Event_IgnoreMove	no message
+ColossoWall	event Event_KnockDownObstacle	no message
+ColossoWall	event Event_PrepareForce	no message
+ColossoWall	event Event_PushRock	no message
+ColossoWall	event Event_PushRockAndUpdateCells	no message
+ColossoWall	event Event_ReachArena	no page waited for the button
+ColossoWall	event Event_RideLog	no message
+ColossoWall	event Event_RollEastLogEast	no message
+ColossoWall	event Event_RollEastLogWest	no message
+ColossoWall	event Event_RollWestLogEast	no message
+ColossoWall	event Event_RollWestLogWest	no message
+ColossoWall	event Event_RunRisingSequence	no message
+ColossoWall	event Event_SaveMovedRockColumns	no message
+ColossoWall	event Event_TalkToBoardWalkAttendant	actor 39 is not in the scene
+ColossoWall	event Event_TalkToLogRollingAttendant	actor 37 is not in the scene
+ColossoWall	event Event_TalkToMiniMazeAttendant	actor 35 is not in the scene
+ColossoWall	event Event_TalkToShiftingFloorAttendant	actor 36 is not in the scene
+ColossoWall	event Event_TalkToWallAttendant	actor 38 is not in the scene
+ColossoWall	event Event_UpdateMovedRockCell	no message
+ColossoWall	event gColossoWallEvents[32]	actor 34 is not in the scene
+ColossoWall	event gColossoWallEvents[33]	actor 35 is not in the scene
+ColossoWall	event gColossoWallEvents[34]	actor 36 is not in the scene
+ColossoWall	event gColossoWallEvents[35]	actor 37 is not in the scene
+ColossoWall	event gColossoWallEvents[36]	actor 38 is not in the scene
+ColossoWall	event gColossoWallEvents[37]	actor 39 is not in the scene
+CrossboneIsle1	event Event_BlowAwayIvy15	no message
+CrossboneIsle1	event Event_BlowAwayIvy16	no message
+CrossboneIsle1	event Event_BlowAwayIvy17	no message
+CrossboneIsle1	event Event_BlowAwayIvy18	no message
+CrossboneIsle1	event Event_CatchNut	no message
+CrossboneIsle1	event Event_GrowPlant11	no message
+CrossboneIsle1	event Event_GrowPlant12	no message
+CrossboneIsle1	event Event_GrowPlant13	no message
+CrossboneIsle1	event Event_GrowPlant14	no message
+CrossboneIsle1	event Event_PushFirstRoomBlock	no message
+CrossboneIsle3	event Event_HopEast	no message
+CrossboneIsle3	event Event_HopNorth	no message
+CrossboneIsle3	event Event_HopSouth	no message
+CrossboneIsle3	event Event_HopWest	no message
+CrossboneIsle3	event Event_SlideBlock10North	no message
+CrossboneIsle3	event Event_SlideBlock10South	no message
+CrossboneIsle3	event Event_SlideBlock11East	no message
+CrossboneIsle3	event Event_SlideBlock11West	no message
+CrossboneIsle3	event Event_SlideBlock12East	no message
+CrossboneIsle3	event Event_SlideBlock12West	no message
+CrossboneIsle3	event Event_SlideBlock13East	no message
+CrossboneIsle3	event Event_SlideBlock13West	no message
+CrossboneIsle3	event Event_SlideBlock14East	no message
+CrossboneIsle3	event Event_SlideBlock14West	no message
+CrossboneIsle3	event Event_SlideBlock15East	no message
+CrossboneIsle3	event Event_SlideBlock15West	no message
+CrossboneIsle3	event Event_SlideBlock16East	no message
+CrossboneIsle3	event Event_SlideBlock16West	no message
+CrossboneIsle3	event Event_SlideBlock17North	no message
+CrossboneIsle3	event Event_SlideBlock17South	no message
+CrossboneIsle3	event Event_SlideBlock18North	no message
+CrossboneIsle3	event Event_SlideBlock18South	no message
+CrossboneIsle3	event Event_SlideBlock19East	no message
+CrossboneIsle3	event Event_SlideBlock19West	no message
+CrossboneIsle3	event Event_SlideBlock8North	no message
+CrossboneIsle3	event Event_SlideBlock8South	no message
+CrossboneIsle3	event Event_SlideBlock9North	no message
+CrossboneIsle3	event Event_SlideBlock9South	no message
+CrossboneIsle3	event Event_StepOnBlock10	no message
+CrossboneIsle3	event Event_StepOnBlock11	no message
+CrossboneIsle3	event Event_StepOnBlock12	no message
+CrossboneIsle3	event Event_StepOnBlock13	no message
+CrossboneIsle3	event Event_StepOnBlock14	no message
+CrossboneIsle3	event Event_StepOnBlock15	no message
+CrossboneIsle3	event Event_StepOnBlock16	no message
+CrossboneIsle3	event Event_StepOnBlock17	no message
+CrossboneIsle3	event Event_StepOnBlock18	no message
+CrossboneIsle3	event Event_StepOnBlock19	no message
+CrossboneIsle3	event Event_StepOnBlock8	no message
+CrossboneIsle3	event Event_StepOnBlock9	no message
+CrossboneIsle5	event Event_FightFinalGuards	no message
+CrossboneIsle5	event Scene_Initialize	no message
+CrossboneIsle6	event Event_EnterGuardedRoom	no message
+CrossboneIsle6	event Event_MoveBlock	no message
+CrossboneIsle6	event Event_OpenWestDoor	no message
+CrossboneIsle6	event Event_PushBlock	no message
+CrossboneIslePillarRooms1	event Event_JumpOrPushPillar	no message
+CrossboneIslePillarRooms2	event Event_PushPillar	no message
+CrossboneIslePillarRooms4	event Event_ClimbUp	no message
+CrossboneIslePillarRooms4	event Event_JumpOrPushRoom4Pillar	no message
+CrossboneIslePillarRooms4	event Event_MovePillar	no message
+CrossboneIslePillarRooms4	event Event_PushOrClimbDown	no message
+CrossboneIslePillarRooms4	event Event_StartRising	no message
+CrossboneIslePillarRooms4	event Event_StopRising	no message
+CrossboneIslePillarRooms5	event Event_FreezeFirstPool	no message
+CrossboneIslePillarRooms5	event Event_FreezeSecondPool	no message
+CrossboneIslePillarRooms5	event Event_FreezeThirdPool	no message
+CrossboneIslePillarRooms5	event Event_FrostBeginsOnThirdPool	no message
+CrossboneIslePillarRooms5	event Event_FrostRaisesPillar	no message
+CrossboneIslePillarRooms5	event Event_MoveSinkingPillar	no message
+CrossboneIslePillarRooms5	event Event_PushSinkingPillar	no message
+CrossboneIslePillarRooms5	event Event_StartMovingSinkingPillar	no message
+CrossboneIslePillarRooms5	event Scene_Initialize	no message
+CrossboneIslePlatformRooms1	event CrossboneIslePlatformRooms_CheckFifthPursuerTrigger	no message
+CrossboneIslePlatformRooms1	event CrossboneIslePlatformRooms_CheckFirstPursuerTrigger	no message
+CrossboneIslePlatformRooms1	event CrossboneIslePlatformRooms_CheckSecondPursuerTrigger	no message
+CrossboneIslePlatformRooms1	event CrossboneIslePlatformRooms_UpdateItemIcons	no message
+CrossboneIslePlatformRooms1	event Event_BaneFirstEscape	no message
+CrossboneIslePlatformRooms1	event Event_BaneJoins	no message
+CrossboneIslePlatformRooms1	event Event_BaneKeepsAway	no message
+CrossboneIslePlatformRooms1	event Event_BaneLastEscape	no message
+CrossboneIslePlatformRooms1	event Event_BaneSecondEscape	no message
+CrossboneIslePlatformRooms1	event Event_BeginRevealBlend	no message
+CrossboneIslePlatformRooms1	event Event_CatchFirstBlueKey	no message
+CrossboneIslePlatformRooms1	event Event_CatchFourthBlueKey	no message
+CrossboneIslePlatformRooms1	event Event_CatchRedKey	no message
+CrossboneIslePlatformRooms1	event Event_CatchSecondBlueKey	no message
+CrossboneIslePlatformRooms1	event Event_CatchThirdBlueKey	no message
+CrossboneIslePlatformRooms1	event Event_CheckLeaderAhead	no message
+CrossboneIslePlatformRooms1	event Event_DodgeFifthPursuer	no message
+CrossboneIslePlatformRooms1	event Event_DodgeFirstPursuer	no message
+CrossboneIslePlatformRooms1	event Event_DodgeFourthPursuer	no message
+CrossboneIslePlatformRooms1	event Event_DodgeSecondPursuer	no message
+CrossboneIslePlatformRooms1	event Event_DodgeThirdPursuer	no message
+CrossboneIslePlatformRooms1	event Event_EndRevealBlend	no message
+CrossboneIslePlatformRooms1	event Event_FreezePuddle	no message
+CrossboneIslePlatformRooms1	event Event_HaltBane	no message
+CrossboneIslePlatformRooms1	event Event_HaltPursuer	no message
+CrossboneIslePlatformRooms1	event Event_HideRedKey	no message
+CrossboneIslePlatformRooms1	event Event_LookAheadOrPushFirstBlock	no message
+CrossboneIslePlatformRooms1	event Event_OpenFirstBlueDoor	no message
+CrossboneIslePlatformRooms1	event Event_OpenFourthBlueDoor	no message
+CrossboneIslePlatformRooms1	event Event_OpenSecondBlueDoor	no message
+CrossboneIslePlatformRooms1	event Event_OpenThirdBlueDoor	no message
+CrossboneIslePlatformRooms1	event Event_PushFirstBlock	no message
+CrossboneIslePlatformRooms1	event Event_PushFourthBlock	no message
+CrossboneIslePlatformRooms1	event Event_PushSecondBlock	no message
+CrossboneIslePlatformRooms1	event Event_PushThirdBlock	no message
+CrossboneIslePlatformRooms1	event Event_ShowRedKey	no message
+CrossboneIslePlatformRooms1	event Event_TouchThirdBlock	no message
+CrossboneIslePlatformRooms1	event Event_TrackFourthPursuerColumn	no message
+CrossboneIslePlatformRooms1	event Event_TrackThirdPursuerColumn	no message
+CrossboneIslePlatformRooms1	event Event_UpdateFifthBlockTerrain	no message
+CrossboneIslePlatformRooms1	event Event_UpdateFirstBlockTerrain	no message
+CrossboneIslePlatformRooms1	event Event_UpdateFourthBlockTerrain	no message
+CrossboneIslePlatformRooms1	event Event_UpdateSecondBlockTerrain	no message
+CrossboneIslePlatformRooms1	event Event_UpdateThirdBlockTerrain	no message
+CrossboneIslePlatformRooms1	event Event_UseLadder	no message
+CrossboneIslePlatformRooms1	event Event_UseRedKey	no message
+CrossboneIslePlatformRooms3	event Scene_Initialize	no message
+FuchinTemple1	event Event_EnterNyunpasHall	no message
+FuchinTemple1	event Event_EnterWaterfallGrotto	no message
+FuchinTemple1	event Event_MonkAsksWhetherTestIsDone	the trigger is in none of its scenes
+FuchinTemple1	event Event_MonkLetsPartyIntoGrotto	its GIFs stop at 20 seconds
+FuchinTemple2	event Event_FehAsksToSeeChi	no page waited for the button
+FuchinTemple2	event Event_ForceTree	no page waited for the button
+FuchinTemple2	event Event_LeaveTemple	no message
+FuchinTemple2	event Event_MoveTree	Move needs a direction held after the cast
+FuchinTemple2	event Event_NyunpaFeelsMindRead	the trigger is in none of its scenes
+FuchinTemple2	event Event_OpenLockedDoor	no page waited for the button
+FuchinTemple2	event Event_PushTreeByHand	no page waited for the button
+FuchinTemple2	event Scene_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+FuchinTemple2	event gFuchinTempleEventsEntrance3[4]	its GIFs stop at 20 seconds
+FuchinTemple2	event gFuchinTempleEvents[18]	no page waited for the button
+FuchinTemple2	event gFuchinTempleEvents[27]	no page waited for the button
+FuchinTemple2	event gFuchinTempleEvents[29]	no page waited for the button
+FuchinTemple2	event gFuchinTempleEvents[53]	no page waited for the button
+FuchinTemple2	event gFuchinTempleEvents[62]	no page waited for the button
+FuchinTemple2	event gFuchinTempleEvents[64]	no page waited for the button
+FuchinTemple2	event gFuchinTempleEvents[69]	no page waited for the button
+GomaCaveEntrance	event Event_BlowAwayIvy	no message
+GomaCaveEntrance	event Event_IvanRejoins	Move needs a direction held after the cast
+GomaCaveEntrance	event Event_MoveEastPillar	no message
+GomaCaveEntrance	event Event_MoveStump	no message
+GomaCaveEntrance	event Event_MoveWestPillar	no message
+GomaCaveEntrance	event Event_PushWestPillar	no message
+GomaCaveEntrance	event Scene_Initialize	no message
+GomaCavePillar	event Event_FightForge	no message
+GomaCavePillar	event Event_JumpGapWest	no message
+GomaCavePillar	event Event_MoveEastPillar	no message
+GomaCavePillar	event Event_MoveWestPillar	no message
+GomaCavePillar	event Event_PushEastPillar	no message
+GomaCavePillar	event Event_PushStumpOver	no message
+GomaCavePillar	event Event_WitnessCheersForgeCaught	"raised 99" is not a talk, search, touch or Psynergy-on-actor trigger
+GomaCavePillar	event Scene_Initialize	no message
+GomaCavePond	event Scene_Initialize	no message
+GomaCaveWaterway1	event Event_MoveStump	no message
+GomaCaveWaterway1	event Scene_Initialize	no message
+GondowanCave1	event Scene_Initialize	no message
+GondowanCave3	event Event_CheckAhead	no message
+GondowanCave3	event Event_LeaveThroughEntrance	no message
+GondowanCave3	event Event_LiftObject	no message
+GondowanCave3	event Event_MoveFirstObject	no message
+GondowanCave3	event Event_MoveSecondObject	no message
+GondowanCave3	event Event_PushSecondObject	no message
+HammetPalace	event Event_LeaveThroughDoor	no message
+HammetPalace	event Scene_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+Imil1	event Imil_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+Imil1	event Imil_LeaveNorth	no message
+Imil1	event Imil_MoveSnowmanToChimney	no message
+Imil1	event Imil_OpenDoorAndExit	no message
+Imil1	event Imil_StartIceSlide	no message
+Imil1	event Imil_UpdateMapLayerByLeaderPosition	no message
+ImilFuchinFalls1	event Fuchin_AnimateFirstPlatform	no message
+ImilFuchinFalls1	event Fuchin_AnimateFourthPlatform	no message
+ImilFuchinFalls1	event Fuchin_AnimateSecondPlatform	no message
+ImilFuchinFalls1	event Fuchin_AnimateThirdPlatform	no message
+ImilFuchinFalls1	event Fuchin_CollectDragonsEye	no message
+ImilFuchinFalls1	event Fuchin_EndRevealLighting	no message
+ImilFuchinFalls1	event Fuchin_FirstRoom_MoveFirstPlatformEast	no message
+ImilFuchinFalls1	event Fuchin_FirstRoom_MoveFirstPlatformWest	no message
+ImilFuchinFalls1	event Fuchin_FirstRoom_MoveSecondPlatformNorth	no message
+ImilFuchinFalls1	event Fuchin_FirstRoom_MoveSecondPlatformSouth	no message
+ImilFuchinFalls1	event Fuchin_FirstRoom_MoveThirdPlatformNorth	no message
+ImilFuchinFalls1	event Fuchin_FirstRoom_MoveThirdPlatformSouth	no message
+ImilFuchinFalls1	event Fuchin_FollowLeaderWithLight	no message
+ImilFuchinFalls1	event Fuchin_FourthRoom_MoveFirstPlatformNorth	no message
+ImilFuchinFalls1	event Fuchin_FourthRoom_MoveFirstPlatformSouth	no message
+ImilFuchinFalls1	event Fuchin_FourthRoom_MoveSecondPlatformEast	no message
+ImilFuchinFalls1	event Fuchin_FourthRoom_MoveSecondPlatformWest	no message
+ImilFuchinFalls1	event Fuchin_FourthRoom_MoveThirdPlatformEast	no message
+ImilFuchinFalls1	event Fuchin_FourthRoom_MoveThirdPlatformWest	no message
+ImilFuchinFalls1	event Fuchin_HopNorth	no message
+ImilFuchinFalls1	event Fuchin_HopWest	no message
+ImilFuchinFalls1	event Fuchin_LightDragonWithEye	no message
+ImilFuchinFalls1	event Fuchin_RebuildSecondRoomPlatforms	no message
+ImilFuchinFalls1	event Fuchin_RebuildThirdRoomPlatforms	no message
+ImilFuchinFalls1	event Fuchin_SecondRoom_MoveFirstPlatformEast	no message
+ImilFuchinFalls1	event Fuchin_SecondRoom_MoveFirstPlatformToEastEnd	no message
+ImilFuchinFalls1	event Fuchin_SecondRoom_MoveFirstPlatformToWestEnd	no message
+ImilFuchinFalls1	event Fuchin_SecondRoom_MoveSecondPlatformNorth	no message
+ImilFuchinFalls1	event Fuchin_SecondRoom_MoveSecondPlatformSouth	no message
+ImilFuchinFalls1	event Fuchin_SecondRoom_MoveThirdPlatformNorth	no message
+ImilFuchinFalls1	event Fuchin_SecondRoom_MoveThirdPlatformSouth	no message
+ImilFuchinFalls1	event Fuchin_SecondRoom_NudgeFirstPlatformWest	no message
+ImilFuchinFalls1	event Fuchin_StartDjinnBattle	no message
+ImilFuchinFalls1	event Fuchin_StopLightFollowingLeader	no message
+ImilFuchinFalls1	event Fuchin_ThirdRoom_MoveFirstPlatformEastFromMiddle	no message
+ImilFuchinFalls1	event Fuchin_ThirdRoom_MoveFirstPlatformEastFromWestEnd	no message
+ImilFuchinFalls1	event Fuchin_ThirdRoom_MoveFirstPlatformWest	no message
+ImilFuchinFalls1	event Fuchin_ThirdRoom_MoveFirstPlatformWestIfClear	no message
+ImilFuchinFalls1	event Fuchin_ThirdRoom_MoveFourthPlatformNorth	no message
+ImilFuchinFalls1	event Fuchin_ThirdRoom_MoveFourthPlatformSouthFromLastStop	no message
+ImilFuchinFalls1	event Fuchin_ThirdRoom_MoveFourthPlatformSouthFromLowerStop	no message
+ImilFuchinFalls1	event Fuchin_ThirdRoom_MoveFourthPlatformSouthFromMiddle	no message
+ImilFuchinFalls1	event Fuchin_ThirdRoom_MoveFourthPlatformSouthFromNorthEnd	no message
+ImilFuchinFalls1	event Fuchin_ThirdRoom_MoveFourthPlatformSouthFromUpperStop	no message
+ImilFuchinFalls1	event Fuchin_ThirdRoom_MoveSecondPlatformEast	no message
+ImilFuchinFalls1	event Fuchin_ThirdRoom_MoveSecondPlatformWest	no message
+ImilFuchinFalls1	event Fuchin_ThirdRoom_MoveThirdPlatformNorthFromLowerStop	no message
+ImilFuchinFalls1	event Fuchin_ThirdRoom_MoveThirdPlatformNorthFromMiddle	no message
+ImilFuchinFalls1	event Fuchin_ThirdRoom_MoveThirdPlatformNorthFromSouthEnd	no message
+ImilFuchinFalls1	event Fuchin_ThirdRoom_MoveThirdPlatformSouthFromLowerStop	no message
+ImilFuchinFalls1	event Fuchin_ThirdRoom_MoveThirdPlatformSouthFromMiddle	no message
+ImilFuchinFalls1	event Fuchin_ThirdRoom_MoveThirdPlatformSouthFromNorthEnd	no message
+ImilFuchinFalls1	event Fuchin_ThirdRoom_MoveThirdPlatformSouthFromUpperStop	no message
+ImilFuchinFalls1	event Fuchin_ThirdRoom_NudgeFourthPlatformNorth	no message
+ImilFuchinFalls1	event Fuchin_ThirdRoom_NudgeThirdPlatformNorth	no message
+ImilFuchinFalls1	event ImilFuchinFalls_HopOnTrigger	no message
+ImilFuchinFalls1	event ImilFuchinFalls_Initialize	no message
+ImilFuchinFalls1	event Imil_LeaveDjinnRoom	no message
+ImilFuchinFalls1	event Imil_MoveAcrossIce	no message
+ImilFuchinFalls1	event Imil_RecruitDjinni	no message
+Kalay1	event Kalay_CatchTownNut	no message
+Kalay1	event Kalay_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+Kalay1	event Kalay_OpenDoorAndExit	no message
+Kalay1	event Kalay_UpdateTunnelEmitters	no message
+Kalay1	event Kalay_WatchTourGroupDeparture	its GIFs stop at 20 seconds
+Kalay2	event Kalay_EnterPalace	no message
+Kalay2	kalay2 room of entrance 1	the scene went on to scene 103 before the player had control
+Kalay3	event Kalay_CatchCaveNut	no message
+Kalay6	event Kalay_DisableLeaderAutomaticPriority	no message
+Kalay6	event Kalay_EnableLeaderAutomaticPriority	no message
+Kalay6	event Kalay_FreezeFrostTarget	no message
+Kalay6	event Kalay_PushTunnelBlock	no message
+Kalay6	event Kalay_RecruitDjinn	no message
+Kalay6	event Kalay_StartTrackingLeader	no message
+Kalay6	event Kalay_StopTrackingLeader	no message
+Kalay6	event Kalay_UpdateTunnelPassages	no message
+KalayInteriors1	event KalayInteriors_Initialize	no message
+KalayInteriors1	event KalayInteriors_OpenDoorAndExit	no message
+KalayInteriors1	event gKalayInteriors_InnEvents[18]	actor 16 is not in the scene
+KalayInteriors1	event gKalayInteriors_InnEvents[33]	actor 16 is not in the scene
+KalayTolbiDocks1	event KalayTolbiDocks_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+KalayTolbiDocks1	event KalayTolbiDocks_OpenDoorAndLeave	no message
+KalayTolbiDocks1	event KalayTolbiDocks_RecruitVenusDjinni	no message
+KalayTolbiDocks3	event KalayTolbiDocks_PassengerGreetsArrivals	no message
+KalayTolbiDocks3	event KalayTolbiDocks_PassengersConfrontTourGuide	its GIFs stop at 20 seconds
+KalayTolbiDocks3	event KalayTolbiDocks_UpdateBlockCells	no message
+Kolima1	event Kolima_AnimateSwitchOrExit	no message
+Kolima1	event Kolima_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+Kolima1	event Kolima_RecruitDjinni	no message
+Kolima3	event Kolima_ShowBridgeCollapse	the trigger is in none of its scenes
+KolimaForestBend	event KolimaForestBend_Initialize	no message
+KolimaForestBend	event KolimaForestBend_JumpSouth	no message
+KolimaForestBend	event KolimaForestBend_PushLog	no message
+KolimaForestBend	event KolimaForestBend_PushShortLogEast	no message
+KolimaForestBend	event KolimaForestBend_PushShortLogWest	no message
+KolimaForestBridge	event KolimaForestBridge_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+KolimaForestBridge	event KolimaForestBridge_PushLog	no message
+KolimaForestBridge	event KolimaForest_HopEast	no message
+KolimaForestClearing	event KolimaForestClearing_CatchNut	no message
+KolimaForestClearing	event KolimaForestClearing_Initialize	no message
+KolimaForestClearing	event KolimaForestClearing_PushLog	no message
+KolimaForestRiver	event KolimaForestRiver_Initialize	no message
+KolimaForestRiver	event KolimaForestRiver_PushLog	no message
+KolimaForestRiver	event KolimaForest_HopEast	no message
+KolimaForestTree	event KolimaForestTree_Initialize	no message
+KolimaForestTree	event KolimaForestTree_UseHermesWater	"use on actor on 12" is not a talk, search, touch or Psynergy-on-actor trigger
+Lalivero	event EnterDoor	no message
+Lalivero	event Lalivero_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+Lalivero	event ReceiveBlackOrb	its GIFs stop at 20 seconds
+Lalivero	event TakeTouchedExit	no message
+Lalivero	event TalkToTorch	no message
+LaliveroInteriors1	event LeaveBuilding	no message
+LaliveroInteriors1	event Scene_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+LaliveroInteriors2	event IodemCallsOut	its GIFs stop at 20 seconds
+LamakanDesert1	event CollapseFromHeat	no message
+LamakanDesert1	event ComplainAboutHeat	no message
+LamakanDesert1	event FallIntoPit	no message
+LamakanDesert1	event FightSandMonster	no message
+LamakanDesert1	event HeatGauge_CountStep	no message
+LamakanDesert1	event HeatGauge_Draw	no message
+LamakanDesert1	event HeatGauge_RaiseQuarterTriggers	no message
+LamakanDesert1	event LamakanDesert_Initialize	no message
+LamakanDesert1	event LeaveForTheWorldMap	no message
+LamakanDesert1	event MeetSandMonster	no message
+LamakanDesert1	event Reveal_HideSecrets	no message
+LamakanDesert1	event Reveal_ShowSecrets	no message
+LamakanDesert1	event SlideDownDune	no message
+LamakanDesert1	event TalkToSmog	no message
+Lunpa1	event Event_CatchFloatingNut	no message
+Lunpa1	event Event_EnterDoor	no message
+Lunpa1	event Event_EnterHiddenPassage	no message
+Lunpa1	event Event_FreezeHiddenPuddle	no message
+Lunpa1	event Event_HideSecrets	no message
+Lunpa1	event Event_PressHiddenSwitch	no message
+Lunpa1	event Event_RevealSecrets	no message
+Lunpa1	event Lunpa_PlayRevealCue	no message
+Lunpa1	event Lunpa_WatchForFortressApproach	no message
+Lunpa1	event Scene_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+Lunpa2	event Event_CastCloak	no message
+Lunpa2	event Event_CloakFades	"cloak 0" is not a talk, search, touch or Psynergy-on-actor trigger
+Lunpa2	event Event_EnterFortress	no message
+Lunpa2	event Event_GaretTurnsLeaderBack	the trigger is in none of its scenes
+Lunpa2	event Event_GuardsCatchParty	"raised TRIGGER_PARTY_SPOTTED=91" is not a talk, search, touch or Psynergy-on-actor trigger
+LunpaFortress1	event Event_BlowAwayFirstSwitchCover	no message
+LunpaFortress1	event Event_BlowAwayPassageCover	no message
+LunpaFortress1	event Event_BlowAwaySecondSwitchCover	no message
+LunpaFortress1	event Event_ColumnSinks	no message
+LunpaFortress1	event Event_DjinniJoins	no message
+LunpaFortress1	event Event_HallPatrolThrowsPartyOut	"raised TRIGGER_HALL_PATROL_SPOTTED=92" is not a talk, search, touch or Psynergy-on-actor trigger
+LunpaFortress1	event Event_HideSwitches	no message
+LunpaFortress1	event Event_MoveColumn	no message
+LunpaFortress1	event Event_OuterPatrolThrowsPartyOut	"raised TRIGGER_OUTER_PATROL_SPOTTED=93" is not a talk, search, touch or Psynergy-on-actor trigger
+LunpaFortress1	event Event_PatrolPairThrowsPartyOut	"raised TRIGGER_PATROL_PAIR_SPOTTED=91" is not a talk, search, touch or Psynergy-on-actor trigger
+LunpaFortress1	event Event_PushColumn	no message
+LunpaFortress1	event Event_ReadJailedDodonpasThoughts	no page waited for the button
+LunpaFortress1	event Event_RevealSwitches	no message
+LunpaFortress1	event Event_TakeCellKey	no message
+LunpaFortress1	event Event_TalkToJailedDodonpa	no page waited for the button
+LunpaFortress1	event Event_UnlockColumnRoomDoor	no message
+LunpaFortress1	event Event_UnlockGuardRoomDoor	no message
+LunpaFortress1	event Event_UnlockOuterDoor	no message
+LunpaFortress1	event Event_UnlockRescueRoomDoor	no message
+LunpaFortress1	event Event_UpperHallGuardThrowsPartyOut	"raised TRIGGER_UPPER_HALL_SPOTTED=94" is not a talk, search, touch or Psynergy-on-actor trigger
+LunpaFortress1	event LunpaFortress_CheckFirstEntranceSentry	no message
+LunpaFortress1	event LunpaFortress_CheckGuardDoorApproach	no message
+LunpaFortress1	event LunpaFortress_CheckOuterDoorApproach	no message
+LunpaFortress1	event LunpaFortress_CheckSecondEntranceSentry	no message
+LunpaFortress1	event LunpaFortress_CheckUpperHallGuard	no message
+LunpaFortress1	event LunpaFortress_FirstPatrolThrowsPartyOut	"not called" is not a talk, search, touch or Psynergy-on-actor trigger
+LunpaFortress1	event LunpaFortress_TryCollectActorEightItem	no message
+LunpaFortress1	event LunpaFortress_TryCollectActorElevenItem	no message
+LunpaFortress1	event LunpaFortress_TryCollectActorNineItem	no message
+LunpaFortress1	event LunpaFortress_TryCollectActorTenItem	no message
+LunpaFortress1	event LunpaFortress_UpdateHallGuardDetection	no message
+LunpaFortress1	event LunpaFortress_UpdateOuterGuardDetection	no message
+LunpaFortress1	event LunpaFortress_UpdatePairedGuardDetection	no message
+LunpaFortress1	event Scene_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+LunpaFortress2	event Event_FightEastGuard	its GIFs stop at 20 seconds
+LunpaFortress2	event Event_FightHallGuard	its GIFs stop at 20 seconds
+LunpaFortress2	event Event_FightThreeGuards	its GIFs stop at 20 seconds
+LunpaFortress2	event Event_FightWestGuard	its GIFs stop at 20 seconds
+LunpaFortress2	event Event_FindHammet	its GIFs stop at 20 seconds
+LunpaFortress2	event Event_TalkToAttendant	its GIFs stop at 20 seconds
+LunpaFortress3	event Event_EntranceGuardThrowsPartyOut	no page waited for the button
+LunpaFortress3	event Event_FlipFirstSwitch	no page waited for the button
+LunpaFortress3	event Event_FlipSecondSwitch	no page waited for the button
+LunpaFortress3	event Event_SentriesThrowPartyOut	no page waited for the button
+LunpaSuhalla	event Scene_Initialize	no message
+LunpaSuhalla	event gSuhallaGateHouseEvents[2]	no page waited for the button
+McCoyPalace	event Event_WalkThroughDoor	no message
+McCoyPalace	event Scene_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+McCoyPalace	event gMcCoyPalaceEvents[48]	no page waited for the button
+McCoyPalace	event gMcCoyPalaceEvents[71]	no page waited for the button
+McCoyPalaceGarden	event Event_CatchFloatingNut	no message
+McCoyPalaceGarden	event Event_EnterPalace	no message
+McCoyPalaceGarden	event Scene_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+McCoyPalaceGarden	event gMcCoyPalaceGardenEvents[15]	McCoyPalaceGarden: the scene went on to scene 33 before the player had control
+McCoyPalaceGarden	event gMcCoyPalaceGardenEvents[17]	McCoyPalaceGarden: the scene went on to scene 33 before the player had control
+McCoyPalaceGarden	event gMcCoyPalaceGardenEvents[19]	McCoyPalaceGarden: the scene went on to scene 33 before the player had control
+McCoyPalaceGarden	event gMcCoyPalaceGardenEvents[3]	McCoyPalaceGarden: the scene went on to scene 33 before the player had control
+McCoyPalaceGarden	event gMcCoyPalaceGardenEvents[5]	McCoyPalaceGarden: the scene went on to scene 33 before the player had control
+McCoyPalaceGarden	event gMcCoyPalaceGardenEvents[7]	McCoyPalaceGarden: the scene went on to scene 33 before the player had control
+McCoyPalaceGarden	mc-coy-palace-garden_cured room of entrance 1	the scene went on to scene 33 before the player had control
+MercuryLighthouse1	event MercuryLighthouse_CloseFloorSwitch	no message
+MercuryLighthouse1	event MercuryLighthouse_EnterRisingPassage	no message
+MercuryLighthouse1	event MercuryLighthouse_ExitAfterSparkStep	no message
+MercuryLighthouse1	event MercuryLighthouse_ExitWithSparks	no message
+MercuryLighthouse1	event MercuryLighthouse_FillHermesWaterBottle	"use empty bottle 5" is not a talk, search, touch or Psynergy-on-actor trigger
+MercuryLighthouse1	event MercuryLighthouse_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+MercuryLighthouse1	event MercuryLighthouse_LeaveWithSparkTrail	no message
+MercuryLighthouse1	event MercuryLighthouse_MiaJoinsAfterRescue	Move needs a direction held after the cast
+MercuryLighthouse1	event MercuryLighthouse_MiaOpensEntranceWithPly	Move needs a direction held after the cast
+MercuryLighthouse1	event MercuryLighthouse_MoveChannelBlocks	no message
+MercuryLighthouse1	event MercuryLighthouse_MoveStairAndFountainBlocks	no message
+MercuryLighthouse1	event MercuryLighthouse_MoveStoneDoorBlocks	no message
+MercuryLighthouse1	event MercuryLighthouse_OpenGateWithMovedBlock	no message
+MercuryLighthouse1	event MercuryLighthouse_OpenMovedBlockCrossing	no message
+MercuryLighthouse1	event MercuryLighthouse_OpenStairGateWithMovedBlock	no message
+MercuryLighthouse1	event MercuryLighthouse_PlyOpensWaterfallPassage	no message
+MercuryLighthouse1	event MercuryLighthouse_PressGateFloorSwitch	no message
+MercuryLighthouse1	event MercuryLighthouse_PressStairFloorSwitch	no message
+MercuryLighthouse1	event MercuryLighthouse_PushAndSaveBlockPositions	no message
+MercuryLighthouse1	event MercuryLighthouse_PushGateSwitchBlock	no message
+MercuryLighthouse1	event MercuryLighthouse_PushStairSwitchBlock	no message
+MercuryLighthouse1	event MercuryLighthouse_RaiseTouchedPillar	no message
+MercuryLighthouse1	event MercuryLighthouse_ReleaseRaisedPillar	no message
+MercuryLighthouse1	event MercuryLighthouse_ReleaseStairFloorSwitch	no message
+MercuryLighthouse1	event MercuryLighthouse_RemoveColumnOnRetreat	no message
+MercuryLighthouse1	event MercuryLighthouse_SpawnTimedRiseEffect	no message
+MercuryLighthouse1	event MercuryLighthouse_StartDjinnBattle	no message
+MercuryLighthouse1	event MercuryLighthouse_SyncBlockFlags	no message
+MercuryLighthouse1	event MercuryLighthouse_TryPillarStep	no message
+MercuryLighthouse1	event MercuryLighthouse_WalkLeaderIn	no message
+MercuryLighthouseAerie1	event MercuryLighthouseAerie_CallLift	no message
+MercuryLighthouseAerie1	event MercuryLighthouseAerie_ConfrontSaturos	its GIFs stop at 20 seconds
+MercuryLighthouseAerie1	event MercuryLighthouseAerie_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+MercuryLighthouseAerie1	event MercuryLighthouseAerie_JumpToPlatform	no message
+MercuryLighthouseAerie1	event MercuryLighthouseAerie_RideLiftDown	no message
+MercuryLighthouseAerie1	event MercuryLighthouseAerie_SettlePlatforms	no message
+MercuryLighthouseAerie1	event MercuryLighthouseAerie_StepOntoPlatform	no message
+MercuryLighthouseEntrance	event MercuryLighthouseEntrance_ActivateWithPly	no message
+MercuryLighthouseEntrance	event MercuryLighthouseEntrance_FightLizardMan	no message
+MercuryLighthouseEntrance	event MercuryLighthouseEntrance_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+MercuryLighthouseEntrance	event MercuryLighthouseEntrance_LizardManBlocksLeader	no message
+MercuryLighthouseEntrance	event MercuryLighthouseEntrance_LizardManReturnsToCentre	no message
+MercuryLighthouseEntrance	event MercuryLighthouseEntrance_RaiseTouchedPillar	no message
+MercuryLighthouseEntrance	event MercuryLighthouseEntrance_ReleaseRaisedPillar	no message
+MercuryLighthouseEntrance	event MercuryLighthouseEntrance_ReturnToDoorway	no message
+MercuryLighthouseEntrance	event MercuryLighthouseEntrance_RiseToMiddleLanding	no message
+MercuryLighthouseEntrance	event MercuryLighthouseEntrance_RiseToNorthernLanding	no message
+MercuryLighthouseEntrance	event MercuryLighthouseEntrance_RiseToSouthernLanding	no message
+MercuryLighthouseEntrance	event MercuryLighthouseEntrance_SpawnTimedRiseEffect	no message
+MercuryLighthouseEntrance	event MercuryLighthouseEntrance_TryPillarStep	no message
+MercuryLighthouseEntrance	event MercuryLighthouse_RemoveColumnOnRetreat	no message
+MogallForest1	event MogallForest_ApeLeadsToKillerApe	no message
+MogallForest1	event MogallForest_CatchNut	no message
+MogallForest1	event MogallForest_FirstArea_ApeAttacks	no message
+MogallForest1	event MogallForest_FirstArea_EastApeShowsWay	no message
+MogallForest1	event MogallForest_FirstArea_JumpNorth	no message
+MogallForest1	event MogallForest_FirstArea_JumpSouth	no message
+MogallForest1	event MogallForest_FirstArea_NorthApeShowsWay	no message
+MogallForest1	event MogallForest_FirstArea_PushLog	no message
+MogallForest1	event MogallForest_Initialize	no message
+MogallForest1	event MogallForest_KillerApeAttacks	no message
+MogallForest1	event MogallForest_ReadBrokenSign	no page waited for the button
+MogallForest1	event MogallForest_SecondArea_EastApeShowsWay	no message
+MogallForest1	event MogallForest_SecondArea_NorthApeShowsWay	no message
+MogallForest1	event MogallForest_SecondArea_PushLog	no message
+MogallForest1	event MogallForest_SecondArea_SouthApeHidesAgain	no message
+MogallForest1	event MogallForest_SecondArea_SouthApeShowsWay	no message
+MogallForest1	event MogallForest_SecondArea_UpdateMovableObstacle	no message
+MogallForest1	event MogallForest_StartDjinnBattle	no message
+MogallForest1	event MogallForest_ThirdArea_ApeAttacks	no message
+MogallForest1	event MogallForest_ThirdArea_CentralApeShowsWay	no message
+MogallForest1	event MogallForest_ThirdArea_EastApeHidesAgain	no message
+MogallForest1	event MogallForest_ThirdArea_EastApeShowsWay	no message
+MogallForest1	event MogallForest_ThirdArea_JumpWest	no message
+MogallForest1	event MogallForest_ThirdArea_PushLog	no message
+MogallForest1	event MogallForest_ThirdArea_UpdateNorthObstacle	no message
+MogallForest1	event MogallForest_ThirdArea_UpdateSouthObstacle	no message
+MogallForest1	event MogallForest_ThirdArea_WestApeShowsWay	no message
+Sanctum	event Event_AskAboutNewAdepts	actor 9 is not in the scene
+Sanctum	event Event_AskAboutPsynergyChanges	actor 10 is not in the scene
+Sanctum	event Event_LeaveAfterRefusing	Sanctum: the scene went on to scene 2 before the player had control
+Sanctum	event Event_ReadMindAboutGoldenStatue	actor 9 is not in the scene
+Sanctum	event Event_ReconsiderQuest	actor 8 is not in the scene
+Sanctum	event Event_TalkAboutAltinMonsters	actor 8 is not in the scene
+Sanctum	event Event_TalkAboutCurse	actor 8 is not in the scene
+Sanctum	event Event_TalkAboutGoldenStatue	actor 9 is not in the scene
+Sanctum	event Event_TalkAboutJourneyFromXian	actor 8 is not in the scene
+Sanctum	event Event_TalkToHealer	actor 8 is not in the scene
+Sanctum	event Event_TalkToHealerOnVisit	actor 8 is not in the scene
+Sanctum	event Event_WarnBeforeLeaving	no page waited for the button
+Sanctum	event Sanctum_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+Sanctum	event gSanctum_SceneTableA[1]	actor 9 is not in the scene
+Sanctum	event gSanctum_SceneTableA[2]	actor 10 is not in the scene
+Sanctum	event gSanctum_SceneTableB[3]	actor 8 is not in the scene
+Sanctum	event gSanctum_SceneTableC[3]	actor 8 is not in the scene
+Sanctum	event gSanctum_SceneTableD[1]	actor 1 is not in the scene
+Sanctum	event gSanctum_SceneTableD[2]	Sanctum: the scene went on to scene 2 before the player had control
+Sanctum	event gSanctum_SceneTableD[3]	Sanctum: the scene went on to scene 2 before the player had control
+Sanctum	event gSanctum_SceneTableD[4]	actor 9 is not in the scene
+Sanctum	event gSanctum_SceneTableD[5]	actor 10 is not in the scene
+Sanctum	event gSanctum_SceneTableE[2]	actor 9 is not in the scene
+Sanctum	event gSanctum_SceneTableE[4]	actor 8 is not in the scene
+Sanctum	event gSanctum_SceneTableE[5]	actor 9 is not in the scene
+Sanctum	event gSanctum_SceneTableE[6]	actor 10 is not in the scene
+Sanctum	event gSanctum_SceneTableF[3]	actor 10 is not in the scene
+Sanctum	event gSanctum_SceneTableF[4]	actor 8 is not in the scene
+Sanctum	event gSanctum_SceneTableF[5]	actor 9 is not in the scene
+Sanctum	event gSanctum_SceneTableF[6]	actor 10 is not in the scene
+Sanctum	event gSanctum_SceneTableG[3]	actor 8 is not in the scene
+Sanctum	event gSanctum_SceneTableG[4]	actor 8 is not in the scene
+Sanctum	event gSanctum_SceneTableH[1]	actor 9 is not in the scene
+Sanctum	event gSanctum_SceneTableH[2]	actor 8 is not in the scene
+Sanctum	event gSanctum_SceneTableH[3]	actor 9 is not in the scene
+Sanctum	event gSanctum_SceneTableH[4]	actor 9 is not in the scene
+Sanctum	event gSanctum_SceneTableH[5]	actor 8 is not in the scene
+Sanctum	event gSanctum_SceneTableH[6]	actor 9 is not in the scene
+Sanctum	event gSanctum_SceneTableI[2]	actor 8 is not in the scene
+Sanctum	sanctum room of entrance 20	the scene went on to scene 2 before the player had control
+SolSanctumCorridor	event SolSanctumRooms_Initialize	no message
+SolSanctumElementalStarRoom	event Event_BagJupiterStarAndMeetSaturos	no page waited for the button
+SolSanctumElementalStarRoom	event Event_BagMercuryStar	no page waited for the button
+SolSanctumElementalStarRoom	event Event_BagVenusStar	no page waited for the button
+SolSanctumElementalStarRoom	event Event_CheckAhead	no message
+SolSanctumElementalStarRoom	event Event_KradenStopsPartyLeaving	no page waited for the button
+SolSanctumElementalStarRoom	event Event_TakeMarsStar	its GIFs stop at 20 seconds
+SolSanctumElementalStarRoom	event Event_TalkToAlex	no page waited for the button
+SolSanctumElementalStarRoom	event Event_TalkToFelix	no page waited for the button
+SolSanctumElementalStarRoom	event Event_TalkToJenna	no page waited for the button
+SolSanctumElementalStarRoom	event Event_TalkToKraden	no page waited for the button
+SolSanctumElementalStarRoom	event Event_TalkToMenardi	no page waited for the button
+SolSanctumElementalStarRoom	event Event_TalkToSaturos	no page waited for the button
+SolSanctumElementalStarRoom	event SolSanctumElementalStarRoom_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+SolSanctumElementalStarRoom	event gSolSanctumElementalStarRoom_Events[10]	no page waited for the button
+SolSanctumElementalStarRoom	event gSolSanctumElementalStarRoom_Events[6]	no page waited for the button
+SolSanctumElementalStarRoom	event gSolSanctumElementalStarRoom_Events[8]	no page waited for the button
+SolSanctumEntrance1	event Event_InnerBlock1Moved	no message
+SolSanctumEntrance1	event Event_InnerBlock2Moved	no message
+SolSanctumEntrance1	event Event_InnerBlock3Moved	no message
+SolSanctumEntrance1	event Event_InnerBlock4Moved	no message
+SolSanctumEntrance1	event Event_InnerBlock5Moved	no message
+SolSanctumEntrance1	event Event_InnerBlock6Moved	no message
+SolSanctumEntrance1	event Event_InspectSecondMinotaurRelief	no page waited for the button
+SolSanctumEntrance1	event Event_OuterLeftBlockMoved	no message
+SolSanctumEntrance1	event Event_OuterRightBlockMoved	no message
+SolSanctumEntrance1	event Event_PushBlock	no message
+SolSanctumEntrance1	event Event_SetFirstSmallJewel	"use small jewel 1044" is not a talk, search, touch or Psynergy-on-actor trigger
+SolSanctumEntrance1	event Event_SetSecondSmallJewel	"use small jewel 1045" is not a talk, search, touch or Psynergy-on-actor trigger
+SolSanctumEntrance1	event SolSanctumEntrance_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+SolSanctumEntrance2	event Event_OpenDoorAndEnter	no message
+SolSanctumEruption	event SolSanctumEruption_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+SolSanctumEruption	event SolSanctumEruption_StepEmbers	no message
+SolSanctumLunaSolRooms	event Event_ApplySecondRoomTint	no message
+SolSanctumLunaSolRooms	event Event_ClearBackdropColor	no message
+SolSanctumLunaSolRooms	event Event_KradenFindsHall	its GIFs stop at 20 seconds
+SolSanctumLunaSolRooms	event Event_KradenSeesLunaPictureChange	no page waited for the button
+SolSanctumLunaSolRooms	event Event_RestorePlainTint	no message
+SolSanctumLunaSolRooms	event Event_RiseToElementalStarRoom	the trigger is in none of its scenes
+SolSanctumLunaSolRooms	event Event_TalkToKraden	no page waited for the button
+SolSanctumLunaSolRooms	event Event_UpdateRoomTint	no page waited for the button
+SolSanctumLunaSolRooms	event Event_UpdateRoomTintInverse	its GIFs stop at 20 seconds
+SolSanctumLunaSolRooms	event SolSanctumLunaSolRooms_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+SolSanctumMaze	event SolSanctumRooms_Initialize	no message
+Suhalla	event Event_EnterDoor	no message
+Suhalla	event Event_EnterWideDoor	no message
+Suhalla	event Event_GrowSprout	no message
+Suhalla	event Scene_Initialize	no message
+SuhallaDesert1	event Event_CaughtByFifthStorm	no message
+SuhallaDesert1	event Event_CaughtByFirstStorm	no message
+SuhallaDesert1	event Event_CaughtByFourthStorm	no message
+SuhallaDesert1	event Event_CaughtBySecondStorm	no message
+SuhallaDesert1	event Event_CaughtByThirdStorm	no message
+SuhallaDesert1	event Event_DouseCastAtStorm	no message
+SuhallaDesert1	event Event_DouseStorm	no message
+SuhallaDesert1	event Event_FifthStormRises	no page waited for the button
+SuhallaDesert1	event Event_FightDjinni	no message
+SuhallaDesert1	event Event_FirstStormRises	no page waited for the button
+SuhallaDesert1	event Event_FourthStormRises	no page waited for the button
+SuhallaDesert1	event Event_RevealEnds	no message
+SuhallaDesert1	event Event_RevealStarts	no message
+SuhallaDesert1	event Event_SecondStormRises	no page waited for the button
+SuhallaDesert1	event Event_StormCarriesPartyAway	no message
+SuhallaDesert1	event Event_StormGivesChase	no message
+SuhallaDesert1	event Event_ThirdStormRises	no page waited for the button
+SuhallaDesert1	event Scene_Initialize	no message
+SuhallaDesert1	event SuhallaDesert_ChaseLeader	no message
+SuhallaDesert1	event SuhallaDesert_UpdateCaptureTimer	no message
+SuhallaDesert2	event Event_IodemAsksWhetherToPressOn	its GIFs stop at 20 seconds
+SuhallaGate1	event Event_EnterHouse	no message
+SuhallaGate1	event Event_GuardsBlockPassage	no message
+SuhallaGate1	event Event_IodemQuestionsGuards	its GIFs stop at 20 seconds
+SuhallaGate1	event Event_LeaveForWorldMap	no message
+SuhallaGate1	event Event_SoldierVanishes	the trigger is in none of its scenes
+SuhallaGate1	event Scene_Initialize	no message
+SuhallaGate2	event Event_FightDjinni	no message
+SuhallaInteriors	event Event_IodemQuestionsWoundedSoldiers	its GIFs stop at 20 seconds
+SuhallaInteriors	event Event_LeaveByExit	no message
+SuhallaInteriors	event Scene_Initialize	no message
+Title	place	a menu, not a place
+Tolbi	event Tolbi_ApplyEntryState	no message
+Tolbi	event Tolbi_EnterDoor	no message
+Tolbi	event Tolbi_EnterSpring	no message
+Tolbi	event Tolbi_FreezePuddle	no message
+Tolbi	event Tolbi_GrowSprout	no message
+Tolbi	event Tolbi_HideRevealedChest	no message
+Tolbi	event Tolbi_JoinEmber	no message
+Tolbi	event Tolbi_MeetSearchingSoldiers	its GIFs stop at 20 seconds
+Tolbi	event Tolbi_RequestTouchedExit	no message
+Tolbi	event Tolbi_RevealHiddenChest	no message
+TolbiInteriors	event TolbiInteriors_ApplyEntryState	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+TolbiInteriors	event TolbiInteriors_EnterDoor	no message
+TolbiShipDeck	event TolbiShipDeck_GoBelow	no message
+TolbiShipDeck	event TolbiShipDeck_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+TolbiShipDeck	event TolbiShipDeck_OfferToScoutIsland	its GIFs stop at 20 seconds
+TolbiShipDeck	event TolbiShipDeck_TalkToWaitingPassenger21	the trigger is in none of its scenes
+TolbiShipDeck	event TolbiShipDeck_TalkToWaitingPassenger24	the trigger is in none of its scenes
+TolbiShipDeck	event TolbiShipDeck_WatchCrewDecideToSail	its GIFs stop at 20 seconds
+TolbiShipDeck	event gTolbiShipDeckEvents[11]	the trigger is in none of its scenes
+TolbiShipDeck	event gTolbiShipDeckEvents[12]	the trigger is in none of its scenes
+TolbiShipDeck	event gTolbiShipDeckEvents[13]	the trigger is in none of its scenes
+TolbiShipDeck	event gTolbiShipDeckEvents[14]	the trigger is in none of its scenes
+TolbiShipDeck	event gTolbiShipDeckEvents[15]	the trigger is in none of its scenes
+TolbiShipDeck	event gTolbiShipDeckEvents[16]	the trigger is in none of its scenes
+TolbiShipDeck	event gTolbiShipDeckEvents[17]	the trigger is in none of its scenes
+TolbiShipDeck	event gTolbiShipDeckEvents[18]	the trigger is in none of its scenes
+TolbiShipDeck	event gTolbiShipDeckEvents[19]	the trigger is in none of its scenes
+TolbiShipDeck	event gTolbiShipDeckEvents[20]	the trigger is in none of its scenes
+TolbiShipDeck	event gTolbiShipDeckEvents[21]	the trigger is in none of its scenes
+TolbiShipDeck	event gTolbiShipDeckEvents[22]	the trigger is in none of its scenes
+TolbiShipDeck	event gTolbiShipDeckEvents[23]	the trigger is in none of its scenes
+TolbiShipDeck	event gTolbiShipDeckEvents[24]	the trigger is in none of its scenes
+TolbiShipDeck	event gTolbiShipDeckEvents[25]	the trigger is in none of its scenes
+TolbiShipDeck	event gTolbiShipDeckEvents[26]	the trigger is in none of its scenes
+TolbiShipDeck	event gTolbiShipDeckEvents[27]	the trigger is in none of its scenes
+TolbiShipDeck	event gTolbiShipDeckEvents[28]	the trigger is in none of its scenes
+TolbiShipDeck	event gTolbiShipDeckEvents[29]	the trigger is in none of its scenes
+TolbiShipDeck	event gTolbiShipDeckEvents[30]	the trigger is in none of its scenes
+TolbiShipDeck	event gTolbiShipDeckEvents[31]	the trigger is in none of its scenes
+TolbiShipDeck	event gTolbiShipDeckEvents[32]	the trigger is in none of its scenes
+TolbiShipDeck	event gTolbiShipDeckEvents[33]	the trigger is in none of its scenes
+TolbiShipDeck	event gTolbiShipDeckEvents[34]	the trigger is in none of its scenes
+TolbiShipDeck	event gTolbiShipDeckEvents[35]	the trigger is in none of its scenes
+TolbiShipDeck	event gTolbiShipDeckEvents[8]	the trigger is in none of its scenes
+TolbiShipInteriors	event TolbiShipInteriors_ApplyEntryState	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+TolbiShipInteriors	event TolbiShipInteriors_FightMonstersInHold	no message
+TolbiShipInteriors	event TolbiShipInteriors_ReadRower18Mind	actor 18 is not in the scene
+TolbiShipInteriors	event TolbiShipInteriors_ReadRower19Mind	actor 19 is not in the scene
+TolbiShipInteriors	event TolbiShipInteriors_ReadRower20Mind	actor 20 is not in the scene
+TolbiShipInteriors	event TolbiShipInteriors_ReadRower21Mind	actor 21 is not in the scene
+TolbiShipInteriors	event TolbiShipInteriors_ReadRower22Mind	actor 22 is not in the scene
+TolbiShipInteriors	event TolbiShipInteriors_ReadRower23Mind	actor 23 is not in the scene
+TolbiShipInteriors	event TolbiShipInteriors_ReadRower24Mind	actor 24 is not in the scene
+TolbiShipInteriors	event TolbiShipInteriors_ReadRower25Mind	actor 25 is not in the scene
+TolbiShipInteriors	event TolbiShipInteriors_ReturnLuckyAnchor	"use on actor on 8" is not a talk, search, touch or Psynergy-on-actor trigger
+TolbiShipInteriors	event TolbiShipInteriors_TalkToRower18	actor 18 is not in the scene
+TolbiShipInteriors	event TolbiShipInteriors_TalkToRower19	actor 19 is not in the scene
+TolbiShipInteriors	event TolbiShipInteriors_TalkToRower20	actor 20 is not in the scene
+TolbiShipInteriors	event TolbiShipInteriors_TalkToRower21	actor 21 is not in the scene
+TolbiShipInteriors	event TolbiShipInteriors_TalkToRower22	actor 22 is not in the scene
+TolbiShipInteriors	event TolbiShipInteriors_TalkToRower23	actor 23 is not in the scene
+TolbiShipInteriors	event TolbiShipInteriors_TalkToRower24	actor 24 is not in the scene
+TolbiShipInteriors	event TolbiShipInteriors_TalkToRower25	actor 25 is not in the scene
+TolbiShipInteriors	event TolbiShipInteriors_TurnBackFromStairs	no page waited for the button
+TolbiShipInteriors	event TolbiShipInteriors_WatchWarriorsStormOff	its GIFs stop at 20 seconds
+TolbiShipInteriors	event gTolbiShipInteriors_CabinEventsAtIsland[1]	no page waited for the button
+TolbiShipInteriors	event gTolbiShipInteriors_CabinEventsAtIsland[3]	no page waited for the button
+TolbiShipInteriors	event gTolbiShipInteriors_CabinEvents[10]	no page waited for the button
+TolbiShipInteriors	event gTolbiShipInteriors_CabinEvents[8]	no page waited for the button
+TolbiShipInteriors	event gTolbiShipInteriors_CabinEvents[9]	no page waited for the button
+TolbiShipInteriors	event gTolbiShipInteriors_HoldEventsAtIsland[13]	no page waited for the button
+TolbiShipInteriors	event gTolbiShipInteriors_HoldEventsAtIsland[14]	actor 10 is not in the scene
+TolbiShipInteriors	event gTolbiShipInteriors_HoldEventsAtIsland[15]	actor 12 is not in the scene
+TolbiShipInteriors	event gTolbiShipInteriors_HoldEventsAtIsland[16]	actor 13 is not in the scene
+TolbiShipInteriors	event gTolbiShipInteriors_HoldEventsAtIsland[21]	actor 11 is not in the scene
+TolbiShipInteriors	event gTolbiShipInteriors_HoldEventsAtIsland[4]	no page waited for the button
+TolbiShipInteriors	event gTolbiShipInteriors_HoldEventsAtIsland[5]	actor 10 is not in the scene
+TolbiShipInteriors	event gTolbiShipInteriors_HoldEventsAtIsland[6]	actor 12 is not in the scene
+TolbiShipInteriors	event gTolbiShipInteriors_HoldEventsAtIsland[7]	actor 13 is not in the scene
+TolbiShipInteriors	event gTolbiShipInteriors_HoldEvents[11]	no page waited for the button
+TolbiShipInteriors	event gTolbiShipInteriors_HoldEvents[12]	no page waited for the button
+TolbiShipInteriors	event gTolbiShipInteriors_HoldEvents[14]	no page waited for the button
+TolbiShipInteriors	event gTolbiShipInteriors_HoldEvents[16]	no page waited for the button
+TolbiShipInteriors	event gTolbiShipInteriors_HoldEvents[18]	no page waited for the button
+TolbiShipInteriors	event gTolbiShipInteriors_HoldEvents[21]	no page waited for the button
+TolbiShipInteriors	event gTolbiShipInteriors_HoldEvents[5]	no page waited for the button
+TolbiShipInteriors	event gTolbiShipInteriors_HoldEvents[8]	no page waited for the button
+TolbiShipInteriors	event gTolbiShipInteriors_RowingDeckEventsArrived[12]	no page waited for the button
+TolbiShipInteriors	event gTolbiShipInteriors_RowingDeckEventsKrakenAboard[16]	actor 26 is not in the scene
+TolbiShipInteriors	event gTolbiShipInteriors_RowingDeckEventsKrakenAboard[17]	no page waited for the button
+TolbiShipInteriors	event gTolbiShipInteriors_RowingDeckEventsKrakenAboard[32]	actor 26 is not in the scene
+TolbiShipInteriors	event gTolbiShipInteriors_RowingDeckEventsMonstersAboard[13]	actor 18 is not in the scene
+TolbiShipInteriors	event gTolbiShipInteriors_RowingDeckEventsMonstersAboard[14]	actor 20 is not in the scene
+TolbiShipInteriors	event gTolbiShipInteriors_RowingDeckEventsMonstersAboard[15]	actor 21 is not in the scene
+TolbiShipInteriors	event gTolbiShipInteriors_RowingDeckEventsMonstersAboard[16]	actor 22 is not in the scene
+TolbiShipInteriors	event gTolbiShipInteriors_RowingDeckEventsMonstersAboard[17]	actor 19 is not in the scene
+TolbiShipInteriors	event gTolbiShipInteriors_RowingDeckEventsMonstersAboard[18]	actor 23 is not in the scene
+TolbiShipInteriors	event gTolbiShipInteriors_RowingDeckEventsMonstersAboard[19]	actor 24 is not in the scene
+TolbiShipInteriors	event gTolbiShipInteriors_RowingDeckEventsMonstersAboard[20]	actor 25 is not in the scene
+TolbiShipInteriors	event gTolbiShipInteriors_RowingDeckEventsMonstersAboard[21]	actor 26 is not in the scene
+TolbiShipInteriors	event gTolbiShipInteriors_RowingDeckEventsMonstersAboard[22]	no page waited for the button
+TolbiShipInteriors	event gTolbiShipInteriors_RowingDeckEventsMonstersAboard[31]	actor 18 is not in the scene
+TolbiShipInteriors	event gTolbiShipInteriors_RowingDeckEventsMonstersAboard[32]	actor 20 is not in the scene
+TolbiShipInteriors	event gTolbiShipInteriors_RowingDeckEventsMonstersAboard[33]	actor 21 is not in the scene
+TolbiShipInteriors	event gTolbiShipInteriors_RowingDeckEventsMonstersAboard[34]	actor 22 is not in the scene
+TolbiShipInteriors	event gTolbiShipInteriors_RowingDeckEventsMonstersAboard[35]	actor 19 is not in the scene
+TolbiShipInteriors	event gTolbiShipInteriors_RowingDeckEventsMonstersAboard[36]	actor 23 is not in the scene
+TolbiShipInteriors	event gTolbiShipInteriors_RowingDeckEventsMonstersAboard[37]	actor 24 is not in the scene
+TolbiShipInteriors	event gTolbiShipInteriors_RowingDeckEventsMonstersAboard[38]	actor 25 is not in the scene
+TolbiShipInteriors	event gTolbiShipInteriors_RowingDeckEventsMonstersAboard[39]	actor 26 is not in the scene
+TolbiShipInteriors	event gTolbiShipInteriors_RowingDeckEvents[17]	no page waited for the button
+TolbiShipInteriors	event gTolbiShipInteriors_RowingDeckEvents[18]	no page waited for the button
+TolbiShipInteriors	event gTolbiShipInteriors_RowingDeckEvents[2]	no page waited for the button
+TolbiShipMast	event TolbiShipMast_ClimbDownLadder	no message
+TolbiShipMast	event TolbiShipMast_FindAnchorCharm	no message
+TolbiShipMast	event TolbiShipMast_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+TolbiSpring1	event TolbiSpring_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+TolbiSpring2	event TolbiSpring_TossCoinOrMedal	no page waited for the button
+TretTreeBranch	event Event_CastReveal	no message
+TretTreeBranch	event Event_ShiftNorthFiveCells	no message
+TretTreeBranch	event Event_ShiftNorthFiveCellsSecond	no message
+TretTreeBranch	event Event_ShiftNorthSixCells	no message
+TretTreeBranch	event Event_ShiftSouthFiveCells	no message
+TretTreeBranch	event Event_ShiftSouthFiveCellsSecond	no message
+TretTreeBranch	event Event_ShiftSouthSixCells	no message
+TretTreeBranch	event Event_TakeTouchedExit	no message
+TretTreeBranch	event Event_TalkToBreeze	no message
+TretTreeBranch	event TretTreeBranch_Initialize	no message
+TretTreeInteriors	event Event_CastReveal	no message
+TretTreeInteriors	event Event_FightTret	its GIFs stop at 20 seconds
+TretTreeInteriors	event Event_FloorGivesWayToLowerMiddleCenter	no message
+TretTreeInteriors	event Event_FloorGivesWayToLowerMiddleEast	no message
+TretTreeInteriors	event Event_FloorGivesWayToLowerMiddleNorth	no message
+TretTreeInteriors	event Event_FloorGivesWayToLowerMiddleNortheast	no message
+TretTreeInteriors	event Event_FloorGivesWayToLowerMiddleNorthwest	no message
+TretTreeInteriors	event Event_FloorGivesWayToLowerMiddleSouth	no message
+TretTreeInteriors	event Event_FloorGivesWayToLowerMiddleSoutheast	no message
+TretTreeInteriors	event Event_FloorGivesWayToLowerMiddleSouthwest	no message
+TretTreeInteriors	event Event_FloorGivesWayToLowerMiddleWestA	no message
+TretTreeInteriors	event Event_FloorGivesWayToLowerMiddleWestB	no message
+TretTreeInteriors	event Event_FloorGivesWayToUpperMiddleNortheast	no message
+TretTreeInteriors	event Event_FloorGivesWayToUpperMiddleNorthwest	no message
+TretTreeInteriors	event Event_FloorGivesWayToUpperMiddleSouthLower	no message
+TretTreeInteriors	event Event_FloorGivesWayToUpperMiddleSouthUpper	no message
+TretTreeInteriors	event Event_FloorGivesWayToUpperMiddleSoutheastLower	no message
+TretTreeInteriors	event Event_FloorGivesWayToUpperMiddleSouthwestLower	no message
+TretTreeInteriors	event Event_FloorGivesWayToUpperMiddleSouthwestUpper	no message
+TretTreeInteriors	event Event_FloorGivesWayToUpperMiddleWestLower	no message
+TretTreeInteriors	event Event_FloorGivesWayToUpperMiddleWestUpper	no message
+TretTreeInteriors	event Event_FloorGivesWayToUpperRightNortheast	no message
+TretTreeInteriors	event Event_FloorGivesWayToUpperRightNorthwest	no message
+TretTreeInteriors	event Event_ResetFloorLatchWhenClear	no message
+TretTreeInteriors	event TretTreeInteriors_EnterRoom	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+TunnelRuins1	event Event_BlowAwayBushA	no message
+TunnelRuins1	event Event_BlowAwayBushB	no message
+TunnelRuins1	event Event_BlowAwayBushC	no message
+TunnelRuins1	event Event_DouseBeginsOnPillarB	no message
+TunnelRuins1	event Event_DousePillarB	no message
+TunnelRuins1	event Event_FreezePuddleA	no message
+TunnelRuins1	event Event_FreezePuddleB	no message
+TunnelRuins1	event Event_HopDownStep	no message
+TunnelRuins1	event Event_HopEast	no message
+TunnelRuins1	event Event_HopNorth	no message
+TunnelRuins1	event Event_HopNorthUnlessAtCell30x52	no message
+TunnelRuins1	event Event_HopSouth	no message
+TunnelRuins1	event Event_HopSouthOrPushBlocks	no message
+TunnelRuins1	event Event_HopWest	no message
+TunnelRuins1	event Event_HopWestUnlessAtCell32x50	no message
+TunnelRuins1	event Event_JumpDownLedge	no message
+TunnelRuins1	event Event_PushBlocks	no message
+TunnelRuins1	event Event_PushFirstPillars	no message
+TunnelRuins1	event Event_PushSecondPillars	no message
+TunnelRuins1	event Event_PushSinkingPillarA	no message
+TunnelRuins1	event Event_PushSinkingPillarB	no message
+TunnelRuins1	event Event_SinkPillarA	no message
+TunnelRuins1	event Event_SinkPillarB	no message
+TunnelRuins1	event TunnelRuins_Initialize	no message
+TunnelRuins1	event TunnelRuins_UpdateBlockCells	no message
+TunnelRuins1	event TunnelRuins_UpdateFirstPillarCells	no message
+TunnelRuins1	event TunnelRuins_UpdateSecondPillarCells	no message
+TunnelRuins2	event Event_DouseBeginsOnPillar	no message
+TunnelRuins2	event Event_FreezeDousePuddle	no message
+TunnelRuins2	event Event_HideFalseStatues	no message
+TunnelRuins2	event Event_MoveDousePillar	no message
+TunnelRuins2	event Event_MoveEastPillar	no message
+TunnelRuins2	event Event_MoveLadyStatue	no message
+TunnelRuins2	event Event_PushDousePillar	no message
+TunnelRuins2	event Event_PushEastPillar	no message
+TunnelRuins2	event Event_PushLadyStatue	no message
+TunnelRuins2	event Event_PushObject	no message
+TunnelRuins2	event Event_SetBlockOnBalance	no message
+TunnelRuins2	event Event_ShowFalseStatues	no message
+Vale	event Event_CatchNut	no message
+Vale	event Event_CatchNutAfterKalay	no message
+Vale	event Event_ClearPathCellOverride	no message
+Vale	event Event_EnterCentralHouse	no message
+Vale	event Event_EnterEastHouse	no message
+Vale	event Event_EnterFarSouthHouse	no message
+Vale	event Event_EnterIsaacsHouse	no page waited for the button
+Vale	event Event_EnterNorthernPassage	no message
+Vale	event Event_EnterSanctum	no message
+Vale	event Event_EnterSoutheastHouse	no message
+Vale	event Event_EnterSouthwestHouse	no message
+Vale	event Event_GaretAsksToProtectFamily	its GIFs stop at 20 seconds
+Vale	event Event_GaretMeetsHisSister	its GIFs stop at 20 seconds
+Vale	event Event_LeaveByNorthPath	no message
+Vale	event Event_LeaveBySouthPath	no message
+Vale	event Event_LeaveTowardHome	no message
+Vale	event Event_PushObject	no message
+Vale	event Event_RepeatMtAlephWarningFromFirstApproach	no page waited for the button
+Vale	event Event_ReturnThroughSouthernPassage	no message
+Vale	event Event_SetPathCellOverride	no message
+Vale	event Event_SettleMovedObject	no message
+Vale	event FieldScene_RunCompanionActorSequence	"not called" is not a talk, search, touch or Psynergy-on-actor trigger
+Vale	event HouseScene_RunRepairMorning	"not called" is not a talk, search, touch or Psynergy-on-actor trigger
+Vale	event Vale_AdjustVillagerPriorityForLeaderHeight	no message
+Vale	event Vale_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+Vale	event Vale_SynchronizeAlephVillagerPause	no message
+Vale	event gVale_EventsAfterKalay[12]	its GIFs stop at 20 seconds
+Vale	event gVale_EventsAfterKalay[14]	its GIFs stop at 20 seconds
+Vale	event gVale_EventsAfterLeaving[10]	no page waited for the button
+Vale	event gVale_EventsAfterLeaving[9]	no page waited for the button
+Vale	event gVale_Events[10]	no page waited for the button
+ValeBabi	event Event_ExitCenterAreaNorth	no message
+ValeBabi	event Event_ExitCenterAreaSouth	no message
+ValeBabi	event Event_ExitNorthArea	no message
+ValeBabi	event Event_ExitNortheastArea	no message
+ValeBabi	event Event_ExitNorthwestArea	no message
+ValeBabi	event Event_ExitSouthAreaSouth	no message
+ValeBabi	event Event_ExitSouthAreaWest	no message
+ValeBabi	event Event_ExitSoutheastArea	no message
+ValeBabi	event Event_ExitSouthwestArea	no message
+ValeBabi	event Event_ExitWestAreaNorth	no message
+ValeBabi	event Event_ExitWestAreaSouth	no message
+ValeBabi	event Event_ReadInnkeepersThoughts	no page waited for the button
+ValeBabi	event Event_ScholarAsksAboutKraden	no page waited for the button
+ValeBabi	event Event_VisitSickDora	its GIFs stop at 20 seconds
+ValeBabi	event ValeBabi_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+ValeBabi	event gValeBabi_EventsAfterKalay[18]	its GIFs stop at 20 seconds
+ValeBabi	event gValeBabi_EventsAfterKalay[19]	its GIFs stop at 20 seconds
+ValeBabi	event gValeBabi_ScholarsEvents[0]	no page waited for the button
+ValeBabi	event gValeBabi_ScholarsEvents[1]	no page waited for the button
+ValeBabi	event gValeBabi_ScholarsEvents[2]	no page waited for the button
+ValeBabi	event gValeBabi_ScholarsEvents[5]	no page waited for the button
+ValeBabi	event gValeBabi_ScholarsEvents[6]	no page waited for the button
+ValeBabi	event gValeBabi_ScholarsEvents[7]	no page waited for the button
+ValeBabi	event gValeBabi_ScholarsEvents[8]	no page waited for the button
+ValeBabi	event gValeBabi_ScholarsEvents[9]	no page waited for the button
+ValeBabi	event gValeBabi_ScholarsLaterEvents[0]	no page waited for the button
+ValeBabi	event gValeBabi_ScholarsLaterEvents[2]	no page waited for the button
+ValeBabi	event gValeBabi_ScholarsLaterEvents[5]	no page waited for the button
+ValeBabi	event gValeBabi_ScholarsLaterEvents[6]	no page waited for the button
+ValeBabi	event gValeBabi_ScholarsLaterEvents[7]	no page waited for the button
+ValeBabi	event gValeBabi_ScholarsLaterEvents[8]	no page waited for the button
+ValeBabi	event gValeBabi_ScholarsLaterEvents[9]	no page waited for the button
+ValeBabi	vale-babi room of entrance 20	the scene went on to scene 3 before the player had control
+ValeCave1	event Event_LeaveRoom	no message
+ValeCave1	event ValeCave_Initialize	no message
+ValeCave2	event Event_HaltKite	no message
+ValeCave2	event Event_HideRevealedTile	no message
+ValeCave2	event Event_HopDownLedge	no message
+ValeCave2	event Event_KiteKeepsAway	no message
+ValeCave2	event Event_KiteRunsBehindLedge	no message
+ValeCave2	event Event_KiteRunsOff	no message
+ValeCave2	event Event_MoveEastObjectIntoHole	no message
+ValeCave2	event Event_MoveWestObjectIntoHole	no message
+ValeCave2	event Event_PushEastObjectIntoHole	no message
+ValeCave2	event Event_RevealHiddenTile	no message
+ValeCave2	event Event_SlideObjectsEast	no message
+ValeCave2	event Event_SlideObjectsWest	no message
+ValeCave2	event Event_TalkToKite	no message
+ValeCave2	event Event_TouchSlidingObjects	no message
+ValeCave3	event Event_PushObjectNorth	no message
+ValeCave3	event Event_PushObjectOffLedge	no message
+ValeCave3	event Event_PushObjectOverEdge	no message
+ValeHome	event Event_ClearFirstWhirlwindTarget	no message
+ValeHome	event Event_ClearSecondWhirlwindTarget	no message
+ValeHome	event Event_ClearThirdWhirlwindTarget	no message
+ValeHome	event Event_LeaveThroughSouthPassage	no message
+ValeHome	event Event_LeaveThroughWestPassage	no message
+ValeHome	event Event_OpenCentralEastDoor	no message
+ValeHome	event Event_OpenCentralWestDoor	no message
+ValeHome	event Event_OpenNortheastDoor	no message
+ValeHome	event Event_OpenNorthwestDoor	no message
+ValeHome	event Event_OpenSoutheastDoor	no message
+ValeHome	event Event_OpenSouthwestDoor	no message
+ValeHome	event Event_OpenWestEdgeDoor	no message
+ValeHome	event Event_SentToAidElders	its GIFs stop at 20 seconds
+ValeHome	event ValeHome_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+ValeKraden	event Event_EnterCottage	no message
+ValeKraden	event Event_FightFirstMonster	no message
+ValeKraden	event Event_FightSecondMonster	no message
+ValeKraden	event Event_KradenPlansSanctumVisit	its GIFs stop at 20 seconds
+ValeKraden	event Event_MeetSaturosAndMenardi	its GIFs stop at 20 seconds
+ValeKraden	event Event_OverhearKraden	its GIFs stop at 20 seconds
+ValeKraden	event ValeKraden_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+ValeStorm	event Event_ClearPathCellOverride	no message
+ValeStorm	event Event_FightFourthMonster	no message
+ValeStorm	event Event_FightThirdMonster	no message
+ValeStorm	event Event_GatherAfterRiverRescue	the trigger is in none of its scenes
+ValeStorm	event Event_LeaveByExit1	no message
+ValeStorm	event Event_LeaveByExit10	no message
+ValeStorm	event Event_LeaveByExit12	no message
+ValeStorm	event Event_LeaveByExit13	no message
+ValeStorm	event Event_LeaveByExit2	its GIFs stop at 20 seconds
+ValeStorm	event Event_LeaveByExit3	no message
+ValeStorm	event Event_LeaveByExit4	no message
+ValeStorm	event Event_LeaveByExit5	no message
+ValeStorm	event Event_LeaveByExit6	no page waited for the button
+ValeStorm	event Event_LeaveByExit7	no message
+ValeStorm	event Event_LeaveByExit8	no message
+ValeStorm	event Event_LeaveByExit9	no message
+ValeStorm	event Event_Rock11Falls	no page waited for the button
+ValeStorm	event Event_Rock12Falls	no page waited for the button
+ValeStorm	event Event_Rock13Falls	no page waited for the button
+ValeStorm	event Event_Rock14Falls	no page waited for the button
+ValeStorm	event Event_SetPathCellOverride	no message
+ValeStorm	event Event_WarnAboutMtAleph	its GIFs stop at 20 seconds
+ValeStorm	event Event_WatchBoulderFall	its GIFs stop at 20 seconds
+ValeStorm	event Event_WitnessRiverRescue	its GIFs stop at 20 seconds
+ValeStorm	event ValeStorm_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+ValeStorm	event ValeStorm_OpenBackdropExit11	no message
+Vault	event Event_EnterCentralEastHouse	no message
+Vault	event Event_EnterCentralHouse	no message
+Vault	event Event_EnterJail	no message
+Vault	event Event_EnterNorthHouse	no message
+Vault	event Event_EnterNortheastHouse	no message
+Vault	event Event_EnterNorthwestHouse	no message
+Vault	event Event_EnterPassage	no message
+Vault	event Event_EnterSoutheastHouse	no message
+Vault	event Event_GiveBoneToDog	no message
+Vault	event Event_LookForRoofer	the trigger is in none of its scenes
+Vault	event Event_ReadMindOnRoofer	the trigger is in none of its scenes
+Vault	event Event_RingBell	no message
+Vault	event Scene_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+Vault	event Vault_EnableAlternatePassageCells	no message
+Vault	event Vault_OpenDoorwayAndEnter	no message
+Vault	event Vault_RestorePassageCells	no message
+VaultCave1	event Scene_Initialize	no message
+VaultCave1	event VaultCave_UpdateFrostControlledFallingObjects	no message
+VaultCave1	event VaultCave_UpdateTimedFallingObjects	no message
+VaultCave2	event Event_FreezeEastLowerTarget	no message
+VaultCave2	event Event_FreezeEastUpperTarget	no message
+VaultCave2	event Event_FreezeFarEastTarget	no message
+VaultCave2	event Event_FreezeInnerWestLowerTarget	no message
+VaultCave2	event Event_FreezeWestLowerTarget	no message
+VaultCave2	event Event_FreezeWestUpperTarget	no message
+VaultCave2	event Event_MoveSouthernBlock	no message
+VaultCave2	event Event_PushSouthernBlock	no message
+VaultCave2	event Event_UseWhirlwind	no message
+VaultCave3	event Event_IgnoreMove	no message
+VaultCave3	event Event_MoveNorthernBlock	no message
+VaultCave3	event Event_PushNorthernBlock	no message
+VaultInteriors	event Event_AdvanceSuspectRoutes	no message
+VaultInteriors	event Event_CheckCrateMoved	no message
+VaultInteriors	event Event_ClimbToAttic	no message
+VaultInteriors	event Event_DiscussSuspiciousGuests	its GIFs stop at 20 seconds
+VaultInteriors	event Event_GaretRefusesToLeave	"raised 250" is not a talk, search, touch or Psynergy-on-actor trigger
+VaultInteriors	event Event_GoToEntrance11	no message
+VaultInteriors	event Event_JumpAcrossRoofGap	no message
+VaultInteriors	event Event_MeetIvan	its GIFs stop at 20 seconds
+VaultInteriors	event Event_ReadCorneredSuspectsMinds	"raised VAULT_INTERIORS_LEADER_CORNERED=201" is not a talk, search, touch or Psynergy-on-actor trigger
+VaultInteriors	event Scene_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+VaultInteriors	event Vault_UpdateBoneProximityFlag	no message
+VaultJail	event Event_LeaveForVault	no message
+VaultJail	event Scene_Initialize	no message
+VaultJail	event gJailPrisonerEvents[1]	the trigger is in none of its scenes
+VaultJail	event gJailPrisonerEvents[2]	the trigger is in none of its scenes
+VaultRevisit	event Event_EnterCentralEastHouse	no message
+VaultRevisit	event Event_EnterCentralHouse	no message
+VaultRevisit	event Event_EnterJail	no message
+VaultRevisit	event Event_EnterNorthHouse	no message
+VaultRevisit	event Event_EnterNortheastHouse	no message
+VaultRevisit	event Event_EnterNorthwestHouse	no message
+VaultRevisit	event Event_EnterSoutheastHouse	no message
+VaultRevisit	event Event_GiveBoneToDog	no message
+VaultRevisit	event Event_HidePassage	no message
+VaultRevisit	event Event_ReadMindAndPraisePartyStrength	the trigger is in none of its scenes
+VaultRevisit	event Event_ReadMindAndRecognizeThiefCatchers	the trigger is in none of its scenes
+VaultRevisit	event Event_ReadMindOnFeelingBrave	the trigger is in none of its scenes
+VaultRevisit	event Event_ReadMindOnJailKey	the trigger is in none of its scenes
+VaultRevisit	event Event_RevealPassage	no message
+VaultRevisit	event Event_RingBell	no message
+VaultRevisit	event Event_TalkToVenusDjinni	no message
+VaultRevisit	event Scene_Initialize	no message
+VaultRevisit	event Vault_EnableAlternatePassageCells	no message
+VaultRevisit	event Vault_OpenDoorwayAndEnter	no message
+VaultRevisit	event Vault_RestorePassageCells	no message
+VenusLighthouse1	event Event_HearOfTheAttack	its GIFs stop at 20 seconds
+VenusLighthouse1	event Scene_RunEntrySetup	no message
+VenusLighthouse2	event Event_CarryBlockPastWall	no message
+VenusLighthouse2	event Event_HidePath	no message
+VenusLighthouse2	event Event_JumpDown	no message
+VenusLighthouse2	event Event_MoveBlockOntoSwitch	no message
+VenusLighthouse2	event Event_MoveBlockTowardWall	Move needs a direction held after the cast
+VenusLighthouse2	event Event_PushBlockTowardWall	no page waited for the button
+VenusLighthouse2	event Event_ReadRelief	no message
+VenusLighthouse2	event Event_RevealPath	no message
+VenusLighthouse2	event Event_StepOnFloorSwitch	no message
+VenusLighthouse3	event Event_CarryBlockAcrossGap	no message
+VenusLighthouse3	event Event_ClearEffectTarget	no message
+VenusLighthouse3	event Event_DriftSouth	no message
+VenusLighthouse3	event Event_FallThroughFloor	no message
+VenusLighthouse3	event Event_JumpOrPushCarryBlock	no message
+VenusLighthouse3	event Event_LiftCarryBlock	no message
+VenusLighthouse3	event Event_MoveCarryBlock	no message
+VenusLighthouse3	event Event_MoveDepthBlock	no message
+VenusLighthouse3	event Event_PushDepthBlock	no message
+VenusLighthouse3	event Event_SetLeaderAsEffectTarget	no message
+VenusLighthouse4	event Event_EnterSparklingPassage	no message
+VenusLighthouse4	event Event_JumpOrPushGateBlock	no message
+VenusLighthouse4	event Event_MoveGateBlock	no message
+VenusLighthouse4	event Event_StepOnWallSwitch	no message
+VenusLighthouse5	event Event_JumpOrPushSwitchBlock	no message
+VenusLighthouse5	event Event_MoveSwitchBlock	no message
+VenusLighthouse6	event Event_CarryFloatingBlock	no message
+VenusLighthouse6	event Event_DriftEast	no message
+VenusLighthouse6	event Event_DriftNorth	no message
+VenusLighthouse6	event Event_DriftWest	no message
+VenusLighthouse6	event Event_EnterRisingPassage	no message
+VenusLighthouse6	event Event_JumpAcrossGap	no message
+VenusLighthouse6	event Event_JumpOrPushPillarBlock	no message
+VenusLighthouse6	event Event_MovePillarSwitchBlock	no message
+VenusLighthouse6	event Event_PushPuzzleBlock	no message
+VenusLighthouse6	event Event_StepOnEastWallSwitch	no message
+VenusLighthouse6	event Event_StepOnWestWallSwitch	no message
+VenusLighthouseAerie	event Event_ConfrontSaturosAndMenardi	its GIFs stop at 20 seconds
+VenusLighthouseAerie	event Event_JumpToNextPillar	no message
+VenusLighthouseAerie	event Event_LandOnPillar	no message
+VenusLighthouseAerie	event Event_SteadyPillars	no message
+VenusLighthouseAerie	event VenusLighthouseAerie_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+VenusLighthouseAerie	event VenusLighthouseAerie_SpawnUpperOrbitParticles	no message
+VenusLighthouseAerie	event VenusLighthouseAerie_UpdateBeaconRise	no message
+VenusLighthouseAerie	event VenusLighthouseAerie_UpdateBeamActors	no message
+WestLunpaCave	event Event_FreezeGatePuddle	no message
+WestLunpaCave	event Event_FreezeHiddenPuddle	no message
+WestLunpaCave	event Event_FreezeNorthPuddle	no message
+WestLunpaCave	event Event_FreezeSouthPuddle	no message
+WestLunpaCave	event Event_HammetFindsBunza	its GIFs stop at 20 seconds
+WestLunpaCave	event Scene_Initialize	no message
+WorldMap	event Event_DouseTravelMarker	no message
+WorldMap	event Event_EnterAirborneTravel	no message
+WorldMap	event Event_EnterTransferRoute	no message
+WorldMap	event Event_FinishAirborneTravel	no message
+WorldMap	event Event_LeaveEastward	no message
+WorldMap	event Event_MeetCorona	no message
+WorldMap	event Event_MeetFlint	WorldMap: the scene went on to scene 109 before the player had control
+WorldMap	event Event_MeetHail	no message
+WorldMap	event Event_MeetVine	no message
+WorldMap	event Event_PassThroughFirstNorthSouthPassage	no message
+WorldMap	event Event_PassThroughFourthNorthSouthPassage	no message
+WorldMap	event Event_PassThroughSecondNorthSouthPassage	no message
+WorldMap	event Event_PassThroughThirdNorthSouthPassage	no message
+WorldMap	event Event_PassThroughWestEastPassage	no message
+WorldMap	event Event_SearchShipwreck	WorldMap: the scene went on to scene 109 before the player had control
+WorldMap	event Event_StartDousingTravelMarker	no message
+WorldMap	event Event_StopLeavingShip	"callback from WorldMap_ActivateSite138" is not a talk, search, touch or Psynergy-on-actor trigger
+WorldMap	event Event_TalkAboutBlackOrb	no page waited for the button
+WorldMap	event Event_UseBlackOrb	"use black orb 96" is not a talk, search, touch or Psynergy-on-actor trigger
+WorldMap	event WorldMap_ApplyMapRotationAndMode	no message
+WorldMap	event WorldMap_Initialize	"entry initialize" is not a talk, search, touch or Psynergy-on-actor trigger
+WorldMap	event WorldMap_InitializeFirstDjinni	no message
+WorldMap	event WorldMap_InitializeProgressMarker	no message
+WorldMap	event WorldMap_UpdateAirborneTravelTimer	no message
+WorldMap	event WorldMap_UpdateLocationContacts	no message
+WorldMap	event WorldMap_UpdateTransferredActorLanding	no message
+WorldMap	maps	the perspective world map has no layered map to stitch
+WorldMap	world-map room of entrance 69	the scene went on to scene 109 before the player had control
+Xian	event Xian_FreezeSpilledWater	no message
+Xian	event Xian_Initialize	no message
+Xian	event Xian_JumpOverSpilledWater	no message
+Xian	event Xian_MoveAsideForWaterCarrier	no message
+Xian	event Xian_OpenDoorAndLeave	no message
+Xian	event Xian_RecruitVillageDjinni	no message
+Xian	event Xian_TalkToFeizhi	the trigger is in none of its scenes
+Xian	event gXian_Events[44]	the trigger is in none of its scenes
+Xian	event gXian_Events[55]	the trigger is in none of its scenes
