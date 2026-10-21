@@ -407,6 +407,7 @@ function siteLink(path: string): string {
   const clean = normalize(path).replace(/\/$/, '');
   if (clean === 'README.md') return '/';
   if (clean === 'INSTALL.md') return '/start';
+  if (clean === 'games/tbs/README.md') return '/tbs';
   if (clean === 'games/tbs/src/MATCHING.md') return '/tbs/matching';
   const guide = guideOf.get(dirname(clean));
   if (guide && basename(clean) === 'README.md') return guide.url;
@@ -1304,7 +1305,7 @@ function pictures() {
 // ---------------------------------------------------------------------------
 
 const started = Date.now();
-for (const p of ['index.md', 'start.md', 'tbs/source', 'tla/source', 'tbs/places.md', 'tbs/abilities.md', 'tbs/abilities', 'tbs/matching.md', ...GUIDES.map(([, t]) => `${t}.md`)]) {
+for (const p of ['index.md', 'tbs/index.md', 'start.md', 'tbs/source', 'tla/source', 'tbs/places.md', 'tbs/abilities.md', 'tbs/abilities', 'tbs/matching.md', ...GUIDES.map(([, t]) => `${t}.md`)]) {
   rmSync(join(content, p), { recursive: true, force: true });
 }
 
@@ -1337,6 +1338,9 @@ for (const game of GAMES) {
 }
 
 prose('README.md', 'index.md', 'none');
+// The game's front page is its README in the source, so the story it tells
+// stays with the code it explains.
+prose('games/tbs/README.md', 'tbs/index.md', 'How the first Golden Sun works, explained from its rebuilt code.');
 prose('INSTALL.md', 'start.md', 'Build The Broken Seal, check it against the cartridge, and change it.');
 guides();
 for (const game of GAMES) sourcePages(game, all.get(game)!);
