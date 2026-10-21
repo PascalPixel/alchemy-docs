@@ -12,7 +12,7 @@
 // no page or section of its own, only its name in its folder's file list.
 // Names in comments link to their declaration within the same game, so the
 // two games never cross. A handler whose comment names the abilities that
-// reach it shows their recordings from public/abilities under its section.
+// reach it shows their recordings (public/abilities/index.tsv) under its section.
 //
 // Every title is Alchemy's: a Markdown page's # heading, a source page's path
 // in its game. Every description is a first sentence Alchemy wrote: a page's
@@ -23,12 +23,16 @@ import { basename, dirname, join, normalize, relative } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { Language, type Node, Parser } from 'web-tree-sitter';
+import { readManifest, renderPath } from '../lib/renders';
 
 const docs = fileURLToPath(new URL('..', import.meta.url));
 // The Alchemy checkout it reads: ALCHEMY, or the one beside this repository.
 const repo = process.env.ALCHEMY ?? join(docs, '../alchemy');
 const content = join(docs, 'content/docs');
 const github = 'https://github.com/PascalPixel/alchemy/blob/main';
+// The renders the store holds (render/manifest.tsv): the pictures are not in
+// public/, so a picture an index lists is shown only when the store has it.
+const stored = readManifest(docs);
 // The Broken Seal's scenes by symbol, numbered as field/scenes.s lists them.
 const sceneIds = new Map(
   [...readFileSync(join(repo, 'games/tbs/src/field/scenes.s'), 'utf8').matchAll(/^\tscene (\w*),/gm)].map((m, i) => [m[1], i] as const),
@@ -416,7 +420,7 @@ const recordings = (() => {
       if (!existsSync(index)) return;
       const [head, ...lines] = readFileSync(index, 'utf8').trim().split('\n');
       const keys = head.split('\t');
-      rows = lines.map((l) => Object.fromEntries(l.split('\t').map((v, i) => [keys[i], v]))).filter((r) => r.file && existsSync(join(docs, 'public/abilities', r.file)));
+      rows = lines.map((l) => Object.fromEntries(l.split('\t').map((v, i) => [keys[i], v]))).filter((r) => r.file && stored.has(`abilities/${r.file}`));
     },
   };
 })();
@@ -809,6 +813,12 @@ function checkArrangement() {
     }
   for (const r of redirects) {
     const to = r.destination.replace(/#.*$/, '');
+    // A redirect between renders (an old folder name) leads into the store.
+    const render = renderPath(to)?.replace(/:path\*$/, '');
+    if (render !== undefined) {
+      if (![...stored.keys()].some((p) => p.startsWith(render))) failures.push(`the redirect from ${r.source} leads to ${r.destination}, which the store doesn't hold`);
+      continue;
+    }
     if (!/^https?:/.test(to) && !pagesWritten.has(to)) failures.push(`the redirect from ${r.source} leads to ${r.destination}, which the build doesn't write`);
     if (pagesWritten.has(r.source)) failures.push(`the redirect from ${r.source} hides a page the build writes`);
     if (redirects.some((s) => s.source === to)) failures.push(`the redirect from ${r.source} leads to another redirect, ${to}`);
@@ -982,8 +992,9 @@ function triggerPhrase(rows: MessageRow[]): string {
 
 // A page for each place: the paragraph its overlay's opening comment gives it
 // (`- SceneName (scene N), ...`), or the whole comment when the overlay holds
-// one place; the place's maps as the game draws them, where public/places
-// has them; and the events whose comments name it, each with its recording.
+// one place; the place's maps as the game draws them, where the renders
+// have them, at each story moment they were drawn at; and the events whose
+// comments name it, each with its recording.
 // The pages follow the scene numbers, which run in story order.
 type Place = { file: SourceFile; scene: string; id: number; slug: string; title: string };
 function placePages(scenes: SourceFile[]): Place[] {
@@ -1007,17 +1018,21 @@ function placePages(scenes: SourceFile[]): Place[] {
   out.sort((a, b) => a.id - b.id);
   // The renders, by scene number: public/places/index.tsv lists every map,
   // entrance shot and recording with the scene it was made in and the way the
-  // place was drawn (cursed, cured), so a scene renamed since keeps its renders.
-  const pub = join(docs, 'public/places');
-  type Render = { number: number; variant: string; kind: string; event: string; messages: string; file: string };
-  const renders = existsSync(join(pub, 'index.tsv'))
-    ? readFileSync(join(pub, 'index.tsv'), 'utf8').trim().split('\n').slice(1).map((l) => l.split('\t'))
-        .map((r) => ({ number: +r[1], variant: r[3], kind: r[4], event: r[6], messages: r[13], file: r[14] }) as Render)
+  // place was drawn (cursed, cured, or a story moment and the flags it set), so
+  // a scene renamed since keeps its renders.
+  type Render = { number: number; scene: string; variant: string; kind: string; event: string; messages: string; file: string };
+  const index = join(docs, 'public/places/index.tsv');
+  const renders = existsSync(index)
+    ? (() => {
+        const [head, ...lines] = readFileSync(index, 'utf8').trim().split('\n').map((l) => l.split('\t'));
+        const col = (name: string) => head.indexOf(name);
+        return lines.map((r) => ({ number: +r[col('number')], scene: r[col('scene')], variant: r[col('variant')] ?? '', kind: r[col('kind')], event: r[col('event')], messages: r[col('messages')] ?? '', file: r[col('file')] }) as Render);
+      })()
     : [];
   const catalogPages = firstPages();
   const rowsOfFile = new Map<string, ReturnType<typeof messageRows>>();
   for (const p of out) {
-    const mine = renders.filter((r) => r.number === p.id && existsSync(join(pub, r.file)));
+    const mine = renders.filter((r) => r.number === p.id && stored.has(`places/${r.file}`));
     const body: string[] = [];
     // A place that shares its overlay opens with what the overlay's comment
     // says of them all (their doors, their area name).
@@ -1028,9 +1043,15 @@ function placePages(scenes: SourceFile[]): Place[] {
     // flat, which the front page shows.
     if (p.scene === 'WorldMap') body.push('![The whole world map of The Broken Seal, laid out flat](/story/world.png)');
     // Its maps, a place drawn more than one way (Kolima Forest before and
-    // after Tret lifts the curse) once for each way.
-    for (const m of mine.filter((r) => r.kind === 'map').sort((a, b) => (a.variant < b.variant ? 1 : -1) || (a.file < b.file ? -1 : 1)))
-      body.push(`![The whole of ${p.title}${m.variant ? `, ${m.variant},` : ''} as the game draws it](/places/${m.file})`);
+    // after Tret lifts the curse, Vale on the stormy night as each rock falls)
+    // once for each way, captioned with the moment: as the game first draws
+    // it, then the moments in the order their flags pile up.
+    const maps = mine.filter((r) => r.kind === 'map').map((r) => ({ ...r, moment: moment(r.variant, r.scene) }));
+    maps.sort((a, b) => a.moment.order - b.moment.order || (a.moment.caption < b.moment.caption ? -1 : a.moment.caption > b.moment.caption ? 1 : 0) || a.file.localeCompare(b.file, 'en', { numeric: true }));
+    for (const m of maps) {
+      const alt = `The whole of ${p.title}${m.moment.caption ? `, ${m.moment.caption},` : ''} as the game draws it`;
+      body.push(`![${md(alt)}](/places/${m.file})${m.moment.caption ? `\\\n${md(m.moment.caption.charAt(0).toUpperCase() + m.moment.caption.slice(1))}` : ''}`);
+    }
     // Its events: the functions whose comments name the place, or every
     // documented function when the overlay holds this place alone, and every
     // event recorded there, by the name it was recorded under.
@@ -1103,6 +1124,80 @@ function placePages(scenes: SourceFile[]): Place[] {
     page(`tbs/places/${p.slug}.md`, { title: p.title, description: `${basename(p.file.path)}, scene ${p.id}.`, source: p.file.path }, body.join('\n\n'));
   }
   return out;
+}
+
+// A map's story moment, from its index row's variant: a way the place looks
+// (`cursed`, `cured`), or the moment's name and the flags it set
+// (`vale-storm-saw-river-rescue: FLAG_VALE_STORM_SENT_TO_PLAZA, ...`). The
+// caption is the name read as English: the words it shares with the scene's
+// own name dropped, a verb turned into "after ...", proper nouns capitalized
+// as the game's text writes them (`after the river rescue`, `after Garet
+// joined`, `after the first switch was flipped`). order is how many flags
+// the moment had set, so the moments follow the story.
+const STATES = new Set(['cursed', 'cured']);
+const ACTIVE = new Set(['fell', 'joined', 'left', 'came', 'spoke', 'reached', 'met', 'heard', 'entered', 'opened', 'decided', 'escaped', 'rejoined', 'reported', 'agreed', 'returned', 'seek']);
+const PASSIVE = new Set(['bagged', 'moved', 'cleared', 'uncovered', 'flipped', 'lowered', 'defeated', 'beaten', 'caught', 'rescued', 'saved', 'placed', 'pushed', 'sunk', 'jailed', 'carried', 'told', 'activated', 'hidden', 'approached', 'read', 'repelled', 'confronted', 'seen', 'shown', 'asked', 'rewarded', 'greeted', 'reopened', 'trapped', 'held', 'given', 'explained', 'witnessed', 'planned']);
+const PERFECT = new Set(['fallen']);
+const ADJECTIVES = new Set(['open', 'over', 'shining', 'in', 'one', 'on']);
+// A moment named for the nth time something happened (the mine's second
+// drain, Bane's last escape).
+const ORDINALS = new Set(['first', 'second', 'third', 'fourth', 'last']);
+const EVENTS = new Set(['drain', 'escape', 'path']);
+let proper: { words: Set<string>; pairs: Set<string> } | undefined;
+function names() {
+  if (!proper) {
+    // A word the catalog writes capitalized inside a sentence and never in
+    // lower case, the playable characters, whom it mostly prints by code, and
+    // the pairs it writes capitalized together (Venus Lighthouse).
+    const all = [...text('games/tbs/text/en.po').matchAll(/msgstr ((?:"(?:[^"\\]|\\.)*"\n?)+)/g)].map((m) => m[1].replace(/"\n?"/g, '').replace(/\{[^}]*\}/g, ' ')).join(' ');
+    const lower = new Set([...all.matchAll(/\b([a-z]+)\b/g)].map((m) => m[1]));
+    const words = new Set([...all.matchAll(/[a-z,] ([A-Z][a-z]+)\b/g)].map((m) => m[1].toLowerCase()).filter((w) => !lower.has(w)));
+    for (const m of text('games/tbs/include/game/character_ids.h').matchAll(/^#define ([A-Z]+) \d+\b/gm)) words.add(m[1].toLowerCase());
+    const pairs = new Set([...all.matchAll(/\b(?=([A-Z][a-z]+\.? [A-Z][a-z]+)\b)/g)].map((m) => m[1].replace('.', '').toLowerCase()));
+    proper = { words, pairs };
+  }
+  return proper;
+}
+const properNoun = (word: string) => names().words.has(word);
+function moment(variant: string, scene: string): { caption: string; order: number } {
+  if (!variant) return { caption: '', order: -1 };
+  const [name, flags = ''] = variant.split(/: (.*)/);
+  const order = flags.split(';')[0].split(',').filter((f) => f.trim()).length;
+  if (STATES.has(name)) return { caption: name, order };
+  const verb = (w: string) => ACTIVE.has(w) || PASSIVE.has(w) || PERFECT.has(w) || ADJECTIVES.has(w);
+  // The words the moment shares with the scene's name (vale-storm-garet-joined
+  // in vale-storm) say nothing on its page, unless the last of them is who
+  // acts (tret-defeated in tret-tree). A single letter names one of a pair
+  // (pillar A, pillar B).
+  let words = name.split('-');
+  const own = scene.split('_')[0].split('-');
+  let shared = 0;
+  while (shared < own.length && shared < words.length - 1 && words[shared] === own[shared]) shared++;
+  if (shared && verb(words[shared]) && !words.slice(shared + 1).some(verb)) shared--;
+  words = words.slice(shared);
+  const cap = (w: string, i: number, ws: string[]) =>
+    properNoun(w) || (i > 0 && names().pairs.has(`${ws[i - 1]} ${w}`) && properNoun(ws[i - 1])) || w.length === 1 ? w.charAt(0).toUpperCase() + w.slice(1) : w;
+  const phrase = (ws: string[]) => ws.map(cap).join(' ').replace(/(^|[^e]) party\b/, '$1 the party').trim();
+  const the = (ws: string[]) => (ws.length && properNoun(ws[0]) ? phrase(ws) : `the ${phrase(ws)}`);
+  const at = words.findIndex((w, i) => i > 0 && verb(w));
+  const last = words.length - 1;
+  let caption: string;
+  if (words[0] === 'saw') caption = `after ${the(words.slice(1))}`;
+  else if (words[0] === 'party') caption = `after the ${phrase(words)}`;
+  else if (words[0] === 'at') caption = `at ${the(words.slice(1))}`;
+  else if (EVENTS.has(words[last]) && ORDINALS.has(words[last - 1])) {
+    const who = words.slice(0, last - 1);
+    caption = `after ${who.length === 1 && properNoun(who[0]) ? `${phrase(who)}'s` : 'the'} ${words[last - 1]} ${words[last]}`;
+  } else if (at > 0) {
+    const subject = words.slice(0, at);
+    const rest = words.slice(at);
+    const plural = /[^s]s$/.test(subject[subject.length - 1]) && !properNoun(subject[subject.length - 1]);
+    const be = PERFECT.has(rest[0]) ? 'had' : plural ? 'were' : 'was';
+    caption = ACTIVE.has(rest[0]) ? `after ${the(subject)} ${phrase(rest)}` : `after ${the(subject)} ${be} ${phrase(rest)}`;
+  } else if (ACTIVE.has(words[0])) caption = `after the party ${phrase(words)}`;
+  else if (words.length === 1 && words[0].endsWith('ing')) caption = `while ${words[0]}`;
+  else caption = words.length === 1 && words[0] === 'storm' ? 'during the storm' : `with ${the(words)}`;
+  return { caption, order };
 }
 
 // ---------------------------------------------------------------------------

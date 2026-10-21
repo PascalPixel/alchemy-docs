@@ -354,6 +354,27 @@
     { "source": "/tbs/abilities/dragon-driver", "destination": "/tbs/source/src/effect/parts/tiamat-c#battlefx_rundragondriver", "permanent": true },
     { "source": "/tbs/abilities/drain-fang", "destination": "/tbs/source/src/effect/parts/target_strike-c#battlefx_rundrainfang", "permanent": true },
     { "source": "/tbs/abilities/severe-blow", "destination": "/tbs/source/src/effect/parts/casting_impact-c#battlefx_runcastingimpact", "permanent": true },
-    { "source": "/tbs/abilities/thrash", "destination": "/tbs/source/src/effect/parts/thrash-c#battlefx_runthrash", "permanent": true }
+    { "source": "/tbs/abilities/thrash", "destination": "/tbs/source/src/effect/parts/thrash-c#battlefx_runthrash", "permanent": true },
+    { "source": "/places/scene-188/:path*", "destination": "/places/lemurian-ship/:path*", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/places/:path*", "destination": "https://n2k4znkfbewwaw0l.public.blob.vercel-storage.com/places/:path*" },
+    { "source": "/abilities/:path*", "destination": "https://n2k4znkfbewwaw0l.public.blob.vercel-storage.com/abilities/:path*" },
+    { "source": "/guides/:path*", "destination": "https://n2k4znkfbewwaw0l.public.blob.vercel-storage.com/guides/:path*" },
+    { "source": "/story/:path*", "destination": "https://n2k4znkfbewwaw0l.public.blob.vercel-storage.com/story/:path*" }
+  ],
+  "headers": [
+    {
+      "source": "/(places|abilities|guides|story)/:path*",
+      "headers": [{ "key": "x-vercel-enable-rewrite-caching", "value": "1" }]
+    },
+    {
+      "source": "/(places|abilities|guides|story)/:path*",
+      "missing": [{ "type": "query", "key": "v" }],
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600" },
+        { "key": "CDN-Cache-Control", "value": "max-age=3600" }
+      ]
+    }
   ]
 }

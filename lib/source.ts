@@ -4,6 +4,7 @@ import { applyMdxPreset } from 'fumadocs-mdx/config';
 import { loader } from 'fumadocs-core/source';
 import { metaSchema, pageSchema } from 'fumadocs-core/source/schema';
 import { z } from 'zod';
+import { onImageError, remarkRenders } from './remark-renders';
 
 const docs = defineDocs({
   dir: 'content/docs',
@@ -11,9 +12,10 @@ const docs = defineDocs({
     // source: the repository file or folder a generated page is made from,
     // for the page's GitHub link.
     schema: pageSchema.extend({ source: z.string().optional() }),
-    // Pictures keep their paths in public/ rather than being bundled, so the
-    // site's CSS can tell a recording from an asset sheet by where it lives.
-    mdxOptions: applyMdxPreset({ remarkImageOptions: { useImport: false } }),
+    // Pictures keep their paths rather than being bundled, so the site's CSS
+    // can tell a recording from an asset sheet by where it lives. The renders
+    // are in the Blob store: their sizes come from its manifest.
+    mdxOptions: applyMdxPreset({ remarkImageOptions: { useImport: false, onError: onImageError }, remarkPlugins: (v) => [remarkRenders, ...v] }),
   },
   meta: {
     schema: metaSchema,
