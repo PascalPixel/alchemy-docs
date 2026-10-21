@@ -12,7 +12,8 @@
 // effect parts) gets a page per file instead. A file with no /// comment has
 // no page or section of its own, only its name in its folder's file list.
 // Names in comments link to their declaration within the same game, so the
-// two games never cross.
+// two games never cross. A handler whose comment names the abilities that
+// reach it shows their recordings from public/abilities under its section.
 //
 // Every title is Alchemy's: a Markdown page's # heading, a source page's path
 // in its game. Every description is a first sentence Alchemy wrote: a page's
@@ -237,6 +238,49 @@ function declsOf(parent: Node, out: Decl[]) {
   }
 }
 
+// tree-sitter loses a function whose body holds an #ifdef that splits a
+// statement (`#ifdef BUGFIX` around an `if (...) {` line), and every
+// declaration after it in the file. Inside a function body, a conditional
+// keeps its first branch: the directives and the other branches are blanked
+// in place, so offsets and lines stay as written.
+function firstBranches(text: string): string {
+  const lines = text.split('\n');
+  let depth = 0;
+  let comment = false;
+  const stack: { body: boolean; blank: boolean }[] = [];
+  const blanking = () => stack.some((s) => s.blank);
+  const blank = (i: number) => (lines[i] = lines[i].replace(/[^\n]/g, ' '));
+  for (let i = 0; i < lines.length; i++) {
+    const directive = lines[i].match(/^\s*#\s*(if|ifdef|ifndef|elif|else|endif)\b/)?.[1];
+    if (directive) {
+      if (directive.startsWith('if')) stack.push({ body: depth > 0 || blanking(), blank: false });
+      const top = stack[stack.length - 1];
+      if (top?.body) {
+        if (directive === 'elif' || directive === 'else') top.blank = true;
+        blank(i);
+      }
+      if (directive === 'endif') stack.pop();
+      continue;
+    }
+    if (blanking()) {
+      blank(i);
+      continue;
+    }
+    // The braces outside comments, strings and character constants.
+    let code = lines[i];
+    if (comment) code = code.includes('*/') ? code.slice(code.indexOf('*/') + 2) : '';
+    comment = false;
+    code = code.replace(/"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|\/\*.*?\*\//g, '');
+    if (code.includes('/*')) {
+      comment = true;
+      code = code.slice(0, code.indexOf('/*'));
+    }
+    code = code.replace(/\/\/.*$/, '');
+    for (const c of code) depth += c === '{' ? 1 : c === '}' ? -1 : 0;
+  }
+  return lines.join('\n');
+}
+
 function readFile(path: string, game: Game): SourceFile {
   const text = readFileSync(join(repo, path), 'utf8');
   // tree-sitter reads `static void UNUSED Name(void)` as a declaration of
@@ -244,7 +288,7 @@ function readFile(path: string, game: Game): SourceFile {
   // outside comments and #define lines; signatures are cut from the file as
   // written.
   written = text;
-  const tree = parser.parse(text.replace(/^(?!\s*#)([^/\n]*?)\bUNUSED\b/gm, (_, before: string) => before + '      '))!;
+  const tree = parser.parse(firstBranches(text).replace(/^(?!\s*#)([^/\n]*?)\bUNUSED\b/gm, (_, before: string) => before + '      '))!;
   const root = tree.rootNode;
   // The file's summary: its /// @file block, which a header may hold inside
   // its guard.
@@ -346,10 +390,102 @@ const KIND_TITLE: Record<Decl['kind'], string> = {
 // Who refers to each name: functions that call it, tables that list it.
 const users = new Map<Game, Map<string, Set<string>>>();
 
+// ---------------------------------------------------------------------------
+// The recordings beside the code that plays them. A handler's comment names
+// every ability that reaches it in its reach line (`Abilities: Gaia, Mother
+// Gaia (BATTLE_FX_GAIA); none (BATTLE_FX_X).`, the form effect/README.md
+// sets), and public/abilities/index.tsv holds the casts recorded from the
+// game by ability id. A name is matched against actions.tsv's ability column
+// and, where several rows share it, to the rows whose effect word in
+// actflags.tsv dispatches to the group's effect: kind in bits 0 to 11, bit 15
+// for a summon's scene, bit 14 for the effects dispatched by id range, the
+// casting impacts among them at kind 100 and up. A field Psynergy group is
+// matched by actions.tsv's type column, and shows no recording: the casts are
+// recorded in battle, which its battle effect's handler plays.
+
+const recordings = (() => {
+  let rows: Row[] = [];
+  return {
+    get: () => rows,
+    load: () => {
+      const index = join(docs, 'public/abilities/index.tsv');
+      if (!existsSync(index)) return;
+      const [head, ...lines] = readFileSync(index, 'utf8').trim().split('\n');
+      const keys = head.split('\t');
+      rows = lines.map((l) => Object.fromEntries(l.split('\t').map((v, i) => [keys[i], v]))).filter((r) => r.file && existsSync(join(docs, 'public/abilities', r.file)));
+    },
+  };
+})();
+const placedRecordings = new Map<number, string[]>(); // ability id: the declarations showing it
+const reachProblems: string[] = [];
+
+// The enum each reach-line prefix names, and whether an ability row reaches
+// one of its values.
+const REACH: [string, string, (value: number, act: Row, word: number) => boolean][] = [
+  ['BATTLE_FX_', 'BattleFxKind', (v, _, w) => !(w & 0xc000) && (w & 0xfff) === v],
+  ['SCENE_EFFECT_', 'SceneEffectKind', (v, _, w) => !!(w & 0x8000) && (w & 0xfff) === v],
+  ['CASTING_IMPACT_', 'CastingImpact', (v, _, w) => (w & 0xc000) === 0x4000 && (w & 0xfff) === v + 100],
+  ['FIELD_KIND_', 'FieldKind', (v, act) => int(act.type) === v],
+];
+
+let abilityRows: { acts: Row[]; words: number[] } | undefined;
+function reachedIds(d: Decl, at: string): number[] {
+  const para = d.doc
+    .split(/\n\n/)
+    .map((p) => p.replace(/\\([\\<>{}[\]*_#|~])/g, '$1').replace(/\s*\n\s*/g, ' '))
+    .find((p) => p.startsWith('Abilities: '));
+  if (!para) return [];
+  abilityRows ??= { acts: tsv('games/tbs/src/game/actions.tsv'), words: tsv('games/tbs/src/battle/actflags.tsv').map((r) => int(r.effect)) };
+  const { acts, words } = abilityRows;
+  const ids: number[] = [];
+  const body = para.replace(/^Abilities: /, '').replace(/\.$/, '');
+  if (para.slice(para.lastIndexOf(')') + 1) !== '.') reachProblems.push(`${at}: the reach line does not end in “).”: ${para}`);
+  for (const group of body.split('; ')) {
+    const m = group.match(/^(.+) \(([A-Z][A-Z0-9_]*)\)$/);
+    if (!m) {
+      reachProblems.push(`${at}: a group that is not “names (EFFECT)”: ${group}`);
+      continue;
+    }
+    const [, names, effect] = m;
+    const kind = REACH.find(([prefix]) => effect.startsWith(prefix));
+    const value = kind && enumOf(kind[1]).find((e) => e.name === effect)?.value;
+    if (!kind || value === undefined) {
+      reachProblems.push(`${at}: ${effect} is no member of a reach-line enum`);
+      continue;
+    }
+    if (names === 'none') continue;
+    for (const name of names.split(', ')) {
+      const rows = acts.flatMap((a, id) => (a.ability === name ? [id] : []));
+      const hit = rows.filter((id) => kind[2](value, acts[id], words[id] ?? 0));
+      if (!rows.length) reachProblems.push(`${at}: “${name}” is no ability in actions.tsv (${effect})`);
+      else if (!hit.length) reachProblems.push(`${at}: no row of “${name}” (${rows.join(', ')}) reaches ${effect}`);
+      if (kind[0] !== 'FIELD_KIND_') ids.push(...hit);
+    }
+  }
+  return ids;
+}
+
+// The recordings a declaration's reach line names, in its order, each
+// captioned by the ability's name.
+function recordingsOf(file: SourceFile, d: Decl): string {
+  if (where.get(file.game)!.get(d.name)?.decl !== d) return '';
+  const ids = reachedIds(d, `${file.path}:${d.line} ${d.name}`);
+  const shown: string[] = [];
+  for (const id of ids) {
+    const r = recordings.get().find((x) => int(x.ability) === id);
+    if (!r) continue;
+    placedRecordings.set(id, [...(placedRecordings.get(id) ?? []), `${pageOf(file.path)}#${anchor(d.name)}`]);
+    shown.push(`![${md(r.name)}](/abilities/${r.file})\\\n${md(r.name)}`);
+  }
+  return shown.join('\n\n');
+}
+
 function declSection(file: SourceFile, d: Decl, level: string): string {
   const parts = [`${level} ${md(d.name)}`];
   parts.push(`\`${d.signature.replace(/`/g, "'")}\``);
   if (d.doc) parts.push(linkNames(d.doc, file.game, d.name));
+  const cast = recordingsOf(file, d);
+  if (cast) parts.push(cast);
   if (d.fields.length) {
     const rows = d.fields.map((f) => `| \`${f.name}\` | ${d.kind === 'enum' ? (f.type ? `\`${f.type}\`` : '') : `\`${f.type.replace(/\|/g, '\\|')}\``} | ${linkNames(f.doc, file.game, d.name).replace(/\n+/g, ' ')} |`);
     parts.push(`| ${d.kind === 'enum' ? 'Value' : 'Field'} | ${d.kind === 'enum' ? '=' : 'Declared as'} | |\n| --- | --- | --- |\n${rows.join('\n')}`);
@@ -1708,7 +1844,15 @@ prose('games/tbs/README.md', 'tbs/index.md');
 prose('INSTALL.md', 'start.md');
 guides();
 for (const [file, target] of SECTIONS) prose(file, `${target}.md`);
+recordings.load();
 for (const game of GAMES) sourcePages(game, all.get(game)!);
+// What the reach lines leave out: recordings no line names, and names or
+// groups that match no row.
+const orphans = recordings.get().filter((r) => !placedRecordings.has(int(r.ability)));
+console.log(`recordings: ${placedRecordings.size} of ${recordings.get().length} beside their handlers`);
+for (const r of orphans) console.log(`  no reach line names ${r.name} (${r.ability}, ${r.file})`);
+for (const [id, at] of placedRecordings) if (at.length > 1) console.log(`  ability ${id} is shown ${at.length} times: ${at.join(', ')}`);
+for (const p of reachProblems) console.log(`  ${p}`);
 // The source tree's page, or, until Alchemy has its README, the game's two
 // folders.
 if (existsSync(join(repo, SOURCE_README))) prose(SOURCE_README, 'tbs/source/index.md');
