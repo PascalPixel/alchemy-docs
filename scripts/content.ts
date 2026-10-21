@@ -9,10 +9,16 @@
 // (the file's /// @file comment) and every function, macro, type, struct and
 // global it declares, with their /// comments, fields and values, who calls
 // them, and a link to their line on GitHub. A large folder (the scenes, the
-// effect parts) gets a page per file instead. Names in comments link to their
-// declaration within the same game, so the two games never cross.
+// effect parts) gets a page per file instead. A file with no /// comment has
+// no page or section of its own, only its name in its folder's file list.
+// Names in comments link to their declaration within the same game, so the
+// two games never cross.
+//
+// Every title is Alchemy's: a Markdown page's # heading, a source page's path
+// in its game. Every description is a first sentence Alchemy wrote: a page's
+// opening sentence, a file's /// @file summary.
 
-import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, normalize } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Language, type Node, Parser } from 'web-tree-sitter';
@@ -105,13 +111,17 @@ function docText(lines: string[]): string {
 const isDoc = (n: Node | null) => !!n && n.type === 'comment' && /^\/\/\/(?!<)/.test(n.text);
 const isTrailing = (n: Node | null) => !!n && n.type === 'comment' && n.text.startsWith('///<');
 
+// clang-format reads its switches only as plain comments, so a table's ///
+// comment sits above its `// clang-format off`.
+const isFormatSwitch = (n: Node | null) => !!n && n.type === 'comment' && /^\/\/ clang-format (off|on)\s*$/.test(n.text);
+
 // The /// lines directly above a node, with no blank line between.
 function docAbove(node: Node): string {
   const lines: string[] = [];
   let row = node.startPosition.row;
-  for (let c = node.previousNamedSibling; isDoc(c) && c!.endPosition.row === row - 1; c = c!.previousNamedSibling) {
+  for (let c = node.previousNamedSibling; (isDoc(c) || isFormatSwitch(c)) && c!.endPosition.row === row - 1; c = c!.previousNamedSibling) {
     if (/^\/\/\/\s*@file/.test(c!.text)) break;
-    lines.unshift(c!.text);
+    if (isDoc(c)) lines.unshift(c!.text);
     row = c!.startPosition.row;
   }
   return docText(lines);
@@ -159,10 +169,30 @@ function fieldsOf(body: Node | null): Field[] {
   return fields;
 }
 
+// A header guard: `#define X` with no value inside the file's own `#ifndef X`,
+// whatever X is called (ALCHEMY_BATTLE_H, BATTLE_H, GUARD_EVENT_H).
+function isGuard(node: Node, name: string): boolean {
+  const ifndef = node.parent;
+  return (
+    node.type === 'preproc_def' &&
+    !node.childForFieldName('value') &&
+    ifndef?.type === 'preproc_ifdef' &&
+    ifndef.parent?.type === 'translation_unit' &&
+    ifndef.text.startsWith('#ifndef') &&
+    ifndef.childForFieldName('name')?.text === name
+  );
+}
+
+// The file being read as written, before readFile blanks its attributes.
+let written = '';
+const asWritten = (n: Node, end = n.endIndex) => written.slice(n.startIndex, end);
+
 function declsOf(parent: Node, out: Decl[]) {
   for (const node of parent.namedChildren) {
     if (!node) continue;
-    if (/^preproc_(if|ifdef|else|elif)$/.test(node.type)) {
+    // tree-sitter can't parse an #ifdef that splits a function's header and
+    // wraps what follows in an ERROR node; the declarations inside are whole.
+    if (/^preproc_(if|ifdef|else|elif)$/.test(node.type) || node.type === 'ERROR') {
       declsOf(node, out);
       continue;
     }
@@ -177,12 +207,14 @@ function declsOf(parent: Node, out: Decl[]) {
     const doc = [docAbove(node), docAfter(node)].filter(Boolean).join('\n\n');
     if (node.type === 'function_definition') {
       const body = node.childForFieldName('body');
-      const signature = oneLine(node.text.slice(0, body ? body.startIndex - node.startIndex : undefined));
+      const signature = oneLine(asWritten(node, body?.startIndex));
       add({ kind: 'function', name: declaredName(node.childForFieldName('declarator')), signature, doc });
     } else if (node.type === 'preproc_def' || node.type === 'preproc_function_def') {
       const name = node.childForFieldName('name')?.text ?? '';
-      if (/^ALCHEMY_\w+_H$/.test(name)) continue;
-      add({ kind: 'macro', name, signature: node.text.split('\n')[0].replace(/\\$/, '').trim(), doc });
+      if (/^ALCHEMY_\w+_H$/.test(name) || isGuard(node, name)) continue;
+      // tree-sitter reads a ///< note on the #define's line as part of its value.
+      const [first, note] = node.text.split('\n')[0].split(/\s*(?=\/\/\/<)/);
+      add({ kind: 'macro', name, signature: first.replace(/\\$/, '').trim(), doc: [docAbove(node), note ? docText([note]) : '', docAfter(node)].filter(Boolean).join('\n\n') });
     } else if (node.type === 'type_definition' || node.type === 'struct_specifier' || node.type === 'union_specifier' || node.type === 'enum_specifier' || node.type === 'declaration') {
       const spec = node.type.endsWith('_specifier') ? node : node.childForFieldName('type');
       const body = spec?.childForFieldName('body') ?? null;
@@ -194,11 +226,11 @@ function declsOf(parent: Node, out: Decl[]) {
         continue;
       }
       if (node.type === 'type_definition') {
-        add({ kind: 'typedef', name: declaredName(node.childForFieldName('declarator')), signature: oneLine(node.text), doc });
+        add({ kind: 'typedef', name: declaredName(node.childForFieldName('declarator')), signature: oneLine(asWritten(node)), doc });
       } else if (node.type === 'declaration') {
         const d = node.childForFieldName('declarator');
         const isFunction = !!d && (d.type === 'function_declarator' || d.descendantsOfType('function_declarator').length > 0) && !node.text.includes('=');
-        const text = oneLine(node.text.replace(/=[\s\S]*$/, '').replace(/;\s*$/, ''));
+        const text = oneLine(asWritten(node).replace(/=[\s\S]*$/, '').replace(/;\s*$/, ''));
         add({ kind: isFunction ? 'prototype' : 'variable', name: declaredName(d), signature: text, doc });
       }
     }
@@ -207,11 +239,18 @@ function declsOf(parent: Node, out: Decl[]) {
 
 function readFile(path: string, game: Game): SourceFile {
   const text = readFileSync(join(repo, path), 'utf8');
-  const tree = parser.parse(text)!;
+  // tree-sitter reads `static void UNUSED Name(void)` as a declaration of
+  // UNUSED and a function named void, so the attribute is blanked, in place,
+  // outside comments and #define lines; signatures are cut from the file as
+  // written.
+  written = text;
+  const tree = parser.parse(text.replace(/^(?!\s*#)([^/\n]*?)\bUNUSED\b/gm, (_, before: string) => before + '      '))!;
   const root = tree.rootNode;
-  // The file's summary: its /// @file block.
+  // The file's summary: its /// @file block, which a header may hold inside
+  // its guard.
   let doc = '';
-  for (const c of root.namedChildren) {
+  const top = root.namedChildren.flatMap((c) => (c?.type === 'preproc_ifdef' ? [c, ...c.namedChildren] : [c]));
+  for (const c of top) {
     if (c && isDoc(c) && /^\/\/\/\s*@file/.test(c.text)) {
       const lines: string[] = [];
       let row = c.startPosition.row - 1;
@@ -248,7 +287,11 @@ const fileSlug = (path: string) => basename(path).replace(/\.([ch])$/, '-$1');
 const anchor = (name: string) => name.toLowerCase().replace(/[^a-z0-9_-]/g, '');
 
 const split = new Set<string>(); // folders with a page per file
+// Files that show no /// comment: no page or section, only a name on their
+// folder's page, so a link to one goes to its code on GitHub.
+const pageless = new Set<string>();
 function pageOf(path: string): string {
+  if (pageless.has(path)) return `${github}/${path}`;
   const game = path.split('/')[1];
   const dir = dirname(path);
   const base = `/${game}/source/${rel(dir)}`;
@@ -323,23 +366,29 @@ function declSection(file: SourceFile, d: Decl, level: string): string {
 
 const documented = (d: Decl) => !!d.doc || d.fields.some((f) => f.doc);
 
-function fileBody(file: SourceFile, level: string): string {
-  const parts: string[] = [];
-  if (file.doc) parts.push(linkNames(file.doc, file.game, ''));
+// A file's declarations by kind: those with a comment, or fields with notes,
+// and the rest.
+function kindsOf(file: SourceFile) {
   const seen = new Set<string>();
-  for (const kind of KIND_ORDER) {
+  return KIND_ORDER.map((kind) => {
     // A prototype whose function is defined, or documented elsewhere, adds nothing.
     const list = file.decls.filter((d) => d.kind === kind && !seen.has(d.name) && !(kind === 'prototype' && where.get(file.game)!.get(d.name)?.decl !== d));
     for (const d of list) seen.add(d.name);
-    // Only what has a comment, or fields with notes, gets a section; the rest
-    // is one line of names, each linked to its line.
-    const full = list.filter(documented);
-    const bare = list.filter((d) => !documented(d));
-    if (full.length) {
-      parts.push(`${level} ${KIND_TITLE[kind]}`);
-      for (const d of full) parts.push(declSection(file, d, level + '#'));
-    }
-    if (bare.length) parts.push(`${full.length ? `Also, ${KIND_TITLE[kind].toLowerCase()} without a comment` : `${KIND_TITLE[kind]}, without a comment`}: ${bare.map((d) => `[${md(d.name)}](${github}/${file.path}#L${d.line})`).join(', ')}.`);
+    return { kind, full: list.filter(documented), bare: list.filter((d) => !documented(d)) };
+  });
+}
+
+// What a file's page or section shows: its summary, then each kind's
+// declarations, the names with no comment first, each linked to its line,
+// then a section for each one with a comment.
+function fileBody(file: SourceFile, level: string): string {
+  const parts: string[] = [];
+  if (file.doc) parts.push(linkNames(file.doc, file.game, ''));
+  for (const { kind, full, bare } of kindsOf(file)) {
+    if (!full.length && !bare.length) continue;
+    parts.push(`${level} ${KIND_TITLE[kind]}`);
+    if (bare.length) parts.push(bare.map((d) => `[\`${d.name}\`](${github}/${file.path}#L${d.line})`).join(', '));
+    for (const d of full) parts.push(declSection(file, d, level + '#'));
   }
   return parts.join('\n\n');
 }
@@ -353,67 +402,66 @@ function sourcePages(game: Game, files: SourceFile[]) {
   }
   // Every folder up to the game's src and include, so each has a page.
   for (const d of [...byDir.keys()]) for (let p = dirname(d); p.split('/').length > 2; p = dirname(p)) if (!byDir.has(p)) byDir.set(p, []);
+  // A page is titled by its path in the game (src/battle, include/battle,
+  // src/battle/battle/transition.c), which no other page shares.
   for (const [dir, list] of byDir) {
     const target = `${game}/source/${rel(dir)}`;
     const subdirs = [...byDir.keys()].filter((d) => dirname(d) === dir).sort();
-    const guide = guideOf.get(dir);
+    const own = list.filter((f) => !pageless.has(f.path));
     const head: string[] = [];
-    if (guide) head.push(`The [${guide.title}](${guide.url}) guide explains this folder.`);
     if (subdirs.length) head.push(`## Folders\n\n${subdirs.map((d) => `- [${basename(d)}](/${game}/source/${rel(d)})`).join('\n')}`);
+    // Every file by name, each linked to its page, or its section below, or,
+    // with no /// comment, its code; a file page's summary beside its name.
+    const link = (f: SourceFile) => (pageless.has(f.path) || split.has(dir) ? pageOf(f.path) : `#${anchor(basename(f.path))}`);
+    const summary = (f: SourceFile) => (split.has(dir) && !pageless.has(f.path) && f.summary ? `: ${md(f.summary)}` : '');
+    if (list.length) head.push(`## Files\n\n${list.map((f) => `- [${md(basename(f.path))}](${link(f)})${summary(f)}`).join('\n')}`);
     if (split.has(dir)) {
-      head.push(`## Files\n\n${list.map((f) => `- [${basename(f.path)}](${pageOf(f.path)})${f.summary ? `: ${md(f.summary)}` : ''}`).join('\n')}`);
-      page(`${target}/index.md`, { title: basename(dir), description: '', source: dir }, head.join('\n\n'));
-      for (const f of list) page(`${target}/${fileSlug(f.path)}.md`, { title: basename(f.path), description: f.summary.replace(/\\/g, ''), source: f.path }, fileBody(f, '##'));
+      page(`${target}/index.md`, { title: rel(dir), description: '', source: dir }, head.join('\n\n'));
+      for (const f of own) page(`${target}/${fileSlug(f.path)}.md`, { title: rel(f.path), description: f.summary.replace(/\\/g, ''), source: f.path }, fileBody(f, '##'));
     } else {
-      const body = list.map((f) => `## ${md(basename(f.path))}\n\n[${f.path}](${github}/${f.path})\n\n${fileBody(f, '###')}`);
-      page(`${target}/index.md`, { title: basename(dir), description: '', source: dir }, [...head, ...body].join('\n\n'));
+      const body = own.map((f) => `## ${md(basename(f.path))}\n\n[${f.path}](${github}/${f.path})\n\n${fileBody(f, '###')}`);
+      page(`${target}/index.md`, { title: rel(dir), description: '', source: dir }, [...head, ...body].join('\n\n'));
     }
   }
 }
 
 // ---------------------------------------------------------------------------
-// The prose pages: the README, INSTALL and the folder guides, without their
-// first heading (the page's title) and with their repository links resolved.
+// The prose pages: the README, INSTALL, the front page, the section pages and
+// the folder guides, without their first heading (the page's title) and with
+// their repository links resolved.
 
-// The guides: each folder README, where its page sits, and its title in the
-// sidebar (empty: the README's own heading). The Lost Age's READMEs head
-// themselves "The Lost Age: battle" to stay unique in the repository; on the
-// site they sit under their game, in The Broken Seal's groups and names.
-const GUIDES: [string, string, string][] = [
-  ['games/tbs/src/field', 'tbs/world/field', ''],
-  ['games/tbs/src/object', 'tbs/world/objects', ''],
-  ['games/tbs/src/scene', 'tbs/world/scenes', ''],
-  ['games/tbs/src/map', 'tbs/world/maps', ''],
-  ['games/tbs/src/battle', 'tbs/battle/battles', ''],
-  ['games/tbs/src/effect', 'tbs/battle/effects/index', ''],
-  ['games/tbs/src/menu', 'tbs/menus/menus', ''],
-  ['games/tbs/src/window', 'tbs/menus/windows', ''],
-  ['games/tbs/src/shop', 'tbs/menus/shops', ''],
-  ['games/tbs/src/game', 'tbs/game', ''],
-  ['games/tbs/src/graphics', 'tbs/engine/graphics', ''],
-  ['games/tbs/src/sound', 'tbs/engine/sound', ''],
-  ['games/tbs/src/runtime', 'tbs/engine/runtime', ''],
-  ['games/tbs/src/system', 'tbs/engine/system', ''],
-  ['games/tbs/src/debug', 'tbs/engine/debug', ''],
+// The guides: each folder README and where its page sits. The Lost Age's
+// READMEs head themselves "The Lost Age: battle" to stay unique in the
+// repository; on the site they would sit under their game.
+const GUIDES: [string, string][] = [
+  ['games/tbs/src/field', 'tbs/world/field'],
+  ['games/tbs/src/object', 'tbs/world/objects'],
+  ['games/tbs/src/scene', 'tbs/world/scenes'],
+  ['games/tbs/src/map', 'tbs/world/maps'],
+  ['games/tbs/src/battle', 'tbs/battle/battles'],
+  ['games/tbs/src/effect', 'tbs/battle/effects/index'],
+  ['games/tbs/src/menu', 'tbs/menus/menus'],
+  ['games/tbs/src/window', 'tbs/menus/windows'],
+  ['games/tbs/src/shop', 'tbs/menus/shops'],
+  ['games/tbs/src/game', 'tbs/game'],
+  ['games/tbs/src/graphics', 'tbs/engine/graphics'],
+  ['games/tbs/src/sound', 'tbs/engine/sound'],
+  ['games/tbs/src/runtime', 'tbs/engine/runtime'],
+  ['games/tbs/src/system', 'tbs/engine/system'],
+  ['games/tbs/src/debug', 'tbs/engine/debug'],
 ];
-// The section pages: each one a page in the game's folder, beside its README,
-// with the title it has in the sidebar and its description.
-const SECTIONS: [string, string, string, string][] = [
-  ['games/tbs/world.md', 'tbs/world/index', 'World', 'How the party walks around towns, dungeons and the world map, and the code that runs it.'],
-  ['games/tbs/battle.md', 'tbs/battle/index', 'Battle', 'How a battle runs from the first menu to the spoils, and the effects drawn over it.'],
-  ['games/tbs/menus.md', 'tbs/menus/index', 'Menus', "The field menu and its screens, the windows they're drawn in, and the shops and inns."],
-  ['games/tbs/engine.md', 'tbs/engine/index', 'Engine', 'The runtime, graphics, sound and system code the rest of the game is built on.'],
+// The section pages: each one a page in the game's folder, beside its README.
+const SECTIONS: [string, string][] = [
+  ['games/tbs/world.md', 'tbs/world/index'],
+  ['games/tbs/battle.md', 'tbs/battle/index'],
+  ['games/tbs/menus.md', 'tbs/menus/index'],
+  ['games/tbs/engine.md', 'tbs/engine/index'],
 ];
+// The source tree's own page, at /tbs/source: how the code is laid out.
+const SOURCE_README = 'games/tbs/src/README.md';
 
-const guideOf = new Map<string, { url: string; title: string }>();
-for (const [dir, target] of GUIDES) guideOf.set(dir, { url: `/${target.replace(/\/index$/, '')}`, title: '' });
-
-function walkDirs(rel: string): string[] {
-  if (!existsSync(join(repo, rel))) return [];
-  return readdirSync(join(repo, rel), { withFileTypes: true })
-    .filter((e) => e.isDirectory() && existsSync(join(repo, rel, e.name, 'README.md')))
-    .map((e) => `${rel}/${e.name}`);
-}
+const guideOf = new Map<string, string>();
+for (const [dir, target] of GUIDES) guideOf.set(dir, `/${target.replace(/\/index$/, '')}`);
 
 // A link in a README, pointed at the site where the site has the page.
 function siteLink(path: string): string {
@@ -422,18 +470,46 @@ function siteLink(path: string): string {
   if (clean === 'INSTALL.md') return '/start';
   if (clean === 'games/tbs/README.md') return '/tbs';
   if (clean === 'games/tbs/src/MATCHING.md') return '/tbs/matching';
+  if (clean === SOURCE_README) return '/tbs/source';
   for (const [file, target] of SECTIONS) if (clean === file) return `/${target.replace(/\/index$/, '')}`;
   const guide = guideOf.get(dirname(clean));
-  if (guide && basename(clean) === 'README.md') return guide.url;
+  if (guide && basename(clean) === 'README.md') return guide;
   const m = clean.match(/^games\/(tbs|tla)\/((?:src|include)(?:\/.*)?)$/);
-  if (m && GAMES.includes(m[1] as Game) && existsSync(join(repo, clean))) return /\.[ch]$/.test(clean) ? pageOf(clean) : `/${m[1]}/source/${m[2]}`;
+  // The source pages show C and the folders that hold it; anything else is
+  // read on GitHub.
+  if (m && GAMES.includes(m[1] as Game) && existsSync(join(repo, clean))) {
+    if (/\.[ch]$/.test(clean)) return pageOf(clean);
+    if (statSync(join(repo, clean)).isDirectory() && walk(clean).length) return `/${m[1]}/source/${m[2]}`;
+  }
   return `${github}/${clean}`;
 }
 
-function prose(source: string, target: string, description = '', after = '', named = ''): string {
+// A page's description: the first sentence of its opening paragraph, past
+// any picture above it, as plain text. A page that opens with a heading, a
+// table or a list has none.
+function firstSentence(text: string): string {
+  for (const block of text.split(/\n\s*\n/)) {
+    const b = block.trim();
+    if (!b || /^(!\[[^\]]*\]\([^)]*\)\s*)+$/.test(b)) continue;
+    if (/^(#|\||```|[-*+] |\d+\. |<|>)/.test(b)) return '';
+    const plain = b
+      .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
+      .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+      .replace(/[`*]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+    // A sentence runs on past an abbreviation's full stop (Mt. Aleph, e.g.).
+    return plain.split(/(?<=(?<!\b(?:Mt|Mr|Mrs|Ms|Dr|St|e\.g|i\.e|vs))[.!?])\s+(?=[^a-z])/)[0];
+  }
+  return '';
+}
+
+// Writes a Markdown file of Alchemy's as the page at target, titled by its
+// # heading and described by its first sentence.
+function prose(source: string, target: string) {
   let text = readFileSync(join(repo, source), 'utf8');
   const heading = text.match(/^# (.+?)(?: \{#[\w-]+\})?\n+/);
-  const title = named || (heading ? heading[1] : basename(source));
+  const title = heading ? heading[1] : basename(source);
   if (heading) text = text.slice(heading[0].length);
   // The pages are Markdown, which drops raw HTML: an <img> becomes an image,
   // and the site's own files are served from its root.
@@ -443,6 +519,7 @@ function prose(source: string, target: string, description = '', after = '', nam
     const alt = attrs.match(/alt="([^"]*)"/)?.[1] ?? '';
     return `![${alt}](${src.replace(/^https:\/\/alchemy\.pascalpixel\.com\//, '/')})`;
   });
+  const description = firstSentence(text);
   // A Markdown image of the site's own is served from its root too, so the
   // build reads it from public/ rather than from the live site.
   text = text.replace(/(!\[[^\]]*\]\()https:\/\/alchemy\.pascalpixel\.com\//g, '$1/');
@@ -457,21 +534,11 @@ function prose(source: string, target: string, description = '', after = '', nam
     .split(/(```[\s\S]*?```|`[^`]*`)/)
     .map((p, i) => (i % 2 ? p : p.replace(/<(?![a-z/!])/g, '&lt;').replace(/[{}]/g, (c) => `\\${c}`)))
     .join('');
-  if (!description) {
-    const first = text.split('\n\n')[0].replace(/\s+/g, ' ').trim();
-    description = first.length < 200 && !first.startsWith('#') && !first.startsWith('|') ? first.replace(/[`*]|\[([^\]]*)\]\([^)]*\)/g, '$1') : '';
-  }
-  page(target, { title, description: description === 'none' ? '' : description, source }, text + after);
-  return title;
+  page(target, { title, description, source }, text);
 }
 
 function guides() {
-  for (const [dir, target, named] of GUIDES) {
-    if (!existsSync(join(repo, dir, 'README.md'))) continue;
-    const game = dir.split('/')[1];
-    const after = walk(dir).length ? `\n\n## Source\n\nEvery file of this folder: [${rel(dir)}](/${game}/source/${rel(dir)}).\n` : '';
-    guideOf.get(dir)!.title = prose(`${dir}/README.md`, `${target}.md`, '', after, named);
-  }
+  for (const [dir, target] of GUIDES) if (existsSync(join(repo, dir, 'README.md'))) prose(`${dir}/README.md`, `${target}.md`);
   prose('games/tbs/src/MATCHING.md', 'tbs/matching.md');
 }
 
@@ -1629,16 +1696,23 @@ for (const game of GAMES) {
       }
     }
   users.set(game, u);
+  // A file has a page, or a section on its folder's, only when it shows a
+  // /// comment: its summary, or a declaration's or a field's.
+  for (const f of files) if (!f.doc && kindsOf(f).every((k) => !k.full.length)) pageless.add(f.path);
 }
 
-prose('README.md', 'index.md', 'none');
+prose('README.md', 'index.md');
 // The game's front page is its README in the source, so the story it tells
 // stays with the code it explains.
-prose('games/tbs/README.md', 'tbs/index.md', 'How the first Golden Sun works, explained from its rebuilt code.');
-prose('INSTALL.md', 'start.md', 'Build The Broken Seal, check it against the cartridge, and change it.');
+prose('games/tbs/README.md', 'tbs/index.md');
+prose('INSTALL.md', 'start.md');
 guides();
-for (const [file, target, named, description] of SECTIONS) prose(file, `${target}.md`, description, '', named);
+for (const [file, target] of SECTIONS) prose(file, `${target}.md`);
 for (const game of GAMES) sourcePages(game, all.get(game)!);
+// The source tree's page, or, until Alchemy has its README, the game's two
+// folders.
+if (existsSync(join(repo, SOURCE_README))) prose(SOURCE_README, 'tbs/source/index.md');
+else page('tbs/source/index.md', { title: 'games/tbs', source: 'games/tbs' }, `## Folders\n\n${ROOTS.map((r) => `- [${r}](/tbs/source/${r})`).join('\n')}`);
 places(all.get('tbs')!);
 abilities(all.get('tbs')!);
 pictures();
