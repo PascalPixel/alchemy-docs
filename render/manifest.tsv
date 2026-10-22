@@ -1200,7 +1200,7 @@ places/bilibin-cave-ice/events/Event_PushActorAhead.gif	cd3b5259cce35eea9b830263
 places/bilibin-cave-ice/map-0.png	a115d283214a1076a70124f1ada6acad9a0cf6077246d668ea0a752122ea81f2	65947	1024	1024
 places/bilibin-cave-ice/map-1.png	236edd3d8f08a1ff8e44f656ed11eec08630963d4c0c339f2703c01c70da012b	50733	730	540
 places/bilibin-cave-ice/map-5.png	5b03e5fd517be007370f845520ad7b81d1bef5c1dc8aad8f742f228950e2b34f	5404	240	180
-places/bilibin-cave-ice/third-puddle-melt.gif	59d6511c3e8eb0380c1c1904eac4ec012e9bd43a61287f85968b8a2f2dcd10cd	621514	480	320
+places/bilibin-cave-ice/third-puddle-melt.gif	7daf76ca624c4cf64d9c9246ec2230f0c0f692e7f6db51fc1dca1ff87a0829f0	624404	480	412
 places/bilibin-cave-ice_bilibin-cave-first-douse-target-cleared/entrance.png	ad17a80b15b6c1e25da5765a06615cfa7b724505ca634872b0112ca54f0bdc84	9675	240	160
 places/bilibin-cave-ice_bilibin-cave-first-douse-target-cleared/map-0.png	1d6538b2372d7b1304c065cc032321eb0018e1aaf49f623b53efb72558644f58	65508	1024	1024
 places/bilibin-cave-ice_bilibin-cave-first-douse-target-cleared/map-1.png	72bf8d720dd4b920bffe8062b69e17e2fabdec90bfddf94aef7de7e7f5727f5b	50576	730	540
@@ -1743,7 +1743,7 @@ places/colosseum-satrage-match/events/Event_KnockDownObstacle.gif	9d0c1f26657b9e
 places/colosseum-satrage-match/events/Event_PrepareForce.gif	9d0c1f26657b9eb6beb61d50f0b3f141f4132c0c71d08637b1b2243cdf584501	1499709	240	160
 places/colosseum-satrage-match/events/Event_RideLog.gif	0c8157e1d60c4063ff9f3af1439a9e22125ee150a5b39d4e18302c7681ace0c4	576428	240	160
 places/colosseum-satrage-match/events/Event_SaveMovedPillarColumns.gif	857dfeb19261aa5783edc7a4d00f4235f42bc62d47331e8e6337c92d2dffc0a2	322069	240	160
-places/colosseum-satrage-match/lifts.gif	26e45a312b68f545c66aa16525d62d6f39c6dfdcbdcd671038944253ec2321f3	209556	480	320
+places/colosseum-satrage-match/lifts.gif	5f4ff15c34da35905618357fcee52b4c2328c5ad7f0a88d83306ce55817114d8	230528	480	438
 places/colosseum-satrage-match/map-1.png	1a990856f539240809689a8a6e3c5d6ec255c93eb23cbc3f7d09142316c30728	225446	1328	512
 places/colosseum-tunnel/entrance.png	d37dbfd4b6b4ce03ec4349a2fbe8737de5de4bd41b3b6f08e4307ba5f589a9de	5355	240	160
 places/colosseum-tunnel/map-0.png	cdbbf7d3b997238850ec3beefb1484ecdf3a7c0e10a04a3cea848549cbaf32a5	11556	560	272
@@ -1931,7 +1931,7 @@ places/fuchin-falls-cave-dragons-eye/map-2.png	64e277e18a4dfe66123af4fdc27e7b243
 places/fuchin-falls-cave-entrance/entrance.png	8d2135d8732a08cd3abd227b6c1b803e580dccfd8b9135004b096b6bd474bf46	6085	240	160
 places/fuchin-falls-cave-entrance/events/Fuchin_ReadDragonFlameInscription.gif	1012095c65f00f235958ec5c9dab50efbfc53dde83d7d7bfb841a5eff4167d08	57586	240	160
 places/fuchin-falls-cave-entrance/events/Fuchin_ReadDragonFlameInscription.png	dbfbbe336610f9b23d89ac0c981291c5820f84bc8b2c4ccc30139fed418a85fb	5780	240	160
-places/fuchin-falls-cave-entrance/log-rebuild.png	aa59f586abd8fd11de3ea9851785059bcc462136dcdcb52de6a0de859f6ef73b	42620	552	988
+places/fuchin-falls-cave-entrance/log-rebuild.png	09f571501679c443c5231aa430a4950fae8fec48d07d4bcbcb3ac331df06a13c	89667	552	1358
 places/fuchin-falls-cave-entrance/map-0.png	d33e10b0c522594632c46895a2495e3e841615dfed7b2c84655460f4a50440be	59515	352	592
 places/fuchin-falls-cave-entrance/map-1.png	63e0b2ffcc6971fdac39d0d3521789307491172193b1910f640c85f71d497249	28893	352	288
 places/fuchin-falls-cave-entrance/map-5.png	cda8f89676b3bfb9cb68f5c2f8492f3ccf5cf01b9c294ab143eba1637f7c7621	31041	352	328
@@ -4553,7 +4553,7 @@ places/mercury-lighthouse-entrance/map-17.png	ddf553737d114590d012835ef642236580
 places/mercury-lighthouse-entrance/map-19.png	0e19a99873e2e017715e5261cf5607a2de67d705e2f7a3ba5781cb813d68ba80	7518	352	192
 places/mercury-lighthouse-entrance/map-3.png	5673362790c133f90ade25e1a291da696f9a9cc5b3253c8fe8ac01dbce0d9acf	12231	240	256
 places/mercury-lighthouse-entrance/map-7.png	ee0933ca33f398e90969adee83dfd98c1619ffca259a697400331edb16f8eaf5	9445	496	176
-places/mercury-lighthouse-entrance/pool-ply-cells.png	a2ff2ed21e985fb772d16a0c84d8bf2243a440f13dff5752a721a0a56213cb10	24530	488	624
+places/mercury-lighthouse-entrance/pool-ply-cells.png	254f13c9c7b2bc56145c55e4340c922237bb4de4582d1fd492d29d0ff1e845a7	46980	488	864
 places/mercury-lighthouse-entrance_mercury-lighthouse-ply-activated/map-3.png	1d5506b9328306fe34419044b7cdcf87bcd6fab4bba8c94a7eb66ab1541d876b	13512	240	256
 places/mercury-lighthouse-entrance_mercury-lighthouse-ply-activated/map-7.png	511bac47651f650239d68248a234292673a61730b73b16c1bb9407c4617ed51f	11221	496	176
 places/mercury-lighthouse-entrance_mia-entered-mercury-lighthouse/map-1.png	38f9c42d23396e106ccf1f630a729ec5002b006571ef322c311245baa876ced8	8629	240	288
@@ -7574,6 +7574,8 @@ places/vale/events/Event_CatchNut.png	3c4ff88db143c8bd04187259033bd5a3e1adb0ced5
 places/vale/events/Event_CatchNutAfterKalay.gif	d0cbd1c759390eac85cf701b8096b964ffbfad25f6b8e64caf70914c53215f08	428849	240	160
 places/vale/events/Event_CatchNutAfterKalay.png	5c6c91bfe32f81454c64ca7ead8a279246676ed0a34ebbf9ef77b7bbd1aa7b6b	14597	240	160
 places/vale/events/Event_ClearPathCellOverride.gif	6d39a1db3527db758d6062e8035e4d6398e60c346faa13d5d63b23abbcec948a	195453	240	160
+places/vale/events/Event_ClimbDownFromRoof.gif	31bace7d4a5005959f558cf7cc5237d82eeeb267f7df89071c64b31e65768ebb	987300	240	160
+places/vale/events/Event_ClimbLadderOntoRoof.gif	b060ec7f4f77e6c62e32f1852a30c2421d70f0efbba92b42004d4e2342742197	480404	240	160
 places/vale/events/Event_DoraFretsAboutTheRoof-2.png	3af5b160b0c61ad937293a3c1c6a26b785eb224ca6de8e4b4ce61fb481dff685	15247	240	160
 places/vale/events/Event_DoraFretsAboutTheRoof.gif	3ecca107335b5c17f47eedad8f6bcc72fb67733c066df59ba6cd4ec3d3c5bd0a	29838	240	160
 places/vale/events/Event_DoraFretsAboutTheRoof.png	370de403001ec8d41cc3a11e5783f20322cd9c652ae4b5afbbcbca45a0d07a1e	15540	240	160

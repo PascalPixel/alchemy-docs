@@ -3825,7 +3825,7 @@ vale	4	Vale		event	8	Event_EnterIsaacsHouse	4		04536				04534, 04535, 04536	vale
 vale	4	Vale		event-gif	8	Event_EnterIsaacsHouse						406	04534, 04535, 04536	vale/events/Event_EnterIsaacsHouse.gif
 vale	4	Vale		event	8	Event_EnterIsaacsHouse	1		04534				04534, 04535, 04536	vale/events/Event_EnterIsaacsHouse.png
 vale	4	Vale		event-gif	9	Event_EnterJennasGrandparentsHouse						26		vale/events/Event_EnterJennasGrandparentsHouse.gif
-vale	4	Vale		event-gif	16	Event_EnterNorthernPassage						191		vale/events/Event_EnterNorthernPassage.gif
+vale	4	Vale		event-gif	16	Event_ClimbLadderOntoRoof						191		vale/events/Event_ClimbLadderOntoRoof.gif
 vale	4	Vale		event-gif	1	Event_EnterSanctum						27		vale/events/Event_EnterSanctum.gif
 vale	4	Vale		event-gif	7	Event_EnterValeInteriorsShops						26		vale/events/Event_EnterValeInteriorsShops.gif
 vale	4	Vale		event-gif	10	Event_EnterValeInteriorsShopsWest						26		vale/events/Event_EnterValeInteriorsShopsWest.gif
@@ -3849,7 +3849,7 @@ vale	4	Vale		event	2	Event_RepeatMtAlephWarningFromFirstApproach	1		04046				040
 vale	4	Vale		event	1	Event_RepeatMtAlephWarningFromSecondApproach	2		04047				04046, 04047, 04048	vale/events/Event_RepeatMtAlephWarningFromSecondApproach-2.png
 vale	4	Vale		event-gif	1	Event_RepeatMtAlephWarningFromSecondApproach						331	04046, 04047, 04048	vale/events/Event_RepeatMtAlephWarningFromSecondApproach.gif
 vale	4	Vale		event	1	Event_RepeatMtAlephWarningFromSecondApproach	1		04046				04046, 04047, 04048	vale/events/Event_RepeatMtAlephWarningFromSecondApproach.png
-vale	4	Vale		event-gif	8	Event_ReturnThroughSouthernPassage						216		vale/events/Event_ReturnThroughSouthernPassage.gif
+vale	4	Vale		event-gif	8	Event_ClimbDownFromRoof						216		vale/events/Event_ClimbDownFromRoof.gif
 vale	4	Vale		event	11	Event_SearchTheLockedDoor	2		03812				03812	vale/events/Event_SearchTheLockedDoor-2.png
 vale	4	Vale		event-gif	11	Event_SearchTheLockedDoor						103	03812	vale/events/Event_SearchTheLockedDoor.gif
 vale	4	Vale		event	11	Event_SearchTheLockedDoor	1		03812				03812	vale/events/Event_SearchTheLockedDoor.png
