@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 452" role="img" aria-labelledby="title desc">
+  <title id="title">The music steps aside for a fanfare</title>
+  <desc id="desc">The music's volume over time while a chest is opened. The music plays at full volume. When the treasure fanfare starts on its own player, the music's volume drops to nothing at once, but the music keeps playing silently underneath. When the fanfare ends, the music's volume climbs back to full over 64 frames, about a second, from the point the song has reached. The code that asked for the fanfare does nothing to bring the music back.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .axis { stroke: #d4d4d4; stroke-width: 1.5; }
+    .vol { fill: none; stroke: #0a72ef; stroke-width: 3; stroke-linejoin: round; }
+    .area { fill: #0a72ef; fill-opacity: 0.1; }
+    .under { fill: none; stroke: #0a72ef; stroke-width: 1.5; stroke-dasharray: 3 4; }
+    .fan { fill: #f59e0b; }
+    .mark { stroke: #a3a3a3; stroke-width: 1; stroke-dasharray: 3 3; }
+    .h { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .l { fill: #525252; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .k { fill: #0a72ef; font: 600 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .in { fill: #ffffff; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .axis { stroke: #333333; }
+      .vol { stroke: #3b8eff; }
+      .area { fill: #3b8eff; fill-opacity: 0.16; }
+      .under { stroke: #3b8eff; }
+      .mark { stroke: #5c5c5c; }
+      .h { fill: #ededed; }
+      .p, .l { fill: #a1a1a1; }
+      .k { fill: #66a6ff; }
+      .in { fill: #0a0a0a; }
+      .small, .code, .eyebrow { fill: #7c7c7c; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="451" rx="16"/>
+  <text class="eyebrow" x="20" y="34">A CHEST IS OPENED</text>
+  <text class="code" x="380" y="34" text-anchor="end">gMusicRestoreDelay</text>
+
+  <!-- Graph: x 40..380, full volume at y 80, silence at y 200 -->
+  <text class="k" x="40" y="66">the music's volume</text>
+  <path class="area" d="M 40 80 H 120 V 200 H 260 L 330 80 H 380 V 200 H 40 Z"/>
+  <path class="vol" d="M 40 80 H 120 V 200 H 260 L 330 80 H 380"/>
+  <path class="under" d="M 124 192 H 256"/>
+  <text class="l" x="190" y="186" text-anchor="middle">still playing, silently</text>
+  <path class="axis" d="M 40 200 H 380"/>
+  <text class="small" x="34" y="84" text-anchor="end">full</text>
+  <text class="small" x="34" y="204" text-anchor="end">none</text>
+
+  <!-- The fanfare -->
+  <rect class="fan" x="120" y="216" width="140" height="28" rx="6"/>
+  <text class="in" x="190" y="235" text-anchor="middle">treasure fanfare</text>
+  <text class="small" x="190" y="262" text-anchor="middle">on its own player</text>
+  <path class="mark" d="M 120 80 V 216 M 260 80 V 216"/>
+
+  <!-- The fade back -->
+  <text class="k" x="296" y="232" text-anchor="middle">back over</text>
+  <text class="k" x="296" y="248" text-anchor="middle">64 frames</text>
+  <text class="small" x="296" y="264" text-anchor="middle">about a second</text>
+
+  <text class="h" x="20" y="312">No one has to bring the music back</text>
+  <text class="p" x="20" y="338">Once a frame, the sound code checks whether</text>
+  <text class="p" x="20" y="357">the fanfare's player has finished. When it</text>
+  <text class="p" x="20" y="376">has, it turns the music up again, a step each</text>
+  <text class="p" x="20" y="395">frame, from where the song has got to.</text>
+  <text class="code" x="380" y="432" text-anchor="end">MusicPlayer_StepVolumeAndPitchTowardTargets</text>
+</svg>
