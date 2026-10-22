@@ -8409,6 +8409,7 @@ places/venus-lighthouse-second-floor/map-1.png	9d88bc039f51524075ec133bd80374d5e
 places/venus-lighthouse-second-floor/map-3.png	1b005a7387418e38768767215c0c461feba4d56b28988c6bef67b22d4dbe092c	16061	296	456
 places/venus-lighthouse-second-floor/map-7.png	a23932a8aa0976e9ebd4c56452f406d8dd1158ac96d0b1b9821f00b89bc41548	9556	296	216
 places/venus-lighthouse-second-floor/map-9.png	698ea2911c259be324ee5303024ae74e9317a2ca4728fae406c28bc93504d36a	5165	248	168
+places/venus-lighthouse-second-floor/occluding-chest.png	de187f5e52925abdbf59d8477ebc9c885b28be46314b6318cbec3ecc16bd8dfa	5977	488	160
 places/venus-lighthouse-third-floor/entrance.png	10be46561857addd94a1926588892a4199657732c2a32519558527ca38df969e	3226	240	160
 places/venus-lighthouse-third-floor/events/Event_JumpOrPushSwitchPillar.gif	924bb84aa131b350b5f16e6bc8b99e7a4bf53ee79d1d86c98a75bb7108820d89	202846	240	160
 places/venus-lighthouse-third-floor/events/Event_MoveSwitchPillar.gif	da12165cff41997a2dbee5b1363e6c43053e1722e1d4b6130f2a1f821c11efc0	157174	240	160
