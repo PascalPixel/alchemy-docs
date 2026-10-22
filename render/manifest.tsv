@@ -201,6 +201,7 @@ guides/engine/boot.gif	7e7c3b4554c7459dc4d7b53f5e5b0a43a938470f62ae60d194d2c85d4
 guides/field/layers-3d.gif	4bbfe87b26321723d57fc3ee4c214aa7719e350cbe9b2abc7fe8d8f2fa551dbd	1913501	520	400
 guides/field/snow.gif	e15c7314377eefedd573e16348d3ac305ce7217cee0b33cc6bc11e438eed7f30	589872	240	160
 guides/field/walk-run.gif	b80ee450b3ba3544a3991e11b768145752236be5dcfc74727dcd3fb80ae90401	1170115	240	160
+guides/field/world-map-footprint.gif	81839bc591a8fdd32cb0cbacdce1fdf529838d969143ffbfe62a94b372e7054b	2128976	592	882
 guides/field/world-map-layers-3d.gif	6dc26b35801ac17b28fac8cf6221d1efa8fca1177781b4a37fef7d18a27e7bab	1879514	520	400
 guides/field/world-map-scanlines.png	8ffa9ba1e57c35e0d3aa95b06dc87ee861f77e73191151097f141c760e4e4c35	20388	732	328
 guides/field/world-map-walk.gif	eff0500e305238ecdd54d8e1ac1c0891645cdb76017c2a6604a91e4d117b1f8b	1183815	240	160
@@ -210,6 +211,7 @@ guides/graphics/credits-tile-ring.gif	6e61a171ddbbcd3a0ac7fc379331b38524ffc72ba6
 guides/graphics/credits.gif	737286e7d01664548ef201d26328da54a4667bb5177d72bb8c47ffa3186d95b6	1097894	240	160
 guides/graphics/title-intro-layers-3d.gif	abd79b0498aaa5f8d8f075382586a13bbe144bb0f26e622448abb8c909fff9a2	1475448	520	400
 guides/map/cells.png	c50dad4b2685dab2404f5b2a6a68e5dddb642c67f6c97a7016b2dde6248daa39	45920	972	328
+guides/map/grid-planes.png	c8c31ed88adb8e12220d3a52217d50e1af8108edc956f77298b5d37160eb0a6f	17930	676	518
 guides/map/grid.png	e65a385eaaf4b6d1eacc699471a7f4760dc93896c88f1ba12e924d6c8789944b	28407	1024	1024
 guides/map/tile-animation.gif	e1b6d0974a9c3cccf20d60cdca9d865718acc6a3fbcd673351844ba45f1e723f	75604	504	160
 guides/menu/item-windows.png	17a04745a4fc379f3b51f356eb46b4fcfe28f70a6813eacf8256331a46ef188f	9619	972	328
@@ -218,6 +220,7 @@ guides/menu/menu-psynergy.gif	2084f21423e866678d603982e598189d77fdf076d98827d5b9
 guides/menu/menu-start.gif	f78e6e8f4fb4fe72a7cfddef0aa6ab3b7901cc87bdd7c5d0fd5b62dd83ba26db	90395	240	160
 guides/menu/menus.gif	fd54f620ade1e3caf6242a8f508db2da2dd1af3e4664dffe03bb07fed1f4d441	111556	240	160
 guides/object/random-battle.gif	e8bd2013327bd462cfd3175a58f103be9662dae93f1985373c565d29ee457943	1347311	240	160
+guides/object/requests.png	bb33a490be134cdea9cecbcd6c26b81b7bce4962c31d8d50e5023553b9d376d8	22888	736	400
 guides/object/world-map-picture.gif	6e09d7e225bbbfd4a884f61151ecb1fedea0742ed2dfffb54e1e66219dd6382e	64676	240	160
 guides/runtime/oam.png	3d08f3cf01c1bea1e924c52a50f09c21692a2688ed60e553aaaf04b252044d11	26354	972	328
 guides/runtime/sleep.gif	c085aad17cffdc943f665f471f72e89b6c0be066113813795a94b1226b73a027	56747	240	160
@@ -225,6 +228,7 @@ guides/scene/actors.png	01d34e35ef30147f9602ce302494866e5dda8a0d83c3d6577c9cc344
 guides/scene/event-cells.png	ce7c9fe109ea37bdfd90fbbec0cab717c6ccb9fda254c71ff814ad879a8bb0fb	20780	480	320
 guides/shop/inn.gif	c574fec9c7b5d74fbf57019a2ecea5b79d97baa5f8583a576be67df8e53fd0ee	370956	240	160
 guides/shop/shop.gif	a006db16ef21fc102d93ffa7fe18e84a1840e02f49100cfd724b894062d9977f	193668	240	160
+guides/sound/players.png	726e62205b93e20ec175440cb9018edd1f9bb9436af92cb52d6fc66c101667c5	20614	628	312
 guides/system/overlay.gif	83e3e6015a7cf53071ea8e705186f8c94702d948523479740cd9d3e4c7159ec6	995616	376	256
 guides/system/vram.png	3a3b0cafbca4c479a2a6e7ebb95a76d2f11bbc40f3c2b18254a49c1ac954a35b	91935	780	320
 guides/window/layers-3d.gif	0f0e72b9f0d0b35e1801754cd6b9c11d54558b4395713a0422d1e0091cc1cdec	2003224	520	400
@@ -1189,6 +1193,7 @@ places/bilibin-cave-ice/events/Event_PushActorAhead.gif	cd3b5259cce35eea9b830263
 places/bilibin-cave-ice/map-0.png	a115d283214a1076a70124f1ada6acad9a0cf6077246d668ea0a752122ea81f2	65947	1024	1024
 places/bilibin-cave-ice/map-1.png	236edd3d8f08a1ff8e44f656ed11eec08630963d4c0c339f2703c01c70da012b	50733	730	540
 places/bilibin-cave-ice/map-5.png	5b03e5fd517be007370f845520ad7b81d1bef5c1dc8aad8f742f228950e2b34f	5404	240	180
+places/bilibin-cave-ice/third-puddle-melt.gif	59d6511c3e8eb0380c1c1904eac4ec012e9bd43a61287f85968b8a2f2dcd10cd	621514	480	320
 places/bilibin-cave-ice_bilibin-cave-first-douse-target-cleared/entrance.png	ad17a80b15b6c1e25da5765a06615cfa7b724505ca634872b0112ca54f0bdc84	9675	240	160
 places/bilibin-cave-ice_bilibin-cave-first-douse-target-cleared/map-0.png	1d6538b2372d7b1304c065cc032321eb0018e1aaf49f623b53efb72558644f58	65508	1024	1024
 places/bilibin-cave-ice_bilibin-cave-first-douse-target-cleared/map-1.png	72bf8d720dd4b920bffe8062b69e17e2fabdec90bfddf94aef7de7e7f5727f5b	50576	730	540
@@ -1731,6 +1736,7 @@ places/colosseum-satrage-match/events/Event_KnockDownObstacle.gif	9d0c1f26657b9e
 places/colosseum-satrage-match/events/Event_PrepareForce.gif	9d0c1f26657b9eb6beb61d50f0b3f141f4132c0c71d08637b1b2243cdf584501	1499709	240	160
 places/colosseum-satrage-match/events/Event_RideLog.gif	0c8157e1d60c4063ff9f3af1439a9e22125ee150a5b39d4e18302c7681ace0c4	576428	240	160
 places/colosseum-satrage-match/events/Event_SaveMovedPillarColumns.gif	857dfeb19261aa5783edc7a4d00f4235f42bc62d47331e8e6337c92d2dffc0a2	322069	240	160
+places/colosseum-satrage-match/lifts.gif	26e45a312b68f545c66aa16525d62d6f39c6dfdcbdcd671038944253ec2321f3	209556	480	320
 places/colosseum-satrage-match/map-1.png	1a990856f539240809689a8a6e3c5d6ec255c93eb23cbc3f7d09142316c30728	225446	1328	512
 places/colosseum-tunnel/entrance.png	d37dbfd4b6b4ce03ec4349a2fbe8737de5de4bd41b3b6f08e4307ba5f589a9de	5355	240	160
 places/colosseum-tunnel/map-0.png	cdbbf7d3b997238850ec3beefb1484ecdf3a7c0e10a04a3cea848549cbaf32a5	11556	560	272
@@ -1917,6 +1923,7 @@ places/fuchin-falls-cave-dragons-eye/map-2.png	64e277e18a4dfe66123af4fdc27e7b243
 places/fuchin-falls-cave-entrance/entrance.png	8d2135d8732a08cd3abd227b6c1b803e580dccfd8b9135004b096b6bd474bf46	6085	240	160
 places/fuchin-falls-cave-entrance/events/Fuchin_ReadDragonFlameInscription.gif	1012095c65f00f235958ec5c9dab50efbfc53dde83d7d7bfb841a5eff4167d08	57586	240	160
 places/fuchin-falls-cave-entrance/events/Fuchin_ReadDragonFlameInscription.png	dbfbbe336610f9b23d89ac0c981291c5820f84bc8b2c4ccc30139fed418a85fb	5780	240	160
+places/fuchin-falls-cave-entrance/log-rebuild.png	aa59f586abd8fd11de3ea9851785059bcc462136dcdcb52de6a0de859f6ef73b	42620	552	988
 places/fuchin-falls-cave-entrance/map-0.png	d33e10b0c522594632c46895a2495e3e841615dfed7b2c84655460f4a50440be	59515	352	592
 places/fuchin-falls-cave-entrance/map-1.png	63e0b2ffcc6971fdac39d0d3521789307491172193b1910f640c85f71d497249	28893	352	288
 places/fuchin-falls-cave-entrance/map-5.png	cda8f89676b3bfb9cb68f5c2f8492f3ccf5cf01b9c294ab143eba1637f7c7621	31041	352	328
@@ -4536,6 +4543,7 @@ places/mercury-lighthouse-entrance/map-17.png	ddf553737d114590d012835ef642236580
 places/mercury-lighthouse-entrance/map-19.png	0e19a99873e2e017715e5261cf5607a2de67d705e2f7a3ba5781cb813d68ba80	7518	352	192
 places/mercury-lighthouse-entrance/map-3.png	5673362790c133f90ade25e1a291da696f9a9cc5b3253c8fe8ac01dbce0d9acf	12231	240	256
 places/mercury-lighthouse-entrance/map-7.png	ee0933ca33f398e90969adee83dfd98c1619ffca259a697400331edb16f8eaf5	9445	496	176
+places/mercury-lighthouse-entrance/pool-ply-cells.png	a2ff2ed21e985fb772d16a0c84d8bf2243a440f13dff5752a721a0a56213cb10	24530	488	624
 places/mercury-lighthouse-entrance_mercury-lighthouse-ply-activated/map-3.png	1d5506b9328306fe34419044b7cdcf87bcd6fab4bba8c94a7eb66ab1541d876b	13512	240	256
 places/mercury-lighthouse-entrance_mercury-lighthouse-ply-activated/map-7.png	511bac47651f650239d68248a234292673a61730b73b16c1bb9407c4617ed51f	11221	496	176
 places/mercury-lighthouse-entrance_mia-entered-mercury-lighthouse/map-1.png	38f9c42d23396e106ccf1f630a729ec5002b006571ef322c311245baa876ced8	8629	240	288
