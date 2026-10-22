@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 500" role="img" aria-labelledby="title desc">
+  <title id="title">The main program, bank by bank</title>
+  <desc id="desc">The main program as it lies on the English cartridge, about 1 MB, drawn to scale from the start to the end, cut into banks. Each large bank has a folder of the source: runtime (start-up, frames and memory), field (moving and drawing the map), window (windows, fonts and all the game's text, the largest), game (the rules: stats, items, Djinn), object (running a place, and random battles), menu, shop, battle, and effect (battle animations). Five small banks follow. A function that calls into another bank goes through that bank's table of jumps at its start: the object bank starts a battle through the battle bank's table.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .b { fill: #f0f6ff; stroke: #bcd7fb; }
+    .b2 { fill: #dbeafe; stroke: #93c5fd; }
+    .small { fill: #f5f5f5; stroke: #d4d4d4; }
+    .lead { stroke: #d4d4d4; stroke-width: 1; }
+    .n { fill: #0a0a0a; font: 600 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .d { fill: #737373; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .k { fill: #0a72ef; font: 500 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .call { fill: none; stroke: #0a72ef; stroke-width: 1.5; }
+    .call-head { fill: #0a72ef; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .b { fill: #0d1a2e; stroke: #1e3a66; }
+      .b2 { fill: #1d3d73; stroke: #3b6bc4; }
+      .small { fill: #1a1a1a; stroke: #333333; }
+      .lead { stroke: #333333; }
+      .n { fill: #ededed; }
+      .d { fill: #8f8f8f; }
+      .p { fill: #a1a1a1; }
+      .k { fill: #66a6ff; }
+      .code, .eyebrow { fill: #7c7c7c; }
+      .call { stroke: #3b8eff; }
+      .call-head { fill: #3b8eff; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="499" rx="16"/>
+  <text class="eyebrow" x="20" y="32">THE MAIN PROGRAM, TO SCALE</text>
+  <text class="code" x="380" y="32" text-anchor="end">about 1 MB</text>
+
+  <!-- banks: 0.34 units a KB, English edition -->
+  <rect class="b" x="60" y="60" width="80" height="12.2"/>
+  <rect class="b2" x="60" y="72.2" width="80" height="16.3"/>
+  <rect class="b" x="60" y="88.5" width="80" height="133.3"/>
+  <rect class="b2" x="60" y="221.8" width="80" height="25.8"/>
+  <rect class="b" x="60" y="247.6" width="80" height="31.3"/>
+  <rect class="b2" x="60" y="278.9" width="80" height="20.4"/>
+  <rect class="b" x="60" y="299.3" width="80" height="6.8"/>
+  <rect class="b2" x="60" y="306.1" width="80" height="27.2"/>
+  <rect class="b" x="60" y="333.3" width="80" height="53"/>
+  <rect class="small" x="60" y="386.3" width="80" height="12.9"/>
+
+  <!-- labels -->
+  <path class="lead" d="M 140 66 H 156 M 140 80 L 148 84 H 156 M 140 155 H 156 M 140 235 H 156 M 140 263 H 156 M 140 289 L 148 287 H 156 M 140 303 L 148 305 H 156 M 140 320 L 148 323 H 156 M 140 360 H 156 M 140 393 H 156"/>
+  <text class="n" x="160" y="70">runtime</text><text class="d" x="222" y="70">start-up, frames, memory</text>
+  <text class="n" x="160" y="88">field</text><text class="d" x="208" y="88">moving and drawing</text>
+  <text class="n" x="160" y="159">window</text><text class="d" x="216" y="159">windows, fonts and</text>
+  <text class="d" x="216" y="175">all the game's text</text>
+  <text class="n" x="160" y="239">game</text><text class="d" x="200" y="239">the rules: stats, items</text>
+  <text class="n" x="160" y="267">object</text><text class="d" x="216" y="267">running a place</text>
+  <text class="n" x="160" y="291">menu</text>
+  <text class="n" x="160" y="309">shop</text>
+  <text class="n" x="160" y="327">battle</text>
+  <text class="n" x="160" y="364">effect</text><text class="d" x="216" y="364">battle animations</text>
+  <text class="d" x="160" y="397">five small banks</text>
+
+  <!-- a far call: object to battle -->
+  <path class="call" d="M 60 263 H 44 V 307.5 H 54"/>
+  <path class="call-head" d="M 52 302.5 v 10 l 8 -5 z"/>
+  <text class="k" transform="translate(36 286) rotate(-90)" text-anchor="middle">a far call</text>
+
+  <text class="p" x="20" y="436">Each bank opens with a table of jumps; a call</text>
+  <text class="p" x="20" y="455">from another bank goes through it, as the</text>
+  <text class="p" x="20" y="474">object bank starts a battle.</text>
+  <text class="code" x="380" y="490" text-anchor="end">Battle_RunEncounterFar · main.ld</text>
+</svg>

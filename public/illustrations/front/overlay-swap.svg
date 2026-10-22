@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 470" role="img" aria-labelledby="title desc">
+  <title id="title">One place's code in memory at a time</title>
+  <desc id="desc">On the cartridge, each place's code is stored packed, 96 pieces in all, such as Vale's, Vault's, Bilibin's and Goma Cave's. In memory there is one area of 32 KB for a place's code. When the party enters Vault, Vault's code is unpacked into that area, over whatever place's code was there before. Beside it the main program is always loaded, and the place's code calls into it.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .pack { fill: #f5f5f5; stroke: #d4d4d4; }
+    .pack-on { fill: #f0f6ff; stroke: #0a72ef; stroke-width: 1.5; }
+    .area { fill: #f0f6ff; stroke: #0a72ef; stroke-width: 1.5; }
+    .old { fill: none; stroke: #a3a3a3; stroke-dasharray: 4 4; }
+    .main { fill: #f5f5f5; stroke: #d4d4d4; }
+    .h { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .s { fill: #525252; font: 500 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .k { fill: #0a72ef; font: 600 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .faint { fill: #a3a3a3; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .wire { fill: none; stroke: #0a72ef; stroke-width: 1.5; }
+    .head { fill: #0a72ef; }
+    .wire-g { fill: none; stroke: #a3a3a3; stroke-width: 1.5; }
+    .head-g { fill: #a3a3a3; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .pack, .main { fill: #1a1a1a; stroke: #333333; }
+      .pack-on, .area { fill: #0d1a2e; stroke: #3b8eff; }
+      .old { stroke: #5c5c5c; }
+      .h { fill: #ededed; }
+      .p, .s { fill: #a1a1a1; }
+      .k { fill: #66a6ff; }
+      .faint { fill: #5c5c5c; }
+      .code, .eyebrow { fill: #7c7c7c; }
+      .wire { stroke: #3b8eff; }
+      .head { fill: #3b8eff; }
+      .wire-g { stroke: #5c5c5c; }
+      .head-g { fill: #5c5c5c; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="469" rx="16"/>
+
+  <!-- Cartridge -->
+  <text class="eyebrow" x="20" y="32">ON THE CARTRIDGE: EACH PLACE'S CODE, PACKED</text>
+  <rect class="card" x="20" y="44" width="360" height="96" rx="12"/>
+  <rect class="pack" x="34" y="58" width="60" height="28" rx="6"/>
+  <text class="s" x="64" y="77" text-anchor="middle">Vale</text>
+  <rect class="pack-on" x="100" y="58" width="60" height="28" rx="6"/>
+  <text class="k" x="130" y="77" text-anchor="middle">Vault</text>
+  <rect class="pack" x="166" y="58" width="68" height="28" rx="6"/>
+  <text class="s" x="200" y="77" text-anchor="middle">Bilibin</text>
+  <rect class="pack" x="240" y="58" width="88" height="28" rx="6"/>
+  <text class="s" x="284" y="77" text-anchor="middle">Goma Cave</text>
+  <text class="s" x="346" y="77" text-anchor="middle">...</text>
+  <text class="p" x="148" y="120">96 pieces for 201 scenes</text>
+
+  <!-- Unpack -->
+  <text class="k" x="142" y="166">entering Vault unpacks it</text>
+
+  <!-- Memory -->
+  <text class="eyebrow" x="20" y="200">IN MEMORY</text>
+  <rect class="card" x="20" y="212" width="360" height="186" rx="12"/>
+  <rect class="area" x="34" y="226" width="160" height="158" rx="8"/>
+  <text class="k" x="114" y="290" text-anchor="middle">Vault's code</text>
+  <text class="s" x="114" y="310" text-anchor="middle">over the last</text>
+  <text class="s" x="114" y="326" text-anchor="middle">place's code</text>
+  <text class="code" x="114" y="372" text-anchor="middle">32 KB</text>
+  <rect class="main" x="206" y="226" width="160" height="158" rx="8"/>
+  <text class="h" x="286" y="290" text-anchor="middle">The main</text>
+  <text class="h" x="286" y="308" text-anchor="middle">program</text>
+  <text class="s" x="286" y="330" text-anchor="middle">always there</text>
+
+  <text class="p" x="20" y="426">The place's code calls the main program;</text>
+  <text class="p" x="20" y="445">the main program asks it about the place.</text>
+  <text class="code" x="380" y="200" text-anchor="end">gOverlayArea</text>
+  <path class="wire" d="M 130 86 V 222"/>
+  <path class="head" d="M 124 218 h 12 l -6 9 z"/>
+</svg>
