@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 430" role="img" aria-labelledby="title desc">
+  <title id="title">Tiles that move by themselves</title>
+  <desc id="desc">One channel of a map's tile animation. Several pictures of the same patch of the map are stored apart from the tiles on screen. The channel copies the first over the patch's tiles, waits a few frames, copies the second, waits, and so on, then goes back to the first. Nothing else changes: every cell that uses those tiles shows the new picture at once. A map can run up to 16 channels, each on its own timer.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .water { fill: #5aa2e0; }
+    .wave { stroke: #e8f4ff; stroke-width: 2.5; fill: none; stroke-linecap: round; }
+    .screen { fill: none; stroke: #0a72ef; stroke-width: 2.5; }
+    .wire { fill: none; stroke: #a3a3a3; stroke-width: 1.5; }
+    .head { fill: #a3a3a3; }
+    .chip { fill: #f5f5f5; stroke: #d4d4d4; }
+    .ct { fill: #525252; font: 500 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .h2 { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .tag { fill: #0a72ef; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .water { fill: #2f6fa8; }
+      .wave { stroke: #bfe0ff; }
+      .screen { stroke: #3b8eff; }
+      .wire { stroke: #5c5c5c; } .head { fill: #5c5c5c; }
+      .chip { fill: #1a1a1a; stroke: #333333; }
+      .ct, .p { fill: #a1a1a1; }
+      .h2 { fill: #ededed; }
+      .tag { fill: #66a6ff; }
+      .small, .code, .eyebrow { fill: #7c7c7c; }
+    }
+  </style>
+  <defs>
+    <!-- One picture of the patch; the waves shift a quarter each picture -->
+    <clipPath id="sq"><rect width="56" height="56"/></clipPath>
+    <g id="p0" clip-path="url(#sq)"><rect class="water" width="56" height="56"/><path class="wave" d="M -14 18 q 7 -6 14 0 t 14 0 t 14 0 t 14 0 t 14 0 M -7 38 q 7 -6 14 0 t 14 0 t 14 0 t 14 0 t 14 0"/></g>
+    <g id="p1" clip-path="url(#sq)"><rect class="water" width="56" height="56"/><path class="wave" d="M -7 18 q 7 -6 14 0 t 14 0 t 14 0 t 14 0 t 14 0 M 0 38 q 7 -6 14 0 t 14 0 t 14 0 t 14 0"/></g>
+    <g id="p2" clip-path="url(#sq)"><rect class="water" width="56" height="56"/><path class="wave" d="M 0 18 q 7 -6 14 0 t 14 0 t 14 0 t 14 0 M 7 38 q 7 -6 14 0 t 14 0 t 14 0 M -21 38 q 7 -6 14 0 t 14 0"/></g>
+    <g id="p3" clip-path="url(#sq)"><rect class="water" width="56" height="56"/><path class="wave" d="M 7 18 q 7 -6 14 0 t 14 0 t 14 0 M -21 18 q 7 -6 14 0 t 14 0 M -14 38 q 7 -6 14 0 t 14 0 t 14 0 t 14 0 t 14 0"/></g>
+  </defs>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="429" rx="16"/>
+  <text class="eyebrow" x="20" y="32">ONE CHANNEL OF A TILE ANIMATION</text>
+
+  <!-- The stored pictures -->
+  <text class="h2" x="20" y="64">Stored pictures</text>
+  <text class="small" x="380" y="64" text-anchor="end">not the tiles on screen</text>
+  <use href="#p0" x="28" y="80"/><use href="#p1" x="122" y="80"/><use href="#p2" x="216" y="80"/><use href="#p3" x="310" y="80"/>
+
+  <!-- Steps: copy, then wait -->
+  <path class="wire" d="M 56 140 V 168 M 150 140 V 168 M 244 140 V 168 M 338 140 V 168"/>
+  <rect class="chip" x="24" y="168" width="64" height="24" rx="12"/><text class="ct" x="56" y="184" text-anchor="middle">copy</text>
+  <rect class="chip" x="118" y="168" width="64" height="24" rx="12"/><text class="ct" x="150" y="184" text-anchor="middle">copy</text>
+  <rect class="chip" x="212" y="168" width="64" height="24" rx="12"/><text class="ct" x="244" y="184" text-anchor="middle">copy</text>
+  <rect class="chip" x="306" y="168" width="64" height="24" rx="12"/><text class="ct" x="338" y="184" text-anchor="middle">copy</text>
+  <text class="small" x="103" y="184" text-anchor="middle">wait</text>
+  <text class="small" x="197" y="184" text-anchor="middle">wait</text>
+  <text class="small" x="291" y="184" text-anchor="middle">wait</text>
+
+  <!-- Back to the start -->
+  <path class="wire" d="M 338 192 V 214 H 56 V 196"/>
+  <path class="head" d="M 50 198 L 56 190 L 62 198 Z"/>
+  <text class="small" x="200" y="230" text-anchor="middle">wait, then back to the first</text>
+
+  <!-- The patch on screen -->
+  <text class="h2" x="20" y="272">On screen</text>
+  <use href="#p1" x="20" y="288"/>
+  <rect class="screen" x="20" y="288" width="56" height="56"/>
+  <text class="tag" x="92" y="306">The same tiles, a new picture</text>
+  <text class="p" x="92" y="326">Every cell that uses these tiles</text>
+  <text class="p" x="92" y="345">changes with them.</text>
+
+  <text class="p" x="20" y="386">Up to 16 channels run at once, each on its</text>
+  <text class="p" x="20" y="405">own timer.</text>
+  <text class="code" x="380" y="420" text-anchor="end">MapAnimation_Update</text>
+</svg>

@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 492" role="img" aria-labelledby="title desc">
+  <title id="title">How each layer follows the camera</title>
+  <desc id="desc">In the north of Suhalla Desert, when the camera moves 16 pixels, the ground layer and the middle layer move 16 pixels with it, but the overhead layer, the sand haze, moves 20, a quarter faster. The haze also drifts by itself every frame, even while the camera stands still. Its picture is a square 256 pixels on a side, repeated across the screen: the layer wraps round. The map's header sets all of this for each layer, along with how far the camera may go.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .cam { stroke: #737373; stroke-width: 3; stroke-linecap: round; fill: none; }
+    .camh { fill: #737373; }
+    .a0 { stroke: #d97706; stroke-width: 3; stroke-linecap: round; fill: none; } .h0 { fill: #d97706; }
+    .a1 { stroke: #16a34a; stroke-width: 3; stroke-linecap: round; fill: none; } .h1 { fill: #16a34a; }
+    .a2 { stroke: #7c3aed; stroke-width: 3; stroke-linecap: round; fill: none; } .h2c { fill: #7c3aed; }
+    .drift { stroke: #7c3aed; stroke-width: 2; stroke-dasharray: 4 4; fill: none; }
+    .haze { fill: #ede9fe; stroke: #c4b5fd; }
+    .haze-on { fill: #ddd6fe; stroke: #7c3aed; stroke-width: 2; }
+    .swirl { stroke: #a78bfa; stroke-width: 2; fill: none; stroke-linecap: round; }
+    .tick { stroke: #d4d4d4; stroke-width: 1; }
+    .h2 { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .v { fill: #0a0a0a; font: 600 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .cam { stroke: #a1a1a1; } .camh { fill: #a1a1a1; }
+      .a0 { stroke: #f59e0b; } .h0 { fill: #f59e0b; }
+      .a1 { stroke: #22c55e; } .h1 { fill: #22c55e; }
+      .a2, .drift { stroke: #a78bfa; } .h2c { fill: #a78bfa; }
+      .haze { fill: #1e1533; stroke: #4c1d95; }
+      .haze-on { fill: #2e1f55; stroke: #a78bfa; }
+      .swirl { stroke: #7c3aed; }
+      .tick { stroke: #333333; }
+      .h2, .v { fill: #ededed; }
+      .p { fill: #a1a1a1; }
+      .small, .code, .eyebrow { fill: #7c7c7c; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="491" rx="16"/>
+  <text class="eyebrow" x="20" y="32">SUHALLA DESERT'S NORTH, WITH ITS SAND HAZE</text>
+
+  <!-- 8 units = 1 game pixel along the arrows: 16 px = 128, 20 px = 160 -->
+  <rect class="card" x="20" y="48" width="360" height="190" rx="12"/>
+  <path class="tick" d="M 132 60 V 226 M 260 60 V 226"/>
+
+  <text class="h2" x="36" y="86">Camera</text>
+  <path class="cam" d="M 132 81 H 250"/>
+  <path class="camh" d="M 248 75 L 260 81 L 248 87 Z"/>
+  <text class="v" x="364" y="86" text-anchor="end">16 px</text>
+
+  <text class="h2" x="36" y="126">Ground</text>
+  <path class="a0" d="M 132 121 H 250"/>
+  <path class="h0" d="M 248 115 L 260 121 L 248 127 Z"/>
+  <text class="v" x="364" y="126" text-anchor="end">16 px</text>
+
+  <text class="h2" x="36" y="166">Middle</text>
+  <path class="a1" d="M 132 161 H 250"/>
+  <path class="h1" d="M 248 155 L 260 161 L 248 167 Z"/>
+  <text class="v" x="364" y="166" text-anchor="end">16 px</text>
+
+  <text class="h2" x="36" y="206">Overhead</text>
+  <path class="a2" d="M 132 201 H 282"/>
+  <path class="h2c" d="M 280 195 L 292 201 L 280 207 Z"/>
+  <text class="v" x="364" y="206" text-anchor="end">20 px</text>
+
+  <text class="p" x="20" y="268">The ground and the middle layer move with</text>
+  <text class="p" x="20" y="287">the camera; the overhead haze, a quarter faster.</text>
+
+  <!-- Drift -->
+  <path class="drift" d="M 30 318 C 50 304, 70 332, 92 318"/>
+  <path class="h2c" d="M 90 312 L 100 318 L 90 324 Z"/>
+  <text class="p" x="112" y="317">It also drifts by itself every frame,</text>
+  <text class="p" x="112" y="336">even when the camera stands still.</text>
+
+  <!-- Wrap: one square of the haze, repeated -->
+  <g>
+    <rect class="haze" x="20" y="358" width="64" height="64"/>
+    <rect class="haze-on" x="88" y="358" width="64" height="64"/>
+    <rect class="haze" x="156" y="358" width="64" height="64"/>
+    <path class="swirl" d="M 30 380 q 12 -10 24 0 t 24 0 M 36 404 q 10 -8 20 0 t 20 0 M 98 380 q 12 -10 24 0 t 24 0 M 104 404 q 10 -8 20 0 t 20 0 M 166 380 q 12 -10 24 0 t 24 0 M 172 404 q 10 -8 20 0 t 20 0"/>
+  </g>
+  <text class="h2" x="236" y="378">One 256 px square,</text>
+  <text class="p" x="236" y="397">repeated: the layer</text>
+  <text class="p" x="236" y="416">wraps round.</text>
+
+  <text class="small" x="20" y="452">The map's header sets this for each layer, and how</text>
+  <text class="small" x="20" y="468">far the camera may go.</text>
+  <text class="code" x="380" y="482" text-anchor="end">LayeredSceneHeader</text>
+</svg>

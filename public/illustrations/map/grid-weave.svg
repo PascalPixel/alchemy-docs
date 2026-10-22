@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 480" role="img" aria-labelledby="title desc">
+  <title id="title">Three planes woven into cells</title>
+  <desc id="desc">A map's grid is stored as three whole planes, one after another: what stepping on each cell does (a byte a cell, 16 KB), the shape of each cell's ground (a byte a cell, 16 KB) and the picture drawn in each cell, with the layer an object standing there takes (two bytes a cell, 32 KB). As the map loads, a routine copied into RAM takes one value from each plane for every cell and puts them together into one four-byte word: the shape at the top, then what stepping does, then the picture. The 128 by 128 words take 64 KB.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .c0 { fill: #fde68a; stroke: #d97706; } .t0 { fill: #b45309; }
+    .c1 { fill: #bbf7d0; stroke: #16a34a; } .t1 { fill: #15803d; }
+    .c2 { fill: #bfdbfe; stroke: #0a72ef; } .t2 { fill: #0a5bc4; }
+    .cell { fill: none; stroke: #0a0a0a; stroke-width: 1.5; }
+    .wire { fill: none; stroke: #a3a3a3; stroke-width: 1.5; }
+    .head { fill: #a3a3a3; }
+    .word { fill: #ffffff; stroke: #d4d4d4; }
+    .lab { font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .h2 { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .c0 { fill: #3d2a06; stroke: #f59e0b; } .t0 { fill: #fbbf24; }
+      .c1 { fill: #0d2e1a; stroke: #22c55e; } .t1 { fill: #4ade80; }
+      .c2 { fill: #0d1f3d; stroke: #3b8eff; } .t2 { fill: #66a6ff; }
+      .cell { stroke: #ededed; }
+      .wire { stroke: #5c5c5c; } .head { fill: #5c5c5c; }
+      .word { fill: #111111; stroke: #333333; }
+      .h2 { fill: #ededed; }
+      .p { fill: #a1a1a1; }
+      .small, .code, .eyebrow { fill: #7c7c7c; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="479" rx="16"/>
+  <text class="eyebrow" x="20" y="32">AS STORED: THREE PLANES, ONE AFTER ANOTHER</text>
+
+  <!-- Planes to scale: 360 units = 64 KB -->
+  <rect class="c0" x="20" y="48" width="90" height="64"/>
+  <rect class="c1" x="110" y="48" width="90" height="64"/>
+  <rect class="c2" x="200" y="48" width="180" height="64"/>
+  <text class="lab t0" x="28" y="68">What it does</text>
+  <text class="small" x="28" y="104">16 KB</text>
+  <text class="lab t1" x="118" y="68">Shape</text>
+  <text class="small" x="118" y="104">16 KB</text>
+  <text class="lab t2" x="208" y="68">Picture</text>
+  <text class="small" x="208" y="104">32 KB: two bytes a cell</text>
+
+  <!-- One cell's place in each plane -->
+  <rect class="cell" x="74" y="76" width="8" height="8"/>
+  <rect class="cell" x="164" y="76" width="8" height="8"/>
+  <rect class="cell" x="320" y="76" width="16" height="8"/>
+
+  <!-- Wires down to the word -->
+  <path class="wire" d="M 168 84 V 150 H 92 V 178"/>
+  <path class="wire" d="M 78 84 V 140 H 184 V 178"/>
+  <path class="wire" d="M 328 84 V 178"/>
+  <path class="head" d="M 86 176 L 92 186 L 98 176 Z"/>
+  <path class="head" d="M 178 176 L 184 186 L 190 176 Z"/>
+  <path class="head" d="M 322 176 L 328 186 L 334 176 Z"/>
+
+  <!-- The word: four bytes, highest first -->
+  <rect class="c1" x="46" y="190" width="92" height="44"/>
+  <rect class="c0" x="138" y="190" width="92" height="44"/>
+  <rect class="c2" x="230" y="190" width="124" height="44"/>
+  <text class="lab t1" x="92" y="217" text-anchor="middle">Shape</text>
+  <text class="lab t0" x="184" y="217" text-anchor="middle">What it does</text>
+  <text class="lab t2" x="292" y="217" text-anchor="middle">Picture</text>
+  <text class="h2" x="200" y="262" text-anchor="middle">One cell, one word of four bytes</text>
+
+  <!-- The whole grid of words -->
+  <text class="eyebrow" x="20" y="302">AS LOADED: A WORD FOR EVERY CELL</text>
+  <rect class="word" x="20" y="314" width="360" height="40"/>
+  <path class="wire" d="M 65 314 V 354 M 110 314 V 354 M 155 314 V 354 M 200 314 V 354 M 245 314 V 354 M 290 314 V 354 M 335 314 V 354" opacity="0.5"/>
+  <text class="small" x="200" y="374" text-anchor="middle">128 by 128 cells: 64 KB</text>
+
+  <text class="p" x="20" y="410">The same routine numbers the pictures as</text>
+  <text class="p" x="20" y="429">it goes. After this, all a cell says is read</text>
+  <text class="p" x="20" y="448">from its one word.</text>
+  <text class="code" x="380" y="470" text-anchor="end">Tile_ConvertMap</text>
+</svg>

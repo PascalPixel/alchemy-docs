@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 452" role="img" aria-labelledby="title desc">
+  <title id="title">A block's first use is a placeholder</title>
+  <desc id="desc">Eight cells of a map's grid, in the order the game reads them, showing grass, grass, water, grass, rock, water, rock and grass. Where a picture appears for the first time, the grid stores a placeholder, the number 4,095, and as the map loads the game gives it the next block number: the first grass becomes block 0, the first water block 1, the first rock block 2. Every later cell with the same picture already stores its number. So a map has as many placeholders as it has blocks.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .grass { fill: #86c35a; } .grass-d { stroke: #4d8a2a; stroke-width: 2; fill: none; stroke-linecap: round; }
+    .water { fill: #5aa2e0; } .water-d { stroke: #e8f4ff; stroke-width: 2; fill: none; stroke-linecap: round; }
+    .rock { fill: #a8a29e; } .rock-d { fill: #78716c; }
+    .edge { fill: none; stroke: #d4d4d4; }
+    .ph { fill: #fff7d6; stroke: #e0b400; }
+    .num { fill: #f0f6ff; stroke: #bcd7fb; }
+    .pt { fill: #8a6d00; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .nt { fill: #0a72ef; font: 600 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .wire { fill: none; stroke: #a3a3a3; stroke-width: 1.5; }
+    .head { fill: #a3a3a3; }
+    .h2 { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .edge { stroke: #333333; }
+      .ph { fill: #2e2600; stroke: #8a6d00; }
+      .num { fill: #0d1a2e; stroke: #1e3a66; }
+      .pt { fill: #facc15; }
+      .nt { fill: #66a6ff; }
+      .wire { stroke: #5c5c5c; } .head { fill: #5c5c5c; }
+      .h2 { fill: #ededed; }
+      .p { fill: #a1a1a1; }
+      .small, .code, .eyebrow { fill: #7c7c7c; }
+    }
+  </style>
+  <defs>
+    <g id="g"><rect class="grass" width="40" height="40"/><path class="grass-d" d="M 8 30 l 3 -7 l 3 7 M 22 16 l 3 -7 l 3 7 M 26 34 l 3 -7 l 3 7"/></g>
+    <g id="w"><rect class="water" width="40" height="40"/><path class="water-d" d="M 6 14 q 7 -6 14 0 t 14 0 M 6 28 q 7 -6 14 0 t 14 0"/></g>
+    <g id="r"><rect class="rock" width="40" height="40"/><path class="rock-d" d="M 6 30 L 14 14 L 24 12 L 34 26 L 30 34 Z"/></g>
+  </defs>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="451" rx="16"/>
+  <text class="eyebrow" x="20" y="32">EIGHT CELLS, IN THE ORDER THE GAME READS THEM</text>
+
+  <!-- 8 cells, 40 wide, 4 apart: x = 22 + 46 i -->
+  <use href="#g" x="22" y="50"/><use href="#g" x="68" y="50"/><use href="#w" x="114" y="50"/><use href="#g" x="160" y="50"/>
+  <use href="#r" x="206" y="50"/><use href="#w" x="252" y="50"/><use href="#r" x="298" y="50"/><use href="#g" x="344" y="50"/>
+
+  <text class="small" x="20" y="118">Stored in the grid</text>
+  <!-- placeholders at cells 0, 2, 4 -->
+  <rect class="ph" x="22" y="128" width="40" height="26" rx="6"/><text class="pt" x="42" y="145" text-anchor="middle">new</text>
+  <rect class="num" x="68" y="128" width="40" height="26" rx="6"/><text class="nt" x="88" y="146" text-anchor="middle">0</text>
+  <rect class="ph" x="114" y="128" width="40" height="26" rx="6"/><text class="pt" x="134" y="145" text-anchor="middle">new</text>
+  <rect class="num" x="160" y="128" width="40" height="26" rx="6"/><text class="nt" x="180" y="146" text-anchor="middle">0</text>
+  <rect class="ph" x="206" y="128" width="40" height="26" rx="6"/><text class="pt" x="226" y="145" text-anchor="middle">new</text>
+  <rect class="num" x="252" y="128" width="40" height="26" rx="6"/><text class="nt" x="272" y="146" text-anchor="middle">1</text>
+  <rect class="num" x="298" y="128" width="40" height="26" rx="6"/><text class="nt" x="318" y="146" text-anchor="middle">2</text>
+  <rect class="num" x="344" y="128" width="40" height="26" rx="6"/><text class="nt" x="364" y="146" text-anchor="middle">0</text>
+
+  <path class="wire" d="M 42 158 V 176 M 134 158 V 176 M 226 158 V 176"/>
+  <path class="head" d="M 36 174 L 42 184 L 48 174 Z M 128 174 L 134 184 L 140 174 Z M 220 174 L 226 184 L 232 174 Z"/>
+
+  <rect class="num" x="22" y="188" width="40" height="26" rx="6"/><text class="nt" x="42" y="206" text-anchor="middle">0</text>
+  <rect class="num" x="114" y="188" width="40" height="26" rx="6"/><text class="nt" x="134" y="206" text-anchor="middle">1</text>
+  <rect class="num" x="206" y="188" width="40" height="26" rx="6"/><text class="nt" x="226" y="206" text-anchor="middle">2</text>
+  <text class="small" x="252" y="200">the next number,</text>
+  <text class="small" x="252" y="214">as the map loads</text>
+
+  <!-- Legend -->
+  <rect class="ph" x="20" y="246" width="40" height="22" rx="6"/><text class="pt" x="40" y="261" text-anchor="middle">new</text>
+  <text class="p" x="72" y="262">a placeholder: the number 4,095</text>
+  <rect class="num" x="20" y="280" width="40" height="22" rx="6"/><text class="nt" x="40" y="296" text-anchor="middle">0</text>
+  <text class="p" x="72" y="296">a block number: which picture</text>
+
+  <text class="p" x="20" y="342">A picture's first appearance is stored as a</text>
+  <text class="p" x="20" y="361">placeholder, and gets the next number when</text>
+  <text class="p" x="20" y="380">the map loads. Later cells name that number.</text>
+  <text class="h2" x="20" y="414">So a map has as many placeholders as blocks.</text>
+  <text class="code" x="380" y="440" text-anchor="end">Tile_ConvertMap</text>
+</svg>

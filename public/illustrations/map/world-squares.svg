@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 520" role="img" aria-labelledby="title desc">
+  <title id="title">Only the squares around the party</title>
+  <desc id="desc">The world map's ground is a grid of 16 by 16 squares, each 512 pixels on a side, and each square is packed on its own, once for each of the world map's two ground layers. Only the 2 by 2 squares around the party are unpacked at any time; the rest stay packed. As the party walks half a square further, the 2 by 2 moves with it, and the squares it now covers are unpacked, one a frame.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .sq { fill: #ececec; stroke: #fafafa; stroke-width: 2; }
+    .on { fill: #86c35a; stroke: #fafafa; stroke-width: 2; }
+    .win { fill: none; stroke: #0a72ef; stroke-width: 3; }
+    .next { fill: none; stroke: #0a72ef; stroke-width: 2; stroke-dasharray: 5 4; }
+    .party { fill: #ffffff; stroke: #0a0a0a; stroke-width: 2; }
+    .go { stroke: #0a0a0a; stroke-width: 2; fill: none; }
+    .goh { fill: #0a0a0a; }
+    .h2 { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .tag { fill: #0a72ef; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .sq { fill: #1f1f1f; stroke: #0a0a0a; }
+      .on { fill: #3f7a24; stroke: #0a0a0a; }
+      .win, .next { stroke: #3b8eff; }
+      .party { fill: #0a0a0a; stroke: #ededed; }
+      .go { stroke: #ededed; } .goh { fill: #ededed; }
+      .h2 { fill: #ededed; }
+      .p { fill: #a1a1a1; }
+      .tag { fill: #66a6ff; }
+      .small, .code, .eyebrow { fill: #7c7c7c; }
+    }
+  </style>
+  <defs>
+    <pattern id="grid" x="56" y="64" width="18" height="18" patternUnits="userSpaceOnUse">
+      <rect class="sq" width="18" height="18"/>
+    </pattern>
+  </defs>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="519" rx="16"/>
+  <text class="eyebrow" x="20" y="32">THE WORLD MAP'S GROUND, SQUARE BY SQUARE</text>
+  <text class="small" x="200" y="54" text-anchor="middle">16 squares across, each 512 px</text>
+
+  <!-- 16 by 16 squares, 18 units each, from (56, 64) -->
+  <rect x="56" y="64" width="288" height="288" fill="url(#grid)"/>
+  <!-- The 2 by 2 unpacked now: squares (6, 9) to (7, 10) -->
+  <rect class="on" x="164" y="226" width="18" height="18"/>
+  <rect class="on" x="182" y="226" width="18" height="18"/>
+  <rect class="on" x="164" y="244" width="18" height="18"/>
+  <rect class="on" x="182" y="244" width="18" height="18"/>
+  <rect class="win" x="164" y="226" width="36" height="36"/>
+  <!-- After the party crosses east: (7, 9) to (8, 10) -->
+  <rect class="next" x="182" y="226" width="36" height="36"/>
+  <path class="go" d="M 186 248 H 204"/>
+  <path class="goh" d="M 202 243 L 211 248 L 202 253 Z"/>
+  <circle class="party" cx="182" cy="248" r="5"/>
+
+  <text class="tag" x="236" y="232">unpacked now</text>
+  <text class="small" x="236" y="248">dashed: after it walks half</text>
+  <text class="small" x="236" y="262">a square east</text>
+
+  <text class="p" x="20" y="390">Each square is packed on its own, once for</text>
+  <text class="p" x="20" y="409">each of the two ground layers. Only the 2 by 2</text>
+  <text class="p" x="20" y="428">around the party are unpacked; the squares it</text>
+  <text class="p" x="20" y="447">walks towards come in one a frame.</text>
+  <text class="small" x="20" y="482">The rest of the world stays packed.</text>
+  <text class="code" x="380" y="508" text-anchor="end">Map_UpdateCurrentTileBlock</text>
+</svg>
