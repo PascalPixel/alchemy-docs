@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 452" role="img" aria-labelledby="title desc">
+  <title id="title">Everything that moves runs a script</title>
+  <desc id="desc">Three field objects and their scripts. The leader moves by the direction pad, waits one frame and repeats, for good. The camera follows the leader, waits one frame and repeats. A footprint waits 120 frames and then disappears. Each frame every object runs its steps in order until one says to wait, which ends its turn until the next frame.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .chip { fill: #f0f6ff; stroke: #bcd7fb; }
+    .chip-wait { fill: #f5f5f5; stroke: #d4d4d4; }
+    .h { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .sub { fill: #8f8f8f; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .k { fill: #0a72ef; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kw { fill: #525252; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .wire { fill: none; stroke: #a3a3a3; stroke-width: 1.5; }
+    .head { fill: #a3a3a3; }
+    .loop { fill: none; stroke: #0a72ef; stroke-width: 1.5; }
+    .loop-head { fill: #0a72ef; }
+    .end { fill: #a3a3a3; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .chip { fill: #0d1a2e; stroke: #1e3a66; }
+      .chip-wait { fill: #1a1a1a; stroke: #333333; }
+      .h { fill: #ededed; }
+      .sub, .code, .eyebrow { fill: #7c7c7c; }
+      .k { fill: #66a6ff; }
+      .kw, .p { fill: #a1a1a1; }
+      .wire { stroke: #5c5c5c; }
+      .head, .end { fill: #5c5c5c; }
+      .loop { stroke: #3b8eff; }
+      .loop-head { fill: #3b8eff; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="451" rx="16"/>
+  <text class="eyebrow" x="20" y="30">THREE OF THE 64 FIELD OBJECTS</text>
+
+  <!-- The leader -->
+  <rect class="card" x="20" y="44" width="360" height="100" rx="12"/>
+  <text class="h" x="36" y="70">The leader</text>
+  <text class="sub" x="122" y="70">the player's control</text>
+  <rect class="chip" x="36" y="84" width="140" height="30" rx="8"/>
+  <text class="k" x="106" y="104" text-anchor="middle">Move by the pad</text>
+  <path class="wire" d="M 180 99 H 192"/>
+  <path class="head" d="M 190 94 v 10 l 8 -5 z"/>
+  <rect class="chip-wait" x="202" y="84" width="110" height="30" rx="8"/>
+  <text class="kw" x="257" y="104" text-anchor="middle">Wait 1 frame</text>
+  <path class="loop" d="M 316 99 H 344 V 126 H 106 V 118"/>
+  <path class="loop-head" d="M 101 120 h 10 l -5 -8 z"/>
+  <text class="code" x="352" y="139" text-anchor="end">SC_PLAYER · SC_WAIT(1) · SC_LOOP</text>
+
+  <!-- The camera -->
+  <rect class="card" x="20" y="156" width="360" height="100" rx="12"/>
+  <text class="h" x="36" y="182">The camera</text>
+  <rect class="chip" x="36" y="196" width="140" height="30" rx="8"/>
+  <text class="k" x="106" y="216" text-anchor="middle">Follow the leader</text>
+  <path class="wire" d="M 180 211 H 192"/>
+  <path class="head" d="M 190 206 v 10 l 8 -5 z"/>
+  <rect class="chip-wait" x="202" y="196" width="110" height="30" rx="8"/>
+  <text class="kw" x="257" y="216" text-anchor="middle">Wait 1 frame</text>
+  <path class="loop" d="M 316 211 H 344 V 238 H 106 V 230"/>
+  <path class="loop-head" d="M 101 232 h 10 l -5 -8 z"/>
+  <text class="code" x="352" y="251" text-anchor="end">SC_CAMERA · SC_WAIT(1) · SC_LOOP</text>
+
+  <!-- A footprint -->
+  <rect class="card" x="20" y="268" width="360" height="92" rx="12"/>
+  <text class="h" x="36" y="294">A footprint</text>
+  <text class="sub" x="122" y="294">left behind the leader</text>
+  <rect class="chip-wait" x="36" y="308" width="140" height="30" rx="8"/>
+  <text class="kw" x="106" y="328" text-anchor="middle">Wait 120 frames</text>
+  <path class="wire" d="M 180 323 H 192"/>
+  <path class="head" d="M 190 318 v 10 l 8 -5 z"/>
+  <rect class="chip" x="202" y="308" width="110" height="30" rx="8"/>
+  <text class="k" x="257" y="328" text-anchor="middle">Disappear</text>
+  <text class="code" x="352" y="353" text-anchor="end">SC_WAIT(120) · SC_FREE</text>
+
+  <!-- The rule -->
+  <text class="p" x="20" y="390">Every frame, each object runs its steps in</text>
+  <text class="p" x="20" y="409">order until one says to wait. That ends its</text>
+  <text class="p" x="20" y="428">turn until the next frame.</text>
+</svg>

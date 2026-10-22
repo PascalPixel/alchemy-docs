@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 620" role="img" aria-labelledby="title desc">
+  <title id="title">The field's loop</title>
+  <desc id="desc">The party walks, and every frame the game checks the ground under the leader and the buttons. When something comes up (a doorway, a random battle, the A button, the menu, Psynergy or an item), walking stops, the game handles one thing at a time until nothing is left, and walking resumes. Leaving the scene, through a doorway or into a battle, is always handled first and ends the loop.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .card-accent { fill: #ffffff; stroke: #0a72ef; stroke-width: 1.5; }
+    .card-exit { fill: #fafafa; stroke: #a3a3a3; stroke-dasharray: 4 4; }
+    .chip { fill: #f0f6ff; stroke: #bcd7fb; }
+    .chip-exit { fill: #fff3f0; stroke: #f6c3b7; }
+    .h { fill: #0a0a0a; font: 600 17px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .k { fill: #0a72ef; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kx { fill: #c2410c; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .wire { fill: none; stroke: #a3a3a3; stroke-width: 1.5; }
+    .wire-accent { fill: none; stroke: #0a72ef; stroke-width: 1.5; }
+    .head { fill: #a3a3a3; }
+    .head-accent { fill: #0a72ef; }
+    .label { fill: #737373; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .dot { fill: #0a72ef; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .card-accent { fill: #111111; stroke: #3b8eff; }
+      .card-exit { fill: #0a0a0a; stroke: #525252; }
+      .chip { fill: #0d1a2e; stroke: #1e3a66; }
+      .chip-exit { fill: #2a130c; stroke: #5c2a1a; }
+      .h { fill: #ededed; }
+      .p { fill: #a1a1a1; }
+      .k { fill: #66a6ff; }
+      .kx { fill: #fb8b5e; }
+      .code { fill: #7c7c7c; }
+      .eyebrow { fill: #7c7c7c; }
+      .wire { stroke: #5c5c5c; }
+      .wire-accent { stroke: #3b8eff; }
+      .head { fill: #5c5c5c; }
+      .head-accent { fill: #3b8eff; }
+      .label { fill: #8f8f8f; }
+      .dot { fill: #3b8eff; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="619" rx="16"/>
+  <text class="eyebrow" x="60" y="34">ONE FIELD SCENE</text>
+
+  <!-- Walk -->
+  <rect class="card-accent" x="60" y="48" width="320" height="108" rx="12"/>
+  <circle class="dot" cx="83" cy="74" r="5"/>
+  <text class="h" x="96" y="80">Walk</text>
+  <text class="p" x="80" y="105">Every frame the game checks the</text>
+  <text class="p" x="80" y="124">ground under the leader and the buttons.</text>
+  <text class="code" x="80" y="145">Field_ProcessStep</text>
+  <!-- once a frame -->
+  <path class="wire-accent" d="M 350 68 a 12 12 0 1 1 -10 -5"/>
+  <path class="head-accent" d="M 336 58 l 8 1 l -4 7 z"/>
+
+  <!-- Walk to the requests -->
+  <path class="wire" d="M 220 156 V 194"/>
+  <path class="head" d="M 214 190 h 12 l -6 9 z"/>
+  <text class="label" x="232" y="180">something came up</text>
+
+  <!-- What can come up -->
+  <rect class="card" x="60" y="202" width="320" height="170" rx="12"/>
+  <text class="h" x="80" y="232">Walking stops</text>
+  <rect class="chip-exit" x="80" y="246" width="82" height="28" rx="14"/>
+  <text class="kx" x="121" y="265" text-anchor="middle">Doorway</text>
+  <rect class="chip-exit" x="170" y="246" width="124" height="28" rx="14"/>
+  <text class="kx" x="232" y="265" text-anchor="middle">Random battle</text>
+  <rect class="chip" x="80" y="282" width="150" height="28" rx="14"/>
+  <text class="k" x="155" y="301" text-anchor="middle">A: talk or search</text>
+  <rect class="chip" x="238" y="282" width="66" height="28" rx="14"/>
+  <text class="k" x="271" y="301" text-anchor="middle">Menu</text>
+  <rect class="chip" x="80" y="318" width="90" height="28" rx="14"/>
+  <text class="k" x="125" y="337" text-anchor="middle">Psynergy</text>
+  <rect class="chip" x="178" y="318" width="62" height="28" rx="14"/>
+  <text class="k" x="209" y="337" text-anchor="middle">Item</text>
+  <text class="code" x="80" y="362">one request flag each</text>
+
+  <!-- Requests to handling -->
+  <path class="wire" d="M 220 372 V 400"/>
+  <path class="head" d="M 214 396 h 12 l -6 9 z"/>
+
+  <!-- Handle one -->
+  <rect class="card" x="60" y="408" width="320" height="108" rx="12"/>
+  <text class="h" x="80" y="438">Handle one, then look again</text>
+  <text class="p" x="80" y="462">An event plays to its end while the</text>
+  <text class="p" x="80" y="481">party waits. Leaving always goes first.</text>
+  <text class="code" x="80" y="504">Field_RunScene</text>
+
+  <!-- Back to walking -->
+  <path class="wire-accent" d="M 60 462 H 30 V 102 H 54"/>
+  <path class="head-accent" d="M 51 96 v 12 l 9 -6 z"/>
+  <text class="k" transform="translate(22 282) rotate(-90)" text-anchor="middle">nothing left: walk again</text>
+
+  <!-- Leave -->
+  <path class="wire" d="M 220 516 V 538"/>
+  <path class="head" d="M 214 534 h 12 l -6 9 z"/>
+  <text class="label" x="232" y="532">a doorway or a battle</text>
+  <rect class="card-exit" x="60" y="546" width="320" height="58" rx="12"/>
+  <text class="h" x="80" y="572">Leave</text>
+  <text class="p" x="80" y="593">The next scene loads.</text>
+  <text class="code" x="360" y="572" text-anchor="end">Scene_TakeExit</text>
+</svg>
