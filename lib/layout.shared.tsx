@@ -7,7 +7,7 @@ export function baseOptions(): BaseLayoutProps {
     nav: {
       title: (
         <>
-          <span aria-hidden>🌋</span> {appName}
+          <span aria-hidden>🌋</span> {appName} Docs
         </>
       ),
     },
