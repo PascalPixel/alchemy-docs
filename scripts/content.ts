@@ -487,9 +487,11 @@ const REACH: [string, string, (value: number, act: Row, word: number) => boolean
 
 let abilityRows: { acts: Row[]; words: number[] } | undefined;
 function reachedIds(d: Decl, at: string): { ids: number[]; field: number[] } {
+  // The comment as md() left it: the effect names shown as code, the
+  // characters Markdown reads escaped. The line is read as written.
   const para = d.doc
     .split(/\n\n/)
-    .map((p) => p.replace(/\\([\\<>{}[\]*_#|~])/g, '$1').replace(/\s*\n\s*/g, ' '))
+    .map((p) => p.replace(/`/g, '').replace(/\\([\\<>{}[\]*_#|~])/g, '$1').replace(/\s*\n\s*/g, ' '))
     .find((p) => p.startsWith('Abilities: '));
   if (!para) return { ids: [], field: [] };
   abilityRows ??= { acts: tsv('games/tbs/src/game/actions.tsv'), words: tsv('games/tbs/src/battle/actflags.tsv').map((r) => int(r.effect)) };
