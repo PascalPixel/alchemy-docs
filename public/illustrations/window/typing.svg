@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 600" role="img" aria-labelledby="title desc">
+  <title id="title">A message is typed a little each frame</title>
+  <desc id="desc">Garet's sister's line in Vale, "You guys are so lucky, Garet.", typed into its window at the normal message speed. Each frame the window gets one more letter cell: a single letter, or two narrow letters that fit together in one cell 16 pixels wide. On the first frame "Yo" appears, on the second "You", on the fourth "You gu", and on the 18th the whole first page; a space and the line break take a frame each. Then an arrow shows and the window waits for a button before the next page. The player's message speed decides how fast the cells come: at the slow speed one cell and then a pause of 4 frames, which is skipped while a button is held; at the normal speed one cell a frame; at the fast speed up to ten a frame, but a space ends the frame's share, so about a word a frame.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .card-accent { fill: #ffffff; stroke: #0a72ef; stroke-width: 1.5; }
+    .chip { fill: #f0f6ff; stroke: #bcd7fb; }
+    .chip-wait { fill: #f5f5f5; stroke: #d4d4d4; }
+    .fill-accent { fill: #0a72ef; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .k { fill: #0a72ef; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kw { fill: #525252; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .tag { fill: #0a72ef; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .type { fill: #0a0a0a; font: 500 15px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .type-faint { fill: #c4c4c4; font: 500 15px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .dot-grey { fill: #a3a3a3; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .card-accent { fill: #111111; stroke: #3b8eff; }
+      .chip { fill: #0d1a2e; stroke: #1e3a66; }
+      .chip-wait { fill: #1a1a1a; stroke: #333333; }
+      .fill-accent { fill: #3b8eff; }
+      .type { fill: #ededed; }
+      .type-faint { fill: #3a3a3a; }
+      .p, .kw { fill: #a1a1a1; }
+      .small, .eyebrow { fill: #7c7c7c; }
+      .k, .tag { fill: #66a6ff; }
+      .dot-grey { fill: #5c5c5c; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="599" rx="16"/>
+  <text class="eyebrow" x="20" y="32">AT THE NORMAL SPEED: ONE CELL A FRAME</text>
+
+  <!-- frame 1 -->
+  <text class="tag" x="20" y="74">frame 1</text>
+  <rect class="card" x="84" y="48" width="296" height="58" rx="8"/>
+  <text x="98" y="72"><tspan class="type">Yo</tspan><tspan class="type-faint">u guys are so lucky,</tspan></text>
+  <text class="type-faint" x="98" y="94">Garet.</text>
+
+  <!-- frame 2 -->
+  <text class="tag" x="20" y="142">frame 2</text>
+  <rect class="card" x="84" y="116" width="296" height="58" rx="8"/>
+  <text x="98" y="140"><tspan class="type">You</tspan><tspan class="type-faint"> guys are so lucky,</tspan></text>
+  <text class="type-faint" x="98" y="162">Garet.</text>
+
+  <!-- frame 4 -->
+  <text class="tag" x="20" y="210">frame 4</text>
+  <rect class="card" x="84" y="184" width="296" height="58" rx="8"/>
+  <text x="98" y="208"><tspan class="type">You gu</tspan><tspan class="type-faint">ys are so lucky,</tspan></text>
+  <text class="type-faint" x="98" y="230">Garet.</text>
+
+  <!-- and so on -->
+  <circle class="dot-grey" cx="232" cy="256" r="2"/>
+  <circle class="dot-grey" cx="232" cy="266" r="2"/>
+  <circle class="dot-grey" cx="232" cy="276" r="2"/>
+
+  <!-- frame 18 -->
+  <text class="tag" x="20" y="318">frame 18</text>
+  <rect class="card-accent" x="84" y="292" width="296" height="58" rx="8"/>
+  <text class="type" x="98" y="316">You guys are so lucky,</text>
+  <text class="type" x="98" y="338">Garet.</text>
+  <path class="fill-accent" d="M 360 332 h 10 l -5 7 z"/>
+  <text class="small" x="84" y="370">Then an arrow: a button turns the page.</text>
+
+  <!-- what a cell is -->
+  <rect class="card" x="20" y="386" width="360" height="52" rx="10"/>
+  <rect class="chip" x="34" y="398" width="28" height="28" rx="4"/>
+  <text class="type" x="48" y="418" text-anchor="middle">Yo</text>
+  <text class="p" x="74" y="409">A cell is 16 pixels wide: one letter, or</text>
+  <text class="p" x="74" y="427">two narrow ones that fit in it together.</text>
+
+  <!-- the speeds -->
+  <text class="eyebrow" x="20" y="466">THE PLAYER'S MESSAGE SPEED</text>
+  <rect class="chip-wait" x="20" y="478" width="72" height="28" rx="14"/>
+  <text class="kw" x="56" y="497" text-anchor="middle">Slow</text>
+  <text class="p" x="104" y="491">a cell, then a pause of 4 frames</text>
+  <text class="small" x="104" y="507">no pause while a button is held</text>
+  <rect class="chip" x="20" y="518" width="72" height="28" rx="14"/>
+  <text class="k" x="56" y="537" text-anchor="middle">Normal</text>
+  <text class="p" x="104" y="537">a cell every frame</text>
+  <rect class="chip" x="20" y="558" width="72" height="28" rx="14"/>
+  <text class="k" x="56" y="577" text-anchor="middle">Fast</text>
+  <text class="p" x="104" y="571">up to 10 cells a frame</text>
+  <text class="small" x="104" y="587">a space ends the frame's share: about a word</text>
+</svg>

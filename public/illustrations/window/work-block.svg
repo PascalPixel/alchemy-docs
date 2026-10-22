@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 596" role="img" aria-labelledby="title desc">
+  <title id="title">One block holds every window</title>
+  <desc id="desc">Everything the window system keeps is in one block of memory, set up with each scene. In it: the windows' tilemap, a picture of the screen 32 tiles wide and 20 tall that every window is drawn into; 8 window slots, 12 in the Japanese edition; 3 typists, each typing one message into one window; 64 sprites that windows carry, such as letters, icons, portraits and the page arrow; the ring of unpacked messages, 512 codes, 256 in Japanese; 8 blanks for names and numbers a message will fill in; and 2 portrait slots.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card-accent { fill: #ffffff; stroke: #0a72ef; stroke-width: 1.5; }
+    .chip { fill: #f0f6ff; stroke: #bcd7fb; }
+    .chip-wait { fill: #f5f5f5; stroke: #d4d4d4; }
+    .fill-accent { fill: #0a72ef; }
+    .frame { fill: none; stroke: #d4d4d4; }
+    .h2 { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .k { fill: #0a72ef; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .dot { fill: #0a72ef; }
+    .dot-grey { fill: #a3a3a3; }
+    .w3 { fill: none; stroke: #0a72ef; stroke-width: 2; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card-accent { fill: #111111; stroke: #3b8eff; }
+      .chip { fill: #0d1a2e; stroke: #1e3a66; }
+      .chip-wait { fill: #1a1a1a; stroke: #333333; }
+      .fill-accent { fill: #3b8eff; }
+      .frame { stroke: #333333; }
+      .h2 { fill: #ededed; }
+      .small, .code, .eyebrow { fill: #7c7c7c; }
+      .k { fill: #66a6ff; }
+      .dot-grey { fill: #5c5c5c; }
+      .dot { fill: #3b8eff; }
+      .w3 { stroke: #3b8eff; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="595" rx="16"/>
+  <text class="eyebrow" x="20" y="32">THE WINDOWS' WORK BLOCK</text>
+
+  <rect class="card-accent" x="20" y="44" width="360" height="510" rx="12"/>
+
+  <!-- tilemap -->
+  <g class="chip">
+    <rect x="36" y="60" width="96" height="60" rx="3"/>
+  </g>
+  <path class="frame" d="M 48 60 V 120 M 60 60 V 120 M 72 60 V 120 M 84 60 V 120 M 96 60 V 120 M 108 60 V 120 M 120 60 V 120 M 36 72 H 132 M 36 84 H 132 M 36 96 H 132 M 36 108 H 132"/>
+  <rect class="fill-accent" x="60" y="72" width="60" height="24" rx="2" fill-opacity="0.6"/>
+  <text class="h2" x="148" y="78">The tilemap</text>
+  <text class="small" x="148" y="96">the screen as 32 by 20 tiles,</text>
+  <text class="small" x="148" y="111">every window drawn into it</text>
+  <path class="frame" d="M 36 132 H 364"/>
+
+  <!-- window slots -->
+  <g class="chip-wait">
+    <rect x="36" y="146" width="20" height="14" rx="2"/><rect x="60" y="146" width="20" height="14" rx="2"/><rect x="84" y="146" width="20" height="14" rx="2"/><rect x="108" y="146" width="20" height="14" rx="2"/>
+    <rect x="36" y="164" width="20" height="14" rx="2"/><rect x="60" y="164" width="20" height="14" rx="2"/><rect x="84" y="164" width="20" height="14" rx="2"/><rect x="108" y="164" width="20" height="14" rx="2"/>
+  </g>
+  <rect class="chip" x="36" y="146" width="20" height="14" rx="2"/>
+  <rect class="chip" x="60" y="146" width="20" height="14" rx="2"/>
+  <text class="h2" x="148" y="158">8 window slots</text>
+  <text class="small" x="148" y="176">12 in Japanese; a window takes one</text>
+  <path class="frame" d="M 36 192 H 364"/>
+
+  <!-- channels -->
+  <g class="chip"><rect x="36" y="206" width="28" height="24" rx="4"/><rect x="70" y="206" width="28" height="24" rx="4"/><rect x="104" y="206" width="28" height="24" rx="4"/></g>
+  <text class="k" x="50" y="223" text-anchor="middle">Aa</text>
+  <text class="k" x="84" y="223" text-anchor="middle">Aa</text>
+  <text class="k" x="118" y="223" text-anchor="middle">Aa</text>
+  <text class="h2" x="148" y="218">3 typists</text>
+  <text class="small" x="148" y="236">each types one message into a window</text>
+  <path class="frame" d="M 36 252 H 364"/>
+
+  <!-- outputs -->
+  <g class="dot-grey">
+    <circle cx="40" cy="268" r="2.5"/><circle cx="48" cy="268" r="2.5"/><circle cx="56" cy="268" r="2.5"/><circle cx="64" cy="268" r="2.5"/><circle cx="72" cy="268" r="2.5"/><circle cx="80" cy="268" r="2.5"/><circle cx="88" cy="268" r="2.5"/><circle cx="96" cy="268" r="2.5"/><circle cx="104" cy="268" r="2.5"/><circle cx="112" cy="268" r="2.5"/><circle cx="120" cy="268" r="2.5"/><circle cx="128" cy="268" r="2.5"/>
+    <circle cx="40" cy="276" r="2.5"/><circle cx="48" cy="276" r="2.5"/><circle cx="56" cy="276" r="2.5"/><circle cx="64" cy="276" r="2.5"/><circle cx="72" cy="276" r="2.5"/><circle cx="80" cy="276" r="2.5"/><circle cx="88" cy="276" r="2.5"/><circle cx="96" cy="276" r="2.5"/><circle cx="104" cy="276" r="2.5"/><circle cx="112" cy="276" r="2.5"/><circle cx="120" cy="276" r="2.5"/><circle cx="128" cy="276" r="2.5"/>
+    <circle cx="40" cy="284" r="2.5"/><circle cx="48" cy="284" r="2.5"/><circle cx="56" cy="284" r="2.5"/><circle cx="64" cy="284" r="2.5"/><circle cx="72" cy="284" r="2.5"/><circle cx="80" cy="284" r="2.5"/><circle cx="88" cy="284" r="2.5"/><circle cx="96" cy="284" r="2.5"/><circle cx="104" cy="284" r="2.5"/><circle cx="112" cy="284" r="2.5"/><circle cx="120" cy="284" r="2.5"/><circle cx="128" cy="284" r="2.5"/>
+    <circle cx="40" cy="292" r="2.5"/><circle cx="48" cy="292" r="2.5"/><circle cx="56" cy="292" r="2.5"/><circle cx="64" cy="292" r="2.5"/><circle cx="72" cy="292" r="2.5"/><circle cx="80" cy="292" r="2.5"/><circle cx="88" cy="292" r="2.5"/><circle cx="96" cy="292" r="2.5"/><circle cx="104" cy="292" r="2.5"/><circle cx="112" cy="292" r="2.5"/><circle cx="120" cy="292" r="2.5"/><circle cx="128" cy="292" r="2.5"/>
+    <circle cx="40" cy="300" r="2.5"/><circle cx="48" cy="300" r="2.5"/><circle cx="56" cy="300" r="2.5"/><circle cx="64" cy="300" r="2.5"/><circle cx="72" cy="300" r="2.5"/><circle cx="80" cy="300" r="2.5"/><circle cx="88" cy="300" r="2.5"/><circle cx="96" cy="300" r="2.5"/><circle cx="104" cy="300" r="2.5"/><circle cx="112" cy="300" r="2.5"/><circle cx="120" cy="300" r="2.5"/><circle cx="128" cy="300" r="2.5"/>
+    <circle cx="40" cy="308" r="2.5"/><circle cx="48" cy="308" r="2.5"/><circle cx="56" cy="308" r="2.5"/><circle cx="64" cy="308" r="2.5"/>
+  </g>
+  <text class="h2" x="148" y="282">64 sprites</text>
+  <text class="small" x="148" y="300">letters, icons, portraits, the arrow</text>
+  <path class="frame" d="M 36 322 H 364"/>
+
+  <!-- ring -->
+  <circle cx="84" cy="358" r="22" fill="none" class="w3" stroke-width="7"/>
+  <text class="h2" x="148" y="354">The ring of messages</text>
+  <text class="small" x="148" y="372">512 codes, 256 in Japanese</text>
+  <path class="frame" d="M 36 394 H 364"/>
+
+  <!-- arguments -->
+  <g class="chip-wait">
+    <rect x="36" y="410" width="20" height="18" rx="3"/><rect x="60" y="410" width="20" height="18" rx="3"/><rect x="84" y="410" width="20" height="18" rx="3"/><rect x="108" y="410" width="20" height="18" rx="3"/>
+    <rect x="36" y="432" width="20" height="18" rx="3"/><rect x="60" y="432" width="20" height="18" rx="3"/><rect x="84" y="432" width="20" height="18" rx="3"/><rect x="108" y="432" width="20" height="18" rx="3"/>
+  </g>
+  <text class="h2" x="148" y="424">8 blanks</text>
+  <text class="small" x="148" y="442">names and numbers to fill in</text>
+  <path class="frame" d="M 36 466 H 364"/>
+
+  <!-- portraits -->
+  <g class="chip"><rect x="36" y="480" width="40" height="40" rx="4"/><rect x="84" y="480" width="40" height="40" rx="4"/></g>
+  <circle class="dot" cx="56" cy="496" r="7" fill-opacity="0.5"/><path class="dot" d="M 44 516 q 12 -14 24 0 z" fill-opacity="0.5"/>
+  <circle class="dot" cx="104" cy="496" r="7" fill-opacity="0.5"/><path class="dot" d="M 92 516 q 12 -14 24 0 z" fill-opacity="0.5"/>
+  <text class="h2" x="148" y="496">2 portraits</text>
+  <text class="small" x="148" y="514">the faces beside a message</text>
+
+  <text class="small" x="20" y="576">Set up with each scene, gone at the next.</text>
+  <text class="code" x="380" y="32" text-anchor="end">UiRenderWork</text>
+</svg>
