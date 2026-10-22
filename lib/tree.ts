@@ -1,12 +1,15 @@
 import type { Folder, Item, Node, Root } from 'fumadocs-core/page-tree';
 import { isList } from './shared';
 
-// The sidebar a page is sent. The whole tree has a node for each of the
-// games' four thousand files, and every page carries its sidebar, so in the
-// source and reference lists a page gets only the folders on its own path
-// open, with every file in them; every other folder there is closed, shown
-// as a link to its index page, and a long list of folders beside the path is
-// left out (the path's own folder pages list them). The guides stay whole.
+// The sidebar a page is sent. The site has two tabs, the guide and each
+// game's reference, which are root folders: a page is sent its own tab's
+// tree, and of every other tab only the folder and its index, which is all
+// the tab switcher needs. The reference has a node for each of the games'
+// thousands of files, structures and index pages, and every page carries its
+// sidebar, so there a page gets only the folders on its own path open, with
+// every item in them; every other folder there is closed, shown as a link to
+// its index page, and a long list of folders beside the path is left out (the
+// path's own folder pages list them). The guide stays whole.
 const LONG = 40;
 
 const urls = new WeakMap<Folder, Set<string>>();
@@ -33,12 +36,14 @@ function prune(nodes: Node[], url: string): Node[] {
   const folders = nodes.filter((n) => n.type === 'folder').length;
   const out: Node[] = [];
   for (const node of nodes) {
-    // prune only opens folders on the page's own path, so every file listed
+    // prune only opens folders on the page's own path, so every item listed
     // here sits beside the page or in one of its folders.
     if (node.type === 'page') out.push(item(node));
     else if (node.type === 'separator') out.push(node);
     else if (node === onPath) {
       out.push({ ...node, $ref: undefined, index: node.index && item(node.index), defaultOpen: true, children: prune(node.children, url) });
+    } else if (node.root) {
+      out.push({ ...node, $ref: undefined, index: node.index && item(node.index), children: [] });
     } else if (node.index && isList(node.index.url)) {
       if (!(onPath && folders > LONG && isList(url))) out.push(item(node.index, node.name));
     } else {
@@ -50,5 +55,8 @@ function prune(nodes: Node[], url: string): Node[] {
 
 export function treeFor(tree: Root, slug: string[] | undefined): Root {
   const url = '/' + (slug ?? []).join('/');
-  return { ...tree, children: prune(tree.children, url) };
+  // The reference lists its files, structures and index pages by name, as
+  // links, which leaves their pages out of the tree: fumadocs keeps those in
+  // a fallback tree, which no page needs sent.
+  return { ...tree, fallback: undefined, children: prune(tree.children, url) };
 }

@@ -1,22 +1,25 @@
-// Builds the whole of content/docs from an Alchemy checkout: the home page
-// from the README, the front page, section pages and folder guides from their
-// Markdown, the sidebar from the links between them, and the source pages
-// from the games' C, read with tree-sitter. Everything it writes is ignored by
-// git; `bun run content` rebuilds it, and `bun run build` runs it first.
+// Builds the whole of content/docs from an Alchemy checkout, laid out as
+// Doxygen lays out its HTML: the guide (Doxygen's main page and related
+// pages) from Alchemy's Markdown, arranged by the links between its pages,
+// and the reference from the games' C, read with tree-sitter. Everything it
+// writes is ignored by git; `bun run content` rebuilds it, and `bun run build`
+// runs it first.
 //
-// A source page is a folder of one game: its files, each with its summary
-// (the file's /// @file comment) and every function, macro, type, struct and
-// global it declares, with their /// comments, fields and values, who calls
-// them, and a link to their line on GitHub. A large folder (the scenes, the
-// effect parts) gets a page per file instead. A file with no /// comment has
-// no page or section of its own, only its name in its folder's file list.
-// Names in comments link to their declaration within the same game, so the
-// two games never cross. A handler whose comment names the abilities that
-// reach it shows their recordings (public/abilities/index.tsv) under its section.
+// The reference has a page for every file: its brief (the first sentence of
+// its /// @file comment), its includes, a summary table for each kind of
+// member, the whole comment, and an entry for every function, macro, type,
+// enum and global it defines, with or without a comment: its declaration,
+// its /// comment, its enumerators, what it refers to and what refers to it,
+// and its line on GitHub. Every structure and union has a page with its
+// fields; every folder a page with its folders and files; and the indexes
+// list every name by kind. Names in comments, and code names in the guide,
+// link to their entries within the same game, so the two games never cross.
+// A handler whose comment names the abilities that reach it shows their
+// recordings (public/abilities/index.tsv) in its entry.
 //
-// Every title is Alchemy's: a Markdown page's # heading, a source page's path
-// in its game. Every description is a first sentence Alchemy wrote: a page's
-// opening sentence, a file's /// @file summary.
+// Every title is Alchemy's: a Markdown page's # heading, a reference page's
+// path in its game or a type's name. Every description is a first sentence
+// Alchemy wrote: a page's opening sentence, a file's /// @file brief.
 
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, normalize, relative } from 'node:path';
@@ -43,8 +46,12 @@ type Game = 'tbs' | 'tla';
 // page saying so (content/docs/tla/index.mdx) until it is done.
 const GAMES: Game[] = ['tbs'];
 const ROOTS = ['src', 'include'];
-// A folder whose C is larger than this gets a page per file.
+// A folder whose C was larger than this once had a page per file, and a
+// smaller one a single page for all its files, whose old anchors still lead
+// on to each member (dirPageWrite).
 const SPLIT_BYTES = 200_000;
+const split = new Set<string>();
+const GAME_TITLE: Record<Game, string> = { tbs: 'The Broken Seal', tla: 'The Lost Age' };
 
 const yaml = (s: string) => JSON.stringify(s);
 
@@ -56,7 +63,7 @@ function write(path: string, text: string) {
 // The URL of every page written, for the redirects' check.
 const pagesWritten = new Set<string>();
 function page(path: string, front: Record<string, string>, body: string) {
-  pagesWritten.add(`/${path.replace(/\.mdx?$/, '').replace(/(^|\/)index$/, '')}`.replace(/(.)\/$/, '$1'));
+  pagesWritten.add(`/${path.replace(/^\([^/)]*\)\//, '').replace(/\.mdx?$/, '').replace(/(^|\/)index$/, '')}`.replace(/(.)\/$/, '$1'));
   const head = Object.entries(front)
     .filter(([, v]) => v)
     .map(([k, v]) => `${k}: ${yaml(v)}`)
@@ -100,6 +107,7 @@ type Decl = {
   fields: Field[];
   refs: Set<string>; // names this declaration uses
   lines: number; // how many lines of source it spans
+  anon?: boolean; // an enum with no tag or typedef name: Doxygen's "anonymous enum"
 };
 type SourceFile = { path: string; game: Game; summary: string; doc: string; decls: Decl[]; size: number };
 
@@ -223,7 +231,7 @@ function declsOf(parent: Node, out: Decl[]) {
     const line = node.startPosition.row + 1;
     const refs = new Set<string>();
     const add = (d: Omit<Decl, 'line' | 'refs' | 'fields' | 'lines'> & { fields?: Field[] }) => {
-      if (!d.name) return;
+      if (!d.name && !d.anon) return;
       identifiers(node, refs);
       refs.delete(d.name);
       out.push({ fields: [], ...d, line, refs, lines: node.endPosition.row - node.startPosition.row + 1 });
@@ -246,7 +254,21 @@ function declsOf(parent: Node, out: Decl[]) {
         const kind = spec.type.split('_')[0] as 'struct' | 'union' | 'enum';
         const tag = spec.childForFieldName('name')?.text ?? '';
         const alias = node.type === 'type_definition' ? declaredName(node.childForFieldName('declarator')) : '';
-        add({ kind, name: tag || alias, signature: `${kind} ${tag || alias}`, doc, fields: fieldsOf(body) });
+        const name = tag || alias;
+        const fields = fieldsOf(body);
+        // An enum with no name is still documented, as Doxygen's anonymous
+        // enum: its enumerators are names the code uses.
+        const members = fields.slice(0, 4).map((f) => f.name);
+        if (name || kind === 'enum') add({ kind, name, anon: !name, signature: name ? `${kind} ${name}` : `${kind} { ${members.join(', ')}${fields.length > 4 ? ', …' : ''} }`, doc, fields });
+        // A variable declared with its type (`static const struct { … }
+        // sTable[] = { … };`): its own entry, holding the fields of a type
+        // that has no name.
+        const declarator = node.type === 'declaration' ? node.childForFieldName('declarator') : null;
+        if (declarator && declaredName(declarator)) {
+          const before = oneLine(asWritten(node, body.startIndex));
+          const after = oneLine(written.slice(body.endIndex, declarator.endIndex)).replace(/\s*=[\s\S]*$/, '');
+          add({ kind: 'variable', name: declaredName(declarator), signature: `${before} { … }${after.startsWith(' ') ? '' : ' '}${after}`.replace(/\s+/g, ' ').trim(), doc, fields: name ? [] : fields });
+        }
         continue;
       }
       if (node.type === 'type_definition') {
@@ -348,32 +370,131 @@ function walk(rel: string, out: string[] = []): string[] {
 
 // ---------------------------------------------------------------------------
 // Where things are on the site.
+//
+// The site has two parts, as Doxygen's output has: the guide (its main page
+// and related pages, from Alchemy's Markdown) and the reference, made from
+// the C alone. Every file of a game has its own page in the reference, at its
+// path under /<game>/source; every folder has a page listing its folders and
+// files; every structure and union has a page of its own under
+// /<game>/source/structs; and the indexes list every member by kind and
+// name. Every declaration has an entry, with or without a comment, so a name
+// in a comment always links to a page of the site.
 
 const rel = (path: string) => path.replace(/^games\/(tbs|tla)\//, '');
 const fileSlug = (path: string) => basename(path).replace(/\.([ch])$/, '-$1');
 const anchor = (name: string) => name.toLowerCase().replace(/[^a-z0-9_-]/g, '');
+// A heading's id as github-slugger, which fumadocs uses, makes it.
+const headingSlug = (s: string) =>
+  s
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}\p{M} _-]/gu, '')
+    .replace(/ /g, '-');
+// A name as words joined by hyphens, for a URL: BattleWork is battle-work.
+const kebab = (s: string) =>
+  s
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    .replace(/_+/g, '-')
+    .replace(/^-|-$/g, '')
+    .toLowerCase();
 
-const split = new Set<string>(); // folders with a page per file
-// Files that show no /// comment: no page or section, only a name on their
-// folder's page, so a link to one goes to its code on GitHub.
-const pageless = new Set<string>();
-function pageOf(path: string): string {
-  if (pageless.has(path)) return `${github}/${path}`;
-  const game = path.split('/')[1];
-  const dir = dirname(path);
-  const base = `/${game}/source/${rel(dir)}`;
-  return split.has(dir) ? `${base}/${fileSlug(path)}` : base;
+// The guide's pages are written under a folder group, which fumadocs leaves
+// out of their URLs, so the guide is one sidebar tab and the reference
+// another while every page keeps its address.
+const GUIDE = '(guide)';
+
+const gameOf = (path: string) => path.split('/')[1] as Game;
+const reference = (game: Game) => `/${game}/source`;
+const dirPage = (dir: string) => `${reference(gameOf(dir))}/${rel(dir)}`;
+const pageOf = (path: string) => `${dirPage(dirname(path))}/${fileSlug(path)}`;
+
+// The headings of a file or structure page, whose ids no member may take.
+const SECTIONS = {
+  struct: ['Data Structures', ''],
+  union: ['Data Structures', ''],
+  macro: ['Macros', 'Macro Definition Documentation'],
+  typedef: ['Typedefs', 'Typedef Documentation'],
+  enum: ['Enumerations', 'Enumeration Type Documentation'],
+  function: ['Functions', 'Function Documentation'],
+  prototype: ['Functions', 'Function Documentation'],
+  variable: ['Variables', 'Variable Documentation'],
+} as const satisfies Record<Decl['kind'], readonly [string, string]>;
+const RESERVED = new Set([...Object.values(SECTIONS).flat(), 'Detailed Description', 'Data Fields', 'Field Documentation', 'Includes'].filter(Boolean).map(headingSlug));
+
+// A declaration's place within its file: one entry for every name of a kind,
+// gathering a name declared again under an edition's #if or as a prototype
+// beside its definition.
+const memberKey = (d: Decl) => `${SECTIONS[d.kind][0]}\t${d.anon ? `@${d.line}` : d.name}`;
+const ids = new Map<SourceFile, Map<string, string>>();
+function idsOf(file: SourceFile): Map<string, string> {
+  let out = ids.get(file);
+  if (out) return out;
+  out = new Map();
+  const used = new Set(RESERVED);
+  for (const d of file.decls) {
+    const key = memberKey(d);
+    if (out.has(key) || d.kind === 'struct' || d.kind === 'union') continue;
+    const base = d.anon ? `enum-${d.line}` : anchor(d.name) || `line-${d.line}`;
+    let id = base;
+    for (let n = 2; used.has(id); n++) id = `${base}-${n}`;
+    used.add(id);
+    out.set(key, id);
+  }
+  ids.set(file, out);
+  return out;
 }
 
-// Every declaration's place, per game: the name's first declaration with a
-// comment, else its first definition, else its first mention.
-const where = new Map<Game, Map<string, { url: string; decl: Decl; file: SourceFile }>>();
+// Every structure and union's page, by its declaration.
+const structPages = new Map<Decl, string>();
+function placeStructs(game: Game, files: SourceFile[]) {
+  // Each name's first declaration takes its name; another type of the same
+  // name (a scene's own struct Object) takes its file's as well.
+  // The letters' folders (structs/a) are taken.
+  const used = new Set<string>([...'abcdefghijklmnopqrstuvwxyz', 'other']);
+  const slugs = new Map<Decl, string>();
+  const all = files.flatMap((f) => f.decls.filter((d) => (d.kind === 'struct' || d.kind === 'union') && d.name).map((d) => ({ f, d, base: kebab(d.name) || `line-${d.line}` })));
+  for (const { d, base } of all)
+    if (!used.has(base)) {
+      used.add(base);
+      slugs.set(d, base);
+    }
+  for (const { f, d, base } of all) {
+    if (slugs.has(d)) continue;
+    const own = `${base}-${kebab(basename(f.path).replace(/\.\w+$/, ''))}`;
+    let slug = own;
+    for (let n = 2; used.has(slug); n++) slug = `${own}-${n}`;
+    used.add(slug);
+    slugs.set(d, slug);
+  }
+  for (const [d, slug] of slugs) structPages.set(d, `${reference(game)}/structs/${slug}`);
+}
+
+function urlOf(file: SourceFile, d: Decl): string {
+  return structPages.get(d) ?? `${pageOf(file.path)}#${idsOf(file).get(memberKey(d))}`;
+}
+
+// A declaration that defines what it names: everything but a prototype and
+// an extern variable, which declare what another file defines.
+const isDefinition = (d: Decl) => d.kind !== 'prototype' && !(d.kind === 'variable' && /\bextern\b/.test(d.signature));
+
+// Every name's entry, per game: its definition with a comment, else any
+// definition, else its first declaration. Links to a name go there.
+type Placement = { url: string; decl: Decl; file: SourceFile };
+const where = new Map<Game, Map<string, Placement>>();
 function place(game: Game, file: SourceFile, d: Decl) {
+  if (d.anon) return;
   const index = where.get(game)!;
   const known = index.get(d.name);
-  const rank = (x: Decl) => (x.doc ? 2 : 0) + (x.kind === 'function' || x.kind === 'struct' || x.kind === 'enum' || x.kind === 'union' ? 1 : 0);
-  if (!known || rank(d) > rank(known.decl)) index.set(d.name, { url: documented(d) ? `${pageOf(file.path)}#${anchor(d.name)}` : `${github}/${file.path}#L${d.line}`, decl: d, file });
+  const rank = (x: Decl) => (x.doc ? 2 : 0) + (isDefinition(x) ? 1 : 0);
+  if (!known || rank(d) > rank(known.decl)) index.set(d.name, { url: urlOf(file, d), decl: d, file });
 }
+// Every enumerator, at its enum's entry.
+const enumerators = new Map<Game, Map<string, Placement>>();
+function placeEnumerators(game: Game, file: SourceFile, d: Decl) {
+  if (d.kind !== 'enum') return;
+  const index = enumerators.get(game)!;
+  for (const f of d.fields) if (!index.has(f.name)) index.set(f.name, { url: urlOf(file, d), decl: d, file });
+}
+const lookup = (game: Game, name: string) => where.get(game)!.get(name) ?? enumerators.get(game)!.get(name);
 
 // The names a game declares that md() could not know while the files were
 // read, written bare in a comment, shown as code once the index has them: a
@@ -407,43 +528,56 @@ function codeProse(text: string, game: Game): string {
     .join('');
 }
 
+// The entry a code span names: `Name`, `Name()`, `gName.field`, and a
+// structure's field on its structure's page (`BattleWork.enemyIds`).
+function codeTarget(span: string, game: Game, self: string): Placement | undefined {
+  const m = span.match(/^`(\w+)(?:(?:\.|->)(\w+))?(?:(?:\.|->)\w+)*(?:\(\))?`$/);
+  if (!m || m[1] === self) return undefined;
+  const hit = lookup(game, m[1]) ?? (sceneIds.has(m[1]) ? where.get(game)!.get(`SceneId_${m[1]}`) : undefined);
+  if (hit && m[2] && structPages.get(hit.decl) === hit.url && hit.decl.fields.some((f) => f.name.split(', ')[0] === m[2])) return { ...hit, url: `${hit.url}#${anchor(m[2])}` };
+  return hit;
+}
+
 // Names in comments that a game declares become links to them.
 function linkNames(text: string, game: Game, self: string): string {
-  const index = where.get(game)!;
   return text
     .split(/(```[\s\S]*?```|`[^`]*`|\]\([^)]*\))/)
     .map((part, i) => {
       if (i % 2) {
-        const m = part.match(/^`(\w+)(?:(?:\.|->)\w+)*(?:\(\))?`$/);
-        const hit = m && m[1] !== self ? (index.get(m[1]) ?? (sceneIds.has(m[1]) ? index.get(`SceneId_${m[1]}`) : undefined)) : undefined;
+        const hit = codeTarget(part, game, self);
         return hit ? `[${part}](${hit.url})` : part;
       }
       return part.replace(/\b([A-Za-z_][A-Za-z0-9_]*)(\\_[A-Za-z0-9_\\]+)*\b/g, (word) => {
         const name = word.replace(/\\_/g, '_');
-        const hit = name !== self && name.length > 3 && /[A-Z_]/.test(name.slice(1)) ? index.get(name) : undefined;
+        const hit = name !== self && name.length > 3 && /[A-Z_]/.test(name.slice(1)) ? lookup(game, name) : undefined;
         return hit ? `[${word}](${hit.url})` : word;
       });
     })
     .join('');
 }
 
-// ---------------------------------------------------------------------------
-// The source pages.
+// The code names in a guide page become links into the reference, as
+// Doxygen links the names in its related pages: a code span by itself, not
+// one inside a link's text or a heading.
+function linkProse(text: string, game: Game): string {
+  return text
+    .split(/(```[\s\S]*?```|!?\[(?:[^\]`]|`[^`]*`)*\]\([^)]*\)|^#[^\n]*$|`[^`\n]*`)/m)
+    .map((part, i) => {
+      if (!(i % 2) || !part.startsWith('`')) return part;
+      const hit = codeTarget(part, game, '');
+      return hit ? `[${part}](${hit.url})` : part;
+    })
+    .join('');
+}
 
-const KIND_ORDER: Decl['kind'][] = ['function', 'struct', 'union', 'enum', 'typedef', 'macro', 'variable', 'prototype'];
-const KIND_TITLE: Record<Decl['kind'], string> = {
-  function: 'Functions',
-  struct: 'Structures',
-  union: 'Unions',
-  enum: 'Enumerations',
-  typedef: 'Types',
-  macro: 'Macros',
-  variable: 'Globals',
-  prototype: 'Declarations',
-};
+// ---------------------------------------------------------------------------
+// The reference.
 
 // Who refers to each name: functions that call it, tables that list it.
 const users = new Map<Game, Map<string, Set<string>>>();
+// The files each file includes, and is included by.
+const includes = new Map<SourceFile, { file?: SourceFile; as: string }[]>();
+const includedBy = new Map<SourceFile, SourceFile[]>();
 
 // ---------------------------------------------------------------------------
 // The recordings beside the code that plays them. A handler's comment names
@@ -530,97 +664,431 @@ function reachedIds(d: Decl, at: string): { ids: number[]; field: number[] } {
 function recordingsOf(file: SourceFile, d: Decl): string {
   if (where.get(file.game)!.get(d.name)?.decl !== d) return '';
   const { ids, field } = reachedIds(d, `${file.path}:${d.line} ${d.name}`);
-  for (const id of [...ids, ...field]) if (!handlerOf.has(id)) handlerOf.set(id, `${pageOf(file.path)}#${anchor(d.name)}`);
+  for (const id of [...ids, ...field]) if (!handlerOf.has(id)) handlerOf.set(id, urlOf(file, d));
   const shown: string[] = [];
   const cast = (id: number, inField: boolean) => recordings.get().find((x) => int(x.ability) === id && !!x.scene === inField);
   for (const [id, inField] of [...ids.map((i) => [i, false] as const), ...field.map((i) => [i, true] as const)]) {
     const r = cast(id, inField);
     if (!r) continue;
-    placedRecordings.set(id, [...(placedRecordings.get(id) ?? []), `${pageOf(file.path)}#${anchor(d.name)}`]);
+    placedRecordings.set(id, [...(placedRecordings.get(id) ?? []), urlOf(file, d)]);
     shown.push(`![${md(r.name)}](/abilities/${r.file})\\\n${md(r.name)}`);
   }
   return shown.join('\n\n');
 }
 
-function declSection(file: SourceFile, d: Decl, level: string): string {
-  const parts = [`${level} ${md(d.name)}`];
-  parts.push(`\`${d.signature.replace(/`/g, "'")}\``);
-  if (d.doc) parts.push(linkNames(d.doc, file.game, d.name));
-  const cast = recordingsOf(file, d);
-  if (cast) parts.push(cast);
-  if (d.fields.length) {
-    const rows = d.fields.map((f) => `| \`${f.name}\` | ${d.kind === 'enum' ? (f.type ? `\`${f.type}\`` : '') : `\`${f.type.replace(/\|/g, '\\|')}\``} | ${linkNames(f.doc, file.game, d.name).replace(/\n+/g, ' ')} |`);
-    parts.push(`| ${d.kind === 'enum' ? 'Value' : 'Field'} | ${d.kind === 'enum' ? '=' : 'Declared as'} | |\n| --- | --- | --- |\n${rows.join('\n')}`);
+// A comment's brief, as Doxygen takes it: the first sentence of its first
+// paragraph, unless that paragraph is laid out as code.
+function brief(doc: string): string {
+  const para = doc.split(/\n\n/)[0] ?? '';
+  if (!para || para.startsWith('```')) return '';
+  return para
+    .replace(/\s*\n\s*/g, ' ')
+    .split(/(?<=(?<!\b(?:Mt|Mr|Mrs|Ms|Dr|St|e\.g|i\.e|vs))[.!?])\s+(?=[^a-z])/)[0]
+    .trim();
+}
+// Text inside a table's cell, which a pipe would end.
+const cell = (s: string) => s.replace(/\n+/g, ' ').replace(/(?<!\\)\|/g, '\\|');
+const code = (s: string) => (s.trim() ? `\`${s.trim().replace(/`/g, "'")}\`` : '');
+const heading = (level: string, title: string, id: string) => `${level} ${title} [#${id.replace(/_/g, '\\_')}]`;
+const listOf = (items: string[]) => (items.length < 2 ? items.join('') : `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`);
+const github_line = (file: SourceFile, line: number) => `${github}/${file.path}#L${line}`;
+
+// A declaration's signature split around its name, for a summary row.
+function aroundName(signature: string, name: string): [string, string] {
+  const at = name ? signature.search(new RegExp(`\\b${name}\\b`)) : -1;
+  return at < 0 ? [signature, ''] : [signature.slice(0, at), signature.slice(at + name.length)];
+}
+
+// The longest a summary row shows of a macro's value or an enum's members;
+// the member's entry shows all of it.
+const ROW_TAIL = 60;
+const clip = (s: string) => (s.length > ROW_TAIL ? `${s.slice(0, ROW_TAIL).trimEnd()} …` : s);
+
+// A summary row: the declaration, its name linked to its entry, and its brief.
+function summaryRow(file: SourceFile, d: Decl, url: string, doc: string): string {
+  const name = d.anon ? '' : d.name;
+  let [before, after] = aroundName(d.signature, name);
+  if (d.kind === 'enum') {
+    const names = d.fields.map((f) => f.name);
+    before = 'enum';
+    after = names.length ? `{ ${clip(names.join(', '))} }` : '';
   }
-  const by = users.get(file.game)!.get(d.name);
-  const index = where.get(file.game)!;
-  if (d.kind !== 'prototype' && by?.size) {
-    const list = [...by].sort().slice(0, 40).map((n) => (index.get(n) ? `[\`${n}\`](${index.get(n)!.url})` : `\`${n}\``));
-    parts.push(`Used by ${list.join(', ')}${by.size > 40 ? ` and ${by.size - 40} more` : ''}.`);
+  if (d.kind === 'macro') after = clip(after);
+  const label = d.anon ? `[anonymous enum](${url})` : `[${code(d.name)}](${url})`;
+  return `| ${cell(code(before))} | ${cell(`${label}${after.trim() ? ` ${code(after)}` : ''}`)} | ${cell(linkNames(brief(doc), file.game, name))} |`;
+}
+
+// "References" and "Referenced by", as Doxygen lists them under a member:
+// the functions and globals it uses, and the functions and tables that use
+// it. A long list stops at REF_LIMIT.
+const REF_LIMIT = 50;
+function refList(names: string[], game: Game): string {
+  const linked = names
+    .sort((a, b) => a.localeCompare(b, 'en'))
+    .slice(0, REF_LIMIT)
+    .map((n) => {
+      const hit = lookup(game, n);
+      const label = code(hit && (hit.decl.kind === 'function' || hit.decl.kind === 'prototype') ? `${n}()` : n);
+      return hit ? `[${label}](${hit.url})` : label;
+    });
+  if (names.length > REF_LIMIT) linked.push(`${names.length - REF_LIMIT} more`);
+  return `${listOf(linked)}.`;
+}
+function relations(file: SourceFile, decls: Decl[], self: string): string[] {
+  const out: string[] = [];
+  const game = file.game;
+  if (decls.some((d) => d.kind === 'function' || (d.kind === 'variable' && isDefinition(d)))) {
+    const used = new Set<string>();
+    for (const d of decls)
+      for (const r of d.refs) {
+        const hit = r !== self && where.get(game)!.get(r);
+        if (hit && /^(function|prototype|variable)$/.test(hit.decl.kind)) used.add(r);
+      }
+    if (used.size) out.push(`References ${refList([...used], game)}`);
   }
-  parts.push(`[Line ${d.line}](${github}/${file.path}#L${d.line})`);
+  const by = self && users.get(game)!.get(self);
+  if (by && by.size) out.push(`Referenced by ${refList([...by], game)}`);
+  return out;
+}
+
+const definedAt = (file: SourceFile, decls: Decl[]) => {
+  const lines = [...new Set(decls.map((d) => d.line))].map((l) => `[${l}](${github_line(file, l)})`);
+  return `Definition at line${lines.length > 1 ? 's' : ''} ${listOf(lines)} of file ${code(basename(file.path))}.`;
+};
+
+// A table of an enum's enumerators or a type's fields.
+function memberTable(file: SourceFile, d: Decl, self: string): string {
+  if (!d.fields.length) return '';
+  if (d.kind === 'enum') {
+    const rows = d.fields.map((f) => `| ${code(f.name)} | ${cell(code(f.type))} | ${cell(linkNames(f.doc, file.game, self))} |`);
+    return `| Enumerator | Value | Description |\n| --- | --- | --- |\n${rows.join('\n')}`;
+  }
+  const rows = d.fields.map((f) => `| ${cell(code(f.type))} | ${cell(linkNames(f.doc, file.game, self))} |`);
+  return `| Field | Description |\n| --- | --- |\n${rows.join('\n')}`;
+}
+
+// A member's entry, as Doxygen documents one: its declarations as written,
+// its comment, its recordings, its enumerators or fields, what it refers to
+// and what refers to it, and its line on GitHub.
+function memberEntry(file: SourceFile, decls: Decl[], id: string): string {
+  const d = decls[0];
+  const self = d.anon ? '' : d.name;
+  const parts = [heading('###', d.anon ? 'anonymous enum' : md(d.name), id)];
+  for (const s of [...new Set(decls.map((x) => (d.kind === 'enum' && !d.anon ? `enum ${d.name}` : x.signature)))]) parts.push(code(s));
+  for (const doc of [...new Set(decls.map((x) => x.doc).filter(Boolean))]) parts.push(linkNames(doc, file.game, self));
+  for (const x of decls) {
+    const cast = x.kind === 'function' ? recordingsOf(file, x) : '';
+    if (cast) parts.push(cast);
+  }
+  const table = memberTable(file, decls.find((x) => x.fields.length) ?? d, self);
+  if (table) parts.push(table);
+  parts.push(...relations(file, decls, self));
+  parts.push(definedAt(file, decls));
   return parts.join('\n\n');
 }
 
-const documented = (d: Decl) => !!d.doc || d.fields.some((f) => f.doc);
+// A file's members, by the summary section and name each takes.
+function membersOf(file: SourceFile): Map<string, Decl[]> {
+  const out = new Map<string, Decl[]>();
+  for (const d of file.decls) {
+    const key = memberKey(d);
+    out.set(key, [...(out.get(key) ?? []), d]);
+  }
+  return out;
+}
 
-// A file's declarations by kind: those with a comment, or fields with notes,
-// and the rest.
-function kindsOf(file: SourceFile) {
-  const seen = new Set<string>();
-  return KIND_ORDER.map((kind) => {
-    // A prototype whose function is defined, or documented elsewhere, adds nothing.
-    const list = file.decls.filter((d) => d.kind === kind && !seen.has(d.name) && !(kind === 'prototype' && where.get(file.game)!.get(d.name)?.decl !== d));
-    for (const d of list) seen.add(d.name);
-    return { kind, full: list.filter(documented), bare: list.filter((d) => !documented(d)) };
+// Whether a file's page holds a member's entry: when the file defines it, or
+// is the only place that declares it.
+function hasEntry(file: SourceFile, decls: Decl[]): boolean {
+  const d = decls[0];
+  if (d.kind === 'struct' || d.kind === 'union') return false;
+  return d.anon || decls.some(isDefinition) || where.get(file.game)!.get(d.name)?.file === file;
+}
+
+// Where a member's row links: its entry on this page, its structure's page,
+// or the entry of the file that defines it.
+function rowTarget(file: SourceFile, decls: Decl[]): { url: string; doc: string } {
+  const d = decls[0];
+  const own = decls.find((x) => x.doc)?.doc ?? '';
+  if (structPages.has(d)) return { url: structPages.get(d)!, doc: d.doc };
+  if (hasEntry(file, decls)) return { url: `#${idsOf(file).get(memberKey(d))}`, doc: own || (where.get(file.game)!.get(d.name)?.decl.doc ?? '') };
+  const there = where.get(file.game)!.get(d.name)!;
+  return { url: there.url, doc: own || there.decl.doc };
+}
+
+const SUMMARY_ORDER = ['Data Structures', 'Macros', 'Typedefs', 'Enumerations', 'Functions', 'Variables'];
+const ENTRY_ORDER: Decl['kind'][] = ['macro', 'typedef', 'enum', 'function', 'variable'];
+
+// A file's page, laid out as Doxygen lays out a file: its brief, what it
+// includes and what includes it, a summary table for each kind of member,
+// the file's whole comment, and an entry for every member it defines.
+function filePage(file: SourceFile) {
+  const parts: string[] = [];
+  const game = file.game;
+  if (file.summary) parts.push(`${linkNames(file.summary, game, '')}${file.doc.length > file.summary.length + 2 ? ' [More…](#detailed-description)' : ''}`);
+  const inc = includes.get(file) ?? [];
+  if (inc.length) parts.push(inc.map((x) => `- ${x.file ? `[${code(`#include "${x.as}"`)}](${pageOf(x.file.path)})` : code(`#include "${x.as}"`)}`).join('\n'));
+  const by = includedBy.get(file) ?? [];
+  if (by.length) parts.push(`Included by ${refFiles(by)}.`);
+  const members = [...membersOf(file).values()];
+  for (const title of SUMMARY_ORDER) {
+    const rows = members.filter((m) => SECTIONS[m[0].kind][0] === title).map((m) => {
+      const t = rowTarget(file, m);
+      return summaryRow(file, m[0], t.url, t.doc);
+    });
+    if (!rows.length) continue;
+    parts.push(heading('##', title, headingSlug(title)), `| | Name | Description |\n| --- | --- | --- |\n${rows.join('\n')}`);
+  }
+  if (file.doc) parts.push(heading('##', 'Detailed Description', 'detailed-description'), linkNames(file.doc, game, ''));
+  for (const kind of ENTRY_ORDER) {
+    const title = SECTIONS[kind][1];
+    const entries = members.filter((m) => SECTIONS[m[0].kind][1] === title && hasEntry(file, m));
+    if (!entries.length) continue;
+    parts.push(heading('##', title, headingSlug(title)));
+    for (const m of entries) parts.push(memberEntry(file, m, idsOf(file).get(memberKey(m[0]))!));
+  }
+  page(`${pageOf(file.path).slice(1)}.md`, { title: rel(file.path), description: plainText(file.summary), source: file.path }, parts.join('\n\n'));
+}
+
+const refFiles = (files: SourceFile[]) => listOf([...files.slice(0, REF_LIMIT).map((f) => `[${code(basename(f.path))}](${pageOf(f.path)})`), ...(files.length > REF_LIMIT ? [`${files.length - REF_LIMIT} more`] : [])]);
+// A summary as a page's description: the Markdown gone.
+const plainText = (s: string) => s.replace(/\\(.)/g, '$1').replace(/`/g, '');
+
+// A structure's or union's page, as Doxygen's: its brief, the file that
+// declares it, a summary of its fields, its whole comment, and an entry for
+// every field.
+function structPage(file: SourceFile, d: Decl) {
+  const url = structPages.get(d)!;
+  const game = file.game;
+  const parts: string[] = [];
+  const b = brief(d.doc);
+  if (b) parts.push(`${linkNames(b, game, d.name)}${d.doc.length > b.length + 2 ? ' [More…](#detailed-description)' : ''}`);
+  parts.push(`Declared in [${code(basename(file.path))}](${pageOf(file.path)}).`);
+  const used = new Set(RESERVED);
+  const fieldIds = d.fields.map((f) => {
+    const base = anchor(f.name.split(', ')[0]) || 'field';
+    let id = base;
+    for (let n = 2; used.has(id); n++) id = `${base}-${n}`;
+    used.add(id);
+    return id;
+  });
+  if (d.fields.length) {
+    const rows = d.fields.map((f, i) => {
+      const [before, after] = aroundName(f.type, f.name.split(', ')[0]);
+      return `| ${cell(code(before))} | ${cell(`[${code(f.name)}](#${fieldIds[i]})${after.trim() ? ` ${code(after)}` : ''}`)} | ${cell(linkNames(brief(f.doc), game, d.name))} |`;
+    });
+    parts.push(heading('##', 'Data Fields', 'data-fields'), `| | Name | Description |\n| --- | --- | --- |\n${rows.join('\n')}`);
+  }
+  parts.push(heading('##', 'Detailed Description', 'detailed-description'));
+  if (d.doc) parts.push(linkNames(d.doc, game, d.name));
+  parts.push(code(d.signature), ...relations(file, [d], d.name), definedAt(file, [d]));
+  if (d.fields.length) {
+    parts.push(heading('##', 'Field Documentation', 'field-documentation'));
+    d.fields.forEach((f, i) => parts.push([heading('###', md(f.name), fieldIds[i]), code(f.type), linkNames(f.doc, game, d.name)].filter(Boolean).join('\n\n')));
+  }
+  page(`${url.slice(1)}.md`, { title: `${d.kind} ${d.name}`, description: plainText(b), source: file.path }, parts.join('\n\n'));
+}
+
+// A folder's page: the guide that explains it, its folders and its files,
+// each with its brief. A folder that once showed its files' members on its
+// own page sends a link to one of them (#battle_runencounter) on to its new
+// place.
+function dirPageWrite(dir: string, dirs: string[], files: SourceFile[], guide: Placed | undefined, oldAnchors: Record<string, string>) {
+  const parts: string[] = [];
+  if (guide) parts.push(`Guide: [${headingOf(guide.key) ?? basename(dirname(guide.key))}](${guide.url})`);
+  if (dirs.length) parts.push(heading('##', 'Directories', 'directories'), dirs.map((d) => `- [${code(`${basename(d)}/`)}](${dirPage(d)})`).join('\n'));
+  if (files.length) parts.push(heading('##', 'Files', 'files'), `| File | Description |\n| --- | --- |\n${files.map((f) => `| [${code(basename(f.path))}](${pageOf(f.path)}) | ${cell(linkNames(f.summary, f.game, ''))} |`).join('\n')}`);
+  if (Object.keys(oldAnchors).length) parts.push(`<AnchorRedirect map={${JSON.stringify(oldAnchors)}} />`);
+  page(`${dirPage(dir).slice(1)}/index.mdx`, { title: rel(dir), description: '', source: dir }, parts.join('\n\n'));
+}
+
+// The indexes, as Doxygen's: Data Structures, Data Fields and File Members
+// (all, functions, variables, typedefs, enumerations, enumerators, macros),
+// each name with the pages it has an entry on. An index longer than
+// INDEX_SPLIT names has a page for each first letter.
+const INDEX_SPLIT = 600;
+type IndexEntry = { key: string; name: string; links: string[]; brief?: string };
+const letterOf = (name: string) => (/^[a-z]/i.test(name) ? name[0].toUpperCase() : '_');
+const letterSlug = (letter: string) => (letter === '_' ? 'other' : letter.toLowerCase());
+const letterTitle = (letter: string) => (letter === '_' ? 'Other' : letter);
+
+function indexLines(entries: IndexEntry[]): string {
+  return entries.map((e) => `- ${e.name}${e.brief !== undefined ? (e.brief ? `: ${e.brief}` : '') : ` : ${e.links.join(', ')}`}`).join('\n');
+}
+
+// Writes one index at url: one page, with a section for each letter, or a
+// folder with a page for each letter. Returns the sidebar entry for it.
+function indexPages(url: string, title: string, what: string, entries: IndexEntry[], lead = '') {
+  entries.sort((a, b) => a.key.localeCompare(b.key, 'en', { sensitivity: 'base' }) || (a.key < b.key ? -1 : 1));
+  const plain = (e: IndexEntry) => e.key;
+  const letters = new Map<string, IndexEntry[]>();
+  for (const e of entries) letters.set(letterOf(plain(e)), [...(letters.get(letterOf(plain(e))) ?? []), e]);
+  // Names that open with a letter first, then the rest, as Doxygen orders them.
+  const other = letters.get('_');
+  if (other) {
+    letters.delete('_');
+    letters.set('_', other);
+  }
+  const description = `${what}.`;
+  if (entries.length <= INDEX_SPLIT) {
+    const body = [...letters].map(([l, es]) => `${heading('##', letterTitle(l), letterSlug(l))}\n\n${indexLines(es)}`);
+    page(`${url.slice(1)}.md`, { title, description }, [lead, ...body].filter(Boolean).join('\n\n'));
+    return;
+  }
+  const links = [...letters.keys()].map((l) => `[${letterTitle(l)}](${url}/${letterSlug(l)})`);
+  page(`${url.slice(1)}/index.md`, { title, description }, [lead, `${entries.length} names, by their first letter: ${links.join(' · ')}.`].filter(Boolean).join('\n\n'));
+  for (const [l, es] of letters) page(`${url.slice(1)}/${letterSlug(l)}.md`, { title: `${title}: ${letterTitle(l)}`, description: `${what}, from ${letterTitle(l)}.` }, `${links.join(' · ')}\n\n${indexLines(es)}`);
+  write(join(content, url.slice(1), 'meta.json'), JSON.stringify({ title, pages: [...letters.keys()].map((l) => `[${letterTitle(l)}](${url}/${letterSlug(l)})`) }, null, 2) + '\n');
+}
+
+function referencePages(game: Game, files: SourceFile[], guides: Map<string, Placed>) {
+  const root = reference(game);
+  const byDir = new Map<string, SourceFile[]>();
+  for (const f of files) byDir.set(dirname(f.path), [...(byDir.get(dirname(f.path)) ?? []), f]);
+  // Every folder up to the game's src and include, so each has a page.
+  for (const d of [...byDir.keys()]) for (let p = dirname(d); p.split('/').length > 2; p = dirname(p)) if (!byDir.has(p)) byDir.set(p, []);
+  const subdirsOf = (dir: string) => [...byDir.keys()].filter((d) => dirname(d) === dir).sort();
+  const meta = (url: string, data: object) => write(join(content, url.slice(1), 'meta.json'), JSON.stringify(data, null, 2) + '\n');
+
+  // The folders and files. A folder's guide is the folder README of its top
+  // folder (src/battle and include/unit/battle are Battles').
+  for (const [dir, list] of byDir) {
+    list.sort((a, b) => (a.path < b.path ? -1 : 1));
+    const top = rel(dir).match(/^(?:src|include(?:\/unit)?)\/([^/]+)/)?.[1];
+    const guide = top ? guides.get(`games/${game}/src/${top}/README.md`) : undefined;
+    // The anchors of a folder that showed its files' members on its own page,
+    // before every file had a page.
+    const old: Record<string, string> = {};
+    if (!split.has(dir))
+      for (const f of list) {
+        old[anchor(basename(f.path))] ??= pageOf(f.path);
+        for (const d of f.decls) if (!d.anon) old[anchor(d.name)] ??= urlOf(f, d);
+      }
+    const subdirs = subdirsOf(dir);
+    dirPageWrite(dir, subdirs, list, guide, old);
+    for (const f of list) filePage(f);
+    meta(dirPage(dir), { title: basename(dir), pages: [...subdirs.map((d) => basename(d)), ...list.map((f) => `[${basename(f.path)}](${pageOf(f.path)})`)] });
+  }
+
+  // Structures and unions: an index of them all, and in the sidebar a folder
+  // for each first letter, whose page lists that letter's, so a structure's
+  // page is sent the few beside it rather than all of them.
+  const structs: { file: SourceFile; d: Decl }[] = [];
+  for (const f of files) for (const d of f.decls) if (structPages.has(d)) structs.push({ file: f, d });
+  for (const { file, d } of structs) structPage(file, d);
+  structs.sort((a, b) => a.d.name.localeCompare(b.d.name, 'en', { sensitivity: 'base' }));
+  const structEntry = ({ d }: { d: Decl }) => ({ key: d.name, name: `[${code(d.name)}](${structPages.get(d)})`, links: [], brief: linkNames(brief(d.doc), game, d.name) });
+  indexPages(`${root}/structs`, 'Data Structures', `Every structure and union of ${GAME_TITLE[game]}, with its brief`, structs.map(structEntry));
+  const byLetter = new Map<string, typeof structs>();
+  for (const s of structs) byLetter.set(letterOf(s.d.name), [...(byLetter.get(letterOf(s.d.name)) ?? []), s]);
+  const letters = [...byLetter.keys()].sort((a, b) => (a === '_' ? 1 : b === '_' ? -1 : a < b ? -1 : 1));
+  for (const l of letters) {
+    const url = `${root}/structs/${letterSlug(l)}`;
+    page(`${url.slice(1)}/index.md`, { title: `Data Structures: ${letterTitle(l)}`, description: `The structures and unions of ${GAME_TITLE[game]} from ${letterTitle(l)}, with their briefs.` }, indexLines(byLetter.get(l)!.map(structEntry)));
+    meta(url, { title: letterTitle(l), pages: byLetter.get(l)!.map(({ d }) => `[${d.name}](${structPages.get(d)})`) });
+  }
+  meta(`${root}/structs`, { title: 'Data Structures', pages: letters.map(letterSlug) });
+
+  // Data Fields: every field name, with the structures that have it.
+  const fields = new Map<string, string[]>();
+  for (const { d } of structs) {
+    const used = new Set(RESERVED);
+    for (const f of d.fields) {
+      const base = anchor(f.name.split(', ')[0]) || 'field';
+      let id = base;
+      for (let n = 2; used.has(id); n++) id = `${base}-${n}`;
+      used.add(id);
+      for (const n of f.name.split(', ')) fields.set(n, [...(fields.get(n) ?? []), `[${code(d.name)}](${structPages.get(d)}#${id})`]);
+    }
+  }
+  indexPages(
+    `${root}/fields`,
+    'Data Fields',
+    `Every field of ${GAME_TITLE[game]}'s structures and unions, with the types that have it`,
+    [...fields].map(([n, links]) => ({ key: n, name: code(n), links })),
+  );
+
+  // File Members, by kind: each name with the files it has an entry in.
+  type Kind = 'all' | 'functions' | 'variables' | 'typedefs' | 'enums' | 'enumerators' | 'macros';
+  const members = new Map<Kind, Map<string, string[]>>();
+  const add = (kind: Kind, name: string, link: string) => {
+    for (const k of [kind, 'all'] as Kind[]) {
+      const m = members.get(k) ?? new Map<string, string[]>();
+      m.set(name, [...(m.get(name) ?? []), link]);
+      members.set(k, m);
+    }
+  };
+  const KIND_OF: Partial<Record<Decl['kind'], Kind>> = { function: 'functions', prototype: 'functions', variable: 'variables', typedef: 'typedefs', enum: 'enums', macro: 'macros' };
+  for (const f of files)
+    for (const decls of membersOf(f).values()) {
+      const d = decls[0];
+      if (!hasEntry(f, decls)) continue;
+      const link = `[${code(basename(f.path))}](${urlOf(f, d)})`;
+      if (!d.anon && KIND_OF[d.kind]) add(KIND_OF[d.kind]!, code(d.kind === 'function' || d.kind === 'prototype' ? `${d.name}()` : d.name), link);
+      if (d.kind === 'enum') for (const x of d.fields) add('enumerators', code(x.name), link);
+    }
+  const KINDS: [Kind, string, string][] = [
+    ['all', 'All', 'Every name the files declare'],
+    ['functions', 'Functions', 'Every function'],
+    ['variables', 'Variables', 'Every global and table'],
+    ['typedefs', 'Typedefs', 'Every typedef'],
+    ['enums', 'Enumerations', 'Every named enum'],
+    ['enumerators', 'Enumerators', 'Every enumerator'],
+    ['macros', 'Macros', 'Every macro'],
+  ];
+  for (const [kind, title, what] of KINDS) indexPages(`${root}/globals/${kind}`, title, `${what} of ${GAME_TITLE[game]}, with the files it is in`, [...(members.get(kind) ?? [])].map(([name, links]) => ({ key: name.replace(/[`()]/g, ''), name, links })));
+  page(`${root.slice(1)}/globals/index.md`, { title: 'File Members', description: `Every name the files of ${GAME_TITLE[game]} declare, by kind.` }, KINDS.map(([kind, title]) => `- [${title}](${root}/globals/${kind}): ${members.get(kind)?.size ?? 0} names`).join('\n'));
+  meta(`${root}/globals`, { title: 'File Members', pages: KINDS.map(([kind]) => kind) });
+
+  // The File List: every folder and file as a tree, each file with its brief.
+  const tree = (dir: string, depth: number): string[] => {
+    const pad = '  '.repeat(depth);
+    return [
+      `${pad}- [${code(`${basename(dir)}/`)}](${dirPage(dir)})`,
+      ...subdirsOf(dir).flatMap((d) => tree(d, depth + 1)),
+      ...(byDir.get(dir) ?? []).map((f) => `${pad}  - [${code(basename(f.path))}](${pageOf(f.path)})${f.summary ? `: ${linkNames(f.summary, game, '')}` : ''}`),
+    ];
+  };
+  const tops = ROOTS.map((r) => `games/${game}/${r}`).filter((d) => byDir.has(d));
+  // The page this was, the source's own guide, now in the guide: a link to
+  // one of its headings goes on to it.
+  const sourceGuide = guides.get(`games/${game}/src`);
+  const readme = join(repo, `games/${game}/src/README.md`);
+  const moved: Record<string, string> = {};
+  if (sourceGuide && existsSync(readme)) for (const m of readFileSync(readme, 'utf8').matchAll(/^#{2,6} (.+?)(?: \{#[\w-]+\})?$/gm)) moved[headingSlug(m[1].replace(/[`*]/g, ''))] = `${sourceGuide.url}#${headingSlug(m[1].replace(/[`*]/g, ''))}`;
+  page(
+    `${root.slice(1)}/index.mdx`,
+    { title: 'File List', description: `Every folder and file of ${GAME_TITLE[game]}'s source, with each file's brief.` },
+    [
+      sourceGuide ? `[${headingOf(`${sourceGuide.key}/README.md`) ?? 'The source'}](${sourceGuide.url}) explains how the folders divide the program.` : '',
+      tops.flatMap((d) => tree(d, 0)).join('\n'),
+      Object.keys(moved).length ? `<AnchorRedirect map={${JSON.stringify(moved)}} />` : '',
+    ]
+      .filter(Boolean)
+      .join('\n\n'),
+  );
+  meta(root, {
+    title: 'Reference',
+    description: `${GAME_TITLE[game]}'s files, structures and members`,
+    root: true,
+    pagesIndex: 'index',
+    pages: [`[File List](${root})`, ...tops.map((d) => basename(d)), 'structs', 'fields', 'globals'],
   });
 }
 
-// What a file's page or section shows: its summary, then each kind's
-// declarations, the names with no comment first, each linked to its line,
-// then a section for each one with a comment.
-function fileBody(file: SourceFile, level: string): string {
+// A folder guide's files in the reference, as a Doxygen group page lists its
+// members: the folders of the guide's code (src/battle, include/battle,
+// include/unit/battle), each with its files and their briefs.
+function guideFiles(key: string, files: SourceFile[]): string {
+  const [, game, , name] = key.split('/');
   const parts: string[] = [];
-  if (file.doc) parts.push(linkNames(file.doc, file.game, ''));
-  for (const { kind, full, bare } of kindsOf(file)) {
-    if (!full.length && !bare.length) continue;
-    parts.push(`${level} ${KIND_TITLE[kind]}`);
-    if (bare.length) parts.push(bare.map((d) => `[\`${d.name}\`](${github}/${file.path}#L${d.line})`).join(', '));
-    for (const d of full) parts.push(declSection(file, d, level + '#'));
+  for (const r of ['src', 'include', 'include/unit']) {
+    const dir = `games/${game}/${r}/${name}`;
+    const list = files.filter((f) => f.path.startsWith(`${dir}/`)).sort((a, b) => (a.path < b.path ? -1 : 1));
+    if (!list.length) continue;
+    parts.push(`[${code(`${r}/${name}/`)}](${dirPage(dir)})`, `| File | Description |\n| --- | --- |\n${list.map((f) => `| [${code(f.path.slice(dir.length + 1))}](${pageOf(f.path)}) | ${cell(linkNames(f.summary, f.game, ''))} |`).join('\n')}`);
   }
-  return parts.join('\n\n');
-}
-
-function sourcePages(game: Game, files: SourceFile[]) {
-  const byDir = new Map<string, SourceFile[]>();
-  for (const f of files) {
-    const d = dirname(f.path);
-    if (!byDir.has(d)) byDir.set(d, []);
-    byDir.get(d)!.push(f);
-  }
-  // Every folder up to the game's src and include, so each has a page.
-  for (const d of [...byDir.keys()]) for (let p = dirname(d); p.split('/').length > 2; p = dirname(p)) if (!byDir.has(p)) byDir.set(p, []);
-  // A page is titled by its path in the game (src/battle, include/battle,
-  // src/battle/battle/transition.c), which no other page shares.
-  for (const [dir, list] of byDir) {
-    const target = `${game}/source/${rel(dir)}`;
-    const subdirs = [...byDir.keys()].filter((d) => dirname(d) === dir).sort();
-    const own = list.filter((f) => !pageless.has(f.path));
-    const head: string[] = [];
-    if (subdirs.length) head.push(`## Folders\n\n${subdirs.map((d) => `- [\`${basename(d)}\`](/${game}/source/${rel(d)})`).join('\n')}`);
-    // Every file by name, each linked to its page, or its section below, or,
-    // with no /// comment, its code; a file page's summary beside its name.
-    const link = (f: SourceFile) => (pageless.has(f.path) || split.has(dir) ? pageOf(f.path) : `#${anchor(basename(f.path))}`);
-    const summary = (f: SourceFile) => (split.has(dir) && !pageless.has(f.path) && f.summary ? `: ${md(f.summary)}` : '');
-    if (list.length) head.push(`## Files\n\n${list.map((f) => `- [${md(basename(f.path))}](${link(f)})${summary(f)}`).join('\n')}`);
-    if (split.has(dir)) {
-      page(`${target}/index.md`, { title: rel(dir), description: '', source: dir }, head.join('\n\n'));
-      for (const f of own) page(`${target}/${fileSlug(f.path)}.md`, { title: rel(f.path), description: f.summary.replace(/\\/g, ''), source: f.path }, fileBody(f, '##'));
-    } else {
-      const body = own.map((f) => `## ${md(basename(f.path))}\n\n[${f.path}](${github}/${f.path})\n\n${fileBody(f, '###')}`);
-      page(`${target}/index.md`, { title: rel(dir), description: '', source: dir }, [...head, ...body].join('\n\n'));
-    }
-  }
+  return parts.length ? [heading('##', 'Source files', 'source-files'), ...parts].join('\n\n') : '';
 }
 
 // ---------------------------------------------------------------------------
@@ -631,25 +1099,28 @@ function sourcePages(game: Game, files: SourceFile[]) {
 // The site's arrangement comes from Alchemy's own links. README.md is the
 // root; it places the games' front pages, INSTALL.md and each game's
 // MATCHING.md. A game's front page places its section pages (the other
-// Markdown files beside it), its places and its source. Both order what they
-// place by their last link to each: a front page tells the game's story,
-// mentioning its pages as it goes, and ends with the list of them. A section
-// page places the folder READMEs it links, in the order it first links them,
-// the first placement winning, and each folder README becomes the parent of
-// its folder's source pages. Every other link is a cross-reference. A page is
-// titled by its # heading and described by its first sentence (prose()).
+// Markdown files beside it), its places and the guide to its source. Both
+// order what they place by their last link to each: a front page tells the
+// game's story, mentioning its pages as it goes, and ends with the list of
+// them. A section page places the folder READMEs it links, in the order it
+// first links them, the first placement winning; each folder README ends with
+// its folders' files in the reference (guideFiles). Every other link is a
+// cross-reference. The arrangement is the guide; the reference stays out of
+// it. A page is titled by its # heading and described by its first sentence
+// (prose()).
 //
 // A page's URL is its parent's and then the section page's name or the
 // folder's (/tbs/battle/effect), except for the few that have fixed URLs.
 const SITE = 'https://alchemy.pascalpixel.com';
 // Site settings: the pages with fixed URLs, by what links to them. A game's
-// places are its scene list and its source its src folder.
+// places are its scene list, and the guide to its source is its src
+// folder's README (the reference, the source itself, is at /tbs/source).
 const FIXED: [string, string][] = [
   ['README.md', '/'],
   ['INSTALL.md', '/start'],
   ['games/tbs/src/MATCHING.md', '/tbs/matching'],
   ['games/tbs/src/field/scenes.s', '/tbs/places'],
-  ['games/tbs/src', '/tbs/source'],
+  ['games/tbs/src', '/tbs/code'],
 ];
 // The root's sidebar label: the README's own heading is the site's name.
 const ROOT_LABEL = 'Introduction';
@@ -744,8 +1215,8 @@ function headingOf(key: string): string | undefined {
   return readFileSync(file, 'utf8').match(/^# (.+?)(?: \{#[\w-]+\})?\n/)?.[1];
 }
 
-// The page a link in a README goes to: the arranged page, a source page for
-// C and the folders that hold it, and GitHub for anything else.
+// The page a link in a README goes to: the arranged page, the reference's
+// page for C and the folders that hold it, and GitHub for anything else.
 function siteLink(path: string): string {
   const clean = normalize(path).replace(/\/$/, '').replace(/^(games\/\w+\/src)\/README\.md$/, '$1');
   const node = placed.get(clean);
@@ -780,7 +1251,7 @@ function firstSentence(text: string): string {
 
 // Writes a Markdown file of Alchemy's as the page at target, titled by its
 // # heading and described by its first sentence.
-function prose(source: string, target: string) {
+function prose(source: string, target: string, extra = '') {
   let text = readFileSync(join(repo, source), 'utf8');
   const heading = text.match(/^# (.+?)(?: \{#[\w-]+\})?\n+/);
   const title = heading ? heading[1] : basename(source);
@@ -794,7 +1265,7 @@ function prose(source: string, target: string) {
     return `![${alt}](${src.replace(/^https:\/\/alchemy\.pascalpixel\.com\//, '/')})`;
   });
   const description = firstSentence(text);
-  text = codeProse(text, 'tbs');
+  text = linkProse(codeProse(text, 'tbs'), 'tbs');
   // A Markdown image of the site's own is served from its root too, so the
   // build reads it from public/ rather than from the live site.
   text = text.replace(/(!\[[^\]]*\]\()https:\/\/alchemy\.pascalpixel\.com\//g, '$1/');
@@ -815,39 +1286,40 @@ function prose(source: string, target: string) {
     .split(/(```[\s\S]*?```|`[^`]*`)/)
     .map((p, i) => (i % 2 ? p : p.replace(/<(?![a-z/!])/g, '&lt;').replace(/[{}]/g, (c) => `\\${c}`)))
     .join('');
-  page(target, { title, description, source }, text);
+  page(target, { title, description, source }, extra ? `${text.trimEnd()}\n\n${extra}` : text);
 }
 
-// Where an arranged page's file goes: its URL as a path, a folder with an
-// index for every page that holds others.
-const fileOf = (node: Placed) => (node.kind === 'fixed' && !node.children.length && !/^games\/\w+\/src(\/field\/scenes\.s)?$/.test(node.key) ? `${node.url.slice(1)}.md` : `${node.url.slice(1) || '.'}/index.md`.replace(/^\.\//, ''));
+// Where an arranged page's file goes: its URL as a path under the guide's
+// folder group, a folder with an index for every page that holds others (and
+// for the places, which places() fills).
+const fileOf = (node: Placed) => `${GUIDE}/${node.children.length || node.kind === 'root' || /\/field\/scenes\.s$/.test(node.key) ? `${node.url.slice(1) || '.'}/index.md`.replace(/^\.\//, '') : `${node.url.slice(1)}.md`}`;
 const folderOf = (node: Placed) => dirname(fileOf(node));
 const relativeTo = (from: string, to: string) => relative(from === '.' ? '' : from, to) || '.';
 
-// Writes every arranged page from its Markdown, except the places and the
-// source index, which places() and sourcePages() write.
-function arrangedPages(root: Placed) {
+// Writes every arranged page from its Markdown, except the places, which
+// places() writes. A folder guide ends with its folders' files in the
+// reference (guideFiles).
+function arrangedPages(root: Placed, files: Map<Game, SourceFile[]>) {
   const walkTree = (n: Placed): Placed[] => [n, ...n.children.flatMap(walkTree)];
-  for (const node of walkTree(root)) if (node.key.endsWith('.md')) prose(node.key, fileOf(node));
+  for (const node of walkTree(root)) {
+    const source = /^games\/\w+\/src$/.test(node.key) ? `${node.key}/README.md` : node.key;
+    if (!source.endsWith('.md') || !existsSync(join(repo, source))) continue;
+    prose(source, fileOf(node), node.kind === 'guide' ? guideFiles(node.key, files.get(node.key.split('/')[1] as Game) ?? []) : '');
+  }
 }
 
-// The sidebar: a meta.json for every folder the arrangement made, listing its
-// children in order. A folder README lists its folder's source pages
-// (src/field, include/field and include/unit/field), which stay where their
-// URLs put them.
+// The sidebar: the guide's tab, a meta.json for every folder the arrangement
+// made, listing its children in order; and each game's reference, which
+// referencePages() lays out, as a tab of its own.
 function arrangedSidebar(root: Placed) {
   const meta = (folder: string, data: object) => write(join(content, folder, 'meta.json'), JSON.stringify(data, null, 2) + '\n');
   const pagesOf = (node: Placed) => node.children.map((c) => relativeTo(folderOf(node), fileOf(c).replace(/(\/index)?\.md$/, '')));
-  meta('.', { pages: [`[${ROOT_LABEL}](/)`, ...pagesOf(root)] });
+  meta('.', { pages: [GUIDE, ...GAMES.map((g) => reference(g).slice(1))] });
+  meta(GUIDE, { title: 'Guide', description: 'How the games work, system by system and place by place', root: true, pagesIndex: 'index', pages: [`[${ROOT_LABEL}](/)`, ...pagesOf(root)] });
   const walkTree = (n: Placed): Placed[] => [n, ...n.children.flatMap(walkTree)];
   for (const node of walkTree(root)) {
     if (node.kind === 'game') meta(folderOf(node), { defaultOpen: true, pages: pagesOf(node) });
-    if (node.kind === 'section') meta(folderOf(node), { pages: pagesOf(node) });
-    if (node.kind === 'guide') {
-      const [, game, , name] = node.key.split('/');
-      const sources = ['src', 'include', 'include/unit'].map((r) => `${game}/source/${r}/${name}`).filter((f) => existsSync(join(content, f, 'index.md')));
-      meta(folderOf(node), { pages: sources.map((f) => relativeTo(folderOf(node), f)) });
-    }
+    if (node.kind === 'section' && node.children.length) meta(folderOf(node), { pages: pagesOf(node) });
   }
 }
 
@@ -887,8 +1359,8 @@ function places(files: SourceFile[]) {
     const here = pages.filter((p) => p.file === f).map((p) => `[${p.title}](/tbs/places/${p.slug})`);
     return `| [\`${basename(f.path)}\`](${pageOf(f.path)}) | ${here.join(', ')} | ${f.summary} |`;
   });
-  page('tbs/places/index.md', { title: 'Places', description: 'Every place the party can walk around in, and what happens there.' }, `Each scene overlay is one place, or a few that share it, and each place has a page of its own with its map and its events. The [Scenes](${siteLink('games/tbs/src/scene/README.md')}) guide explains how a scene runs and how to find an event in it.\n\n| Scene | Places | What happens there |\n| --- | --- | --- |\n${rows.join('\n')}`);
-  write(join(content, 'tbs/places/meta.json'), JSON.stringify({ title: 'Places', pages: pages.map((p) => p.slug) }, null, 2) + '\n');
+  page(`${GUIDE}/tbs/places/index.md`, { title: 'Places', description: 'Every place the party can walk around in, and what happens there.' }, `Each scene overlay is one place, or a few that share it, and each place has a page of its own with its map and its events. The [Scenes](${siteLink('games/tbs/src/scene/README.md')}) guide explains how a scene runs and how to find an event in it.\n\n| Scene | Places | What happens there |\n| --- | --- | --- |\n${rows.join('\n')}`);
+  write(join(content, GUIDE, 'tbs/places/meta.json'), JSON.stringify({ title: 'Places', pages: pages.map((p) => p.slug) }, null, 2) + '\n');
 }
 
 // The English catalog's messages by symbol, each as the pages the player
@@ -1377,7 +1849,7 @@ function placePages(scenes: SourceFile[]): Place[] {
     }
     body.push(`Its code is in [\`${basename(p.file.path)}\`](${pageOf(p.file.path)}).`);
     const description = placeSentence(block ?? (alone ? p.file.doc : undefined)) || (area && area !== p.title ? placeSentence(placeBlock(p.file.doc, '\0', [area])) : '');
-    page(`tbs/places/${p.slug}.md`, { title: p.title, description, source: p.file.path }, body.join('\n\n'));
+    page(`${GUIDE}/tbs/places/${p.slug}.md`, { title: p.title, description, source: p.file.path }, body.join('\n\n'));
   }
   return out;
 }
@@ -1497,7 +1969,7 @@ function abilityAnchors() {
   const [, ...rows] = readFileSync(join(docs, 'redirects/ability-anchors.tsv'), 'utf8').trim().split('\n');
   const map = Object.fromEntries(rows.map((r) => r.split('\t')));
   const chapter = `${siteLink('games/tbs/src/battle/README.md')}#how-an-ability-resolves`;
-  page('tbs/abilities/index.mdx', { title: 'Abilities' }, `<AnchorRedirect map={${JSON.stringify(map)}} fallback={${JSON.stringify(chapter)}} />\n\n[How an ability resolves](${chapter})`);
+  page(`${GUIDE}/tbs/abilities/index.mdx`, { title: 'Abilities' }, `<AnchorRedirect map={${JSON.stringify(map)}} fallback={${JSON.stringify(chapter)}} />\n\n[How an ability resolves](${chapter})`);
 }
 
 // ---------------------------------------------------------------------------
@@ -1532,17 +2004,26 @@ const all = new Map<Game, SourceFile[]>();
 for (const game of GAMES) {
   const files = ROOTS.flatMap((r) => walk(`games/${game}/${r}`)).map((p) => readFile(p, game));
   all.set(game, files);
-  // Large folders get a page per file.
-  const size = new Map<string, { bytes: number; count: number }>();
-  for (const f of files) {
-    const s = size.get(dirname(f.path)) ?? { bytes: 0, count: 0 };
-    s.bytes += f.size;
-    s.count++;
-    size.set(dirname(f.path), s);
+  // The folders that once had a page per file, for the old anchors of the
+  // others (dirPageWrite).
+  const size = new Map<string, number>();
+  for (const f of files) size.set(dirname(f.path), (size.get(dirname(f.path)) ?? 0) + f.size);
+  for (const [d, s] of size) if (s > SPLIT_BYTES) split.add(d);
+  // A definition with no comment takes the comment of the declaration that
+  // has one (a function's prototype in its header, a table's extern), as
+  // Doxygen joins a declaration's and a definition's documentation.
+  const byName = new Map<string, Decl[]>();
+  for (const f of files) for (const d of f.decls) if (!d.anon) byName.set(d.name, [...(byName.get(d.name) ?? []), d]);
+  for (const decls of byName.values()) {
+    const defs = decls.filter(isDefinition);
+    const doc = decls.find((d) => !isDefinition(d) && d.doc)?.doc;
+    if (doc && defs.length === 1 && !defs[0].doc && /^(function|variable)$/.test(defs[0].kind)) defs[0].doc = doc;
   }
-  for (const [d, s] of size) if (s.bytes > SPLIT_BYTES) split.add(d);
+  placeStructs(game, files);
   where.set(game, new Map());
+  enumerators.set(game, new Map());
   for (const f of files) for (const d of f.decls) place(game, f, d);
+  for (const f of files) for (const d of f.decls) placeEnumerators(game, f, d);
   for (const f of files) {
     f.doc = codeDeclared(f.doc, game);
     f.summary = codeDeclared(f.summary, game);
@@ -1562,9 +2043,20 @@ for (const game of GAMES) {
       }
     }
   users.set(game, u);
-  // A file has a page, or a section on its folder's, only when it shows a
-  // /// comment: its summary, or a declaration's or a field's.
-  for (const f of files) if (!f.doc && kindsOf(f).every((k) => !k.full.length)) pageless.add(f.path);
+  // The includes, found as the compilers find them: beside the file, then in
+  // the folders the Makefile's INCLUDES name.
+  const byPath = new Map(files.map((f) => [f.path, f]));
+  const makefile = text('Makefile');
+  const searched = [`games/${game}/include`, ...(makefile.match(/addprefix -Igames\/\$\(GAME\)\/include\/,([\w ]+)\)/)?.[1].trim().split(/\s+/) ?? []).map((d) => `games/${game}/include/${d}`)];
+  for (const f of files) {
+    const found: { file?: SourceFile; as: string }[] = [];
+    for (const m of readFileSync(join(repo, f.path), 'utf8').matchAll(/^\s*#\s*include\s+["<]([^">]+)[">]/gm)) {
+      const hit = [dirname(f.path), ...searched].map((d) => byPath.get(normalize(join(d, m[1])))).find(Boolean);
+      if (!found.some((x) => x.as === m[1])) found.push({ file: hit, as: m[1] });
+    }
+    includes.set(f, found);
+    for (const h of found) if (h.file) includedBy.set(h.file, [...(includedBy.get(h.file) ?? []), f]);
+  }
 }
 
 // The arrangement, from Alchemy's links; the game's front page is its README
@@ -1572,9 +2064,9 @@ for (const game of GAMES) {
 const site = arrange();
 console.log(`arrangement:\n${printTree(site).map((l) => `  ${l}`).join('\n')}`);
 for (const n of notes) console.log(`  ${n}`);
-arrangedPages(site);
+arrangedPages(site, all);
 recordings.load();
-for (const game of GAMES) sourcePages(game, all.get(game)!);
+for (const game of GAMES) referencePages(game, all.get(game)!, placed);
 // What the reach lines leave out: recordings no line names, and names or
 // groups that match no row.
 const orphans = recordings.get().filter((r) => !placedRecordings.has(int(r.ability)));
@@ -1582,17 +2074,10 @@ console.log(`recordings: ${placedRecordings.size} of ${recordings.get().length} 
 for (const r of orphans) console.log(`  no reach line names ${r.name} (${r.ability}, ${r.file})`);
 for (const [id, at] of placedRecordings) if (at.length > 1) console.log(`  ability ${id} is shown ${at.length} times: ${at.join(', ')}`);
 for (const p of reachProblems) console.log(`  ${p}`);
-// The source tree's page, or, until Alchemy has its README, the game's two
-// folders.
-for (const game of GAMES) {
-  const readme = `games/${game}/src/README.md`;
-  if (existsSync(join(repo, readme))) prose(readme, `${game}/source/index.md`);
-  else page(`${game}/source/index.md`, { title: `games/${game}`, source: `games/${game}` }, `## Folders\n\n${ROOTS.map((r) => `- [${r}](/${game}/source/${r})`).join('\n')}`);
-}
 places(all.get('tbs')!);
 abilityAnchors();
 arrangedSidebar(site);
 const failures = checkArrangement();
 for (const f of failures) console.error(`content: ${f}`);
 if (failures.length) process.exit(1);
-console.log(`content: ${all.get('tbs')!.length} files read, ${split.size} folders split by file, in ${((Date.now() - started) / 1000).toFixed(1)} s`);
+console.log(`content: ${all.get('tbs')!.length} files read, ${pagesWritten.size} pages written, in ${((Date.now() - started) / 1000).toFixed(1)} s`);
