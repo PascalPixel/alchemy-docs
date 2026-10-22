@@ -2,6 +2,7 @@ import defaultMdxComponents from 'fumadocs-ui/mdx';
 import type { MDXComponents } from 'mdx/types';
 import type { ComponentProps } from 'react';
 import { AnchorRedirect } from './anchor-redirect';
+import { Mermaid } from './mermaid';
 
 const DefaultImage = defaultMdxComponents.img;
 
@@ -16,6 +17,7 @@ export function getMDXComponents(components?: MDXComponents) {
     ...defaultMdxComponents,
     img: Image,
     AnchorRedirect,
+    Mermaid,
     ...components,
   } satisfies MDXComponents;
 }
