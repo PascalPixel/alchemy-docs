@@ -1723,6 +1723,7 @@ places/colosseum-satrage-match/map-1.png	1a990856f539240809689a8a6e3c5d6ec255c93
 places/colosseum-tunnel/entrance.png	d37dbfd4b6b4ce03ec4349a2fbe8737de5de4bd41b3b6f08e4307ba5f589a9de	5355	240	160
 places/colosseum-tunnel/map-0.png	cdbbf7d3b997238850ec3beefb1484ecdf3a7c0e10a04a3cea848549cbaf32a5	11556	560	272
 places/colosseum-tunnel/map-1.png	c5b8a8a9b296ef4502d383acb04f45bfbb23b8525d3fa4a6e5b71d05415cfe58	11389	512	240
+places/colosseum/camera-boxes.png	a601032faa30e04e7365653df3bddc0e9c0e0af46909885c1540b03a7c0baf34	311151	1024	1040
 places/colosseum/entrance.png	04f6f4f876d6e651f6de02eb0c51e19fd42f8a77c4b843e655b4c18ab051f1d3	3187	240	160
 places/colosseum/events/Event_AskIfReadyForFinals-2.png	56df74214d338efbd437c6b0c83c27d9dd63aa715fc34eeded8023d28d7dfd15	10696	240	160
 places/colosseum/events/Event_AskIfReadyForFinals.gif	bfdd71dc56a597d6b89ce89ce65a82a6af6b854cd1389b335a60c09286a35ee8	62925	240	160
@@ -5645,6 +5646,7 @@ places/tolbi-interiors/events/TolbiInteriors_TalkToWeaponShopkeeper-2.png	2864c7
 places/tolbi-interiors/events/TolbiInteriors_TalkToWeaponShopkeeper-3.png	81de7af2cd9e5a2a8218ba3f1dc846dd6300ba6d1844f7f20e07e2926c28a56a	24547	240	160
 places/tolbi-interiors/events/TolbiInteriors_TalkToWeaponShopkeeper.gif	641abd79486d4acea80b28f53d9488ed41184b7e40dbac221f6a11c208e68ca8	49356	240	160
 places/tolbi-interiors/events/TolbiInteriors_TalkToWeaponShopkeeper.png	9a6b89ef3e998c0faead4c9a8aec16eff6839de35d9093d3af4158a0a9851ec4	24619	240	160
+places/tolbi-interiors/inn-rooms.png	05e89a2a21395460134071f0fa9f37f0b2da730b1494599a6d44e0896c569623	231064	1320	1292
 places/tolbi-interiors/map-0.png	0287b817bd0893a3195bec012fbde30d08e45ad47d7ef5386ee825a2f7d926e8	357634	960	960
 places/tolbi-interiors/map-1.png	dd31e50ce5fbbe32966782decb4e3d951bf9789f557add1ab961aaca35b31641	31142	256	256
 places/tolbi-interiors/map-11.png	21cbce53d7e0355fd641749c64936b96a00eb036b9812719e33a4300f03fe3fa	25227	296	176
@@ -6307,6 +6309,7 @@ places/tolbi-ship-interiors/map-21.png	7bc1e12f0f46129bc618fb9b53785bfb2e7de09c6
 places/tolbi-ship-interiors/map-3.png	712d1e9398f9dd9810a3da6996d594bac3c4057d4f3163d5782f3436b6031089	25327	240	270
 places/tolbi-ship-interiors/map-4.png	74cf85ed7d353208883fe02985b26c4a90d55c1f5f408389eabd1bba60a40aa7	29647	240	330
 places/tolbi-ship-interiors/map-5.png	f900b805931317ccf2d89fc45943054371767382790bf93f7d7715c9fd36d255	31610	240	265
+places/tolbi-ship-interiors/rowing-deck-seats.png	74a892d11956165edd9121c573584b289582ba81bfea71ee24570ceb4906a930	67453	780	1110
 places/tolbi-ship-interiors_kalay-colosso-tour-left/entrance.png	1d36491a39350abaf11beac12c824ea0a109b7ba12612e0f02b1d791ad24f2a8	19992	240	160
 places/tolbi-ship-interiors_kalay-colosso-tour-left/map-1.png	2c0d271737913d25b430de3a4afb767ce76e2f46056c0fc3d1096fff73e7b7fc	28156	240	240
 places/tolbi-ship-interiors_kalay-colosso-tour-left/map-5.png	fa2c80ca8813e32456ce0da77dcc14f06ea9f50e35381b3eeb437095ddde016d	30131	240	265
