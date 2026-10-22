@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 560" role="img" aria-labelledby="title desc">
+  <title id="title">One object, read as parts</title>
+  <desc id="desc">The battle code is one object in the cartridge, too long to read as a single file, so it is written as parts. battle.c is the only file the build compiles. It first includes its private header, battle_internal.h, which holds what the parts share and places no bytes, and then the parts under battle/ one after another in the order their code lies in the cartridge: debug.c, setup.c, link.c, encounter.c and so on to spoils.c, 24 in all. The compiler sees one long file and produces one object, which objects.tsv puts in its place in the battle bank.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .file { fill: #ffffff; stroke: #0a72ef; stroke-width: 1.5; }
+    .hdr { fill: #f5f5f5; stroke: #d4d4d4; }
+    .part { fill: #f0f6ff; stroke: #bcd7fb; }
+    .obj { fill: #0a72ef; }
+    .wire { fill: none; stroke: #a3a3a3; stroke-width: 1.5; }
+    .head { fill: #a3a3a3; }
+    .h { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .f { fill: #0a0a0a; font: 500 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .fk { fill: #0a72ef; font: 500 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .l { fill: #737373; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .in { fill: #ffffff; font: 600 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .file { fill: #111111; stroke: #3b8eff; }
+      .hdr { fill: #1a1a1a; stroke: #333333; }
+      .part { fill: #0d1a2e; stroke: #1e3a66; }
+      .obj { fill: #3b8eff; }
+      .wire { stroke: #5c5c5c; }
+      .head { fill: #5c5c5c; }
+      .h, .f { fill: #ededed; }
+      .p { fill: #a1a1a1; }
+      .fk { fill: #66a6ff; }
+      .l { fill: #8f8f8f; }
+      .in { fill: #0a0a0a; }
+      .eyebrow { fill: #7c7c7c; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="559" rx="16"/>
+  <text class="eyebrow" x="20" y="34">THE BATTLE CODE</text>
+
+  <rect class="file" x="20" y="48" width="360" height="330" rx="12"/>
+  <text class="h" x="36" y="74">battle.c</text>
+  <text class="l" x="364" y="74" text-anchor="end">the only file compiled</text>
+  <text class="l" x="36" y="96">a guide comment: where each family starts</text>
+
+  <rect class="hdr" x="36" y="108" width="328" height="34" rx="8"/>
+  <text class="f" x="50" y="129">battle_internal.h</text>
+  <text class="l" x="350" y="129" text-anchor="end">what the parts share</text>
+
+  <text class="l" x="36" y="166">then the parts, in the order they lie in the cartridge</text>
+  <rect class="part" x="36" y="176" width="328" height="28" rx="6"/>
+  <text class="fk" x="50" y="194">battle/debug.c</text>
+  <rect class="part" x="36" y="208" width="328" height="28" rx="6"/>
+  <text class="fk" x="50" y="226">battle/setup.c</text>
+  <rect class="part" x="36" y="240" width="328" height="28" rx="6"/>
+  <text class="fk" x="50" y="258">battle/link.c</text>
+  <rect class="part" x="36" y="272" width="328" height="28" rx="6"/>
+  <text class="fk" x="50" y="290">battle/encounter.c</text>
+  <text class="l" x="200" y="318" text-anchor="middle">… 19 more …</text>
+  <rect class="part" x="36" y="330" width="328" height="28" rx="6"/>
+  <text class="fk" x="50" y="348">battle/spoils.c</text>
+
+  <path class="wire" d="M 200 378 V 404"/>
+  <path class="head" d="M 194 400 h 12 l -6 9 z"/>
+  <text class="l" x="212" y="396">compiled once</text>
+
+  <rect class="obj" x="20" y="412" width="360" height="44" rx="10"/>
+  <text class="in" x="200" y="439" text-anchor="middle">one object, in the battle bank</text>
+
+  <text class="p" x="20" y="496">Each part opens with what it holds, so the tops</text>
+  <text class="p" x="20" y="515">of the files read as a table of contents. The</text>
+  <text class="p" x="20" y="534">split into parts is ours, not Camelot's.</text>
+</svg>
