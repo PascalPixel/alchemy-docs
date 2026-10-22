@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 540" role="img" aria-labelledby="title desc">
+  <title id="title">A call into another bank</title>
+  <desc id="desc">Two banks of the program as they lie in the cartridge, each starting at a fixed address. The sound bank starts with its far-call table, one short entry for each of its functions that other banks call, followed by its code and then empty room up to the next fixed start. A function in the field bank that plays a sound calls the table's entry, AudioCommand_PlayFar, which jumps on to AudioCommand_Play wherever it lies in the sound bank. If the sound bank's code changes size, AudioCommand_Play moves, but the table entry stays where it is, so nothing in the field bank changes.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .bank { fill: #ffffff; stroke: #d4d4d4; }
+    .table { fill: #f0f6ff; stroke: #bcd7fb; }
+    .entry { fill: #0a72ef; }
+    .codeblk { fill: #e5e5e5; }
+    .fn { fill: #16a34a; }
+    .room { fill: #fafafa; stroke: #a3a3a3; stroke-dasharray: 4 4; }
+    .fixed { stroke: #0a0a0a; stroke-width: 2; }
+    .wire { fill: none; stroke: #0a72ef; stroke-width: 1.5; }
+    .head { fill: #0a72ef; }
+    .wire2 { fill: none; stroke: #16a34a; stroke-width: 1.5; }
+    .head2 { fill: #16a34a; }
+    .h { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .in { fill: #ffffff; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .ink { fill: #0a72ef; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .l { fill: #525252; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #737373; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .codew { fill: #ffffff; font: 500 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .bank { fill: #111111; stroke: #333333; }
+      .table { fill: #0d1a2e; stroke: #1e3a66; }
+      .entry { fill: #3b8eff; }
+      .codeblk { fill: #2a2a2a; }
+      .fn { fill: #22c55e; }
+      .room { fill: #0a0a0a; stroke: #525252; }
+      .fixed { stroke: #ededed; }
+      .wire { stroke: #3b8eff; }
+      .head { fill: #3b8eff; }
+      .wire2 { stroke: #22c55e; }
+      .head2 { fill: #22c55e; }
+      .h { fill: #ededed; }
+      .p { fill: #a1a1a1; }
+      .in { fill: #0a0a0a; }
+      .ink { fill: #66a6ff; }
+      .l { fill: #a1a1a1; }
+      .small, .code, .eyebrow { fill: #7c7c7c; }
+      .codew { fill: #0a0a0a; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="539" rx="16"/>
+  <text class="eyebrow" x="20" y="34">TWO OF THE BANKS IN THE CARTRIDGE</text>
+  <text class="code" x="380" y="474" text-anchor="end">far_call/SOUND.S</text>
+
+  <!-- Field bank -->
+  <path class="fixed" d="M 20 56 H 120"/>
+  <text class="small" x="126" y="60">fixed start</text>
+  <text class="h" x="40" y="84">The field bank</text>
+  <rect class="bank" x="40" y="94" width="320" height="96" rx="8"/>
+  <rect class="table" x="48" y="102" width="304" height="20" rx="4"/>
+  <text class="small" x="56" y="116">its own far-call table</text>
+  <rect class="codeblk" x="48" y="128" width="304" height="54" rx="4"/>
+  <rect class="fn" x="60" y="140" width="190" height="30" rx="6"/>
+  <text class="in" x="155" y="159" text-anchor="middle">code that plays a sound</text>
+
+  <!-- Sound bank -->
+  <path class="fixed" d="M 20 222 H 120"/>
+  <text class="small" x="126" y="226">fixed start</text>
+  <text class="h" x="40" y="250">The sound bank</text>
+  <rect class="bank" x="40" y="260" width="320" height="196" rx="8"/>
+  <rect class="table" x="48" y="268" width="304" height="62" rx="4"/>
+  <text class="ink" x="56" y="284">far-call table</text>
+  <rect class="entry" x="56" y="292" width="200" height="28" rx="5"/>
+  <text class="codew" x="156" y="310" text-anchor="middle">AudioCommand_PlayFar</text>
+  <rect class="codeblk" x="48" y="336" width="304" height="62" rx="4"/>
+  <rect class="fn" x="150" y="350" width="190" height="34" rx="6"/>
+  <text class="codew" x="245" y="371" text-anchor="middle">AudioCommand_Play</text>
+  <text class="small" x="58" y="371">its code</text>
+  <rect class="room" x="48" y="404" width="304" height="44" rx="4"/>
+  <text class="small" x="200" y="430" text-anchor="middle">empty room to grow into</text>
+  <path class="fixed" d="M 20 470 H 120"/>
+  <text class="small" x="126" y="474">the next fixed start</text>
+
+  <!-- The call: caller to table entry, entry to function -->
+  <path class="wire" d="M 250 155 H 372 V 306 H 262"/>
+  <path class="head" d="M 264 300 l -9 6 l 9 6 z"/>
+  <text class="ink" x="368" y="232" text-anchor="end">calls the entry</text>
+  <path class="wire2" d="M 200 320 V 342"/>
+  <path class="head2" d="M 194 340 h 12 l -6 9 z"/>
+  <text class="small" x="208" y="337">jumps on</text>
+
+  <text class="p" x="20" y="504">If the sound bank's code changes size, its</text>
+  <text class="p" x="20" y="523">functions move, but the entry stays put.</text>
+</svg>

@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 540" role="img" aria-labelledby="title desc">
+  <title id="title">Video memory in a town</title>
+  <desc id="desc">The console's 96 KB of video memory as a field scene fills it, drawn to scale from the start at the top. The first 8 KB holds the windows' tiles, the frame pieces and letters every text box is built from. Next come the windows' own screen map, then the screen maps of the map's three layers, ground, middle and overhead, which say which tile goes where. The next 48 KB holds the map's three sheets of tiles. The last 32 KB is for sprites: the tiles of the people and things that move, handed out in small blocks as they appear.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .win { fill: #7c3aed; stroke: #ffffff; }
+    .maps { fill: #d97706; stroke: #ffffff; }
+    .tiles { fill: #f6c87a; stroke: #ffffff; }
+    .spr { fill: #0a72ef; stroke: #ffffff; }
+    .grid { stroke: #ffffff; stroke-width: 1; stroke-opacity: 0.6; }
+    .lead { stroke: #a3a3a3; stroke-width: 1; fill: none; }
+    .brace { stroke: #a3a3a3; stroke-width: 1.5; fill: none; }
+    .h { fill: #0a0a0a; font: 600 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .l { fill: #525252; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .win { fill: #a78bfa; stroke: #0a0a0a; }
+      .maps { fill: #f59e0b; stroke: #0a0a0a; }
+      .tiles { fill: #a16207; stroke: #0a0a0a; }
+      .spr { fill: #3b8eff; stroke: #0a0a0a; }
+      .grid { stroke: #0a0a0a; }
+      .lead, .brace { stroke: #5c5c5c; }
+      .h { fill: #ededed; }
+      .l, .p { fill: #a1a1a1; }
+      .small, .code, .eyebrow { fill: #7c7c7c; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="539" rx="16"/>
+  <text class="eyebrow" x="20" y="34">96 KB OF VIDEO MEMORY IN A FIELD SCENE</text>
+
+  <!-- 3.75 px a KB from y 56: 0..8 KB 56-86, 8..10 86-93.5, 10..16 93.5-116, 16..64 116-296, 64..96 296-416 -->
+  <text class="small" x="20" y="52"></text>
+  <rect class="win" x="36" y="56" width="70" height="30"/>
+  <rect class="win" x="36" y="86" width="70" height="7.5"/>
+  <rect class="maps" x="36" y="93.5" width="70" height="22.5"/>
+  <rect class="tiles" x="36" y="116" width="70" height="60"/>
+  <rect class="tiles" x="36" y="176" width="70" height="60"/>
+  <rect class="tiles" x="36" y="236" width="70" height="60"/>
+  <rect class="spr" x="36" y="296" width="70" height="120"/>
+  <path class="grid" d="M 36 311 H 106 M 36 326 H 106 M 36 341 H 106 M 36 356 H 106 M 36 371 H 106 M 36 386 H 106 M 36 401 H 106 M 53.5 296 V 416 M 71 296 V 416 M 88.5 296 V 416"/>
+
+  <!-- Labels -->
+  <path class="lead" d="M 110 71 H 124"/>
+  <text class="h" x="130" y="76">The windows' tiles: frames, letters</text>
+  <path class="lead" d="M 110 89.75 H 118 V 92 H 124"/>
+  <text class="l" x="130" y="96">the windows' screen map</text>
+  <path class="lead" d="M 110 104.75 H 118 V 112 H 124"/>
+  <text class="l" x="130" y="116">the layers' screen maps: what goes where</text>
+  <path class="brace" d="M 112 120 h 6 v 172 h -6"/>
+  <text class="h" x="130" y="208">The map's three sheets</text>
+  <text class="h" x="130" y="226">of tiles</text>
+  <text class="l" x="130" y="244">the pictures the layers are</text>
+  <text class="l" x="130" y="260">built from, 16 KB each</text>
+  <path class="brace" d="M 112 300 h 6 v 112 h -6"/>
+  <text class="h" x="130" y="342">Sprites</text>
+  <text class="l" x="130" y="360">the people and things that move,</text>
+  <text class="l" x="130" y="376">in small blocks handed out as</text>
+  <text class="l" x="130" y="392">each appears</text>
+
+  <text class="small" x="36" y="432">the background, 64 KB, then the sprites, 32 KB</text>
+
+  <text class="p" x="20" y="472">Every scene fills the first part with its own</text>
+  <text class="p" x="20" y="491">map, and the sprite part changes as people</text>
+  <text class="p" x="20" y="510">and things come and go.</text>
+  <text class="code" x="380" y="528" text-anchor="end">Map_LoadLayeredScene · vram_cache.c</text>
+</svg>
