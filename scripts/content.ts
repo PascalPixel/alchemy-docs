@@ -528,9 +528,17 @@ function codeProse(text: string, game: Game): string {
     .join('');
 }
 
-// The entry a code span names: `Name`, `Name()`, `gName.field`, and a
-// structure's field on its structure's page (`BattleWork.enemyIds`).
-function codeTarget(span: string, game: Game, self: string): Placement | undefined {
+// The entry a code span names: `Name`, `Name()`, `gName.field`, a
+// structure's field on its structure's page (`BattleWork.enemyIds`), and a
+// file by a name or path that only one file ends with (`encounter.c`,
+// `game/units.c`), as Doxygen links a file's name.
+const filesOf = new Map<Game, SourceFile[]>();
+function codeTarget(span: string, game: Game, self: string): { url: string } | undefined {
+  const file = span.match(/^`([\w./-]+\.[ch])`$/)?.[1];
+  if (file) {
+    const hits = (filesOf.get(game) ?? []).filter((f) => f.path.endsWith(`/${file}`));
+    return hits.length === 1 && file !== self ? { url: pageOf(hits[0].path) } : undefined;
+  }
   const m = span.match(/^`(\w+)(?:(?:\.|->)(\w+))?(?:(?:\.|->)\w+)*(?:\(\))?`$/);
   if (!m || m[1] === self) return undefined;
   const hit = lookup(game, m[1]) ?? (sceneIds.has(m[1]) ? where.get(game)!.get(`SceneId_${m[1]}`) : undefined);
@@ -2004,6 +2012,7 @@ const all = new Map<Game, SourceFile[]>();
 for (const game of GAMES) {
   const files = ROOTS.flatMap((r) => walk(`games/${game}/${r}`)).map((p) => readFile(p, game));
   all.set(game, files);
+  filesOf.set(game, files);
   // The folders that once had a page per file, for the old anchors of the
   // others (dirPageWrite).
   const size = new Map<string, number>();
