@@ -1698,9 +1698,12 @@ function placePages(scenes: SourceFile[]): Place[] {
     // already talks for added to its section; one for each kind of thing
     // searched.
     type Item = { label: string; gifs: string[]; quote: string; prose: string };
-    type Section = { heading: string; unused: boolean; order: number; items: Item[]; link: string; symbols: string[] };
+    // Each event is a section headed by its own name, the one thing about it
+    // that is unique and searchable: an Event_ function, or the message a
+    // table row shows. heading is the sentence that says what it is, shown
+    // under the name.
+    type Section = { name: string; heading: string; unused: boolean; order: number; items: Item[]; link: string; symbols: string[] };
     const sections: Section[] = [];
-    const byKey = new Map<string, Section>();
     const actorOf = (trigger: string) => trigger.match(/^(?:talk|[\w ]+? on) (\w+)=/)?.[1] ?? trigger.match(/^(?:talk|[\w ]+? on) (\d+)$/)?.[1];
     const labelOf = (trigger: string) => {
       const ability = trigger.match(/^([\w ]+?) on /)?.[1];
@@ -1763,7 +1766,7 @@ function placePages(scenes: SourceFile[]): Place[] {
     };
     const sectionFor = (d: Decl, order: number, messages: string[]) => {
       const h = headingOf(d.doc);
-      const s: Section = { heading: h.heading, unused: h.unused, order, items: [], link: `[\`${d.name}\`](${index2.get(d.name)?.url ?? `${github}/${p.file.path}#L${d.line}`})`, symbols: messages.slice(0, 1) };
+      const s: Section = { name: d.name, heading: h.heading, unused: h.unused, order, items: [], link: `[\`${basename(p.file.path)}\`, line ${d.line}](${index2.get(d.name)?.url ?? `${github}/${p.file.path}#L${d.line}`})`, symbols: messages.slice(0, 1) };
       const quote = passage(messages, words2.pages);
       const gifs = recording(d.name);
       const prose = linkNames(h.prose, 'tbs', d.name);
@@ -1778,34 +1781,36 @@ function placePages(scenes: SourceFile[]): Place[] {
         console.log(`  ${p.slug}: ${e.event} has no comment to head it`);
         continue;
       }
-      const s = sectionFor(d, e.order, symbolsOf(e));
-      const who = actorOf(e.trigger);
-      if (who && /^talk /.test(e.trigger) && !byKey.has(who)) byKey.set(who, s);
+      sectionFor(d, e.order, symbolsOf(e));
     }
+    // A row that shows a message rather than calling an event function is
+    // headed by the message's name; who says it, or what is searched, is its
+    // sentence, with the ability that reaches it (Mind Read) after.
     for (const e of ordered.filter((e) => e.event.startsWith('Msg'))) {
       const rows = rowsOf(e.event);
       const who = actorOf(e.trigger);
-      const key = who ?? (/^search /.test(e.trigger) ? `search ${searched(rows[0])}` : e.event);
       // A message that rows for several actors show (the rocks that cannot be
-      // moved) is one item, in the first section that shows it.
-      if (sections.some((x) => x.symbols.includes(e.event))) continue;
-      let s = byKey.get(key);
-      if (!s) {
-        const heading = who
-          ? /^\d+$/.test(who)
-            ? `Someone in ${p.title}`
-            : actorHeading(who, actor(p.file.path, who))
-          : /^search /.test(e.trigger)
-            ? `Searching ${searched(rows[0])}`
-            : (console.log(`  ${p.slug}: ${e.event} (${e.trigger}) has nothing to head it`), '');
-        if (!heading) continue;
-        const row = rows[0];
-        s = { heading, unused: false, order: e.order, items: [], link: row ? `[\`${row.table}\`](${github}/${p.file.path}#L${row.line})` : `[${basename(p.file.path)}](${pageOf(p.file.path)})`, symbols: [] };
-        sections.push(s);
-        byKey.set(key, s);
-      }
-      s.items.push({ label: labelOf(e.trigger), gifs: recording(e.event), quote: passage([e.event], words2.pages), prose: '' });
-      s.symbols.push(e.event);
+      // moved) is one section, the first that shows it.
+      if (sections.some((x) => x.name === e.event || x.symbols.includes(e.event))) continue;
+      const about = who
+        ? /^\d+$/.test(who)
+          ? `Someone in ${p.title}`
+          : actorHeading(who, actor(p.file.path, who))
+        : /^search /.test(e.trigger)
+          ? `Searching ${searched(rows[0])}`
+          : (console.log(`  ${p.slug}: ${e.event} (${e.trigger}) has nothing to head it`), '');
+      if (!about) continue;
+      const label = labelOf(e.trigger);
+      const row = rows[0];
+      sections.push({
+        name: e.event,
+        heading: label ? `${about}, by ${label}` : about,
+        unused: false,
+        order: e.order,
+        items: [{ label: '', gifs: recording(e.event), quote: passage([e.event], words2.pages), prose: '' }],
+        link: row ? `[\`${row.table}\`](${github}/${p.file.path}#L${row.line})` : `[${basename(p.file.path)}](${pageOf(p.file.path)})`,
+        symbols: [e.event],
+      });
     }
     // Events the game never plays: functions whose comment opens with
     // "Unused:" and names this place (or any, when the overlay is this place
@@ -1828,22 +1833,11 @@ function placePages(scenes: SourceFile[]): Place[] {
             const rest = s.heading.slice(opening.length);
             s.heading = rest.charAt(0).toUpperCase() + rest.slice(1);
           }
-    // Functions whose comments say the same (Vale's doors, each "opens a door
-    // and goes in") are one section.
-    const merged: Section[] = [];
-    for (const s of [...sections].sort((a, b) => a.order - b.order)) {
-      const same = merged.find((m) => m.heading === s.heading && m.unused === s.unused);
-      if (!same) merged.push({ ...s, items: [...s.items], symbols: [...s.symbols] });
-      else {
-        same.items.push(...s.items);
-        same.link += `, ${s.link}`;
-        same.symbols.push(...s.symbols.filter((m) => !same.symbols.includes(m)));
-      }
-    }
-    if (merged.length) {
+    if (sections.length) {
       body.push('## Events');
-      for (const s of merged) {
-        const parts = [`### ${s.heading}${s.unused ? ' (unused)' : ''}`];
+      for (const s of [...sections].sort((a, b) => a.order - b.order)) {
+        const sentence = /[.!?]$/.test(s.heading) ? s.heading : `${s.heading}.`;
+        const parts = [`### \`${s.name}\`${s.unused ? ' (unused)' : ''}`, sentence];
         const alt = s.heading.replace(/[`[\]\\]/g, '');
         for (const item of s.items) {
           if (item.label) parts.push(`*${item.label}*`);
@@ -1851,7 +1845,7 @@ function placePages(scenes: SourceFile[]): Place[] {
           if (item.quote) parts.push(item.quote);
           if (item.prose) parts.push(item.prose);
         }
-        parts.push(`<small>${[s.link, ...s.symbols.map((m) => `\`${m}\``)].join(' · ')}</small>`);
+        parts.push(`<small>In ${s.link}</small>`);
         body.push(parts.join('\n\n'));
       }
     }

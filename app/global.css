@@ -55,6 +55,19 @@ h4,
      one character, where break-word keeps their width and the table scrolls. */
   overflow-wrap: break-word;
 }
+/* A heading that is a name (a place page's event, a reference entry) has no
+   spaces to break at, so it breaks between any two letters. */
+h2 > code,
+h3 > code,
+h2 a > code,
+h3 a > code {
+  word-break: break-all;
+  white-space: normal;
+}
+h2 > a,
+h3 > a {
+  min-width: 0;
+}
 main table {
   display: block;
   overflow-x: auto;
