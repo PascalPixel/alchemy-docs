@@ -202,12 +202,17 @@ guides/field/layers-3d.gif	4bbfe87b26321723d57fc3ee4c214aa7719e350cbe9b2abc7fe8d
 guides/field/snow.gif	b3c8df1e84dfc10e82558bfc42453123cd6ca26e0dc53821f93f7479d045f58e	670632	240	160
 guides/field/walk-run.gif	b80ee450b3ba3544a3991e11b768145752236be5dcfc74727dcd3fb80ae90401	1170115	240	160
 guides/field/world-map-layers-3d.gif	6dc26b35801ac17b28fac8cf6221d1efa8fca1177781b4a37fef7d18a27e7bab	1879514	520	400
+guides/field/world-map-scanlines.png	8ffa9ba1e57c35e0d3aa95b06dc87ee861f77e73191151097f141c760e4e4c35	20388	732	328
 guides/field/world-map-walk.gif	eff0500e305238ecdd54d8e1ac1c0891645cdb76017c2a6604a91e4d117b1f8b	1183815	240	160
 guides/game/items.gif	ffdcee12da5b5792d748c7b7f9d06020c523b7e3f5c2b02a800c3c14a86f63ff	77666	240	160
 guides/graphics/credits-layers.png	17464d201a8839b3bae2575a59ec53c8f877e44deb453b37c50d94d7e467abff	111013	492	332
+guides/graphics/credits-tile-ring.gif	6e61a171ddbbcd3a0ac7fc379331b38524ffc72ba68c9d635a45b50e7f39bc13	2467975	504	256
 guides/graphics/credits.gif	737286e7d01664548ef201d26328da54a4667bb5177d72bb8c47ffa3186d95b6	1097894	240	160
+guides/graphics/title-intro-layers-3d.gif	abd79b0498aaa5f8d8f075382586a13bbe144bb0f26e622448abb8c909fff9a2	1475448	520	400
 guides/map/cells.png	c50dad4b2685dab2404f5b2a6a68e5dddb642c67f6c97a7016b2dde6248daa39	45920	972	328
 guides/map/grid.png	e65a385eaaf4b6d1eacc699471a7f4760dc93896c88f1ba12e924d6c8789944b	28407	1024	1024
+guides/map/tile-animation.gif	e1b6d0974a9c3cccf20d60cdca9d865718acc6a3fbcd673351844ba45f1e723f	75604	504	160
+guides/menu/item-windows.png	17a04745a4fc379f3b51f356eb46b4fcfe28f70a6813eacf8256331a46ef188f	9619	972	328
 guides/menu/layers-3d.gif	4e47e4d491e3a1574d96085d87ab8635f2fc7326376517d6998898f1640b9f5e	1925507	520	400
 guides/menu/menu-psynergy.gif	2084f21423e866678d603982e598189d77fdf076d98827d5b9121b32805eff5a	277917	240	160
 guides/menu/menu-start.gif	f78e6e8f4fb4fe72a7cfddef0aa6ab3b7901cc87bdd7c5d0fd5b62dd83ba26db	90395	240	160
@@ -217,6 +222,7 @@ guides/object/world-map-picture.gif	6e09d7e225bbbfd4a884f61151ecb1fedea0742ed2df
 guides/runtime/oam.png	3d08f3cf01c1bea1e924c52a50f09c21692a2688ed60e553aaaf04b252044d11	26354	972	328
 guides/runtime/sleep.gif	c085aad17cffdc943f665f471f72e89b6c0be066113813795a94b1226b73a027	56747	240	160
 guides/scene/actors.png	01d34e35ef30147f9602ce302494866e5dda8a0d83c3d6577c9cc344921f9dc7	21750	480	320
+guides/scene/event-cells.png	ce7c9fe109ea37bdfd90fbbec0cab717c6ccb9fda254c71ff814ad879a8bb0fb	20780	480	320
 guides/shop/inn.gif	c574fec9c7b5d74fbf57019a2ecea5b79d97baa5f8583a576be67df8e53fd0ee	370956	240	160
 guides/shop/shop.gif	a006db16ef21fc102d93ffa7fe18e84a1840e02f49100cfd724b894062d9977f	193668	240	160
 guides/system/overlay.gif	83e3e6015a7cf53071ea8e705186f8c94702d948523479740cd9d3e4c7159ec6	995616	376	256
@@ -716,6 +722,7 @@ places/altmiller-cave-draught/map-40.png	b06636816871b4f9c327addeee6eec3be9f2d91
 places/altmiller-cave-draught/map-50.png	470b880f2c5687847facdc63014d7e159222cf7232a853d1cd8db02a8e7c1103	29197	416	400
 places/altmiller-cave-draught/map-52.png	471b39fa4bcc18669ad0e4c6813421f996e015876ae503118478491324ad565a	7072	240	176
 places/altmiller-cave-draught/map-54.png	f68ef9683121bb3e3216332591485b8c3079648d848d4d0adf45e32223cb1e63	6870	240	176
+places/altmiller-cave-entrance/darkness-levels.png	8e6185655dad8acbc6a117ccc9b9aa72cc77ddab65f2e38ee65ecadd8d48e565	145237	744	904
 places/altmiller-cave-entrance/entrance.png	81072b1c2995b8ad68768e50d059e041f14546b56b96f672b9bb6f8211e88602	2122	240	160
 places/altmiller-cave-entrance/map-0.png	737e4699874ac2178f7526126c649f756663e2b918751f946d2c09980efbcf48	17905	752	752
 places/altmiller-cave-entrance/map-1.png	cb20acc1ae573b86216af2d54d91a81925ed414e6206e76eb92ba7bd0f8a1608	28283	544	528
@@ -1560,6 +1567,7 @@ places/colosseum-azart-match/events/Event_PushRock.gif	4f3792dd58a5eaad36054d898
 places/colosseum-azart-match/events/Event_PushRockOrCheckAhead.gif	8679e411915e47308e18010dad7cbce28466304c3fda94dda4e5c33e7bcafdd9	111249	240	160
 places/colosseum-azart-match/events/Event_SettleRocks.gif	eab964ebfa2b629d4f52f0cabcdc07d53d0e3cc805c8ada3fec5b5552b3efd9f	243005	240	160
 places/colosseum-azart-match/map-0.png	86a904c5c9ec510962cb5a0907b5cdc9afc657e75d7eb12910c5629dfba82df6	92233	1216	448
+places/colosseum-azart-match/race.png	ea9a28ede4252c120d6d42aa116a9d681d1e72271d9ac1f2ee076dfcb50bb773	106184	1224	620
 places/colosseum-entrance/entrance.png	8ee8a54a1518ed98102455b7f62d4bc7a3da0f98f61de39cc58896e8ba67519f	13224	240	160
 places/colosseum-entrance/events/Event_CrowdRecognizesIsaac-2.png	6a770a875e628382e95aea4a9c4c47cae48b4f4e6d2da656fdd2628005445760	13853	240	160
 places/colosseum-entrance/events/Event_CrowdRecognizesIsaac-3.png	86888a47a96d928604bcea61a9d00522ce22353cdf36038089dc83ee053d6edc	13795	240	160
@@ -1716,6 +1724,7 @@ places/colosseum-navampa-match/events/MsgColossoLogTheStreetVendorsCornOnThe.png
 places/colosseum-navampa-match/events/MsgColossoRiverThisYearsFinalsAreIncredibleThis.gif	b77286f09c4d758d114d6bd56f7ff574739b22ce65b4300669285328ad329773	551002	240	160
 places/colosseum-navampa-match/events/MsgColossoRiverThisYearsFinalsAreIncredibleThis.png	67f992dddc76fc0e63b267b169be2ba350c7db5af0deb80d2611e24aadc55b2b	4813	240	160
 places/colosseum-navampa-match/map-0.png	9e8e95bf4d15b72925e1f0b7e5b51a810448c22ccb6c82e165bacfaa3ec0f9d6	93174	1648	416
+places/colosseum-navampa-match/scales.gif	e794e1e1e6eb9807b00c88bc4e2a2e4c787cc6591252b64db18ba5ffb38a1fc9	1090361	480	320
 places/colosseum-satrage-match/entrance.png	06f406854b23b136819cffc6c30a091f2e66e93ed99693c44defa302b46f1bec	8039	240	160
 places/colosseum-satrage-match/events/Event_HaltLifts.gif	3f5f45b345fd2dc5749e04325717e10f81eae33fc3e1c1dfb89de79dd59b136b	497376	240	160
 places/colosseum-satrage-match/events/Event_KnockDownObstacle.gif	9d0c1f26657b9eb6beb61d50f0b3f141f4132c0c71d08637b1b2243cdf584501	1499709	240	160
@@ -3042,6 +3051,7 @@ places/kolima-forest-cliff_cursed/entrance.png	5d7e9ee098ef355cf30848ee19b47ba04
 places/kolima-forest-cliff_cursed/map-0.png	0a27e272f141c31d847fcc7483fba0e303a39001a907055970148903b3cb8efd	77159	512	512
 places/kolima-forest-entrance/events/KolimaForestEntrance_PushLog.gif	9de52bd8e2c21a720056f831e85d468c2e00da157158adf8092e37c97b684c1b	474229	240	160
 places/kolima-forest-entrance/events/KolimaForest_HopEast.gif	6f9e13c7db055d15b469ce3d8edad8ba89ff8bc5975162f325044c58199f4a23	277378	240	160
+places/kolima-forest-entrance/psynergy-fields.png	c34cf29a5f1254911af142b24d34e1a8ab4fd85faf5f58d549ada122f240f6a3	28584	792	828
 places/kolima-forest-entrance_cured/entrance.png	e0f090ec0dfca29493b34f53799a59c453a3af08ffbc1037168e6745f90c93c4	14806	240	160
 places/kolima-forest-entrance_cured/map-0.png	f87da65c4b06bf45ead96a161963fae65b8e295c3e61c66e1c1c1d70acc37d20	94495	512	672
 places/kolima-forest-entrance_cursed/entrance.png	f4cec54539e1a558a9a65ab9295836192bb4395e1b63383cb0ba003dd339bd86	14826	240	160
@@ -3076,6 +3086,7 @@ places/kolima-forest-tree/events/KolimaForestTree_TalkToTret-2.png	0b8fc6ec446f3
 places/kolima-forest-tree/events/KolimaForestTree_TalkToTret-3.png	e5ead2ff0b68687e73aa997f1c97d1dc16fa3e3fb6a2396a68b7988bc2cd95e6	10880	240	160
 places/kolima-forest-tree/events/KolimaForestTree_TalkToTret.gif	b4a4cc4bd41c1eb150a817b713d05606bca3a88efa169cd39cc0a649ba710d72	325034	240	160
 places/kolima-forest-tree/events/KolimaForestTree_TalkToTret.png	9dba7fbd697e91b90fceaa2b6e92ce550558187543101f3bcb4fbe643624c2ca	15022	240	160
+places/kolima-forest-tree/healing-palette.gif	0797b12a0796fa9cbbb46e05b869541108d0cabb8bac8ea375e1c716756254c8	4149809	412	168
 places/kolima-forest-tree_cursed/entrance.png	fe1023e1dcdcab7159152f13f3e7215f6cfe1b1d89a855f6d6e155e0b15cf552	14463	240	160
 places/kolima-forest-tree_cursed/map-0.png	8a2f21d0e68215dcfe84848de0bde25d9747a239b2f40a89c64fccfde5642584	61691	512	448
 places/kolima-interiors/events/KolimaInteriors_TalkToArmorMerchant.gif	4e75a39ac3293c652985241d11844f60baa59f82c5be318b0ca341842e202c55	50664	240	160
@@ -3961,6 +3972,7 @@ places/lunpa-fortress-upper-floor/map-21.png	7a8c31cc15f2606ba15f6b24d731d353088
 places/lunpa-fortress-upper-floor/map-23.png	0c3b7c3377d5d2a8f8e055f4430c6d8db43ba7366a848a216d8d6aa261389830	4930	248	168
 places/lunpa-fortress-upper-floor/map-4.png	dbed9a904267a531c02074aeb0841fef47d0eed078ae93433e2d62aa3d0f6717	10611	240	264
 places/lunpa-fortress-upper-floor/map-7.png	9ef251ffab11556874a87848b095c2dcbc608341091f4b8e1d4c13b3bf992a08	10679	256	240
+places/lunpa-fortress-upper-floor/patrol-sight.png	e36eccdad3b3bca83e3e1f3fb3439253f62fb07d0199f88603d3689a35becc59	66117	536	880
 places/lunpa-fortress-upper-floor_lunpa-fortress-cell-key/entrance.png	1f254cb6d3d6a89c829640e74b02438dc492a4d64e0947ecb2a8b694177f2f51	7576	240	160
 places/lunpa-fortress-upper-floor_lunpa-fortress-cell-key/map-0.png	ac5dc420cbf9c031bcc736fcf1d7af3bd1084b1028fed6e417b25dded57841ec	216854	1024	1024
 places/lunpa-fortress-upper-floor_lunpa-fortress-cell-key/map-1.png	e75762450701987763c6383f2b0bbde4dda4e8c47524896109851f1fd97c12a0	18890	268	440
@@ -6389,6 +6401,7 @@ places/tolbi-spring/events/TolbiSpring_AskAboutLuckyMedal.gif	6e4fc3c0bd626bab78
 places/tolbi-spring/events/TolbiSpring_AskAboutLuckyMedal.png	9272c3a80875de3a9473f694d473dc353b06d762e94ed683c1ce9d21dcba2aa8	32400	240	160
 places/tolbi-spring/map-0.png	81dc80c73c82383f3da19207e2585c27d652dcf891d1e74226986d7d1f90121f	21737	240	176
 places/tolbi-spring/map-11.png	bebfedebc018025f0294c67727a12c7387026fe71c14a3901f0156f91e11c1a9	14197	240	168
+places/tolbi-spring/toss.gif	f553739cb9f2e68264523e50897cbc0d25f841f918b7b44819160c56c5e046d5	277003	480	320
 places/tolbi/entrance.png	95fcd5b58d8372b4fea4da2c036a50b5e0e90e729a89a7ea9a9fe4cb394e89f7	17486	240	160
 places/tolbi/events/MsgTolbiABattleToTheDeathWith.gif	1b2cffc73c8c49ea6c7c129b25d5484ba118b3e9f411d55678790705c06e128e	325159	240	160
 places/tolbi/events/MsgTolbiABattleToTheDeathWith.png	f2a5204aa90eb8ce5bf90e46dcd7139db18215d903c462b2135d0928a8e8c824	9990	240	160
@@ -6604,10 +6617,12 @@ places/tolbi_colosso-over/entrance.png	e79657b10eff9854d877b1807a08e66a408bfef80
 places/tolbi_colosso-over/map-0.png	865546d59138da801c17cce65ce4c009f0496455eefc3f82f62660f8103de3b1	148306	608	512
 places/tolbi_tolbi-spring-opened/entrance.png	95fcd5b58d8372b4fea4da2c036a50b5e0e90e729a89a7ea9a9fe4cb394e89f7	17486	240	160
 places/tolbi_tolbi-spring-opened/map-0.png	3e2ae9a0b542c11ac2d6b6f8f884248358a6f03b40f41ebf1421d3a0940f6878	151608	608	512
+places/tret-tree-branch/bg3-split.gif	26ca14e0f818e220f21957b6ffc8b200ab9b2c86fc47331e45c0150abbac7540	2511905	492	168
 places/tret-tree-branch/entrance.png	3df6e908fe843b7bd3bbcf7f3dd2e0bc57ddd8d7417268501e0788c5bad90725	28743	240	160
 places/tret-tree-branch/events/Event_TakeTouchedExit.gif	f01a63cc737b6d067c967a7f88d25554f1a1f33df7dd18afabedf083991f0c0f	209834	240	160
 places/tret-tree-branch/events/Event_TalkToBreeze.gif	9d65f8e2a5fb9bfcd08d5138c13eb9435a7c10cc0c2e4a43fb0f972e4a3eb161	3094839	240	160
 places/tret-tree-branch/map-0.png	8b5365f614fded05685b0e95f6a9f419ebd9db81789f6089f9dd931eb29518b5	281786	1024	512
+places/tret-tree-interiors/cocoons.png	3b69cddbc8c58cc5c0e2552305294a1968fff8d810d4e46e884532a8af8378e8	271932	1024	544
 places/tret-tree-interiors/entrance.png	bc44537c77c9402dc8fd1f1bbe77707b137dca814427ff734ffa73482058e572	14250	240	160
 places/tret-tree-interiors/events/Event_FightTret-2.png	bae474c858dfb1bd2ccd7ada675a49ac25956330b232958699e70404e121c2d2	14976	240	160
 places/tret-tree-interiors/events/Event_FightTret-3.png	faeb61e844c9a63e025c3eba4705ba1c6ece766930e8931115afb70f31495430	15116	240	160
@@ -6666,6 +6681,7 @@ places/tunnel-ruins-great-statue_tunnel-ruins-pillar-b-sunk/map-10.png	8d15036eb
 places/tunnel-ruins-great-statue_venus-lighthouse-first-path/map-1.png	34ea9d1bc9ade0f49e0ca94e68be0b415a88927208bc07021ec2180918f3faac	15325	240	320
 places/tunnel-ruins-great-statue_venus-lighthouse-first-path/map-5.png	9c5871b17e72b0ba716a362506ecbdb35a55f41883dfe0c8d49a9160b309f351	5569	240	240
 places/tunnel-ruins-great-statue_venus-lighthouse-second-path/map-5.png	6bab5ea9927d48b57c3227d9951c33c5138970af57d88a68d3dcd4ebdd223d2e	5583	240	240
+places/tunnel-ruins-lady-statues/balance.png	8796047987ceb3f4182f290535a07fbcbc0d72881831747cd1cd41e07c5d801b	14733	488	688
 places/tunnel-ruins-lady-statues/entrance.png	cf05c45ba3026ea9490716acadad56dfa644d9727f686f9258ba61e7d4936c16	3944	240	160
 places/tunnel-ruins-lady-statues/events/Event_JumpDownLedge.gif	dabbccc604e9a1223fb97259d338c8e3a5858247125465b1b442d6383cb1244a	225054	240	160
 places/tunnel-ruins-lady-statues/events/Event_MoveDousePillar.gif	7b7ab1bf9c2d8552540888d5d08f8000a5878def37a840d174701e06fd4e60cf	158187	240	160
@@ -8297,6 +8313,8 @@ places/vault_vault-suspects-mind-read/map-0.png	f49c36f538fca9440d6be63a45511043
 places/vault_vault-thieves-jailed/entrance.png	2b67dbf02f1d2c43a2da04e2f7520500de5f9c0d708662909f5bf84a36018d96	17399	240	160
 places/vault_vault-thieves-jailed/map-0.png	f9fa2a600de68a9513735cf65e80ed38f7f26be21b2f0d41e8d8efeb11a3b83b	85264	512	512
 places/venus-lighthouse-aerie/entrance.png	593735e983c8812db8910702296c3ed4e6f5c045fc1ee01517ff39fe5dfd227a	10479	240	160
+places/venus-lighthouse-aerie/eruption-layers-3d.gif	677ac00ab40c6a4899a7e45dbef48cacd5fbbb0410573e1496d926cd43de6ba8	2063451	520	400
+places/venus-lighthouse-aerie/eruption.gif	122ca41e6c94a32a7fd2b200f3184b123c85bad04ce06035b1b00a93d10ffde6	3027565	240	160
 places/venus-lighthouse-aerie/map-0.png	b37520635b2c8154cdd76f99a4360ef7d59b6ec08c2738dc06e14ead0947427b	24019	600	420
 places/venus-lighthouse-entry/entrance.png	cf34ebeb69cffcb6b984565658d355d7c363706c4032771f60f1d54e65d02c63	11576	240	160
 places/venus-lighthouse-entry/events/Event_HearOfTheAttack.gif	1be36b0f13c4869ca7969720d41b87fb2dde57b94ad8b75fd399028e17de755d	32464	240	160
