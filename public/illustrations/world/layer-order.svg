@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 470" role="img" aria-labelledby="title desc">
+  <title id="title">A town is drawn in four sheets</title>
+  <desc id="desc">A town or dungeon drawn as four sheets stacked from back to front: the ground at the back, then the middle layer of walls and edges, then the characters, then the overhead layer of roofs and treetops in front. The console stacks them in this order on most maps, and a map can give its layers another order. No code works out whether Isaac is hidden behind a roof: he is simply drawn between two layers of the same map.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .ground { fill: #dcfce7; stroke: #86efac; }
+    .middle { fill: #e5e5e5; stroke: #a3a3a3; }
+    .chars { fill: none; stroke: #0a72ef; stroke-dasharray: 4 4; }
+    .over { fill: #fee2e2; stroke: #fca5a5; fill-opacity: 0.9; }
+    .fig { fill: #0a72ef; }
+    .roof { fill: #f87171; }
+    .wallb { fill: #a3a3a3; }
+    .grass { fill: #4ade80; }
+    .h { fill: #0a0a0a; font: 600 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .s { fill: #737373; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .lead { stroke: #d4d4d4; stroke-width: 1; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .ground { fill: #0b2015; stroke: #1d4d2e; }
+      .middle { fill: #1f1f1f; stroke: #525252; }
+      .chars { stroke: #3b8eff; }
+      .over { fill: #2a1010; stroke: #7f2a2a; }
+      .fig { fill: #3b8eff; }
+      .roof { fill: #dc2626; }
+      .wallb { fill: #5c5c5c; }
+      .grass { fill: #16a34a; }
+      .h { fill: #ededed; }
+      .s { fill: #8f8f8f; }
+      .p { fill: #a1a1a1; }
+      .code, .eyebrow { fill: #7c7c7c; }
+      .lead { stroke: #333333; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="469" rx="16"/>
+  <text class="eyebrow" x="20" y="32">BACK</text>
+
+  <!-- Ground -->
+  <path class="ground" d="M 30 50 H 180 L 210 94 H 60 Z"/>
+  <circle class="grass" cx="80" cy="70" r="4"/><circle class="grass" cx="130" cy="64" r="4"/><circle class="grass" cx="160" cy="80" r="4"/>
+  <path class="lead" d="M 210 72 H 236"/>
+  <text class="h" x="240" y="70">Ground</text>
+  <text class="s" x="240" y="87">grass, paths, floors</text>
+
+  <!-- Middle -->
+  <path class="middle" d="M 52 114 H 202 L 232 158 H 82 Z"/>
+  <rect class="wallb" x="96" y="124" width="40" height="10"/><rect class="wallb" x="150" y="140" width="46" height="8"/>
+  <path class="lead" d="M 232 136 H 236"/>
+  <text class="h" x="240" y="134">Middle</text>
+  <text class="s" x="240" y="151">walls and edges</text>
+
+  <!-- Characters -->
+  <path class="chars" d="M 74 178 H 224 L 254 222 H 104 Z"/>
+  <circle class="fig" cx="150" cy="192" r="5"/><rect class="fig" x="145" y="197" width="10" height="12" rx="3"/>
+  <circle class="fig" cx="190" cy="196" r="4"/><rect class="fig" x="186" y="200" width="8" height="10" rx="3"/>
+  <text class="h" x="262" y="198">Characters</text>
+  <text class="s" x="262" y="215">Isaac, townspeople</text>
+
+  <!-- Overhead -->
+  <path class="over" d="M 96 242 H 246 L 276 286 H 126 Z"/>
+  <path class="roof" d="M 136 270 L 156 252 L 176 270 Z"/><path class="roof" d="M 196 276 L 214 260 L 232 276 Z"/>
+  <text class="h" x="284" y="262">Overhead</text>
+  <text class="s" x="284" y="279">roofs, treetops</text>
+
+  <text class="eyebrow" x="20" y="316">FRONT</text>
+
+  <text class="p" x="20" y="352">The console stacks the sheets; no code works</text>
+  <text class="p" x="20" y="371">out whether Isaac is behind a roof. He is drawn</text>
+  <text class="p" x="20" y="390">between two layers of the same map.</text>
+  <text class="p" x="20" y="418">Most maps stack them this way; a map can</text>
+  <text class="p" x="20" y="437">give its layers another order.</text>
+  <text class="code" x="380" y="458" text-anchor="end">Map_LoadLayeredScene</text>
+</svg>

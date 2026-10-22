@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 500" role="img" aria-labelledby="title desc">
+  <title id="title">How the leader slides along a wall</title>
+  <desc id="desc">The leader seen from above, with the direction pad held to the right. Before each step the game checks the ground 8 pixels away in five directions: the way the pad points, and 22.5 and 45 degrees to either side. On open ground all five are clear, and the leader steps the way the pad points. Walking into a slanting wall, three of the five land beyond the wall, so the game tries other headings, nearest first: 22.5, then 45, then 67.5 degrees to either side, each needing five clear checks of its own. Here the first to pass is 67.5 degrees towards the open side, so the leader slides along the wall instead of stopping.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .wall { fill: #e5e5e5; }
+    .wall-edge { stroke: #737373; stroke-width: 2; }
+    .ok { stroke: #16a34a; stroke-width: 2; }
+    .no { stroke: #dc2626; stroke-width: 2; }
+    .okd { fill: #16a34a; }
+    .nod { fill: #dc2626; }
+    .leader { fill: #0a72ef; }
+    .go { stroke: #0a72ef; stroke-width: 2.5; fill: none; }
+    .go-head { fill: #0a72ef; }
+    .h { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .s { fill: #525252; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .tag { fill: #737373; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .wall { fill: #262626; }
+      .wall-edge { stroke: #8f8f8f; }
+      .ok { stroke: #22c55e; }
+      .no { stroke: #f05252; }
+      .okd { fill: #22c55e; }
+      .nod { fill: #f05252; }
+      .leader { fill: #3b8eff; }
+      .go { stroke: #3b8eff; }
+      .go-head { fill: #3b8eff; }
+      .h { fill: #ededed; }
+      .p, .s { fill: #a1a1a1; }
+      .tag { fill: #8f8f8f; }
+      .code, .eyebrow { fill: #7c7c7c; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="499" rx="16"/>
+  <text class="eyebrow" x="20" y="32">SEEN FROM ABOVE, THE PAD HELD RIGHT</text>
+
+  <!-- Open ground -->
+  <rect class="card" x="20" y="44" width="360" height="126" rx="12"/>
+  <path class="ok" d="M 70 107 L 120 107 M 70 107 L 116.2 87.9 M 70 107 L 116.2 126.1 M 70 107 L 105.4 71.6 M 70 107 L 105.4 142.4"/>
+  <circle class="okd" cx="120" cy="107" r="3.5"/><circle class="okd" cx="116.2" cy="87.9" r="3.5"/><circle class="okd" cx="116.2" cy="126.1" r="3.5"/><circle class="okd" cx="105.4" cy="71.6" r="3.5"/><circle class="okd" cx="105.4" cy="142.4" r="3.5"/>
+  <circle class="leader" cx="70" cy="107" r="7"/>
+  <text class="h" x="160" y="84">Open ground</text>
+  <text class="s" x="160" y="108">All five checks are clear:</text>
+  <text class="s" x="160" y="126">one step the way the pad points.</text>
+
+  <!-- Into a wall -->
+  <rect class="card" x="20" y="182" width="360" height="236" rx="12"/>
+  <text class="h" x="36" y="208">Walking into a slanting wall</text>
+
+  <!-- A: the pad's way -->
+  <path class="wall" d="M 58 340 L 158 240 L 186 240 L 186 340 Z"/>
+  <path class="wall-edge" d="M 58 340 L 158 240"/>
+  <path class="ok" d="M 60 300 L 106.2 280.9 M 60 300 L 95.4 264.6"/>
+  <path class="no" d="M 60 300 L 110 300 M 60 300 L 106.2 319.1 M 60 300 L 95.4 335.4"/>
+  <circle class="okd" cx="106.2" cy="280.9" r="3.5"/><circle class="okd" cx="95.4" cy="264.6" r="3.5"/>
+  <circle class="nod" cx="110" cy="300" r="3.5"/><circle class="nod" cx="106.2" cy="319.1" r="3.5"/><circle class="nod" cx="95.4" cy="335.4" r="3.5"/>
+  <circle class="leader" cx="60" cy="300" r="7"/>
+  <text class="tag" x="36" y="368">The pad's way:</text>
+  <text class="tag" x="36" y="384">three checks blocked</text>
+
+  <!-- B: the heading that passes -->
+  <path class="wall" d="M 238 340 L 338 240 L 366 240 L 366 340 Z"/>
+  <path class="wall-edge" d="M 238 340 L 338 240"/>
+  <path class="ok" d="M 240 300 L 259.1 253.8 M 240 300 L 240 250 M 240 300 L 275.4 264.6 M 240 300 L 220.9 253.8 M 240 300 L 286.2 280.9"/>
+  <circle class="okd" cx="259.1" cy="253.8" r="3.5"/><circle class="okd" cx="240" cy="250" r="3.5"/><circle class="okd" cx="275.4" cy="264.6" r="3.5"/><circle class="okd" cx="220.9" cy="253.8" r="3.5"/><circle class="okd" cx="286.2" cy="280.9" r="3.5"/>
+  <circle class="leader" cx="240" cy="300" r="7"/>
+  <text class="tag" x="216" y="368">Turned 67.5°: all clear,</text>
+  <text class="tag" x="216" y="384">so the leader slides</text>
+
+  <text class="s" x="36" y="406">Tried nearest first: 22.5°, 45°, then 67.5° off.</text>
+
+  <text class="p" x="20" y="446">Each check is 8 pixels away, and asks</text>
+  <text class="p" x="20" y="465">whether the ground there can be stepped on.</text>
+  <text class="code" x="380" y="488" text-anchor="end">FieldObject_UpdatePlayerControl</text>
+</svg>

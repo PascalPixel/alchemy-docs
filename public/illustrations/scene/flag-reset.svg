@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 416" role="img" aria-labelledby="title desc">
+  <title id="title">What a place forgets, and when</title>
+  <desc id="desc">Two sets of flags let a scene remember things for a while without ever undoing them. Scene flags are forgotten every time the party enters a scene, even the one it just left: the plant Growth raised on Crossbone Isle is a sprout again. Place flags are kept while the party moves between the scenes of one place and forgotten when it enters another place: Vault's mayor remembers having welcomed Isaac back while the party stays in Vault, and welcomes him again on the next visit. Coming back from a battle forgets neither, so the room is as the party left it.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .chip-gone { fill: #fff3f0; stroke: #f6c3b7; }
+    .chip-kept { fill: #f0fdf4; stroke: #bbf7d0; }
+    .h { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .col { fill: #737373; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .gone { fill: #c2410c; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kept { fill: #15803d; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .chip-gone { fill: #2a130c; stroke: #5c2a1a; }
+      .chip-kept { fill: #0b2015; stroke: #1d4d2e; }
+      .h { fill: #ededed; }
+      .p { fill: #a1a1a1; }
+      .col { fill: #8f8f8f; }
+      .gone { fill: #fb8b5e; }
+      .kept { fill: #4ade80; }
+      .code, .eyebrow { fill: #7c7c7c; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="415" rx="16"/>
+  <text class="eyebrow" x="20" y="32">WHEN THE PARTY...</text>
+  <text class="col" x="260" y="32" text-anchor="middle">scene flags</text>
+  <text class="col" x="336" y="32" text-anchor="middle">place flags</text>
+
+  <!-- Any entrance -->
+  <rect class="card" x="20" y="46" width="360" height="112" rx="12"/>
+  <text class="h" x="36" y="72">enters a scene,</text>
+  <text class="h" x="36" y="90">even the same one</text>
+  <rect class="chip-gone" x="224" y="60" width="72" height="22" rx="11"/>
+  <text class="gone" x="260" y="75" text-anchor="middle">forgotten</text>
+  <rect class="chip-kept" x="300" y="60" width="72" height="22" rx="11"/>
+  <text class="kept" x="336" y="75" text-anchor="middle">kept</text>
+  <text class="p" x="36" y="120">The plant Growth raised on Crossbone</text>
+  <text class="p" x="36" y="139">Isle is a sprout again.</text>
+
+  <!-- Another place -->
+  <rect class="card" x="20" y="168" width="360" height="94" rx="12"/>
+  <text class="h" x="36" y="194">enters another place</text>
+  <rect class="chip-gone" x="224" y="182" width="72" height="22" rx="11"/>
+  <text class="gone" x="260" y="197" text-anchor="middle">forgotten</text>
+  <rect class="chip-gone" x="300" y="182" width="72" height="22" rx="11"/>
+  <text class="gone" x="336" y="197" text-anchor="middle">forgotten</text>
+  <text class="p" x="36" y="226">Vault's mayor, who remembered welcoming</text>
+  <text class="p" x="36" y="245">Isaac back, welcomes him back again.</text>
+
+  <!-- Battle -->
+  <rect class="card" x="20" y="272" width="360" height="76" rx="12"/>
+  <text class="h" x="36" y="298">comes back from a battle</text>
+  <rect class="chip-kept" x="224" y="286" width="72" height="22" rx="11"/>
+  <text class="kept" x="260" y="301" text-anchor="middle">kept</text>
+  <rect class="chip-kept" x="300" y="286" width="72" height="22" rx="11"/>
+  <text class="kept" x="336" y="301" text-anchor="middle">kept</text>
+  <text class="p" x="36" y="334">The room is as the party left it.</text>
+
+  <!-- foot -->
+  <text class="p" x="20" y="378">A scene never undoes what it changed.</text>
+  <text class="code" x="380" y="402" text-anchor="end">Scene_ResetFlagsOnEnter</text>
+</svg>

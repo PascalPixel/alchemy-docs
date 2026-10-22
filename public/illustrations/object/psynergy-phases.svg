@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 560" role="img" aria-labelledby="title desc">
+  <title id="title">Psynergy on the field, step by step</title>
+  <desc id="desc">Isaac uses Move on the stone pillar in Vale. First the game checks Psynergy can be used here (not in the Battle Arena, not Reveal on the world map, not Retreat where it is blocked) and takes the PP. Then it runs the scene's event for before the cast, if the scene has one. Then the effect plays: Move's hand appears, and it pushes the thing ahead only because the scene has an event for Move on that pillar; with no such event the effect plays at nothing. Last it runs the scene's event for after the cast: in Vale, recording which column the pillar now stands in and blocking its cell. The place decides what happens; the effect only draws it.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .card-accent { fill: #ffffff; stroke: #0a72ef; stroke-width: 1.5; }
+    .chip { fill: #f0f6ff; stroke: #bcd7fb; }
+    .chip-scene { fill: #f0fdf4; stroke: #bbf7d0; }
+    .h { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .ks { fill: #15803d; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .k { fill: #0a72ef; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .wire { fill: none; stroke: #a3a3a3; stroke-width: 1.5; }
+    .head { fill: #a3a3a3; }
+    .num { fill: #0a72ef; }
+    .num-text { fill: #ffffff; font: 700 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .card-accent { fill: #111111; stroke: #3b8eff; }
+      .chip { fill: #0d1a2e; stroke: #1e3a66; }
+      .chip-scene { fill: #0b2015; stroke: #1d4d2e; }
+      .h { fill: #ededed; }
+      .p { fill: #a1a1a1; }
+      .ks { fill: #4ade80; }
+      .k { fill: #66a6ff; }
+      .code, .eyebrow { fill: #7c7c7c; }
+      .wire { stroke: #5c5c5c; }
+      .head { fill: #5c5c5c; }
+      .num { fill: #3b8eff; }
+      .num-text { fill: #0a0a0a; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="559" rx="16"/>
+  <text class="eyebrow" x="20" y="32">ISAAC USES MOVE ON VALE'S STONE PILLAR</text>
+
+  <!-- Check and pay -->
+  <rect class="card" x="20" y="44" width="360" height="92" rx="12"/>
+  <text class="h" x="36" y="70">Can it be used here?</text>
+  <text class="p" x="36" y="94">Not in the Battle Arena, not Reveal on the</text>
+  <text class="p" x="36" y="112">world map. If it can, the PP is paid.</text>
+  <text class="code" x="364" y="128" text-anchor="end">Field_UsePsynergy</text>
+  <path class="wire" d="M 200 136 V 150"/>
+  <path class="head" d="M 194 146 h 12 l -6 9 z"/>
+
+  <!-- Before -->
+  <rect class="card" x="20" y="158" width="360" height="80" rx="12"/>
+  <rect class="chip-scene" x="36" y="172" width="98" height="22" rx="11"/>
+  <text class="ks" x="85" y="187" text-anchor="middle">the place</text>
+  <text class="h" x="144" y="188">runs its "before" event</text>
+  <text class="p" x="36" y="216">if it has one. Vale has none for Move.</text>
+  <path class="wire" d="M 200 238 V 252"/>
+  <path class="head" d="M 194 248 h 12 l -6 9 z"/>
+
+  <!-- The effect -->
+  <rect class="card-accent" x="20" y="260" width="360" height="128" rx="12"/>
+  <rect class="chip" x="36" y="274" width="98" height="22" rx="11"/>
+  <text class="k" x="85" y="289" text-anchor="middle">the effect</text>
+  <text class="h" x="144" y="290">plays: a hand appears</text>
+  <text class="p" x="36" y="318">It pushes the pillar only because Vale has</text>
+  <text class="p" x="36" y="336">an event for Move on it. With no event</text>
+  <text class="p" x="36" y="354">there, the hand pushes at nothing.</text>
+  <text class="code" x="364" y="378" text-anchor="end">FieldEffect_DispatchRequestKind</text>
+  <path class="wire" d="M 200 388 V 402"/>
+  <path class="head" d="M 194 398 h 12 l -6 9 z"/>
+
+  <!-- After -->
+  <rect class="card" x="20" y="410" width="360" height="98" rx="12"/>
+  <rect class="chip-scene" x="36" y="424" width="98" height="22" rx="11"/>
+  <text class="ks" x="85" y="439" text-anchor="middle">the place</text>
+  <text class="h" x="144" y="440">runs its "after" event</text>
+  <text class="p" x="36" y="468">Vale notes where the pillar now stands,</text>
+  <text class="p" x="36" y="486">and makes its new cell solid.</text>
+  <text class="code" x="364" y="500" text-anchor="end">Event_SettleMovedPillar</text>
+
+  <text class="p" x="20" y="536">The place decides; the effect only draws.</text>
+</svg>

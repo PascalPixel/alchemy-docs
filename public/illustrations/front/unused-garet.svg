@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 470" role="img" aria-labelledby="title desc">
+  <title id="title">An event its own question ends</title>
+  <desc id="desc">On the stormy night in Vale, every way to a third spot crosses two others first. On the first, Isaac hears Garet struggling with his things. On the second, Garet calls after him and joins the party, and the game notes that he has joined. The third spot holds an older version of Garet joining, which first asks whether Garet has joined. By the time the leader can stand there the answer is always yes, so the event ends at once, and its lines, among them "Are you trapped, too?", are never shown.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .card-dead { fill: #fafafa; stroke: #a3a3a3; stroke-dasharray: 4 4; }
+    .spot { fill: #0a72ef; }
+    .spot-dead { fill: none; stroke: #a3a3a3; stroke-width: 2; }
+    .path { fill: none; stroke: #d4d4d4; stroke-width: 10; stroke-linecap: round; }
+    .flag { fill: #f0fdf4; stroke: #bbf7d0; }
+    .h { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .hd { fill: #8f8f8f; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .g { fill: #15803d; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .x { fill: #c2410c; font: 600 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .card-dead { fill: #0a0a0a; stroke: #525252; }
+      .spot { fill: #3b8eff; }
+      .spot-dead { stroke: #5c5c5c; }
+      .path { stroke: #262626; }
+      .flag { fill: #0b2015; stroke: #1d4d2e; }
+      .h { fill: #ededed; }
+      .hd { fill: #7c7c7c; }
+      .p { fill: #a1a1a1; }
+      .g { fill: #4ade80; }
+      .x { fill: #fb8b5e; }
+      .code, .eyebrow { fill: #7c7c7c; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="469" rx="16"/>
+  <text class="eyebrow" x="20" y="32">VALE ON THE STORMY NIGHT: THE ONLY WAY ALONG</text>
+
+  <path class="path" d="M 40 56 V 352"/>
+
+  <!-- first spot -->
+  <circle class="spot" cx="40" cy="84" r="9"/>
+  <rect class="card" x="66" y="52" width="314" height="70" rx="10"/>
+  <text class="h" x="80" y="78">Isaac hears Garet struggling</text>
+  <text class="p" x="80" y="102">"Ugh... Hrnghhh..."</text>
+
+  <!-- second spot -->
+  <circle class="spot" cx="40" cy="176" r="9"/>
+  <rect class="card" x="66" y="138" width="314" height="84" rx="10"/>
+  <text class="h" x="80" y="164">Garet calls after him and joins</text>
+  <rect class="flag" x="80" y="178" width="222" height="26" rx="13"/>
+  <text class="g" x="191" y="196" text-anchor="middle">the game notes: Garet has joined</text>
+
+  <!-- third spot -->
+  <circle class="spot-dead" cx="40" cy="300" r="9"/>
+  <rect class="card-dead" x="66" y="240" width="314" height="122" rx="10"/>
+  <text class="hd" x="80" y="266">An older version of Garet joining</text>
+  <text class="p" x="80" y="290">Its first question: has Garet joined?</text>
+  <text class="x" x="80" y="314">Always yes by now, so it ends at once.</text>
+  <text class="p" x="80" y="342">"Are you trapped, too?" is never shown.</text>
+
+  <text class="p" x="20" y="402">Every way to the third spot crosses the first</text>
+  <text class="p" x="20" y="421">two, so their events have always run first.</text>
+  <text class="code" x="380" y="452" text-anchor="end">Event_UnusedGaretJoinsIsaac</text>
+</svg>

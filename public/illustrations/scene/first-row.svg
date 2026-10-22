@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 500" role="img" aria-labelledby="title desc">
+  <title id="title">The first row that fits answers</title>
+  <desc id="desc">Four talk rows from Vault's houses once the party is back from Kalay, in table order. The mayor's first row holds until he has welcomed Isaac back, and it runs the first time the player talks to him. His second row holds always, and it answers the later talks on that visit: he warns of the thieves' revenge. The cook's first row holds always and answers every talk with "We don't get a lot of travelers in winter." The cook's second row, in which he would offer his leftover bones, is never reached, because the row above it always fits first.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .row { fill: #ffffff; stroke: #e5e5e5; }
+    .row-dead { fill: #fafafa; stroke: #a3a3a3; stroke-dasharray: 4 4; }
+    .h { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .hd { fill: #8f8f8f; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .when { fill: #0a72ef; font: 500 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .pd { fill: #a3a3a3; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .chip-ok { fill: #f0fdf4; stroke: #bbf7d0; }
+    .chip-no { fill: #fff3f0; stroke: #f6c3b7; }
+    .ok { fill: #15803d; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .no { fill: #c2410c; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .wire { fill: none; stroke: #0a72ef; stroke-width: 1.5; }
+    .head { fill: #0a72ef; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .row { fill: #111111; stroke: #2e2e2e; }
+      .row-dead { fill: #0a0a0a; stroke: #525252; }
+      .h { fill: #ededed; }
+      .hd { fill: #7c7c7c; }
+      .when { fill: #66a6ff; }
+      .p { fill: #a1a1a1; }
+      .pd { fill: #5c5c5c; }
+      .chip-ok { fill: #0b2015; stroke: #1d4d2e; }
+      .chip-no { fill: #2a130c; stroke: #5c2a1a; }
+      .ok { fill: #4ade80; }
+      .no { fill: #fb8b5e; }
+      .code, .eyebrow { fill: #7c7c7c; }
+      .wire { stroke: #3b8eff; }
+      .head { fill: #3b8eff; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="499" rx="16"/>
+  <text class="eyebrow" x="44" y="32">VAULT'S HOUSES, BACK FROM KALAY</text>
+
+  <!-- read from the top -->
+  <path class="wire" d="M 24 52 V 382"/>
+  <path class="head" d="M 18 378 h 12 l -6 9 z"/>
+  <text class="when" transform="translate(16 210) rotate(-90)" text-anchor="middle">read from the top</text>
+
+  <!-- Mayor, first -->
+  <rect class="row" x="44" y="46" width="336" height="76" rx="10"/>
+  <text class="h" x="58" y="70">The mayor</text>
+  <text class="when" x="138" y="70">until he has welcomed Isaac</text>
+  <text class="p" x="58" y="94">Welcomes Isaac back.</text>
+  <rect class="chip-ok" x="58" y="102" width="132" height="14" rx="7"/>
+  <text class="ok" x="124" y="113" text-anchor="middle">the first talk</text>
+
+  <!-- Mayor, second -->
+  <rect class="row" x="44" y="130" width="336" height="76" rx="10"/>
+  <text class="h" x="58" y="154">The mayor</text>
+  <text class="when" x="138" y="154">always</text>
+  <text class="p" x="58" y="178">Warns of the thieves' revenge.</text>
+  <rect class="chip-ok" x="58" y="186" width="132" height="14" rx="7"/>
+  <text class="ok" x="124" y="197" text-anchor="middle">later talks</text>
+
+  <!-- Cook, first -->
+  <rect class="row" x="44" y="214" width="336" height="76" rx="10"/>
+  <text class="h" x="58" y="238">The cook</text>
+  <text class="when" x="128" y="238">always</text>
+  <text class="p" x="58" y="262">"We don't get a lot of travelers in winter."</text>
+  <rect class="chip-ok" x="58" y="270" width="132" height="14" rx="7"/>
+  <text class="ok" x="124" y="281" text-anchor="middle">every talk</text>
+
+  <!-- Cook, second -->
+  <rect class="row-dead" x="44" y="298" width="336" height="76" rx="10"/>
+  <text class="hd" x="58" y="322">The cook</text>
+  <text class="when" x="128" y="322">always</text>
+  <text class="pd" x="58" y="346">Offers his leftover bones.</text>
+  <rect class="chip-no" x="58" y="354" width="132" height="14" rx="7"/>
+  <text class="no" x="124" y="365" text-anchor="middle">never reached</text>
+
+  <text class="p" x="20" y="418">The first row that fits answers. So rows run</text>
+  <text class="p" x="20" y="437">from the latest point in the story down to the</text>
+  <text class="p" x="20" y="456">default, and a row behind one that always fits</text>
+  <text class="p" x="20" y="475">is never reached.</text>
+  <text class="code" x="380" y="490" text-anchor="end">Scene_FindEvent</text>
+</svg>

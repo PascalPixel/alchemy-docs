@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 560" role="img" aria-labelledby="title desc">
+  <title id="title">A cutscene runs from top to bottom</title>
+  <desc id="desc">The script a woman in Vale runs when Isaac talks to her after Kalay, one step to a line with how long each step holds the scene. The player loses control. The view starts to shake, and the script waits ten frames. The shake is set to die away. She says "Aghh! I felt another one!", which holds until the player answers it and then twenty frames more. She turns to face Isaac and the scene holds twenty frames. She says the next line, which holds until the player answers it. Then the player has control again. Steps that take no time follow each other within one frame; steps that take time wait inside themselves, so the script reads as a list of what happens, in order.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .step { fill: #ffffff; stroke: #e5e5e5; }
+    .step-talk { fill: #f0f6ff; stroke: #bcd7fb; }
+    .bar { fill: #0a72ef; fill-opacity: 0.85; }
+    .bar-open { fill: none; stroke: #0a72ef; stroke-width: 1.5; stroke-dasharray: 3 3; }
+    .spine { stroke: #d4d4d4; stroke-width: 2; }
+    .dot { fill: #a3a3a3; }
+    .h { fill: #0a0a0a; font: 600 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .q { fill: #0a72ef; font: 600 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .t { fill: #737373; font: 500 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .step { fill: #111111; stroke: #2e2e2e; }
+      .step-talk { fill: #0d1a2e; stroke: #1e3a66; }
+      .bar { fill: #3b8eff; }
+      .bar-open { stroke: #3b8eff; }
+      .spine { stroke: #333333; }
+      .dot { fill: #5c5c5c; }
+      .h { fill: #ededed; }
+      .q { fill: #66a6ff; }
+      .t { fill: #8f8f8f; }
+      .p { fill: #a1a1a1; }
+      .code, .eyebrow { fill: #7c7c7c; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="559" rx="16"/>
+  <text class="eyebrow" x="20" y="32">A WOMAN IN VALE FEELS ANOTHER TREMOR</text>
+  <path class="spine" d="M 32 52 V 448"/>
+
+  <!-- 1 -->
+  <circle class="dot" cx="32" cy="68" r="4"/>
+  <rect class="step" x="46" y="50" width="334" height="36" rx="8"/>
+  <text class="h" x="60" y="73">The player loses control</text>
+  <text class="t" x="366" y="73" text-anchor="end">no time</text>
+
+  <!-- 2 -->
+  <circle class="dot" cx="32" cy="112" r="4"/>
+  <rect class="step" x="46" y="94" width="334" height="36" rx="8"/>
+  <text class="h" x="60" y="117">The view starts to shake</text>
+  <text class="t" x="366" y="117" text-anchor="end">no time</text>
+
+  <!-- 3 -->
+  <circle class="dot" cx="32" cy="156" r="4"/>
+  <rect class="step" x="46" y="138" width="334" height="36" rx="8"/>
+  <text class="h" x="60" y="161">Wait</text>
+  <rect class="bar" x="276" y="150" width="20" height="12" rx="3"/>
+  <text class="t" x="366" y="161" text-anchor="end">10 frames</text>
+
+  <!-- 4 -->
+  <circle class="dot" cx="32" cy="200" r="4"/>
+  <rect class="step" x="46" y="182" width="334" height="36" rx="8"/>
+  <text class="h" x="60" y="205">The shake dies away</text>
+  <text class="t" x="366" y="205" text-anchor="end">no time</text>
+
+  <!-- 5 -->
+  <circle class="dot" cx="32" cy="254" r="4"/>
+  <rect class="step-talk" x="46" y="226" width="334" height="56" rx="8"/>
+  <text class="q" x="60" y="249">"Aghh! I felt another one!"</text>
+  <rect class="bar-open" x="60" y="260" width="48" height="12" rx="3"/>
+  <rect class="bar" x="110" y="260" width="40" height="12" rx="3"/>
+  <text class="t" x="366" y="271" text-anchor="end">until answered, then 20 frames</text>
+
+  <!-- 6 -->
+  <circle class="dot" cx="32" cy="308" r="4"/>
+  <rect class="step" x="46" y="290" width="334" height="36" rx="8"/>
+  <text class="h" x="60" y="313">She turns to face Isaac</text>
+  <rect class="bar" x="256" y="302" width="40" height="12" rx="3"/>
+  <text class="t" x="366" y="313" text-anchor="end">20 frames</text>
+
+  <!-- 7 -->
+  <circle class="dot" cx="32" cy="362" r="4"/>
+  <rect class="step-talk" x="46" y="334" width="334" height="56" rx="8"/>
+  <text class="q" x="60" y="357">"They've been going on for a while..."</text>
+  <rect class="bar-open" x="60" y="368" width="48" height="12" rx="3"/>
+  <text class="t" x="366" y="379" text-anchor="end">until answered</text>
+
+  <!-- 8 -->
+  <circle class="dot" cx="32" cy="416" r="4"/>
+  <rect class="step" x="46" y="398" width="334" height="36" rx="8"/>
+  <text class="h" x="60" y="421">The player has control again</text>
+  <text class="t" x="366" y="421" text-anchor="end">no time</text>
+
+  <text class="p" x="20" y="478">Each step that takes time waits inside itself,</text>
+  <text class="p" x="20" y="497">so the script is a plain list of what happens,</text>
+  <text class="p" x="20" y="516">and the walk resumes only after the last line.</text>
+  <text class="code" x="380" y="544" text-anchor="end">Event_ReactToAnotherTremor</text>
+</svg>
