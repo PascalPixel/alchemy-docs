@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 520" role="img" aria-labelledby="title desc">
+  <title id="title">One person, four conversations</title>
+  <desc id="desc">In the menu test room, outside the Japanese edition, Felix gives a different test depending on which way the leader faces when talking to him. Facing north, from below him, the leader gets the weapon shop's lines; facing west, from his right, the armour shop's; facing east, from his left, the item shop's; facing south, from above, the Sanctum's. Each is a separate talk event that names the facing it needs. A second Felix does the same with the Warrior's shops.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .felix { fill: #0a72ef; }
+    .leader { fill: #f59e0b; }
+    .wire { fill: none; stroke: #d97706; stroke-width: 2; }
+    .head { fill: #d97706; }
+    .grid { stroke: #ececec; stroke-width: 1; }
+    .h { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .lb { fill: #0a0a0a; font: 600 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .l { fill: #525252; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .in { fill: #ffffff; font: 600 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .felix { fill: #3b8eff; }
+      .leader { fill: #f59e0b; }
+      .wire { stroke: #f59e0b; }
+      .head { fill: #f59e0b; }
+      .grid { stroke: #1f1f1f; }
+      .h, .lb { fill: #ededed; }
+      .p, .l { fill: #a1a1a1; }
+      .in { fill: #0a0a0a; }
+      .code, .eyebrow { fill: #7c7c7c; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="519" rx="16"/>
+  <text class="eyebrow" x="20" y="34">FELIX IN THE MENU TEST ROOM, SEEN FROM ABOVE</text>
+
+  <!-- Felix at the centre (200, 216) -->
+  <circle class="felix" cx="200" cy="216" r="22"/>
+  <text class="in" x="200" y="221" text-anchor="middle">Felix</text>
+
+  <!-- From below, facing north -->
+  <circle class="leader" cx="200" cy="300" r="9"/>
+  <path class="wire" d="M 200 290 V 250"/>
+  <path class="head" d="M 194 252 l 6 -9 l 6 9 z"/>
+  <text class="lb" x="200" y="330" text-anchor="middle">facing north</text>
+  <text class="l" x="200" y="346" text-anchor="middle">the weapon shop's lines</text>
+
+  <!-- From above, facing south -->
+  <circle class="leader" cx="200" cy="132" r="9"/>
+  <path class="wire" d="M 200 142 V 182"/>
+  <path class="head" d="M 194 180 l 6 9 l 6 -9 z"/>
+  <text class="lb" x="200" y="96" text-anchor="middle">facing south</text>
+  <text class="l" x="200" y="112" text-anchor="middle">the Sanctum's lines</text>
+
+  <!-- From the left, facing east -->
+  <circle class="leader" cx="116" cy="216" r="9"/>
+  <path class="wire" d="M 126 216 H 166"/>
+  <path class="head" d="M 164 210 l 9 6 l -9 6 z"/>
+  <text class="lb" x="70" y="250" text-anchor="middle">facing east</text>
+  <text class="l" x="70" y="266" text-anchor="middle">the item shop's</text>
+  <text class="l" x="70" y="281" text-anchor="middle">lines</text>
+
+  <!-- From the right, facing west -->
+  <circle class="leader" cx="284" cy="216" r="9"/>
+  <path class="wire" d="M 274 216 H 234"/>
+  <path class="head" d="M 236 210 l -9 6 l 9 6 z"/>
+  <text class="lb" x="330" y="250" text-anchor="middle">facing west</text>
+  <text class="l" x="330" y="266" text-anchor="middle">the armour shop's</text>
+  <text class="l" x="330" y="281" text-anchor="middle">lines</text>
+
+  <!-- Key -->
+  <circle class="leader" cx="28" cy="384" r="6"/>
+  <text class="l" x="40" y="388">the leader, talking to Felix</text>
+
+  <text class="p" x="20" y="426">Each conversation is a talk event of its own</text>
+  <text class="p" x="20" y="445">that names the facing it needs. A second Felix</text>
+  <text class="p" x="20" y="464">does the same with the Warrior's shops.</text>
+  <text class="code" x="380" y="500" text-anchor="end">EVENT_TALK · debug/test.c</text>
+</svg>
