@@ -1642,7 +1642,7 @@ function flagLabel(n: number, tu?: TU): string {
 }
 
 // FLAG_ names the shared headers declare outside flags.h, as field_scene.h
-// does FLAG_PARTY_LEFT_VALE.
+// does FLAG_VALE_PARTY_LEFT.
 function globalFlagNames(): Map<number, string> {
   if (globalFlagNamesCache) return globalFlagNamesCache;
   const names = new Map<number, string>();

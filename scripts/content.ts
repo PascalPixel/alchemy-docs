@@ -621,7 +621,7 @@ const reachProblems: string[] = [];
 // The enum each reach-line prefix names, and whether an ability row reaches
 // one of its values.
 const REACH: [string, string, (value: number, act: Row, word: number) => boolean][] = [
-  ['BATTLE_EFFECT_', 'BattleFxKind', (v, _, w) => !(w & 0xc000) && (w & 0xfff) === v],
+  ['BATTLE_EFFECT_', 'BattleEffectKind', (v, _, w) => !(w & 0xc000) && (w & 0xfff) === v],
   ['SCENE_EFFECT_', 'SceneEffectKind', (v, _, w) => !!(w & 0x8000) && (w & 0xfff) === v],
   ['CASTING_IMPACT_', 'CastingImpact', (v, _, w) => (w & 0xc000) === 0x4000 && (w & 0xfff) === v + 100],
   ['FIELD_KIND_', 'FieldKind', (v, act) => int(act.type) === v],
