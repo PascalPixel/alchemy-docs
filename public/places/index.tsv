@@ -4484,19 +4484,19 @@ tolbi-ship-deck	109	Tolbi-bound Ship		event	18	TolbiShipDeck_WatchCrewDecideToSa
 tolbi-ship-deck	109	Tolbi-bound Ship		event	18	TolbiShipDeck_WatchCrewDecideToSail	4		07465				07462, 07463, 07464, 07465, 07466, 07467, 07468, 07469, 07470, 07488, 07489, 07490, 07491, 07492, 07493, 07494, 07495, 07496, 07497	tolbi-ship-deck/events/TolbiShipDeck_WatchCrewDecideToSail-4.png
 tolbi-ship-deck	109	Tolbi-bound Ship		event-gif	18	TolbiShipDeck_WatchCrewDecideToSail						1853	07462, 07463, 07464, 07465, 07466, 07467, 07468, 07469, 07470, 07488, 07489, 07490, 07491, 07492, 07493, 07494, 07495, 07496, 07497	tolbi-ship-deck/events/TolbiShipDeck_WatchCrewDecideToSail.gif
 tolbi-ship-deck	109	Tolbi-bound Ship		event	18	TolbiShipDeck_WatchCrewDecideToSail	1		07462				07462, 07463, 07464, 07465, 07466, 07467, 07468, 07469, 07470, 07488, 07489, 07490, 07491, 07492, 07493, 07494, 07495, 07496, 07497	tolbi-ship-deck/events/TolbiShipDeck_WatchCrewDecideToSail.png
-tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	13	Event_BlowAwayBushB						214		tunnel-ruins-great-statue/events/Event_BlowAwayBushB.gif
-tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	13	Event_BlowAwayBushC						216		tunnel-ruins-great-statue/events/Event_BlowAwayBushC.gif
+tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	13	Event_BlowAwayIvyB						214		tunnel-ruins-great-statue/events/Event_BlowAwayIvyB.gif
+tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	13	Event_BlowAwayIvyC						216		tunnel-ruins-great-statue/events/Event_BlowAwayIvyC.gif
 tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	13	Event_HopDownStep						42		tunnel-ruins-great-statue/events/Event_HopDownStep.gif
 tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	11	Event_HopEast						42		tunnel-ruins-great-statue/events/Event_HopEast.gif
 tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	12	Event_HopSouth						49		tunnel-ruins-great-statue/events/Event_HopSouth.gif
-tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	13	Event_HopSouthOrPushStones						40		tunnel-ruins-great-statue/events/Event_HopSouthOrPushStones.gif
+tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	13	Event_HopSouthOrPushSmallPillars						40		tunnel-ruins-great-statue/events/Event_HopSouthOrPushSmallPillars.gif
 tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	11	Event_HopWest						41		tunnel-ruins-great-statue/events/Event_HopWest.gif
 tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	13	Event_HopWestUnlessAtCell32x50						41		tunnel-ruins-great-statue/events/Event_HopWestUnlessAtCell32x50.gif
 tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	3	Event_PushFirstPillars						31		tunnel-ruins-great-statue/events/Event_PushFirstPillars.gif
 tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	8	Event_PushSecondPillars						31		tunnel-ruins-great-statue/events/Event_PushSecondPillars.gif
 tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	0	Event_PushSinkingPillarA						76		tunnel-ruins-great-statue/events/Event_PushSinkingPillarA.gif
 tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	11	Event_PushSinkingPillarB						78		tunnel-ruins-great-statue/events/Event_PushSinkingPillarB.gif
-tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	0	Event_PushStones						29		tunnel-ruins-great-statue/events/Event_PushStones.gif
+tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	0	Event_PushSmallPillars						29		tunnel-ruins-great-statue/events/Event_PushSmallPillars.gif
 tunnel-ruins-great-statue	172	Tunnel Ruins		event	1	Event_ReadFirstStatue	2		09865				09866, 09865	tunnel-ruins-great-statue/events/Event_ReadFirstStatue-2.png
 tunnel-ruins-great-statue	172	Tunnel Ruins		event	1	Event_ReadFirstStatue	3		09865				09866, 09865	tunnel-ruins-great-statue/events/Event_ReadFirstStatue-3.png
 tunnel-ruins-great-statue	172	Tunnel Ruins		event	1	Event_ReadFirstStatue	4		09865				09866, 09865	tunnel-ruins-great-statue/events/Event_ReadFirstStatue-4.png
@@ -4505,7 +4505,7 @@ tunnel-ruins-great-statue	172	Tunnel Ruins		event	1	Event_ReadFirstStatue	1		098
 tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	0	Event_SinkPillarA						108		tunnel-ruins-great-statue/events/Event_SinkPillarA.gif
 tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	3	TunnelRuins_UpdateFirstPillarCells						250		tunnel-ruins-great-statue/events/TunnelRuins_UpdateFirstPillarCells.gif
 tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	8	TunnelRuins_UpdateSecondPillarCells						250		tunnel-ruins-great-statue/events/TunnelRuins_UpdateSecondPillarCells.gif
-tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	12	TunnelRuins_UpdateStoneCells						106		tunnel-ruins-great-statue/events/TunnelRuins_UpdateStoneCells.gif
+tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	12	TunnelRuins_UpdateSmallPillarCells						106		tunnel-ruins-great-statue/events/TunnelRuins_UpdateSmallPillarCells.gif
 tunnel-ruins-lady-statues	173	1,2,3=Babi Lighthouse; *=Tunnel Ruins		event-gif	7	Event_JumpDownLedge						51		tunnel-ruins-lady-statues/events/Event_JumpDownLedge.gif
 tunnel-ruins-lady-statues	173	1,2,3=Babi Lighthouse; *=Tunnel Ruins		event-gif	6	Event_MoveDousePillar						109		tunnel-ruins-lady-statues/events/Event_MoveDousePillar.gif
 tunnel-ruins-lady-statues	173	1,2,3=Babi Lighthouse; *=Tunnel Ruins		event-gif	1	Event_MoveEastPillar						106		tunnel-ruins-lady-statues/events/Event_MoveEastPillar.gif
@@ -8309,6 +8309,8 @@ kalay-tunnel-treasure-room	156	Kalay Tunnel		event	1	Kalay_TalkAboutLayana	1		09
 kalay-tunnel-treasure-room	156	Kalay Tunnel		event-gif	1	Kalay_UpdateTunnelPassages						113		kalay-tunnel-treasure-room/events/Kalay_UpdateTunnelPassages.gif
 kalay-tunnel-treasure-room	156	Kalay Tunnel		event-gif	1	MsgKalayTreasureBeyondDoors						104	09654	kalay-tunnel-treasure-room/events/MsgKalayTreasureBeyondDoors.gif
 kalay-tunnel-treasure-room	156	Kalay Tunnel		event	1	MsgKalayTreasureBeyondDoors	1		09654				09654	kalay-tunnel-treasure-room/events/MsgKalayTreasureBeyondDoors.png
+kalay-tunnel-treasure-room	156	Kalay Tunnel		event-gif	3	Kalay_ScorchJoins						316		kalay-tunnel-treasure-room/events/Kalay_ScorchJoins.gif
+kalay-tunnel-treasure-room	156	Kalay Tunnel		event	3	Kalay_ScorchJoins	1							kalay-tunnel-treasure-room/events/Kalay_ScorchJoins.png
 kalay	99	Kalay		event-gif	10	Kalay_CatchTownNut						169		kalay/events/Kalay_CatchTownNut.gif
 kalay	99	Kalay		event	10	Kalay_CatchTownNut	1							kalay/events/Kalay_CatchTownNut.png
 kalay	99	Kalay		event-gif	1	Kalay_OpenDoorAndExit						34		kalay/events/Kalay_OpenDoorAndExit.gif
