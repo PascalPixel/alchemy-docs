@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 520" role="img" aria-labelledby="title desc">
+  <title id="title">The Item screen's windows</title>
+  <desc id="desc">The Item screen is six windows laid over a screen 30 tiles wide and 20 tall. Top left, 13 by 5 tiles, the party, where the hand picks a member. Top right, 17 by 3, the question the screen is asking. Below the party, 13 by 12, the chosen member's level, HP and PP. On the right, 17 by 10, that member's items as icons, and under it, 17 by 4, the button help: L and A to sort, R to show the equipment. Along the bottom, 30 by 3, the description of the item the hand is on. Once an item is chosen, a taller list window, 17 by 14, takes the right side and offers the commands.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .frame { fill: none; stroke: #d4d4d4; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .w0 { fill: none; stroke: #d97706; stroke-width: 2; }
+    .w1 { fill: none; stroke: #16a34a; stroke-width: 2; }
+    .w2 { fill: none; stroke: #7c3aed; stroke-width: 2; }
+    .w3 { fill: none; stroke: #0a72ef; stroke-width: 2; }
+    .w4 { fill: none; stroke: #db2777; stroke-width: 2; }
+    .w5 { fill: none; stroke: #0891b2; stroke-width: 2; }
+    .f0 { fill: #d97706; }
+    .f1 { fill: #16a34a; }
+    .f2 { fill: #7c3aed; }
+    .f3 { fill: #0a72ef; }
+    .f4 { fill: #db2777; }
+    .f5 { fill: #0891b2; }
+    .t0 { fill: #d97706; fill-opacity: 0.10; }
+    .t1 { fill: #16a34a; fill-opacity: 0.10; }
+    .t2 { fill: #7c3aed; fill-opacity: 0.10; }
+    .t3 { fill: #0a72ef; fill-opacity: 0.10; }
+    .t4 { fill: #db2777; fill-opacity: 0.10; }
+    .t5 { fill: #0891b2; fill-opacity: 0.10; }
+    .c0 { fill: #b45309; }
+    .c1 { fill: #15803d; }
+    .c2 { fill: #6d28d9; }
+    .c3 { fill: #0a72ef; }
+    .c4 { fill: #be185d; }
+    .c5 { fill: #0e7490; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .frame { stroke: #333333; }
+      .p { fill: #a1a1a1; }
+      .small, .eyebrow { fill: #7c7c7c; }
+      .w0 { stroke: #f59e0b; }
+      .w1 { stroke: #22c55e; }
+      .w2 { stroke: #a78bfa; }
+      .w3 { stroke: #3b8eff; }
+      .w4 { stroke: #f472b6; }
+      .w5 { stroke: #22d3ee; }
+      .f0 { fill: #b45309; }
+      .f1 { fill: #15803d; }
+      .f2 { fill: #6d28d9; }
+      .f3 { fill: #1d5fc4; }
+      .f4 { fill: #be185d; }
+      .f5 { fill: #0e7490; }
+      .t0, .t1, .t2, .t3, .t4, .t5 { fill-opacity: 0.18; }
+      .c0 { fill: #f59e0b; }
+      .c1 { fill: #4ade80; }
+      .c2 { fill: #a78bfa; }
+      .c3 { fill: #66a6ff; }
+      .c4 { fill: #f472b6; }
+      .c5 { fill: #22d3ee; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="519" rx="16"/>
+  <text class="eyebrow" x="20" y="32">THE SCREEN IN TILES: 30 ACROSS, 20 DOWN</text>
+
+  <!-- 12 units a tile; the screen at 20, 46 -->
+  <rect class="frame" x="20" y="46" width="360" height="240"/>
+  <!-- party 0,0 13x5 -->
+  <rect class="t0" x="22" y="48" width="152" height="56" rx="4"/>
+  <rect class="w0" x="22" y="48" width="152" height="56" rx="4"/>
+  <text class="c0" x="32" y="72" font-weight="600" font-size="13" font-family="ui-sans-serif, system-ui, sans-serif">Party</text>
+  <text class="small" x="32" y="90">the hand picks one</text>
+  <!-- prompt 13,0 17x3 -->
+  <rect class="t3" x="178" y="48" width="200" height="32" rx="4"/>
+  <rect class="w3" x="178" y="48" width="200" height="32" rx="4"/>
+  <text class="c3" x="188" y="69" font-weight="600" font-size="13" font-family="ui-sans-serif, system-ui, sans-serif">The question</text>
+  <!-- status 0,5 13x12 -->
+  <rect class="t1" x="22" y="108" width="152" height="140" rx="4"/>
+  <rect class="w1" x="22" y="108" width="152" height="140" rx="4"/>
+  <text class="c1" x="32" y="132" font-weight="600" font-size="13" font-family="ui-sans-serif, system-ui, sans-serif">The member</text>
+  <text class="small" x="32" y="150">level, HP, PP</text>
+  <!-- items 13,3 17x10 -->
+  <rect class="t2" x="178" y="84" width="200" height="116" rx="4"/>
+  <rect class="w2" x="178" y="84" width="200" height="116" rx="4"/>
+  <text class="c2" x="188" y="108" font-weight="600" font-size="13" font-family="ui-sans-serif, system-ui, sans-serif">Their items</text>
+  <g class="t2"><rect x="190" y="122" width="16" height="16" rx="3"/><rect x="212" y="122" width="16" height="16" rx="3"/><rect x="234" y="122" width="16" height="16" rx="3"/><rect x="256" y="122" width="16" height="16" rx="3"/><rect x="278" y="122" width="16" height="16" rx="3"/><rect x="190" y="146" width="16" height="16" rx="3"/><rect x="212" y="146" width="16" height="16" rx="3"/></g>
+  <!-- help 13,13 17x4 -->
+  <rect class="t5" x="178" y="204" width="200" height="44" rx="4"/>
+  <rect class="w5" x="178" y="204" width="200" height="44" rx="4"/>
+  <text class="c5" x="188" y="224" font-weight="600" font-size="13" font-family="ui-sans-serif, system-ui, sans-serif">Button help</text>
+  <text class="small" x="188" y="240">L + A sorts, R: equipment</text>
+  <!-- info 0,17 30x3 -->
+  <rect class="t4" x="22" y="252" width="356" height="32" rx="4"/>
+  <rect class="w4" x="22" y="252" width="356" height="32" rx="4"/>
+  <text class="c4" x="32" y="273" font-weight="600" font-size="13" font-family="ui-sans-serif, system-ui, sans-serif">What the item under the hand does</text>
+
+  <!-- sizes -->
+  <text class="eyebrow" x="20" y="320">EACH WINDOW, IN TILES</text>
+  <rect class="f0" x="20" y="334" width="10" height="10" rx="2"/>
+  <text class="p" x="38" y="344">Party: 13 by 5, top left</text>
+  <rect class="f3" x="20" y="358" width="10" height="10" rx="2"/>
+  <text class="p" x="38" y="368">The question: 17 by 3, top right</text>
+  <rect class="f1" x="20" y="382" width="10" height="10" rx="2"/>
+  <text class="p" x="38" y="392">The member: 13 by 12</text>
+  <rect class="f2" x="20" y="406" width="10" height="10" rx="2"/>
+  <text class="p" x="38" y="416">Their items: 17 by 10</text>
+  <rect class="f5" x="20" y="430" width="10" height="10" rx="2"/>
+  <text class="p" x="38" y="440">Button help: 17 by 4</text>
+  <rect class="f4" x="20" y="454" width="10" height="10" rx="2"/>
+  <text class="p" x="38" y="464">Description: 30 by 3, along the bottom</text>
+  <text class="small" x="20" y="492">Once an item is chosen, a 17 by 14 list takes the</text><text class="small" x="20" y="508">right side and offers what to do with it.</text>
+</svg>
