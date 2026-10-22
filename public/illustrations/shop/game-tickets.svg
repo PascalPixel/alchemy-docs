@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 540" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 556" role="img" aria-labelledby="title desc">
   <title id="title">Spending earns Game Tickets</title>
   <desc id="desc">When the party buys something for 200 coins, the coins go down by 200 and a hidden shop credit goes up by 200. After each purchase the keeper checks the credit against the next ticket's cost; once it reaches it, the keeper gives a Game Ticket and the cost comes off the credit, never off the coins. The first five tickets cost 300 of credit each, the next five 500, then 1,000, 2,000 and 4,000, five at a time, and every ticket after the 25th costs 8,000.</desc>
   <style>
@@ -38,7 +38,7 @@
     }
   </style>
 
-  <rect class="panel" x="0.5" y="0.5" width="399" height="539" rx="16"/>
+  <rect class="panel" x="0.5" y="0.5" width="399" height="555" rx="16"/>
   <text class="eyebrow" x="20" y="32">BUYING A LONG SWORD FOR 200 COINS</text>
 
   <!-- two purses -->
@@ -86,5 +86,5 @@
   <text class="small" x="220" y="496" text-anchor="middle">16th</text><text class="small" x="220" y="511" text-anchor="middle">to 20th</text>
   <text class="small" x="276" y="496" text-anchor="middle">21st</text><text class="small" x="276" y="511" text-anchor="middle">to 25th</text>
   <text class="small" x="332" y="496" text-anchor="middle">26th</text><text class="small" x="332" y="511" text-anchor="middle">on</text>
-  <text class="code" x="380" y="530" text-anchor="end">Shop_BuySpecialItem</text>
+  <text class="code" x="380" y="544" text-anchor="end">Shop_BuySpecialItem</text>
 </svg>
