@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 696" role="img" aria-labelledby="title desc">
+  <title id="title">Four summons, four ways to throw flames</title>
+  <desc id="desc">The four summons that need one Djinni each draw a small Djinni of their element and throw flames at the enemies. Venus raises ten columns of flame from the ground, one every four frames, each bursting into motes. Mercury's Djinni circles and fires five flames across the screen, each shattering into motes five frames after it leaves. Mars flares an orb, its Djinni dives into the ground and nine flames erupt in a row while embers rise from them. Jupiter drops eight flameballs from the top right, one every four frames, each shattering into motes as it lands. The flames are the effect's own particles; the motes each flame breaks into take a block of 32 places in the borrowed pool.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .card-accent { fill: #ffffff; stroke: #0a72ef; stroke-width: 1.5; }
+    .card-exit { fill: #fafafa; stroke: #a3a3a3; stroke-dasharray: 4 4; }
+    .chip { fill: #f0f6ff; stroke: #bcd7fb; }
+    .chip-wait { fill: #f5f5f5; stroke: #d4d4d4; }
+    .h { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .h17 { fill: #0a0a0a; font: 600 17px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .k { fill: #0a72ef; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kw { fill: #525252; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .label { fill: #737373; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .wire { fill: none; stroke: #a3a3a3; stroke-width: 1.5; }
+    .wire-accent { fill: none; stroke: #0a72ef; stroke-width: 1.5; }
+    .head { fill: #a3a3a3; }
+    .head-accent { fill: #0a72ef; }
+    .dot { fill: #0a72ef; }
+    .frame { fill: none; stroke: #d4d4d4; stroke-width: 1; }
+    .canvasbg { fill: #101014; }
+
+    .ground { stroke: #d4d4d4; stroke-width: 1.5; }
+    .foe { fill: #c4c4c4; }
+    .ve { stroke: #ca8a04; fill: none; stroke-width: 2; stroke-linecap: round; }
+    .me { stroke: #2563eb; fill: none; stroke-width: 2; stroke-linecap: round; }
+    .ma { stroke: #dc2626; fill: none; stroke-width: 2; stroke-linecap: round; }
+    .ju { stroke: #9333ea; fill: none; stroke-width: 2; stroke-linecap: round; }
+    .ve-f { fill: #ca8a04; } .me-f { fill: #2563eb; } .ma-f { fill: #dc2626; } .ju-f { fill: #9333ea; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .card-accent { fill: #111111; stroke: #3b8eff; }
+      .card-exit { fill: #0a0a0a; stroke: #525252; }
+      .chip { fill: #0d1a2e; stroke: #1e3a66; }
+      .chip-wait { fill: #1a1a1a; stroke: #333333; }
+      .h, .h17 { fill: #ededed; }
+      .p, .kw { fill: #a1a1a1; }
+      .k { fill: #66a6ff; }
+      .small, .code, .eyebrow { fill: #7c7c7c; }
+      .label { fill: #8f8f8f; }
+      .wire { stroke: #5c5c5c; }
+      .wire-accent { stroke: #3b8eff; }
+      .head { fill: #5c5c5c; }
+      .head-accent { fill: #3b8eff; }
+      .dot { fill: #3b8eff; }
+      .frame { stroke: #333333; }
+
+      .ground { stroke: #3a3a3a; }
+      .foe { fill: #4a4a4a; }
+      .ve { stroke: #eab308; } .me { stroke: #60a5fa; } .ma { stroke: #f87171; } .ju { stroke: #c084fc; }
+      .ve-f { fill: #eab308; } .me-f { fill: #60a5fa; } .ma-f { fill: #f87171; } .ju-f { fill: #c084fc; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="695" rx="16"/>
+
+  <text class="eyebrow" x="20" y="30">FOUR SUMMONS, FOUR WAYS TO THROW FLAMES</text>
+  <rect class="card" x="20" y="44" width="176" height="250" rx="12"/>
+  <text class="h" x="34" y="70">Venus</text>
+  <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAoCAYAAAD+MdrbAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAGYktHRAD/AP8A/6C9p5MAAAAHdElNRQfqChYWFjKILbkzAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDI2LTEwLTIyVDIyOjIyOjM5KzAwOjAwjirougAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyNi0xMC0yMlQyMjoyMjozOSswMDowMP93UAYAAAAodEVYdGRhdGU6dGltZXN0YW1wADIwMjYtMTAtMjJUMjI6MjI6NTArMDA6MDD7lT2NAAAD00lEQVRIx7WWLZDjOBSEv+QCBA4IHBBYYGhoGGhoGDgwcMCBwIF7bOHCgYGBgQEHAg4YLAg0WCCwQFDggMBU+UDLduLJzCzYU5UrP5Za/fr1exL8n8M5+p+ZZwx9Udyfu7z+UZaa/BGgdVAU998t5xOt/Zhh4cCY+5vfABre3nkeSQLq5gOGMWnyh/qVEIPmWnvL8gYweCg+ACwKsAZiBOf0jJJZ+luGURq+l5iyghAV8lyi7eOMYUoTi/f0C/52A4Dtln69vgMY49uAztFbK4YglmUJZUn/+QucTjNAkNjXuszZxSikFEWgKOB5r//PpzvGjkl+fIMhweuzLMF30rysxM57FiPgek3/5asMS5rK0Bj64bEOQoBmA9utNndOUZ3PwlkNgu6eRN93emmttGk2AvFeYVZrqGuFGJPetS1cLhnQWvqygkurSeta9JsNNM1VsjKLzSb7RVFxOEB7huBZAKxiZPH5id4YMdw9TeZ2brKS78AVYn5pr5wRoW0FBkxfrhLTP+6gu8DjTprGCId9TkSA01Fzq0ohn8+QkrBe2abrWISgTMc4ASag89Jr8Kuxt2BjUuYMjVGLSkmLQsjAQSFXG+g6SXkN9grQGPrt49hoKQotck5WajbapOvg4UFGno/lNbPnZy1o28HADjBYK9sYM2W8LJWk+Vhlcfv9QeHsdgILJbgiAHA8CPB0VB3bbJumgf0zfQhT2L+5gv7PnX4cj/D9u3YJAdpv8O0fmfblRf57+Rd+/ADzO3z6BH84OP/NX6NtrFUSQmDhCvqmViKqUqaNUeE1G4XaeRnZ2jyv0oano1jeZGi3o8doUj6EJt2iQHynjWzOfteN3299WDdqBtaKzdBZ2jZ7L4ohZjoZNw/a8FrDFUBR0Dur3b5mPddVQ1meRgbZ9CQv0O6ituVyAYy2sZa+rjNIrcUpDr5cU1XFCDhUzSBFd3l9qC2LQuJ6LzuklB9OQAuE8T/QZtZcgXN7hVl2nQq/bVmkbJcYc/0mSBlpMHQIUzkONZ6T2AMsU2IRo0RNuWEOnzFeLUyyzFB6w6a+k6ZVNavlqqK3RqG7fMcZxE5JC30nRikKwMs2C+91Gt4A1o1C6S5i5bJxU1Sr935KyMNWZm6fx8gWIcwAg59YpQCe3LGzrsOxOZ54nrtjRc5SUaqkjFUWfdbSmGyjfBqCzpz2fB9wOfTA3KlGltZMl6GyhLIYq0KmfuNStdpuNfF0zBkN05FYVVPPG+4zg/hVpUReLrf9YFHX9J0X0Lydz0c+8DEW6rWI7Pfvr/npYQx907x9ef9l4z9afvw+ucCQ9gAAAABJRU5ErkJggg==" x="148.67000000000002" y="54" width="33.33" height="66.67" style="image-rendering: pixelated" preserveAspectRatio="none"/>
+  <path class="ground" d="M 34 204 H 182"/><circle class="foe" cx="50" cy="182" r="5"/><rect class="foe" x="44" y="188" width="12" height="16" rx="4"/><circle class="foe" cx="74" cy="182" r="5"/><rect class="foe" x="68" y="188" width="12" height="16" rx="4"/><circle class="foe" cx="98" cy="182" r="5"/><rect class="foe" x="92" y="188" width="12" height="16" rx="4"/><path class="ve" d="M 42 202 V 150"/><path class="ve-f" d="M 42.0 144.0 L 37.5 152.0 L 46.5 152.0 Z"/><circle class="ve-f" cx="42" cy="131" r="1.6"/><circle class="ve-f" cx="48" cy="134" r="1.6"/><circle class="ve-f" cx="36" cy="134" r="1.6"/><circle class="ve-f" cx="49" cy="141" r="1.6"/><circle class="ve-f" cx="35" cy="141" r="1.6"/><circle class="ve-f" cx="42" cy="145" r="1.6"/><path class="ve" d="M 68 202 V 162"/><path class="ve-f" d="M 68.0 156.0 L 63.5 164.0 L 72.5 164.0 Z"/><circle class="ve-f" cx="68" cy="143" r="1.6"/><circle class="ve-f" cx="74" cy="146" r="1.6"/><circle class="ve-f" cx="62" cy="146" r="1.6"/><circle class="ve-f" cx="75" cy="153" r="1.6"/><circle class="ve-f" cx="61" cy="153" r="1.6"/><circle class="ve-f" cx="68" cy="157" r="1.6"/><path class="ve" d="M 92 202 V 174"/><path class="ve-f" d="M 92.0 168.0 L 87.5 176.0 L 96.5 176.0 Z"/><circle class="ve-f" cx="92" cy="155" r="1.6"/><circle class="ve-f" cx="98" cy="158" r="1.6"/><circle class="ve-f" cx="86" cy="158" r="1.6"/><circle class="ve-f" cx="99" cy="165" r="1.6"/><circle class="ve-f" cx="85" cy="165" r="1.6"/><circle class="ve-f" cx="92" cy="169" r="1.6"/><path class="ve" d="M 118 202 V 190"/><path class="ve-f" d="M 118.0 184.0 L 113.5 192.0 L 122.5 192.0 Z"/>
+  <text class="small" x="34" y="228">Ten columns of flame rise</text>
+  <text class="small" x="34" y="244">from the ground, one every</text>
+  <text class="small" x="34" y="260">four frames, and burst</text>
+  <text class="small" x="34" y="276">into motes.</text>
+  <rect class="card" x="204" y="44" width="176" height="250" rx="12"/>
+  <text class="h" x="218" y="70">Mercury</text>
+  <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAoCAYAAAD+MdrbAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAGYktHRAD/AP8A/6C9p5MAAAAHdElNRQfqChYWFjKILbkzAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDI2LTEwLTIyVDIyOjIyOjM5KzAwOjAwjirougAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyNi0xMC0yMlQyMjoyMjozOSswMDowMP93UAYAAAAodEVYdGRhdGU6dGltZXN0YW1wADIwMjYtMTAtMjJUMjI6MjI6NTArMDA6MDD7lT2NAAAD0UlEQVRIx+2WLZDjNhiGn2wDBAoEBQoECgwKBA4IChoGBgYUGAYGFAQuDAwMDCgwKDAoMCgwKDAUFDggUCBQILAzKpB3s3u93et1lnSmnvEksuVH39/7SfD/9eIyXUHq8j4wIQuHXBDyq4B3r1u3w2ogp9W7ANXmnpS/3rHPA4Usews+pHcC2kN111/fByjbPTkDYfqXQCELiJpN2ZTOQEhACp+spAvt+Tb3VWB7gvZ+cXeP0xATkPzzMJTD1aPdDsirt4EIpO3qX7NDiuWtduCOxZ5zma5HjIJwbt90eQ1AjlgNgzsWoxfvJGyPV7YGGgkZ2N6PEMY367JamFONmT3QyNtLLSElSBn2PXDdfDEp60dgTCDEAsnULAM+Qe9hPG3fjN1LoNQgQFChMdUsZyBEGKcJfP+PJHiHPZRd1yEBtUD9AkwJlIRuY7HnXLD7LzaKO1SDj3WwaepvytVSFoulgLYBlKkPlS3unIs45r/V5JrxyCQ1IAja4DT4CGNYvpVLTfY78NcVgNqPHNsajl1OMJ8Lw34FUOOyHQraQZyrFXFCNRaroO/7Sh66pZWJsr0mUoZhTphG0hnoTiNc29UdgDKOnQXiVG/f0zawNfWZNBuwex4TGBIMl3u4boiphuSyd6BsuQOIMRIiMBzqPZ3pZzgtvcFqbkBgmmaYr9BU4BDAaKA9LYU9HBjHEaSqbjcbUopMcwB7ICZomyVLOdY5ALaDFOjnGndnmqUOhUQbh914fITOwhxhWlYePWwUDNoVwlQ1/tgrhSD5kSE4tHqUnnakXDU77MCoWtQZuEwQUq4Fuu1BKrTWIGR1e+mZPkLOgm8ACL8e88MD458/8EsQnCeY5sAfDwKr13ycf4NvNVquCd//iNNr/M8/wXcf4OPvsBaslWH9kJ+0vGK8L0iNT021LUV27Ya9BRcd4xwwjUYKwRyBFKvgc4QUSIvC1rcazytyfqp6t8AE4DT088y8yCelUOeHoTzFMQF+eA6syWmMYWcWqQExc9tOo6+xm851HMYVUhdkUzM/nT4BJo9YmkReQL2HOdXFUA0M+5edRz4m6AJxWr1sSc220J4wWmJ1zfJ1hpwSCMl5A915got79p0oSFVjSn4G3A5FNI7sx6dVpZS1fFKCnDjvNACdU68eUe4AxDGXy97VzSl5yAlSQAhoFHUcJ/ZD7ehsXj8ArOh8uXaaywzDMC6NUNQmoexNEabKzDhHTBAP4rMWrpGK7SVBGOvGnlO18nnghSwICbplDtXqqGwhTm9tC+LL50DZFExX2A4FZd/pIPqfv/4CGgLWQP/U61MAAAAASUVORK5CYII=" x="332.67" y="54" width="33.33" height="66.67" style="image-rendering: pixelated" preserveAspectRatio="none"/>
+  <path class="ground" d="M 218 204 H 366"/><circle class="foe" cx="234" cy="182" r="5"/><rect class="foe" x="228" y="188" width="12" height="16" rx="4"/><circle class="foe" cx="258" cy="182" r="5"/><rect class="foe" x="252" y="188" width="12" height="16" rx="4"/><circle class="foe" cx="282" cy="182" r="5"/><rect class="foe" x="276" y="188" width="12" height="16" rx="4"/><path class="me" d="M 358 148 H 256"/><path class="me-f" d="M 248.0 148.0 L 256.0 152.5 L 256.0 143.5 Z"/><circle class="me-f" cx="238" cy="141" r="1.6"/><circle class="me-f" cx="244" cy="144" r="1.6"/><circle class="me-f" cx="232" cy="144" r="1.6"/><circle class="me-f" cx="245" cy="151" r="1.6"/><circle class="me-f" cx="231" cy="151" r="1.6"/><circle class="me-f" cx="238" cy="155" r="1.6"/><path class="me" d="M 358 162 H 274"/><path class="me-f" d="M 266.0 162.0 L 274.0 166.5 L 274.0 157.5 Z"/><circle class="me-f" cx="256" cy="155" r="1.6"/><circle class="me-f" cx="262" cy="158" r="1.6"/><circle class="me-f" cx="250" cy="158" r="1.6"/><circle class="me-f" cx="263" cy="165" r="1.6"/><circle class="me-f" cx="249" cy="165" r="1.6"/><circle class="me-f" cx="256" cy="169" r="1.6"/><path class="me" d="M 358 176 H 292"/><path class="me-f" d="M 284.0 176.0 L 292.0 180.5 L 292.0 171.5 Z"/>
+  <text class="small" x="218" y="228">The Djinni circles and</text>
+  <text class="small" x="218" y="244">fires five flames across;</text>
+  <text class="small" x="218" y="260">each shatters into motes</text>
+  <text class="small" x="218" y="276">five frames after it leaves.</text>
+  <rect class="card" x="20" y="306" width="176" height="250" rx="12"/>
+  <text class="h" x="34" y="332">Mars</text>
+  <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAoCAYAAAD+MdrbAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAGYktHRAD/AP8A/6C9p5MAAAAHdElNRQfqChYWFjKILbkzAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDI2LTEwLTIyVDIyOjIyOjM5KzAwOjAwjirougAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyNi0xMC0yMlQyMjoyMjozOSswMDowMP93UAYAAAAodEVYdGRhdGU6dGltZXN0YW1wADIwMjYtMTAtMjJUMjI6MjI6NTArMDA6MDD7lT2NAAADoElEQVRIx6WWIXTjMBBEf/oOLBQUFDQ0NDQsDAwMDAwsLAwsLAwMNDQ0NDQ0FBQUXKYDsh0nba7NuyVxZGk02p0dGR7EhyFVQuLJeJkfLCTDFaASKJ5FWwPWAhd7feEESvkPwEGh3m55M1eW/wU4woYQeN9tKafcFQLP5vFl/ccPPVhHX1pEhAicLdRPgN4AfgQgeHjdARAVLHAy1znFXfHmkGnsBrBRwDooCkQEIxCBwgi1kF6FdDCgd2AWUiHfMBQA50AVRJhrIpMCmtLiAYXNel29Kt4NYDW/8B40EhRGzfjGOWIInOMtu1pIW5PnfQE0ADFA8MSoBOAY4OgVYiBoPoVMeTwIqS2ELl5Z/1kDKkAIMI4MCr3CcSrIu1ferOCrMm9qLBQF8XLmvErqDcNOga4l+JFRc5X3dcX+fMYAn0HBWtgdoK6h79mF25zeMPSwOQwhlcJSEKwFYygkM+6ahqprQZVTzGPr+MNdXDQXx0l+ZuhBBCUvtoAPSq9ZZvcV/xIGUnCkiyXVQvo0JN3VSSubFs1BKh90z8v9gExMXo3QHg9fRBxgc7JwlLy5g2T5oTXfDUm7JmlzSVrZFB1pdqHjinF0pNbmDnrIEGBvyC348U7nA71mewM4lQWUFWz3iHPA9d1DwKjA6Q1Q6qqiMrnmWyFRVWAMjAOoUgq8Pmo9gdRYUlFVE8MLvG4R667MkSz+4EEVAXYmF+urDh2YpgcxoDE3cQhZi4zMjoIfIQTGEBmnoTcDp0i6ATT7Y16sCiHmYwWf7SZLBlDwniFEWs32JlwtbQF0kJiSjGqe0jaZaYzEJcERoqfLosaSTaXVLKkF0AqZic57SWYHxJCdJgJWlRB15kqn4Bb2K4ZRp93XDI1ZxsJ0NFTxCl7hvGo9C0kgLVX2kPs2TsWIERRCyDp0gJnyKxOzdR8H2ChsFkA352focxXHEYoCu9sTFT4tYAw69ISZwDexHLkScgf0XdbgOED9CmVFdTnTRvD9SCB3xiOXWQD9nLuhBzMuF9V8xPZq/7TKw1gABwWaMyFGzmPAAIcYIBqiQqtsLKTIvz1wyWGETRMi43TTfUSyDscxXw2rxPOPWAArIRVkOUxJ3wzDCF3zzyM+BHw3+bfR23tiHEaewMvxYUjRkXZ3th4dybt8FfwarBaS1u7Gdec4G5KW8hxgJaTtgwWVkGIh3272MOSHC6a3+ZPjt3gvP8mg08mJfgv404Rusq3fxl9CBOuSUQFaLAAAAABJRU5ErkJggg==" x="148.67000000000002" y="316" width="33.33" height="66.67" style="image-rendering: pixelated" preserveAspectRatio="none"/>
+  <path class="ground" d="M 34 466 H 182"/><circle class="foe" cx="50" cy="444" r="5"/><rect class="foe" x="44" y="450" width="12" height="16" rx="4"/><circle class="foe" cx="74" cy="444" r="5"/><rect class="foe" x="68" y="450" width="12" height="16" rx="4"/><circle class="foe" cx="98" cy="444" r="5"/><rect class="foe" x="92" y="450" width="12" height="16" rx="4"/><circle class="ma" cx="162" cy="406" r="8"/><path class="ma" stroke-dasharray="3 4" d="M 152 414 L 132 458"/><path class="ma-f" d="M 130.0 462.0 L 137.5 456.7 L 129.3 452.8 Z"/><path class="ma-f" d="M 37 466 Q 42 446 47 466 Z"/><circle class="ma-f" cx="39" cy="438" r="1.6"/><circle class="ma-f" cx="45" cy="428" r="1.4"/><path class="ma-f" d="M 55 466 Q 60 443.1715728752538 65 466 Z"/><circle class="ma-f" cx="57" cy="435.1715728752538" r="1.6"/><circle class="ma-f" cx="63" cy="425.1715728752538" r="1.4"/><path class="ma-f" d="M 73 466 Q 78 442 83 466 Z"/><circle class="ma-f" cx="75" cy="434" r="1.6"/><circle class="ma-f" cx="81" cy="424" r="1.4"/><path class="ma-f" d="M 91 466 Q 96 443.1715728752538 101 466 Z"/><circle class="ma-f" cx="93" cy="435.1715728752538" r="1.6"/><circle class="ma-f" cx="99" cy="425.1715728752538" r="1.4"/><path class="ma-f" d="M 109 466 Q 114 446 119 466 Z"/><circle class="ma-f" cx="111" cy="438" r="1.6"/><circle class="ma-f" cx="117" cy="428" r="1.4"/>
+  <text class="small" x="34" y="490">An orb flares, the Djinni</text>
+  <text class="small" x="34" y="506">dives, and nine flames</text>
+  <text class="small" x="34" y="522">erupt in a row while</text>
+  <text class="small" x="34" y="538">embers rise from them.</text>
+  <rect class="card" x="204" y="306" width="176" height="250" rx="12"/>
+  <text class="h" x="218" y="332">Jupiter</text>
+  <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAoCAYAAAD+MdrbAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAGYktHRAD/AP8A/6C9p5MAAAAHdElNRQfqChYWFjKILbkzAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDI2LTEwLTIyVDIyOjIyOjM5KzAwOjAwjirougAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyNi0xMC0yMlQyMjoyMjozOSswMDowMP93UAYAAAAodEVYdGRhdGU6dGltZXN0YW1wADIwMjYtMTAtMjJUMjI6MjI6NTArMDA6MDD7lT2NAAADsUlEQVRIx62WLXTjOhBGb3IWDBQUNBQ0NDQ0NAwMLCwMLAwMDAwMNBQ0NDQ0FBQcOEwPONndvjbp69sd5h/dM/PNp5E2/KV45VAWFrZ/A+bxpfEtiv6d7E5cSt5bqanLH8NaupL6XJYuFeDPSg6E8lq94ipHSvnPdRuqWFKfi16s7Nj//3IFKUMVy9LlYtHK1Cx/Dkt9LvpmRQ9WPP4n8Fsaeny5VpGmaTADBPKs7+zyn4EdfYntSNs2qCrOOwiQ0oJhm/t/m69AgpSTXOj7HnGgWQHBNcIyJJopvGP8eAYLhHKuL9R9DQqaDFXDVw48TNP0Yc3Dkve8lNiP1LsaDEwh54yZITVYhCOHD+s+zfAsl7J73YEHMmBrqaqZpmlAob92ZPLmKVCQcq0i7Vuzvkg3IJBzIoQAAS6HKxPjp/pvfofFeqR+q3/BZsCBJmWeZ1JKnDmxsDxs5k8Nr9VAc6yRCtAbUNZv0zRxTEcymZ79U1ds7w1oX1oIv8EM8JCXzCmfODVnDscDHvcUuAGYmrnU5wAObPilGwLxHAFouw7NmRCrp97ddvQl9AHupQJUYGl9NgPvPZqVQzzwVWx76ZHmVqKC1JCHvHoug5kCQowDA9eNIEWQh9NlW1UVuFt2btVNRKhaz7LMmEFKa4fmNpW0V8ZmJhA+hf5wzq+lZZiPM3VT418cFmFZEl3XrYMAEH+z0ZQfWmcrIuu2uijOOZZ5wQaI13Wy+MZhapjq2qTTSLe0j30ochdfCW8VZnA8H6nrgK88aUyM49rpJS7sc/+0KT+macInT86ZaqpQVXbtHuc8mo1xnMgkliERub6bfZ9mOOiAiKCqjOcRkdUmyNoMEaikwlA6ehzu6fmxzWRCXdM0LSklnHPAqplqpqoCILjbDgnUBEJ51OUNrOOqaVq8d4gTqGE6zYisxs45o6okFhyO4AMxRy6cP5S/BXix/aYfW1QN2YFGI6UFWKUQeb8o5siVCw8zvMeJS6nrwDAPNL5ZDV4Fck6My0i+7c3I9dPh+jPDe7yy35zmEx6P3c7JKnhE3O0PY2Z8CPsAvIsuOFQN51bTqyoeTyYzMz+3zb9fZDIigqGoKssyr4MCY2biq3h3pjhcqQmso+fuQ4eZoejTUj/N8BoGuq4jWQJuc9AyhhIZvszuXezYF4tW8m69icYwFotWznIpHf33b1d5Z0XfrOx5KQ1tsdGKnq3sef0+7MCx5J2WhrascC16XeHfhsF6T77vzVcORY//MzPgH+1sIESirorRAAAAAElFTkSuQmCC" x="332.67" y="316" width="33.33" height="66.67" style="image-rendering: pixelated" preserveAspectRatio="none"/>
+  <path class="ground" d="M 218 466 H 366"/><circle class="foe" cx="234" cy="444" r="5"/><rect class="foe" x="228" y="450" width="12" height="16" rx="4"/><circle class="foe" cx="258" cy="444" r="5"/><rect class="foe" x="252" y="450" width="12" height="16" rx="4"/><circle class="foe" cx="282" cy="444" r="5"/><rect class="foe" x="276" y="450" width="12" height="16" rx="4"/><path class="ju" d="M 342 396 L 313 454"/><path class="ju-f" d="M 309.0 462.0 L 316.6 456.9 L 308.6 452.8 Z"/><circle class="ju-f" cx="307" cy="451" r="1.6"/><circle class="ju-f" cx="313" cy="454" r="1.6"/><circle class="ju-f" cx="301" cy="454" r="1.6"/><circle class="ju-f" cx="314" cy="461" r="1.6"/><circle class="ju-f" cx="300" cy="461" r="1.6"/><circle class="ju-f" cx="307" cy="465" r="1.6"/><path class="ju" d="M 322 396 L 293 454"/><path class="ju-f" d="M 289.0 462.0 L 296.6 456.9 L 288.6 452.8 Z"/><circle class="ju-f" cx="287" cy="451" r="1.6"/><circle class="ju-f" cx="293" cy="454" r="1.6"/><circle class="ju-f" cx="281" cy="454" r="1.6"/><circle class="ju-f" cx="294" cy="461" r="1.6"/><circle class="ju-f" cx="280" cy="461" r="1.6"/><circle class="ju-f" cx="287" cy="465" r="1.6"/><path class="ju" d="M 302 396 L 287 426"/><path class="ju-f" d="M 283.0 434.0 L 290.6 428.9 L 282.6 424.8 Z"/>
+  <text class="small" x="218" y="490">Eight flameballs fall from</text>
+  <text class="small" x="218" y="506">the top right, one every</text>
+  <text class="small" x="218" y="522">four frames, and shatter</text>
+  <text class="small" x="218" y="538">into motes as they land.</text>
+  <text class="p" x="20" y="590">Each draws a small Djinni of its element. The</text>
+  <text class="p" x="20" y="609">flames are the effect's own particles; the motes</text>
+  <text class="p" x="20" y="628">a flame breaks into take a block of 32 places in</text>
+  <text class="p" x="20" y="647">the borrowed pool.</text>
+  <text class="code" x="20" y="678">djinn_attacks.c</text>
+</svg>

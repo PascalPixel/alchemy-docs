@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 602" role="img" aria-labelledby="title desc">
+  <title id="title">Two pools of particles</title>
+  <desc id="desc">A particle is one spark, ember or shard: its position, its speed and one spare number for its life or picture. An effect has two fixed pools of them. Its own holds 64, and Heat Wave keeps a target's seven fireballs in the first seven. The second, 1,170 more, borrows the memory that holds the field's map, which the battle does not need while an effect plays. Heat Wave divides its first 1,024 into ranges: hit flashes, the forty sparks each hit throws, and the two trails each fireball leaves every frame; it leaves the rest unused. A finished particle's place is reused, so neither pool grows.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .card-accent { fill: #ffffff; stroke: #0a72ef; stroke-width: 1.5; }
+    .card-exit { fill: #fafafa; stroke: #a3a3a3; stroke-dasharray: 4 4; }
+    .chip { fill: #f0f6ff; stroke: #bcd7fb; }
+    .chip-wait { fill: #f5f5f5; stroke: #d4d4d4; }
+    .h { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .h17 { fill: #0a0a0a; font: 600 17px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .k { fill: #0a72ef; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kw { fill: #525252; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .label { fill: #737373; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .wire { fill: none; stroke: #a3a3a3; stroke-width: 1.5; }
+    .wire-accent { fill: none; stroke: #0a72ef; stroke-width: 1.5; }
+    .head { fill: #a3a3a3; }
+    .head-accent { fill: #0a72ef; }
+    .dot { fill: #0a72ef; }
+    .frame { fill: none; stroke: #d4d4d4; stroke-width: 1; }
+    .canvasbg { fill: #101014; }
+
+    .fire { fill: #ea580c; }
+    .c-flash { fill: #facc15; }
+    .c-spark { fill: #f97316; }
+    .c-trail { fill: #dc2626; }
+    .c-free { fill: #e5e5e5; }
+    .slot { fill: #f0f0f0; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .card-accent { fill: #111111; stroke: #3b8eff; }
+      .card-exit { fill: #0a0a0a; stroke: #525252; }
+      .chip { fill: #0d1a2e; stroke: #1e3a66; }
+      .chip-wait { fill: #1a1a1a; stroke: #333333; }
+      .h, .h17 { fill: #ededed; }
+      .p, .kw { fill: #a1a1a1; }
+      .k { fill: #66a6ff; }
+      .small, .code, .eyebrow { fill: #7c7c7c; }
+      .label { fill: #8f8f8f; }
+      .wire { stroke: #5c5c5c; }
+      .wire-accent { stroke: #3b8eff; }
+      .head { fill: #5c5c5c; }
+      .head-accent { fill: #3b8eff; }
+      .dot { fill: #3b8eff; }
+      .frame { stroke: #333333; }
+
+      .fire { fill: #fb923c; }
+      .c-free { fill: #262626; }
+      .slot { fill: #1f1f1f; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="601" rx="16"/>
+
+  <text class="eyebrow" x="20" y="30">WHERE HEAT WAVE'S PARTICLES LIVE</text>
+  <text class="p" x="20" y="54">A particle is one spark, ember or shard: where</text>
+  <text class="p" x="20" y="73">it is, how fast it moves, and one spare number</text>
+  <text class="p" x="20" y="92">for its life or its picture.</text>
+
+  <rect class="card" x="20" y="110" width="360" height="94" rx="12"/>
+  <text class="h" x="40" y="136">The effect's own: 64</text>
+  <rect class="fire" x="40" y="150" width="8" height="8" rx="2"/><rect class="fire" x="50" y="150" width="8" height="8" rx="2"/><rect class="fire" x="60" y="150" width="8" height="8" rx="2"/><rect class="fire" x="70" y="150" width="8" height="8" rx="2"/><rect class="fire" x="80" y="150" width="8" height="8" rx="2"/><rect class="fire" x="90" y="150" width="8" height="8" rx="2"/><rect class="fire" x="100" y="150" width="8" height="8" rx="2"/><rect class="slot" x="110" y="150" width="8" height="8" rx="2"/><rect class="slot" x="120" y="150" width="8" height="8" rx="2"/><rect class="slot" x="130" y="150" width="8" height="8" rx="2"/><rect class="slot" x="140" y="150" width="8" height="8" rx="2"/><rect class="slot" x="150" y="150" width="8" height="8" rx="2"/><rect class="slot" x="160" y="150" width="8" height="8" rx="2"/><rect class="slot" x="170" y="150" width="8" height="8" rx="2"/><rect class="slot" x="180" y="150" width="8" height="8" rx="2"/><rect class="slot" x="190" y="150" width="8" height="8" rx="2"/><rect class="slot" x="200" y="150" width="8" height="8" rx="2"/><rect class="slot" x="210" y="150" width="8" height="8" rx="2"/><rect class="slot" x="220" y="150" width="8" height="8" rx="2"/><rect class="slot" x="230" y="150" width="8" height="8" rx="2"/><rect class="slot" x="240" y="150" width="8" height="8" rx="2"/><rect class="slot" x="250" y="150" width="8" height="8" rx="2"/><rect class="slot" x="260" y="150" width="8" height="8" rx="2"/><rect class="slot" x="270" y="150" width="8" height="8" rx="2"/><rect class="slot" x="280" y="150" width="8" height="8" rx="2"/><rect class="slot" x="290" y="150" width="8" height="8" rx="2"/><rect class="slot" x="300" y="150" width="8" height="8" rx="2"/><rect class="slot" x="310" y="150" width="8" height="8" rx="2"/><rect class="slot" x="320" y="150" width="8" height="8" rx="2"/><rect class="slot" x="330" y="150" width="8" height="8" rx="2"/><rect class="slot" x="340" y="150" width="8" height="8" rx="2"/><rect class="slot" x="350" y="150" width="8" height="8" rx="2"/><rect class="slot" x="40" y="160" width="8" height="8" rx="2"/><rect class="slot" x="50" y="160" width="8" height="8" rx="2"/><rect class="slot" x="60" y="160" width="8" height="8" rx="2"/><rect class="slot" x="70" y="160" width="8" height="8" rx="2"/><rect class="slot" x="80" y="160" width="8" height="8" rx="2"/><rect class="slot" x="90" y="160" width="8" height="8" rx="2"/><rect class="slot" x="100" y="160" width="8" height="8" rx="2"/><rect class="slot" x="110" y="160" width="8" height="8" rx="2"/><rect class="slot" x="120" y="160" width="8" height="8" rx="2"/><rect class="slot" x="130" y="160" width="8" height="8" rx="2"/><rect class="slot" x="140" y="160" width="8" height="8" rx="2"/><rect class="slot" x="150" y="160" width="8" height="8" rx="2"/><rect class="slot" x="160" y="160" width="8" height="8" rx="2"/><rect class="slot" x="170" y="160" width="8" height="8" rx="2"/><rect class="slot" x="180" y="160" width="8" height="8" rx="2"/><rect class="slot" x="190" y="160" width="8" height="8" rx="2"/><rect class="slot" x="200" y="160" width="8" height="8" rx="2"/><rect class="slot" x="210" y="160" width="8" height="8" rx="2"/><rect class="slot" x="220" y="160" width="8" height="8" rx="2"/><rect class="slot" x="230" y="160" width="8" height="8" rx="2"/><rect class="slot" x="240" y="160" width="8" height="8" rx="2"/><rect class="slot" x="250" y="160" width="8" height="8" rx="2"/><rect class="slot" x="260" y="160" width="8" height="8" rx="2"/><rect class="slot" x="270" y="160" width="8" height="8" rx="2"/><rect class="slot" x="280" y="160" width="8" height="8" rx="2"/><rect class="slot" x="290" y="160" width="8" height="8" rx="2"/><rect class="slot" x="300" y="160" width="8" height="8" rx="2"/><rect class="slot" x="310" y="160" width="8" height="8" rx="2"/><rect class="slot" x="320" y="160" width="8" height="8" rx="2"/><rect class="slot" x="330" y="160" width="8" height="8" rx="2"/><rect class="slot" x="340" y="160" width="8" height="8" rx="2"/><rect class="slot" x="350" y="160" width="8" height="8" rx="2"/>
+  <text class="small" x="40" y="190">The first seven: a target's seven fireballs.</text>
+
+  <rect class="card" x="20" y="216" width="360" height="270" rx="12"/>
+  <text class="h" x="40" y="242">Borrowed: 1,170 more</text>
+  <text class="small" x="40" y="262">The memory that holds the field's map, which</text>
+  <text class="small" x="40" y="278">the battle doesn't need while an effect plays.</text>
+  <rect class="c-flash" x="40.0" y="296" width="26.4" height="28"/><rect class="c-spark" x="67.4" y="296" width="111.7" height="28"/><rect class="c-trail" x="180.0" y="296" width="139.0" height="28"/><rect class="c-free" x="320.1" y="296" width="38.9" height="28"/>
+  <path class="wire" d="M 40 332 V 338 H 319.1 V 332"/>
+  <text class="small" x="180.05" y="352" text-anchor="middle">Heat Wave's share</text>
+  <text class="small" x="340.05" y="352" text-anchor="middle">unused</text>
+
+  <rect class="c-flash" x="40" y="368" width="12" height="12" rx="2"/>
+  <text class="kw" x="60" y="378">Hit flashes</text>
+  <text class="small" x="60" y="395">one for each hit, though Heat Wave draws none</text>
+
+  <rect class="c-spark" x="40" y="408" width="12" height="12" rx="2"/>
+  <text class="kw" x="60" y="418">Sparks</text>
+  <text class="small" x="60" y="435">forty thrown by each hit</text>
+
+  <rect class="c-trail" x="40" y="448" width="12" height="12" rx="2"/>
+  <text class="kw" x="60" y="458">Trails</text>
+  <text class="small" x="60" y="475">two a frame behind each fireball</text>
+
+  <text class="p" x="20" y="514">Each effect splits the pools into ranges of its</text>
+  <text class="p" x="20" y="533">own. A finished particle's place is taken by the</text>
+  <text class="p" x="20" y="552">next, so neither pool ever grows.</text>
+  <text class="code" x="20" y="584">work-&gt;particles</text>
+  <text class="code" x="380" y="584" text-anchor="end">PARTICLES</text>
+</svg>

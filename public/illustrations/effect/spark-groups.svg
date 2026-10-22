@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 570" role="img" aria-labelledby="title desc">
+  <title id="title">A burst of sparks</title>
+  <desc id="desc">One burst of Nova, drawn on the canvas, with every second frame of a third of its sparks overlaid. A big white flash shows for two frames. Around it a ring of twelve small flashes lights up, each a little further out and a little later than the one before. Sparks fly out in every direction, fall, bounce back at half their speed from a line near the bottom of the canvas, and shrink as their lives run out. Blast and Fire Bomb throw one burst of 128 sparks, Nova and Cluster Bomb one of 255, and Supernova and Carpet Bomb three bursts of 192, eight frames apart.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .card-accent { fill: #ffffff; stroke: #0a72ef; stroke-width: 1.5; }
+    .card-exit { fill: #fafafa; stroke: #a3a3a3; stroke-dasharray: 4 4; }
+    .chip { fill: #f0f6ff; stroke: #bcd7fb; }
+    .chip-wait { fill: #f5f5f5; stroke: #d4d4d4; }
+    .h { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .h17 { fill: #0a0a0a; font: 600 17px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .k { fill: #0a72ef; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kw { fill: #525252; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .label { fill: #737373; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .wire { fill: none; stroke: #a3a3a3; stroke-width: 1.5; }
+    .wire-accent { fill: none; stroke: #0a72ef; stroke-width: 1.5; }
+    .head { fill: #a3a3a3; }
+    .head-accent { fill: #0a72ef; }
+    .dot { fill: #0a72ef; }
+    .frame { fill: none; stroke: #d4d4d4; stroke-width: 1; }
+    .canvasbg { fill: #101014; }
+
+    .stage { fill: #101014; }
+    .ground { stroke: #6b6b6b; stroke-width: 1.5; stroke-dasharray: 4 4; }
+    .spark { fill: #fb923c; }
+    .ring { fill: none; stroke: #ffffff; stroke-width: 1.5; }
+    .on { fill: #d4d4d4; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .lead { stroke: #8f8f8f; stroke-width: 1; fill: none; }
+    .star { fill: #f97316; }
+    .trace { fill: none; stroke: #fb923c; stroke-opacity: 0.45; stroke-width: 1; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .card-accent { fill: #111111; stroke: #3b8eff; }
+      .card-exit { fill: #0a0a0a; stroke: #525252; }
+      .chip { fill: #0d1a2e; stroke: #1e3a66; }
+      .chip-wait { fill: #1a1a1a; stroke: #333333; }
+      .h, .h17 { fill: #ededed; }
+      .p, .kw { fill: #a1a1a1; }
+      .k { fill: #66a6ff; }
+      .small, .code, .eyebrow { fill: #7c7c7c; }
+      .label { fill: #8f8f8f; }
+      .wire { stroke: #5c5c5c; }
+      .wire-accent { stroke: #3b8eff; }
+      .head { fill: #5c5c5c; }
+      .head-accent { fill: #3b8eff; }
+      .dot { fill: #3b8eff; }
+      .frame { stroke: #333333; }
+
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="569" rx="16"/>
+
+  <text class="eyebrow" x="40" y="32">ONE BURST OF NOVA, ON PART OF THE CANVAS</text>
+  <rect class="stage" x="40" y="44" width="240" height="280"/>
+  <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAABACAYAAAB7jnWuAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAGYktHRAD/AP8A/6C9p5MAAAAHdElNRQfqChYWFjKILbkzAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDI2LTEwLTIyVDIyOjIyOjM5KzAwOjAwjirougAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyNi0xMC0yMlQyMjoyMjozOSswMDowMP93UAYAAAAodEVYdGRhdGU6dGltZXN0YW1wADIwMjYtMTAtMjJUMjI6MjI6NTArMDA6MDD7lT2NAAADuklEQVRo3u1Zu27kMAykDylYqnSZMuV+Rj4/pT9BJUt2TmGPTEmk5XUSHHAXAcbKD4nD4UvSEv22f6Ux83pn3J87gu4K89rLbY2JVmImUiVivg3gaQYMFfXvTwOw1LMjlJk3Vn6aAQhn5qrvsQHQZ8CGPuA5HDOTqlZAcB+NuQ3A156IqNOWVLUSjmdKNF0CYAer6uTZ/KBe6azxRed8OaF59SY8zF0L2LXvvremuWwCz8ZWcKydVkAHsl0ThBRaj08pdRPlnAvQq9q7DPgx3j+f55lyzqUvIsSsDUNKqho6YAFgHQ4CPVDQfJ7n6hcN71NKJCJ3GaA+weyTWoGtcLBhGbnSCgCwgNoS2RqC7TsR6QAZJ17PzPDSDoroRt97DgbwLOd8iX4PwKSqK7KcJzyyv4gUcNYcYAHznwIACyJKmL+lPPIDy8CyLBA8NIebiDYQ0mndCrYaPx6P0kdOaLOjZ5awHKtq59m4UkqdOXBhzObE7OaQIQMWrYjQ4/GotI7MgNDDsyMUNUzLFQNRHYdWbVgyp4qBlq2U0rAquqnYptOcM729vVWaQTD6qlLuveh4CsA2aWw3K9wD0dN/KLa3KhJO14QttaNm/cPWBaeyFlMPl2ReOo6YaXMHWNiSFBFIseHoMmA99mpRaZnzWLBEgIUuFdO+hBaRktFSSpRzppQSvb7GjIxYsCDAQsDAFrdIRiJSQtF6/BUW0DxTMvPaAYCHbiA2lBD+jDnaghS10yhQvecDGIO6gMsqdQpgL8udRrhiwIep2u9gVsPupKrTU3tD2PXMD6y/WPaixOYCYKK1DZt+ySUVENvPOdOyLM7CxPadMPS+tN7bTtgyYt/DXJYFmMBufMJM6O2APPsjL3jvRGRfngOAVr8ugFFJhuY2L1hNe+cj1/tDAFFDVpznmT4+PijnTO/v712i8prRfLwoPdMemrfatuHpgYn2BkMA1omw47GCAQrArlbPEIDdJ1rb2RXSsiylQOGCiezy/BYAA4SIjnCZZ+4SDNg484HRQclpFIABG45bTj8qJZgAIM/b20OsJxio77e41iqvQ3u7H8TGpFXs6tZs8wFzugVWkFi272qTiBxJZlvU6nBJHjLgITUJZd/GqwGjVZaD2VIanxNdroaNkKl9V35NH6w8zYAnvBUMQMj15Ruiyai92vG3AVwAtsvsmCmL3MgWz5gg9Iv9bjobFx3XXjXB5D3DacroOObsjOj+HxbH5F8a/yUAXxX+bQyMTkN/FMBfb9/5F95v+z/bJz7lKtS+ouaTAAAAAElFTkSuQmCC" x="120" y="84" width="80" height="160" style="image-rendering: pixelated" preserveAspectRatio="none"/>
+  <circle class="ring" cx="160" cy="164" r="2"/><circle class="ring" cx="164.7" cy="165.7" r="2.25"/><circle class="ring" cx="165.2" cy="172.6" r="2.5"/><circle class="ring" cx="172.3" cy="172.6" r="2.75"/><circle class="ring" cx="164.9" cy="144.6" r="3"/><circle class="ring" cx="135.1" cy="165.9" r="3.25"/><circle class="ring" cx="184.7" cy="181.1" r="3.5"/><circle class="ring" cx="189.8" cy="145.6" r="3.75"/><circle class="ring" cx="149.2" cy="202.5" r="4"/><circle class="ring" cx="121.4" cy="187.2" r="4.25"/><circle class="ring" cx="116.7" cy="139.1" r="4.5"/><circle class="ring" cx="105" cy="164.2" r="4.75"/>
+  <path class="trace" d="M 160 164 L 156.9 158.9 L 154.1 154.2 L 151.4 149.9 L 148.8 146.1 L 146.5 142.7 L 144.3 139.6 L 142.2 136.9 L 140.2 134.4 L 138.4 132.3 L 136.7 130.5 L 135.1 128.9 L 133.6 127.6 L 132.2 126.5 L 130.8 125.6 L 129.6 124.9 L 128.4 124.4 L 127.3 124.1 L 126.3 123.9 L 125.4 123.9 L 124.5 124 L 123.6 124.3 L 122.8 124.7 L 122.1 125.3 L 121.4 125.9 L 120.7 126.7 L 120.1 127.5 L 119.6 128.5 L 119 129.5 L 118.5 130.6 L 118 131.8 L 117.6 133.1 L 117.2 134.4 L 116.8 135.8 L 116.4 137.3 L 116.1 138.8 L 115.8 140.3 L 115.5 141.9 L 115.2 143.6 L 114.9 145.3"/><circle class="spark" cx="156.9" cy="158.9" r="4.20"/><circle class="spark" cx="148.8" cy="146.1" r="4.20"/><circle class="spark" cx="142.2" cy="136.9" r="3.75"/><circle class="spark" cx="136.7" cy="130.5" r="3.75"/><circle class="spark" cx="132.2" cy="126.5" r="3.30"/><circle class="spark" cx="128.4" cy="124.4" r="2.85"/><circle class="spark" cx="125.4" cy="123.9" r="2.85"/><circle class="spark" cx="122.8" cy="124.7" r="2.40"/><circle class="spark" cx="120.7" cy="126.7" r="2.40"/><circle class="spark" cx="119" cy="129.5" r="1.95"/><circle class="spark" cx="117.6" cy="133.1" r="1.50"/><circle class="spark" cx="116.4" cy="137.3" r="1.50"/><circle class="spark" cx="115.5" cy="141.9" r="1.05"/><path class="trace" d="M 160 164 L 161.6 158.4 L 163.1 153.2 L 164.6 148.6 L 165.9 144.4 L 167.2 140.5 L 168.3 137.1 L 169.5 134 L 170.5 131.3 L 171.5 128.9 L 172.4 126.8 L 173.2 124.9 L 174 123.4 L 174.8 122 L 175.5 120.9 L 176.1 120 L 176.7 119.4 L 177.3 118.9 L 177.9 118.5 L 178.4 118.4 L 178.8 118.4 L 179.3 118.5 L 179.7 118.8 L 180.1 119.3 L 180.5 119.8 L 180.8 120.4 L 181.1 121.2 L 181.4 122 L 181.7 123 L 182 124 L 182.2 125.1 L 182.5 126.3 L 182.7 127.6 L 182.9 128.9 L 183.1 130.3 L 183.3 131.8 L 183.5 133.3"/><circle class="spark" cx="161.6" cy="158.4" r="4.20"/><circle class="spark" cx="165.9" cy="144.4" r="3.75"/><circle class="spark" cx="169.5" cy="134" r="3.75"/><circle class="spark" cx="172.4" cy="126.8" r="3.30"/><circle class="spark" cx="174.8" cy="122" r="2.85"/><circle class="spark" cx="176.7" cy="119.4" r="2.85"/><circle class="spark" cx="178.4" cy="118.4" r="2.40"/><circle class="spark" cx="179.7" cy="118.8" r="2.40"/><circle class="spark" cx="180.8" cy="120.4" r="1.95"/><circle class="spark" cx="181.7" cy="123" r="1.50"/><circle class="spark" cx="182.5" cy="126.3" r="1.50"/><circle class="spark" cx="183.1" cy="130.3" r="1.05"/><path class="trace" d="M 160 164 L 165.4 162.1 L 170.5 160.4 L 175.3 159.1 L 179.7 157.9 L 183.9 156.9 L 187.8 156.2 L 191.5 155.7 L 194.9 155.3 L 198.2 155.1 L 201.2 155.1 L 204.1 155.2 L 206.7 155.4 L 209.2 155.8 L 211.6 156.3 L 213.7 156.9 L 215.8 157.7 L 217.7 158.5 L 219.5 159.4 L 221.2 160.4 L 222.8 161.5 L 224.3 162.7 L 225.7 164 L 227 165.3 L 228.2 166.6 L 229.4 168.1 L 230.5 169.6 L 231.5 171.1 L 232.4 172.7 L 233.3 174.4 L 234.2 176.1 L 234.9 177.8 L 235.7 179.6 L 236.4 181.4 L 237 183.2 L 237.6 185.1 L 238.2 187 L 238.7 188.9 L 239.2 190.9"/><circle class="spark" cx="175.3" cy="159.1" r="4.20"/><circle class="spark" cx="187.8" cy="156.2" r="3.75"/><circle class="spark" cx="198.2" cy="155.1" r="3.75"/><circle class="spark" cx="206.7" cy="155.4" r="3.30"/><circle class="spark" cx="213.7" cy="156.9" r="2.85"/><circle class="spark" cx="219.5" cy="159.4" r="2.85"/><circle class="spark" cx="224.3" cy="162.7" r="2.40"/><circle class="spark" cx="228.2" cy="166.6" r="2.40"/><circle class="spark" cx="231.5" cy="171.1" r="1.95"/><circle class="spark" cx="234.2" cy="176.1" r="1.50"/><circle class="spark" cx="236.4" cy="181.4" r="1.50"/><circle class="spark" cx="238.2" cy="187" r="1.05"/><path class="trace" d="M 160 164 L 156.6 165.2 L 153.3 166.5 L 150.3 167.9 L 147.5 169.3 L 144.8 170.7 L 142.3 172.3 L 140 173.8 L 137.8 175.5 L 135.7 177.1 L 133.8 178.9 L 132 180.6 L 130.3 182.4 L 128.7 184.2 L 127.2 186.1 L 125.8 188 L 124.5 189.9 L 123.3 191.8 L 122.1 193.8 L 121 195.8 L 120 197.8 L 119.1 199.8 L 118.2 201.9 L 117.3 203.9 L 116.6 206 L 115.8 208.1 L 115.1 210.3 L 114.5 212.4 L 113.9 214.5 L 113.3 216.7 L 112.8 218.9 L 112.3 221 L 111.8 223.2 L 111.4 225.4 L 111 227.6 L 110.6 229.9"/><circle class="spark" cx="150.3" cy="167.9" r="3.75"/><circle class="spark" cx="142.3" cy="172.3" r="3.75"/><circle class="spark" cx="135.7" cy="177.1" r="3.30"/><circle class="spark" cx="130.3" cy="182.4" r="2.85"/><circle class="spark" cx="125.8" cy="188" r="2.85"/><circle class="spark" cx="122.1" cy="193.8" r="2.40"/><circle class="spark" cx="119.1" cy="199.8" r="2.40"/><circle class="spark" cx="116.6" cy="206" r="1.95"/><circle class="spark" cx="114.5" cy="212.4" r="1.50"/><circle class="spark" cx="112.8" cy="218.9" r="1.50"/><circle class="spark" cx="111.4" cy="225.4" r="1.05"/><path class="trace" d="M 160 164 L 161.8 180.6 L 163.4 196.4 L 165 211.3 L 166.4 225.4 L 167.8 238.8 L 169.1 251.4 L 170.3 263.5 L 171.4 274.9 L 172.5 285.8 L 173.4 296.1 L 174.4 306 L 175.2 314 L 176.1 310.9 L 176.8 306.8 L 177.5 303.2 L 178.2 299.9 L 178.8 297 L 179.4 294.4 L 180 292.1 L 180.5 290.1 L 181 288.4 L 181.4 287 L 181.9 285.7 L 182.3 284.7 L 182.6 283.9 L 183 283.3 L 183.3 282.9 L 183.6 282.7 L 183.9 282.6 L 184.2 282.7 L 184.5 282.9 L 184.7 283.2 L 184.9 283.7 L 185.1 284.3 L 185.3 285 L 185.5 285.8 L 185.7 286.7 L 185.8 287.7 L 186 288.8"/><circle class="spark" cx="161.8" cy="180.6" r="4.20"/><circle class="spark" cx="166.4" cy="225.4" r="4.20"/><circle class="spark" cx="170.3" cy="263.5" r="3.75"/><circle class="spark" cx="173.4" cy="296.1" r="3.75"/><circle class="spark" cx="176.1" cy="310.9" r="3.30"/><circle class="spark" cx="178.2" cy="299.9" r="2.85"/><circle class="spark" cx="180" cy="292.1" r="2.85"/><circle class="spark" cx="181.4" cy="287" r="2.40"/><circle class="spark" cx="182.6" cy="283.9" r="2.40"/><circle class="spark" cx="183.6" cy="282.7" r="1.95"/><circle class="spark" cx="184.5" cy="282.9" r="1.50"/><circle class="spark" cx="185.1" cy="284.3" r="1.50"/><circle class="spark" cx="185.7" cy="286.7" r="1.05"/><path class="trace" d="M 160 164 L 157.7 178.3 L 155.5 191.8 L 153.5 204.6 L 151.6 216.8 L 149.8 228.3 L 148.1 239.3 L 146.5 249.7 L 145 259.7 L 143.7 269.1 L 142.4 278.1 L 141.2 286.7 L 140 295 L 138.9 302.8 L 137.9 310.3 L 137 314 L 136.1 314 L 135.3 314 L 134.5 314 L 133.8 314 L 133.1 314 L 132.5 314 L 131.9 314 L 131.3 314 L 130.8 314 L 130.3 314 L 129.8 314 L 129.4 314 L 129 314 L 128.6 314 L 128.3 314 L 127.9 314 L 127.6 314 L 127.3 314 L 127.1 314 L 126.8 314 L 126.5 314 L 126.3 314"/><circle class="spark" cx="155.5" cy="191.8" r="4.20"/><circle class="spark" cx="149.8" cy="228.3" r="3.75"/><circle class="spark" cx="145" cy="259.7" r="3.75"/><circle class="spark" cx="141.2" cy="286.7" r="3.30"/><circle class="spark" cx="137.9" cy="310.3" r="2.85"/>
+  <path class="ground" d="M 40 314 H 280"/>
+  <text class="small" x="292" y="318">the bounce line</text>
+  <text class="small" x="292" y="64">a big flash,</text>
+  <text class="small" x="292" y="79">for two</text>
+  <text class="small" x="292" y="94">frames</text>
+  <text class="small" x="292" y="128">a ring of</text>
+  <text class="small" x="292" y="143">twelve small</text>
+  <text class="small" x="292" y="158">flashes, each</text>
+  <text class="small" x="292" y="173">further out</text>
+  <text class="small" x="292" y="188">and later</text>
+  <text class="small" x="292" y="220">sparks fly out,</text>
+  <text class="small" x="292" y="235">fall, bounce at</text>
+  <text class="small" x="292" y="250">half speed and</text>
+  <text class="small" x="292" y="265">shrink as their</text>
+  <text class="small" x="292" y="280">lives run out</text>
+
+  <rect class="card" x="20" y="348" width="360" height="176" rx="12"/>
+  <text class="h" x="40" y="374">How many bursts</text>
+
+  <text class="kw" x="40" y="406">Blast, Fire Bomb</text>
+  <text class="small" x="40" y="423">one burst of 128 sparks</text><path class="star" d="M 340 392 l 4 8 l 8 3 l -8 3 l -4 8 l -4 -8 l -8 -3 l 8 -3 z"/>
+
+  <text class="kw" x="40" y="450">Nova, Cluster Bomb</text>
+  <text class="small" x="40" y="467">one burst of 255 sparks</text><path class="star" d="M 340 436 l 4 8 l 8 3 l -8 3 l -4 8 l -4 -8 l -8 -3 l 8 -3 z"/>
+
+  <text class="kw" x="40" y="494">Supernova, Carpet Bomb</text>
+  <text class="small" x="40" y="511">three of 192, eight frames apart</text><path class="star" d="M 292 480 l 4 8 l 8 3 l -8 3 l -4 8 l -4 -8 l -8 -3 l 8 -3 z"/><path class="star" d="M 316 480 l 4 8 l 8 3 l -8 3 l -4 8 l -4 -8 l -8 -3 l 8 -3 z"/><path class="star" d="M 340 480 l 4 8 l 8 3 l -8 3 l -4 8 l -4 -8 l -8 -3 l 8 -3 z"/>
+  <text class="code" x="20" y="552">BattleEffect_RunSparkGroups</text>
+</svg>
