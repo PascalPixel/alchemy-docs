@@ -5780,8 +5780,8 @@ sol-sanctum-reliefs	16	Sol Sanctum		event-gif	11	Event_WestStatueMoved						108	
 tolbi-ship-mast	110	Tolbi-bound Ship		event	1	MsgTolbiShipHiddenAnchorDiscovered	2		07716				07716	tolbi-ship-mast/events/MsgTolbiShipHiddenAnchorDiscovered-2.png
 tolbi-ship-mast	110	Tolbi-bound Ship		event-gif	1	MsgTolbiShipHiddenAnchorDiscovered						147	07716	tolbi-ship-mast/events/MsgTolbiShipHiddenAnchorDiscovered.gif
 tolbi-ship-mast	110	Tolbi-bound Ship		event	1	MsgTolbiShipHiddenAnchorDiscovered	1		07716				07716	tolbi-ship-mast/events/MsgTolbiShipHiddenAnchorDiscovered.png
-tolbi-ship-mast	110	Tolbi-bound Ship		event-gif	0	MsgTolbiShipIslandMonstersUnknown						75	08035	tolbi-ship-mast/events/MsgTolbiShipIslandMonstersUnknown.gif
-tolbi-ship-mast	110	Tolbi-bound Ship		event	0	MsgTolbiShipIslandMonstersUnknown	1		08035				08035	tolbi-ship-mast/events/MsgTolbiShipIslandMonstersUnknown.png
+tolbi-ship-mast	110	Tolbi-bound Ship		event-gif	0	MsgTolbiShipMonstersAnywhereAroundHere						75	08035	tolbi-ship-mast/events/MsgTolbiShipMonstersAnywhereAroundHere.gif
+tolbi-ship-mast	110	Tolbi-bound Ship		event	0	MsgTolbiShipMonstersAnywhereAroundHere	1		08035				08035	tolbi-ship-mast/events/MsgTolbiShipMonstersAnywhereAroundHere.png
 tolbi-ship-mast	110	Tolbi-bound Ship		event-gif	1	MsgTolbiShipIslandTreasures						110	08036	tolbi-ship-mast/events/MsgTolbiShipIslandTreasures.gif
 tolbi-ship-mast	110	Tolbi-bound Ship		event	1	MsgTolbiShipIslandTreasures	1		08036				08036	tolbi-ship-mast/events/MsgTolbiShipIslandTreasures.png
 tolbi-ship-mast	110	Tolbi-bound Ship		event	0	MsgTolbiShipLookoutCannotRow	2		07717				07717	tolbi-ship-mast/events/MsgTolbiShipLookoutCannotRow-2.png
