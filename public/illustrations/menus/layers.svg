@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 500" role="img" aria-labelledby="title desc">
+  <title id="title">Every window on one layer</title>
+  <desc id="desc">The console draws four background layers and the sprites in front of them. The map uses three of the layers: the ground, the middle and the overhead layer. Every window, however many are open, is drawn on the fourth layer, in front of the map. What a window carries, its letters, icons, portraits and the pointing hand, are sprites, in front of everything. Because all the windows share one layer, the map keeps its three whatever menus are open.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .fill-accent { fill: #0a72ef; }
+    .h2 { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .pill-on { fill: #ffffff; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .w0 { fill: none; stroke: #d97706; stroke-width: 2; }
+    .w1 { fill: none; stroke: #16a34a; stroke-width: 2; }
+    .w2 { fill: none; stroke: #7c3aed; stroke-width: 2; }
+    .w3 { fill: none; stroke: #0a72ef; stroke-width: 2; }
+    .w4 { fill: none; stroke: #db2777; stroke-width: 2; }
+    .f0 { fill: #d97706; }
+    .f1 { fill: #16a34a; }
+    .f2 { fill: #7c3aed; }
+    .f3 { fill: #0a72ef; }
+    .f4 { fill: #db2777; }
+    .t0 { fill: #d97706; fill-opacity: 0.10; }
+    .t1 { fill: #16a34a; fill-opacity: 0.10; }
+    .t2 { fill: #7c3aed; fill-opacity: 0.10; }
+    .t3 { fill: #0a72ef; fill-opacity: 0.10; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .fill-accent { fill: #3b8eff; }
+      .h2 { fill: #ededed; }
+      .small, .code, .eyebrow { fill: #7c7c7c; }
+      .w0 { stroke: #f59e0b; }
+      .w1 { stroke: #22c55e; }
+      .w2 { stroke: #a78bfa; }
+      .w3 { stroke: #3b8eff; }
+      .w4 { stroke: #f472b6; }
+      .f0 { fill: #b45309; }
+      .f1 { fill: #15803d; }
+      .f2 { fill: #6d28d9; }
+      .f3 { fill: #1d5fc4; }
+      .f4 { fill: #be185d; }
+      .t0, .t1, .t2, .t3 { fill-opacity: 0.18; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="499" rx="16"/>
+  <text class="eyebrow" x="20" y="32">FROM BACK TO FRONT</text>
+
+  <!-- ground -->
+  <path class="t0" d="M 30 110 L 170 66 L 170 176 L 30 220 Z"/>
+  <path class="w0" d="M 30 110 L 170 66 L 170 176 L 30 220 Z"/>
+  <!-- middle -->
+  <path class="t1" d="M 70 138 L 210 94 L 210 204 L 70 248 Z"/>
+  <path class="w1" d="M 70 138 L 210 94 L 210 204 L 70 248 Z"/>
+  <!-- overhead -->
+  <path class="t2" d="M 110 166 L 250 122 L 250 232 L 110 276 Z"/>
+  <path class="w2" d="M 110 166 L 250 122 L 250 232 L 110 276 Z"/>
+  <!-- the window layer, with three windows on it -->
+  <path class="t3" d="M 150 194 L 290 150 L 290 260 L 150 304 Z"/>
+  <path class="w3" d="M 150 194 L 290 150 L 290 260 L 150 304 Z"/>
+  <path class="fill-accent" fill-opacity="0.5" d="M 160 206 L 240 181 L 240 199 L 160 224 Z"/>
+  <path class="fill-accent" fill-opacity="0.5" d="M 246 179 L 282 168 L 282 186 L 246 197 Z"/>
+  <path class="fill-accent" fill-opacity="0.5" d="M 160 238 L 212 222 L 212 260 L 160 276 Z"/>
+  <!-- sprites, floating in front -->
+  <g class="f4">
+    <circle cx="214" cy="230" r="4"/>
+    <circle cx="226" cy="226" r="4"/>
+    <circle cx="238" cy="222" r="4"/>
+    <rect x="300" y="196" width="14" height="14" rx="2"/>
+    <path d="M 214 290 l 16 -5 l -5 12 z"/>
+  </g>
+
+  <!-- labels on each plane -->
+  <rect class="f0" x="36" y="116" width="62" height="18" rx="9"/>
+  <text class="pill-on" x="67" y="129" text-anchor="middle">Ground</text>
+  <rect class="f1" x="76" y="144" width="58" height="18" rx="9"/>
+  <text class="pill-on" x="105" y="157" text-anchor="middle">Middle</text>
+  <rect class="f2" x="116" y="172" width="72" height="18" rx="9"/>
+  <text class="pill-on" x="152" y="185" text-anchor="middle">Overhead</text>
+  <rect class="f3" x="300" y="246" width="76" height="18" rx="9"/>
+  <text class="pill-on" x="338" y="259" text-anchor="middle">Windows</text>
+  <rect class="f4" x="300" y="290" width="64" height="18" rx="9"/>
+  <text class="pill-on" x="332" y="303" text-anchor="middle">Sprites</text>
+  <path class="w4" d="M 300 299 H 236 L 228 293" stroke-width="1"/>
+
+  <!-- what it means -->
+  <text class="h2" x="20" y="346">The map takes three layers</text>
+  <text class="small" x="20" y="364">ground, middle and overhead, at the back</text>
+  <text class="h2" x="20" y="392">Every window shares the fourth</text>
+  <text class="small" x="20" y="410">frames and fillings, however many are open</text>
+  <text class="h2" x="20" y="438">What a window carries is sprites</text>
+  <text class="small" x="20" y="456">letters, icons, portraits, the hand: in front</text>
+  <text class="code" x="380" y="484" text-anchor="end">the window layer is BG0</text>
+</svg>
