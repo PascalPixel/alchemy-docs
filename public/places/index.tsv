@@ -2759,10 +2759,10 @@ vault-interiors	21	Vault		event	6	Event_AskWhetherThievesCameFromLunpa	2		04951	
 vault-interiors	21	Vault		event	6	Event_AskWhetherThievesCameFromLunpa	3		04951				04950, 04952, 04951	vault-interiors/events/Event_AskWhetherThievesCameFromLunpa-3.png
 vault-interiors	21	Vault		event-gif	6	Event_AskWhetherThievesCameFromLunpa						176	04950, 04952, 04951	vault-interiors/events/Event_AskWhetherThievesCameFromLunpa.gif
 vault-interiors	21	Vault		event	6	Event_AskWhetherThievesCameFromLunpa	1		04950				04950, 04952, 04951	vault-interiors/events/Event_AskWhetherThievesCameFromLunpa.png
-vault-interiors	21	Vault		event	12	Event_BeginCorneringSuspects	2		04769				04768, 04769, 04770	vault-interiors/events/Event_BeginCorneringSuspects-2.png
-vault-interiors	21	Vault		event	12	Event_BeginCorneringSuspects	3		04770				04768, 04769, 04770	vault-interiors/events/Event_BeginCorneringSuspects-3.png
-vault-interiors	21	Vault		event-gif	12	Event_BeginCorneringSuspects						457	04768, 04769, 04770	vault-interiors/events/Event_BeginCorneringSuspects.gif
-vault-interiors	21	Vault		event	12	Event_BeginCorneringSuspects	1		04768				04768, 04769, 04770	vault-interiors/events/Event_BeginCorneringSuspects.png
+vault-interiors	21	Vault		event	12	Event_StartCorneringSuspects	2		04769				04768, 04769, 04770	vault-interiors/events/Event_StartCorneringSuspects-2.png
+vault-interiors	21	Vault		event	12	Event_StartCorneringSuspects	3		04770				04768, 04769, 04770	vault-interiors/events/Event_StartCorneringSuspects-3.png
+vault-interiors	21	Vault		event-gif	12	Event_StartCorneringSuspects						457	04768, 04769, 04770	vault-interiors/events/Event_StartCorneringSuspects.gif
+vault-interiors	21	Vault		event	12	Event_StartCorneringSuspects	1		04768				04768, 04769, 04770	vault-interiors/events/Event_StartCorneringSuspects.png
 vault-interiors	21	Vault		event-gif	14	Event_CheckCrateMoved						106		vault-interiors/events/Event_CheckCrateMoved.gif
 vault-interiors	21	Vault		event	6	Event_ChildAsksAboutTravel	2		04680				04679, 04681, 04680	vault-interiors/events/Event_ChildAsksAboutTravel-2.png
 vault-interiors	21	Vault		event-gif	6	Event_ChildAsksAboutTravel						136	04679, 04681, 04680	vault-interiors/events/Event_ChildAsksAboutTravel.gif
@@ -6227,7 +6227,7 @@ crossbone-isle-bane	120	Crossbone Isle Cave		event-gif	1	Event_UpdateSecondPilla
 crossbone-isle-bane	120	Crossbone Isle Cave		event-gif	2	Event_UpdateThirdPillarTerrain						106		crossbone-isle-bane/events/Event_UpdateThirdPillarTerrain.gif
 crossbone-isle-bane	120	Crossbone Isle Cave		event-gif	2	Event_UseLadder						47		crossbone-isle-bane/events/Event_UseLadder.gif
 crossbone-isle-dragon-statue	122	Crossbone Isle Cave		event-gif	1	Event_FreezeThirdPuddle						336		crossbone-isle-dragon-statue/events/Event_FreezeThirdPuddle.gif
-crossbone-isle-dragon-statue	122	Crossbone Isle Cave		event-gif	1	Event_FrostBeginsOnThirdPuddle						336		crossbone-isle-dragon-statue/events/Event_FrostBeginsOnThirdPuddle.gif
+crossbone-isle-dragon-statue	122	Crossbone Isle Cave		event-gif	1	Event_FrostStartsOnThirdPuddle						336		crossbone-isle-dragon-statue/events/Event_FrostStartsOnThirdPuddle.gif
 crossbone-isle-dragon-statue	122	Crossbone Isle Cave		event-gif	1	Event_FrostRaisesPillar						336		crossbone-isle-dragon-statue/events/Event_FrostRaisesPillar.gif
 crossbone-isle-dragon-statue	122	Crossbone Isle Cave		event-gif	2	Event_MoveSinkingPillar						109		crossbone-isle-dragon-statue/events/Event_MoveSinkingPillar.gif
 crossbone-isle-dragon-statue	122	Crossbone Isle Cave		event-gif	2	Event_StartMovingSinkingPillar						109		crossbone-isle-dragon-statue/events/Event_StartMovingSinkingPillar.gif

@@ -590,7 +590,7 @@ const includedBy = new Map<SourceFile, SourceFile[]>();
 // ---------------------------------------------------------------------------
 // The recordings beside the code that plays them. A handler's comment names
 // every ability that reaches it in its reach line (`Abilities: Gaia, Mother
-// Gaia (BATTLE_FX_GAIA); none (BATTLE_FX_X).`, the form effect/README.md
+// Gaia (BATTLE_EFFECT_GAIA); none (BATTLE_EFFECT_X).`, the form effect/README.md
 // sets), and public/abilities/index.tsv holds the casts recorded from the
 // game by ability id. A name is matched against actions.tsv's ability column
 // and, where several rows share it, to the rows whose effect word in
@@ -621,7 +621,7 @@ const reachProblems: string[] = [];
 // The enum each reach-line prefix names, and whether an ability row reaches
 // one of its values.
 const REACH: [string, string, (value: number, act: Row, word: number) => boolean][] = [
-  ['BATTLE_FX_', 'BattleFxKind', (v, _, w) => !(w & 0xc000) && (w & 0xfff) === v],
+  ['BATTLE_EFFECT_', 'BattleFxKind', (v, _, w) => !(w & 0xc000) && (w & 0xfff) === v],
   ['SCENE_EFFECT_', 'SceneEffectKind', (v, _, w) => !!(w & 0x8000) && (w & 0xfff) === v],
   ['CASTING_IMPACT_', 'CastingImpact', (v, _, w) => (w & 0xc000) === 0x4000 && (w & 0xfff) === v + 100],
   ['FIELD_KIND_', 'FieldKind', (v, act) => int(act.type) === v],
