@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 560" role="img" aria-labelledby="title desc">
+  <title id="title">Why changes wait for the blank</title>
+  <desc id="desc">Three timelines of a figure walking right. On time: the frame's work ends before the vertical blank, and at the blank the figure appears in its new place, whole. Late: the work is still running when the blank comes, so nothing is sent and the screen keeps the old picture, whole; the new one appears at the next blank. Had the work written to the hardware directly, the screen could be drawn while the figure was half moved, its head in the new place and its body in the old.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .axis { stroke: #d4d4d4; stroke-width: 1.5; }
+    .blank { fill: #0a72ef; fill-opacity: 0.12; }
+    .work { fill: #0a72ef; }
+    .late { fill: #c2410c; }
+    .screen { fill: #ffffff; stroke: #d4d4d4; }
+    .ground { fill: #e8f2e0; }
+    .fig { fill: #0a0a0a; }
+    .fig-old { fill: #a3a3a3; }
+    .tear { stroke: #dc2626; stroke-width: 1.5; stroke-dasharray: 3 3; }
+    .wire { fill: none; stroke: #a3a3a3; stroke-width: 1.2; stroke-dasharray: 2 3; }
+    .h { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #737373; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .bl { fill: #0a72ef; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .ok { fill: #15803d; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .no { fill: #b91c1c; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .in { fill: #ffffff; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .axis { stroke: #333333; }
+      .blank { fill: #3b8eff; fill-opacity: 0.2; }
+      .work { fill: #3b8eff; }
+      .late { fill: #fb8b5e; }
+      .screen { fill: #111111; stroke: #333333; }
+      .ground { fill: #1a2a14; }
+      .fig { fill: #ededed; }
+      .fig-old { fill: #5c5c5c; }
+      .tear { stroke: #f05252; }
+      .wire { stroke: #5c5c5c; }
+      .h { fill: #ededed; }
+      .p { fill: #a1a1a1; }
+      .small { fill: #8f8f8f; }
+      .bl { fill: #66a6ff; }
+      .ok { fill: #4ade80; }
+      .no { fill: #f87171; }
+      .in { fill: #0a0a0a; }
+      .eyebrow, .code { fill: #7c7c7c; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="559" rx="16"/>
+  <text class="eyebrow" x="20" y="34">A FIGURE TAKES A STEP RIGHT</text>
+  <text class="code" x="380" y="34" text-anchor="end">gFrameRenderPending</text>
+
+  <!-- Blanks at x 200 and 340, 14 wide, through all rows -->
+  <rect class="blank" x="196" y="50" width="16" height="296"/>
+  <rect class="blank" x="336" y="50" width="16" height="296"/>
+  <text class="bl" x="204" y="64" text-anchor="middle">blank</text>
+  <text class="bl" x="344" y="64" text-anchor="middle">blank</text>
+
+  <!-- Row 1: on time -->
+  <text class="h" x="20" y="96">On time</text>
+  <path class="axis" d="M 20 116 H 380"/>
+  <rect class="work" x="20" y="104" width="150" height="24" rx="6"/>
+  <text class="in" x="95" y="120" text-anchor="middle">the frame's work</text>
+  <path class="wire" d="M 204 128 V 140"/>
+  <rect class="screen" x="172" y="142" width="64" height="44" rx="4"/>
+  <rect class="ground" x="173" y="172" width="62" height="13"/>
+  <circle class="fig" cx="216" cy="157" r="4"/>
+  <rect class="fig" x="212" y="162" width="8" height="12" rx="2"/>
+  <text class="ok" x="246" y="160">new picture,</text>
+  <text class="ok" x="246" y="175">whole</text>
+
+  <!-- Row 2: late -->
+  <text class="h" x="20" y="228">Late</text>
+  <path class="axis" d="M 20 248 H 380"/>
+  <rect class="late" x="20" y="236" width="240" height="24" rx="6"/>
+  <text class="in" x="110" y="252" text-anchor="middle">the frame's work, too long</text>
+  <path class="wire" d="M 204 260 V 272"/>
+  <rect class="screen" x="172" y="274" width="64" height="44" rx="4"/>
+  <rect class="ground" x="173" y="304" width="62" height="13"/>
+  <circle class="fig" cx="192" cy="289" r="4"/>
+  <rect class="fig" x="188" y="294" width="8" height="12" rx="2"/>
+  <text class="small" x="204" y="334" text-anchor="middle">old picture, whole</text>
+  <path class="wire" d="M 344 260 V 272"/>
+  <rect class="screen" x="312" y="274" width="64" height="44" rx="4"/>
+  <rect class="ground" x="313" y="304" width="62" height="13"/>
+  <circle class="fig" cx="356" cy="289" r="4"/>
+  <rect class="fig" x="352" y="294" width="8" height="12" rx="2"/>
+  <text class="ok" x="344" y="334" text-anchor="middle">new, whole</text>
+
+  <!-- Row 3: written straight to the hardware -->
+  <text class="h" x="20" y="374">Without the wait</text>
+  <text class="small" x="20" y="392">changes written straight to the screen</text>
+  <rect class="screen" x="120" y="404" width="64" height="44" rx="4"/>
+  <rect class="ground" x="121" y="434" width="62" height="13"/>
+  <circle class="fig" cx="164" cy="419" r="4"/>
+  <rect class="fig-old" x="136" y="424" width="8" height="12" rx="2"/>
+  <path class="tear" d="M 120 423 H 184"/>
+  <text class="no" x="194" y="422">half old,</text>
+  <text class="no" x="194" y="437">half new</text>
+
+  <text class="p" x="20" y="500">So the game keeps its changes in RAM and</text>
+  <text class="p" x="20" y="519">sends them in the blank, only for a frame</text>
+  <text class="p" x="20" y="538">whose work has finished.</text>
+</svg>

@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 452" role="img" aria-labelledby="title desc">
+  <title id="title">Code waits, tasks keep going</title>
+  <desc id="desc">Five frames of a field scene. An event's code does some work in the first frame, then calls WaitFrames to wait three frames, and carries on in the fifth. Meanwhile two tasks run once in every one of the five frames, waiting or not: the windows' task opens, closes and types the text windows, and the map's task scrolls the map's layers with the camera. WaitFrames is what runs them.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .col { fill: #f2f2f2; }
+    .strip { fill: #fafafa; }
+    .work { fill: #0a72ef; }
+    .wait { fill: #ffffff; stroke: #a3a3a3; stroke-dasharray: 4 3; }
+    .tick { fill: #16a34a; }
+    .h { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .sub { fill: #737373; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .in { fill: #ffffff; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .inw { fill: #525252; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .col { fill: #171717; }
+      .strip { fill: #0a0a0a; }
+      .work { fill: #3b8eff; }
+      .wait { fill: #111111; stroke: #5c5c5c; }
+      .tick { fill: #22c55e; }
+      .h { fill: #ededed; }
+      .p { fill: #a1a1a1; }
+      .sub { fill: #8f8f8f; }
+      .inw { fill: #a1a1a1; }
+      .small, .code, .eyebrow { fill: #7c7c7c; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="451" rx="16"/>
+  <text class="eyebrow" x="20" y="34">FIVE FRAMES OF A FIELD SCENE</text>
+
+  <!-- Five frame columns, 52 wide, from x 120 -->
+  <rect class="col" x="120" y="48" width="48" height="300" rx="6"/>
+  <rect class="col" x="172" y="48" width="48" height="300" rx="6"/>
+  <rect class="col" x="224" y="48" width="48" height="300" rx="6"/>
+  <rect class="col" x="276" y="48" width="48" height="300" rx="6"/>
+  <rect class="col" x="328" y="48" width="48" height="300" rx="6"/>
+  <text class="small" x="20" y="68">frame</text>
+  <text class="small" x="144" y="68" text-anchor="middle">1</text>
+  <text class="small" x="196" y="68" text-anchor="middle">2</text>
+  <text class="small" x="248" y="68" text-anchor="middle">3</text>
+  <text class="small" x="300" y="68" text-anchor="middle">4</text>
+  <text class="small" x="352" y="68" text-anchor="middle">5</text>
+
+  <!-- The event -->
+  <text class="h" x="20" y="104">An event</text>
+  <text class="sub" x="20" y="122">its own code</text>
+  <rect class="work" x="124" y="88" width="40" height="34" rx="6"/>
+  <text class="in" x="144" y="110" text-anchor="middle">work</text>
+  <rect class="wait" x="176" y="88" width="144" height="34" rx="6"/>
+  <text class="inw" x="248" y="110" text-anchor="middle">waits 3 frames</text>
+  <rect class="work" x="332" y="88" width="40" height="34" rx="6"/>
+  <text class="in" x="352" y="110" text-anchor="middle">work</text>
+  <text class="code" x="248" y="142" text-anchor="middle">WaitFrames(3)</text>
+
+  <!-- The windows' task -->
+  <text class="h" x="20" y="196">Windows</text>
+  <text class="sub" x="20" y="214">a task</text>
+  <circle class="tick" cx="144" cy="196" r="7"/>
+  <circle class="tick" cx="196" cy="196" r="7"/>
+  <circle class="tick" cx="248" cy="196" r="7"/>
+  <circle class="tick" cx="300" cy="196" r="7"/>
+  <circle class="tick" cx="352" cy="196" r="7"/>
+  <rect class="strip" x="116" y="212" width="264" height="20"/>
+  <text class="small" x="120" y="226">open, close and type their text</text>
+
+  <!-- The map's task -->
+  <text class="h" x="20" y="282">The map</text>
+  <text class="sub" x="20" y="300">a task</text>
+  <circle class="tick" cx="144" cy="282" r="7"/>
+  <circle class="tick" cx="196" cy="282" r="7"/>
+  <circle class="tick" cx="248" cy="282" r="7"/>
+  <circle class="tick" cx="300" cy="282" r="7"/>
+  <circle class="tick" cx="352" cy="282" r="7"/>
+  <rect class="strip" x="116" y="298" width="264" height="20"/>
+  <text class="small" x="120" y="312">its layers scroll with the camera</text>
+
+  <!-- The rule -->
+  <text class="p" x="20" y="384">The event stops inside WaitFrames, and every</text>
+  <text class="p" x="20" y="403">frame WaitFrames runs each task once, so the</text>
+  <text class="p" x="20" y="422">screen keeps moving while the event waits.</text>
+  <text class="code" x="380" y="34" text-anchor="end">Scheduler_RunPass</text>
+</svg>
