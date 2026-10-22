@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 540" role="img" aria-labelledby="title desc">
+  <title id="title">Spending earns Game Tickets</title>
+  <desc id="desc">When the party buys something for 200 coins, the coins go down by 200 and a hidden shop credit goes up by 200. After each purchase the keeper checks the credit against the next ticket's cost; once it reaches it, the keeper gives a Game Ticket and the cost comes off the credit, never off the coins. The first five tickets cost 300 of credit each, the next five 500, then 1,000, 2,000 and 4,000, five at a time, and every ticket after the 25th costs 8,000.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .card-accent { fill: #ffffff; stroke: #0a72ef; stroke-width: 1.5; }
+    .chip-ok { fill: #effaf2; stroke: #b5e3c2; }
+    .fill-soft { fill: #f5f5f5; }
+    .fill-accent { fill: #0a72ef; }
+    .frame { fill: none; stroke: #d4d4d4; }
+    .h2 { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .k { fill: #0a72ef; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kw { fill: #525252; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .big { fill: #0a0a0a; font: 600 22px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .wire-accent { fill: none; stroke: #0a72ef; stroke-width: 1.5; }
+    .head-accent { fill: #0a72ef; }
+    .ok { stroke: #16a34a; stroke-width: 3; stroke-linecap: round; fill: none; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .card-accent { fill: #111111; stroke: #3b8eff; }
+      .chip-ok { fill: #0c2214; stroke: #1d4d2c; }
+      .fill-soft { fill: #1a1a1a; }
+      .fill-accent { fill: #3b8eff; }
+      .frame { stroke: #333333; }
+      .h2, .big { fill: #ededed; }
+      .p, .kw { fill: #a1a1a1; }
+      .small, .code, .eyebrow { fill: #7c7c7c; }
+      .k { fill: #66a6ff; }
+      .wire-accent { stroke: #3b8eff; }
+      .head-accent { fill: #3b8eff; }
+      .ok { stroke: #22c55e; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="539" rx="16"/>
+  <text class="eyebrow" x="20" y="32">BUYING A LONG SWORD FOR 200 COINS</text>
+
+  <!-- two purses -->
+  <rect class="card" x="20" y="44" width="172" height="96" rx="12"/>
+  <text class="h2" x="36" y="70">Coins</text>
+  <text class="big" x="36" y="104">−200</text>
+  <text class="small" x="36" y="126">what the player sees</text>
+  <rect class="card-accent" x="208" y="44" width="172" height="96" rx="12"/>
+  <text class="h2" x="224" y="70">Shop credit</text>
+  <text class="k" x="224" y="104" style="font-size: 22px; font-weight: 600">+200</text>
+  <text class="small" x="224" y="126">kept out of sight</text>
+
+  <!-- the credit filling up -->
+  <text class="eyebrow" x="20" y="176">AFTER EACH PURCHASE</text>
+  <rect class="fill-soft" x="20" y="188" width="300" height="20" rx="10"/>
+  <rect class="fill-accent" x="20" y="188" width="300" height="20" rx="10" fill-opacity="0.85"/>
+  <text class="small" x="20" y="226">credit reaches the next ticket's cost</text>
+  <path class="wire-accent" d="M 324 198 H 340"/>
+  <path class="head-accent" d="M 338 192 v 12 l 9 -6 z"/>
+  <path class="chip-ok" d="M 350 184 h 30 v 9 a 5 5 0 0 0 0 10 v 9 h -30 v -9 a 5 5 0 0 0 0 -10 z"/>
+  <path class="ok" d="M 365 188 V 208" stroke-width="1" stroke-dasharray="2 2"/>
+  <text class="p" x="20" y="256">The keeper gives a Game Ticket, and the cost</text>
+  <text class="p" x="20" y="275">comes off the credit, not the coins.</text>
+
+  <!-- the costs -->
+  <text class="eyebrow" x="20" y="316">WHAT EACH TICKET COSTS IN CREDIT</text>
+  <g class="fill-accent" fill-opacity="0.75">
+    <rect x="30" y="472" width="44" height="6"/>
+    <rect x="86" y="468" width="44" height="10"/>
+    <rect x="142" y="458" width="44" height="20"/>
+    <rect x="198" y="438" width="44" height="40"/>
+    <rect x="254" y="398" width="44" height="80"/>
+    <rect x="310" y="338" width="44" height="140"/>
+  </g>
+  <text class="kw" x="52" y="462" text-anchor="middle">300</text>
+  <text class="kw" x="108" y="458" text-anchor="middle">500</text>
+  <text class="kw" x="164" y="448" text-anchor="middle">1,000</text>
+  <text class="kw" x="220" y="428" text-anchor="middle">2,000</text>
+  <text class="kw" x="276" y="388" text-anchor="middle">4,000</text>
+  <text class="kw" x="332" y="358" text-anchor="middle" style="fill: #ffffff">8,000</text>
+  <path class="frame" d="M 20 478 H 380"/>
+  <text class="small" x="52" y="496" text-anchor="middle">1st</text><text class="small" x="52" y="511" text-anchor="middle">to 5th</text>
+  <text class="small" x="108" y="496" text-anchor="middle">6th</text><text class="small" x="108" y="511" text-anchor="middle">to 10th</text>
+  <text class="small" x="164" y="496" text-anchor="middle">11th</text><text class="small" x="164" y="511" text-anchor="middle">to 15th</text>
+  <text class="small" x="220" y="496" text-anchor="middle">16th</text><text class="small" x="220" y="511" text-anchor="middle">to 20th</text>
+  <text class="small" x="276" y="496" text-anchor="middle">21st</text><text class="small" x="276" y="511" text-anchor="middle">to 25th</text>
+  <text class="small" x="332" y="496" text-anchor="middle">26th</text><text class="small" x="332" y="511" text-anchor="middle">on</text>
+  <text class="code" x="380" y="530" text-anchor="end">Shop_BuySpecialItem</text>
+</svg>

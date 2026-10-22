@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 468" role="img" aria-labelledby="title desc">
+  <title id="title">Three kinds of counter</title>
+  <desc id="desc">Where the party spends coins, a town has three kinds of counter. A shop, for weapons, armor or items, offers four things: Buy, Sell, its rare items (Artifacts) and Repair. A sanctum serves one member at a time: it revives, cures poison, drives out a haunting or takes off cursed equipment, for a fee. An inn charges for each member still standing and gives them back their HP and PP overnight. Each is opened by the scene of its town, when the player talks to the keeper.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .card-accent { fill: #ffffff; stroke: #0a72ef; stroke-width: 1.5; }
+    .chip { fill: #f0f6ff; stroke: #bcd7fb; }
+    .chip-wait { fill: #f5f5f5; stroke: #d4d4d4; }
+    .h { fill: #0a0a0a; font: 600 17px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .sub { fill: #8f8f8f; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .k { fill: #0a72ef; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kw { fill: #525252; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .card-accent { fill: #111111; stroke: #3b8eff; }
+      .chip { fill: #0d1a2e; stroke: #1e3a66; }
+      .chip-wait { fill: #1a1a1a; stroke: #333333; }
+      .h { fill: #ededed; }
+      .p, .kw { fill: #a1a1a1; }
+      .sub, .small, .eyebrow { fill: #7c7c7c; }
+      .k { fill: #66a6ff; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="467" rx="16"/>
+  <text class="eyebrow" x="20" y="32">WHERE THE COINS GO</text>
+
+  <!-- shop -->
+  <rect class="card-accent" x="20" y="44" width="360" height="124" rx="12"/>
+  <text class="h" x="36" y="72">Shop</text>
+  <text class="sub" x="86" y="72">weapons, armor or items</text>
+  <rect class="chip" x="36" y="86" width="56" height="28" rx="14"/>
+  <text class="k" x="64" y="105" text-anchor="middle">Buy</text>
+  <rect class="chip" x="98" y="86" width="56" height="28" rx="14"/>
+  <text class="k" x="126" y="105" text-anchor="middle">Sell</text>
+  <rect class="chip" x="160" y="86" width="84" height="28" rx="14"/>
+  <text class="k" x="202" y="105" text-anchor="middle">Artifacts</text>
+  <rect class="chip" x="250" y="86" width="70" height="28" rx="14"/>
+  <text class="k" x="285" y="105" text-anchor="middle">Repair</text>
+  <text class="small" x="36" y="138">Artifacts are rare items, counted for the</text>
+  <text class="small" x="36" y="154">whole game rather than stocked per shop.</text>
+
+  <!-- sanctum -->
+  <rect class="card" x="20" y="180" width="360" height="124" rx="12"/>
+  <text class="h" x="36" y="208">Sanctum</text>
+  <text class="sub" x="114" y="208">one member at a time</text>
+  <rect class="chip-wait" x="36" y="222" width="70" height="28" rx="14"/>
+  <text class="kw" x="71" y="241" text-anchor="middle">Revive</text>
+  <rect class="chip-wait" x="112" y="222" width="100" height="28" rx="14"/>
+  <text class="kw" x="162" y="241" text-anchor="middle">Cure poison</text>
+  <rect class="chip-wait" x="218" y="222" width="72" height="28" rx="14"/>
+  <text class="kw" x="254" y="241" text-anchor="middle">Exorcise</text>
+  <rect class="chip-wait" x="36" y="256" width="118" height="28" rx="14"/>
+  <text class="kw" x="95" y="275" text-anchor="middle">Remove curse</text>
+  <text class="small" x="166" y="275">a fee for each</text>
+
+  <!-- inn -->
+  <rect class="card" x="20" y="316" width="360" height="100" rx="12"/>
+  <text class="h" x="36" y="344">Inn</text>
+  <text class="sub" x="72" y="344">a night's rest</text>
+  <text class="p" x="36" y="370">A price for each member still standing;</text>
+  <text class="p" x="36" y="389">by morning their HP and PP are full.</text>
+
+  <text class="small" x="20" y="440">Each is opened by its town's scene when the</text><text class="small" x="20" y="456">player talks to the keeper.</text>
+</svg>

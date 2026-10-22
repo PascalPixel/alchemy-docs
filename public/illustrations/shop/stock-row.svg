@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 452" role="img" aria-labelledby="title desc">
+  <title id="title">A shop is one row of a table</title>
+  <desc id="desc">Each shop is one row of the stock table: room for 24 ordinary items, then 8 rare items, then the kind of shop: weapons, armor or items. Bilibin's weapon shop uses five of the ordinary places, for the Long Sword, Broad Sword, Hunter's Sword, Battle Axe and Heavy Mace, one rare place, for the Witch's Wand, and is a weapon shop. Its Buy list shows the five weapons. The table has 35 rows; a town's scene opens its shop by the row number, with the keeper whose face the shop's lines show.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .chip-wait { fill: #f5f5f5; stroke: #d4d4d4; }
+    .frame { fill: none; stroke: #d4d4d4; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .k { fill: #0a72ef; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kx { fill: #c2410c; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .w2 { fill: none; stroke: #7c3aed; stroke-width: 2; }
+    .f0 { fill: #d97706; }
+    .f2 { fill: #7c3aed; }
+    .f3 { fill: #0a72ef; }
+    .c2 { fill: #6d28d9; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .chip-wait { fill: #1a1a1a; stroke: #333333; }
+      .frame { stroke: #333333; }
+      .p { fill: #a1a1a1; }
+      .small, .code, .eyebrow { fill: #7c7c7c; }
+      .k { fill: #66a6ff; }
+      .kx { fill: #fb8b5e; }
+      .w2 { stroke: #a78bfa; }
+      .f0 { fill: #b45309; }
+      .f2 { fill: #6d28d9; }
+      .f3 { fill: #1d5fc4; }
+      .c2 { fill: #a78bfa; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="451" rx="16"/>
+  <text class="eyebrow" x="20" y="32">BILIBIN'S WEAPON SHOP: ONE ROW</text>
+
+  <g transform="translate(20 0) scale(0.94 1) translate(-20 0)">
+<rect class="f3" x="20.0" y="64" width="9" height="28" rx="2"/><rect class="f3" x="30.9" y="64" width="9" height="28" rx="2"/><rect class="f3" x="41.8" y="64" width="9" height="28" rx="2"/><rect class="f3" x="52.7" y="64" width="9" height="28" rx="2"/><rect class="f3" x="63.6" y="64" width="9" height="28" rx="2"/><rect class="chip-wait" x="74.5" y="64" width="9" height="28" rx="2"/><rect class="chip-wait" x="85.4" y="64" width="9" height="28" rx="2"/><rect class="chip-wait" x="96.3" y="64" width="9" height="28" rx="2"/><rect class="chip-wait" x="107.2" y="64" width="9" height="28" rx="2"/><rect class="chip-wait" x="118.1" y="64" width="9" height="28" rx="2"/><rect class="chip-wait" x="129.0" y="64" width="9" height="28" rx="2"/><rect class="chip-wait" x="139.9" y="64" width="9" height="28" rx="2"/><rect class="chip-wait" x="150.8" y="64" width="9" height="28" rx="2"/><rect class="chip-wait" x="161.7" y="64" width="9" height="28" rx="2"/><rect class="chip-wait" x="172.6" y="64" width="9" height="28" rx="2"/><rect class="chip-wait" x="183.5" y="64" width="9" height="28" rx="2"/><rect class="chip-wait" x="194.4" y="64" width="9" height="28" rx="2"/><rect class="chip-wait" x="205.3" y="64" width="9" height="28" rx="2"/><rect class="chip-wait" x="216.2" y="64" width="9" height="28" rx="2"/><rect class="chip-wait" x="227.1" y="64" width="9" height="28" rx="2"/><rect class="chip-wait" x="238.0" y="64" width="9" height="28" rx="2"/><rect class="chip-wait" x="248.9" y="64" width="9" height="28" rx="2"/><rect class="chip-wait" x="259.8" y="64" width="9" height="28" rx="2"/><rect class="chip-wait" x="270.7" y="64" width="9" height="28" rx="2"/><rect class="f0" x="287.6" y="64" width="9" height="28" rx="2"/><rect class="chip-wait" x="298.5" y="64" width="9" height="28" rx="2"/><rect class="chip-wait" x="309.4" y="64" width="9" height="28" rx="2"/><rect class="chip-wait" x="320.3" y="64" width="9" height="28" rx="2"/><rect class="chip-wait" x="331.2" y="64" width="9" height="28" rx="2"/><rect class="chip-wait" x="342.1" y="64" width="9" height="28" rx="2"/><rect class="chip-wait" x="353.0" y="64" width="9" height="28" rx="2"/><rect class="chip-wait" x="363.9" y="64" width="9" height="28" rx="2"/><rect class="f2" x="380.8" y="64" width="9" height="28" rx="2"/><rect class="w2" x="380.8" y="64" width="9" height="28" rx="2" stroke-width="1"/>
+  </g>
+  <text class="k" x="20" y="56">24 items</text>
+  <text class="kx" x="270" y="56">8 rare</text>
+  <text class="c2" x="380" y="56" text-anchor="end" font-weight="600" font-size="12" font-family="ui-sans-serif, system-ui, sans-serif">kind</text>
+
+  <!-- what Bilibin puts in it -->
+  <rect class="card" x="20" y="108" width="360" height="132" rx="12"/>
+  <rect class="f3" x="36" y="124" width="10" height="10" rx="2"/>
+  <text class="p" x="54" y="134">Long Sword, Broad Sword, Hunter's</text>
+  <text class="p" x="54" y="152">Sword, Battle Axe, Heavy Mace</text>
+  <rect class="f0" x="36" y="168" width="10" height="10" rx="2"/>
+  <text class="p" x="54" y="178">rare: the Witch's Wand</text>
+  <rect class="f2" x="36" y="196" width="10" height="10" rx="2"/>
+  <text class="p" x="54" y="206">a weapon shop</text>
+  <text class="small" x="54" y="226">the rest of the row is empty</text>
+
+  <text class="eyebrow" x="20" y="272">ITS BUY LIST</text>
+  <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAA+CAMAAADESThMAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAA5UExURQAAAFJSUv///6WlpQBKUgBSYwiEvQBac///AAhzrQBjjAhrnHMAAP9zALVzAJycnP+1czk5OQD//wtwwVkAAAABYktHRAJmC3xkAAAAB3RJTUUH6goWFiQp7zgkrgAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNi0xMC0yMlQyMjozNTo1NyswMDowMDsoXtkAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjYtMTAtMjJUMjI6MzU6NTcrMDA6MDBKdeZlAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDI2LTEwLTIyVDIyOjM2OjQxKzAwOjAwWS1JHQAAA8tJREFUeNrtnYFymzAMhoF1SZsCIXn/h91UTScDtpGdBGfm/+7WtL38MdbH6WxolqZp2rYDVdK2DQHBtfIjmPT+AhVCXiG4YmaC/3VrUA3stYHgWlkIpl99gGqA4MrxCP74+A2q4XSC4KoJCD6fPw00zRm8NV9fEFw1QcGsL4YovoC35fsbgqsmKjgmt++HgSU3DV3KDg0Qa+78DL4UXmu+NBAMwduCeZqh8oTbOyUlV2e+PBAMwa5Ugh+HYRxVcKhN+cvDJwc3dylPSl5KXCrfdderLV8eCIZgZRimv5Ae0avTlH/hAlGaxMrJ4S5TLHmfoJT89UoS8vOu3tvNli8PBEOwMo6kdprGUfRqi5aJxgo0jqS4793mriWyF5g1peVJ7/VKrXUtOGV80WvLlweCIdgi2J1muEB9Ty2et1fzpC0vellTWp71hgRbx1e9tnx5IBiClfudSsRLLXeRdbkMP3QdP46jv0CUV8VugWx5V29qXgSLnpzx0/PlgWAIdvVQge93atFuo2Xl03S58KNO0X0NzlN6muYFsuXnenPyfX+7sWZapqXmu+52U722fHkgGIJZjui53+fa6VnTCpmivobk6ft5i5byxPNLvel52p71/VqwLc+nxnLmW/nyQDAECymCaRHmFsjVuyzQNG3lx5FuzoUKvJ3nk4r08kJJbxZY8qTW3R6ljF8eCD6m4CVc3KVcq2Auqu/UsApixfl50eu7ULKV9+uFYAh+CzyCRae0RN4czdtjimC/3rQWTT/nC6afWG9OnvWu5w/BEPwGrASLUFEq/4WHv0FvCw7pnRdIL/Pxd0tBpEdvcKSfIGu9KYJJbzUtGoKrF6xKRXVY77Zgvrjpy7kF0lEZzW/92eqWoLL58kDwsQS7UoXQ8soiWN6g5n/rx1ywvqa2aGv+0fFflS8PBB9NcIpemWhsgrGTg5/BgocZqflHx39dvjQQfGzBW+1ZBNPmhuGNTsoEqRyany+yUvI8cn7+0ePPHf+1QPCRBbNefptGbKmhiySaJn2lCX4bWS+y8vI8cn7+0ePPHf/VQPCRBLubJLnVEG/TvMTSCWqL+jIi+WWLzsuroNT8c44/ffzXA8HHFEytWd7ucYqg2xxRztuckxHOu+Tn+Shy8s85/pzxX0/bQvBRBHceSHAbIbTNaY08N6/bnDLjp+f3AYKPIdh/q6GLEtrmdEaemXcXOXn5/Y9/H+iDOSD4KILnW6OtD2wJbXOsH/jyrPxym7P3+Ln5vfj5qBUIrlzw8k/uLIS2Ofvm19uc/+X4dwaCaxb8BxsR8gMJaNPCAAAAAElFTkSuQmCC" x="20" y="282" width="360" height="46.5" style="image-rendering: pixelated" preserveAspectRatio="none"/>
+  <rect class="frame" x="20" y="282" width="360" height="46.5"/>
+
+  <text class="p" x="20" y="370">The table has 35 rows. A town's scene opens</text>
+  <text class="p" x="20" y="389">its shop by row number, with the keeper</text>
+  <text class="p" x="20" y="408">whose face the shop's lines show.</text>
+  <text class="code" x="380" y="438" text-anchor="end">sStockTable, Shop_Run</text>
+</svg>
