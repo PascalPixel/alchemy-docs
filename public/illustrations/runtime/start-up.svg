@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 616" role="img" aria-labelledby="title desc">
+  <title id="title">From power-on to the title</title>
+  <desc id="desc">Start-up, in order. The cartridge's first instruction jumps to System_Entry, which sets up the stacks. System_Initialize then prepares memory: it clears IWRAM, empties the heap and copies the fast routines into IWRAM. It starts the services: the VBlank handler, the sound driver and an empty task table. It waits ten frames, then Game_Run runs one scene after another, starting with the title. Before each scene it drops the last scene's tasks and empties the heap. None of these steps returns.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .card-accent { fill: #ffffff; stroke: #0a72ef; stroke-width: 1.5; }
+    .chip { fill: #f0f6ff; stroke: #bcd7fb; }
+    .h { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .k { fill: #0a72ef; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .wire { fill: none; stroke: #a3a3a3; stroke-width: 1.5; }
+    .head { fill: #a3a3a3; }
+    .wire-accent { fill: none; stroke: #0a72ef; stroke-width: 1.5; }
+    .head-accent { fill: #0a72ef; }
+    .label { fill: #0a72ef; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .dot { fill: #0a72ef; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .card-accent { fill: #111111; stroke: #3b8eff; }
+      .chip { fill: #0d1a2e; stroke: #1e3a66; }
+      .h { fill: #ededed; }
+      .p { fill: #a1a1a1; }
+      .k { fill: #66a6ff; }
+      .code, .eyebrow { fill: #7c7c7c; }
+      .wire { stroke: #5c5c5c; }
+      .head { fill: #5c5c5c; }
+      .wire-accent { stroke: #3b8eff; }
+      .head-accent { fill: #3b8eff; }
+      .label { fill: #66a6ff; }
+      .dot { fill: #3b8eff; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="615" rx="16"/>
+  <text class="eyebrow" x="20" y="34">POWER ON</text>
+
+  <!-- Entry -->
+  <rect class="card" x="20" y="48" width="360" height="70" rx="12"/>
+  <text class="h" x="36" y="74">The stacks</text>
+  <text class="p" x="36" y="97">The cartridge's first jump sets them up.</text>
+  <text class="code" x="364" y="74" text-anchor="end">System_Entry</text>
+
+  <path class="wire" d="M 200 118 V 132"/>
+  <path class="head" d="M 194 128 h 12 l -6 9 z"/>
+
+  <!-- Memory -->
+  <rect class="card" x="20" y="140" width="360" height="110" rx="12"/>
+  <text class="h" x="36" y="166">Memory</text>
+  <text class="code" x="364" y="166" text-anchor="end">System_Initialize</text>
+  <rect class="chip" x="36" y="180" width="104" height="28" rx="14"/>
+  <text class="k" x="88" y="199" text-anchor="middle">clear IWRAM</text>
+  <rect class="chip" x="148" y="180" width="120" height="28" rx="14"/>
+  <text class="k" x="208" y="199" text-anchor="middle">empty the heap</text>
+  <rect class="chip" x="36" y="214" width="250" height="28" rx="14"/>
+  <text class="k" x="161" y="233" text-anchor="middle">copy the fast routines into IWRAM</text>
+
+  <path class="wire" d="M 200 250 V 264"/>
+  <path class="head" d="M 194 260 h 12 l -6 9 z"/>
+
+  <!-- Services -->
+  <rect class="card" x="20" y="272" width="360" height="110" rx="12"/>
+  <text class="h" x="36" y="298">Services</text>
+  <rect class="chip" x="36" y="312" width="160" height="28" rx="14"/>
+  <text class="k" x="116" y="331" text-anchor="middle">the VBlank handler</text>
+  <rect class="chip" x="204" y="312" width="124" height="28" rx="14"/>
+  <text class="k" x="266" y="331" text-anchor="middle">the sound driver</text>
+  <rect class="chip" x="36" y="346" width="168" height="28" rx="14"/>
+  <text class="k" x="120" y="365" text-anchor="middle">an empty task table</text>
+
+  <path class="wire" d="M 200 382 V 396"/>
+  <path class="head" d="M 194 392 h 12 l -6 9 z"/>
+
+  <!-- Wait -->
+  <rect class="card" x="20" y="404" width="360" height="52" rx="12"/>
+  <text class="h" x="36" y="436">Wait ten frames</text>
+  <text class="code" x="364" y="436" text-anchor="end">WaitFrames(10)</text>
+
+  <path class="wire" d="M 200 456 V 470"/>
+  <path class="head" d="M 194 466 h 12 l -6 9 z"/>
+
+  <!-- Game_Run -->
+  <rect class="card-accent" x="60" y="478" width="320" height="114" rx="12"/>
+  <circle class="dot" cx="83" cy="504" r="5"/>
+  <text class="h" x="96" y="509">One scene after another</text>
+  <text class="p" x="80" y="534">From the title on. Before each scene the</text>
+  <text class="p" x="80" y="553">last one's tasks and heap are dropped.</text>
+  <text class="code" x="80" y="578">Game_Run</text>
+  <path class="wire-accent" d="M 350 500 a 12 12 0 1 1 -10 -5"/>
+  <path class="head-accent" d="M 336 490 l 8 1 l -4 7 z"/>
+  <text class="label" transform="translate(40 535) rotate(-90)" text-anchor="middle">never ends</text>
+</svg>

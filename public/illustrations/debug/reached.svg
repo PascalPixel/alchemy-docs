@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 540" role="img" aria-labelledby="title desc">
+  <title id="title">The one way into the test rooms</title>
+  <desc id="desc">No door, table or event of the game leads to the three test rooms. The only way in is the debug scene selector, which warps to any scene by number, and the field opens it only when the Start menu is opened with B held while debug mode is on. Debug mode is switched off at power-on, and nothing the player can reach switches it on, so in the released game the selector, and the rooms behind it, are never reached. From the selector come the Djinn room, which eight scenes share, the level room and the menu test room.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .card-off { fill: #fff3f0; stroke: #f6c3b7; }
+    .card-accent { fill: #ffffff; stroke: #0a72ef; stroke-width: 1.5; }
+    .chip { fill: #f0f6ff; stroke: #bcd7fb; }
+    .h { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .k { fill: #0a72ef; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kx { fill: #c2410c; font: 600 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .label { fill: #737373; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .wire { fill: none; stroke: #a3a3a3; stroke-width: 1.5; }
+    .head { fill: #a3a3a3; }
+    .cross { stroke: #dc2626; stroke-width: 2.5; stroke-linecap: round; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .card-off { fill: #2a130c; stroke: #5c2a1a; }
+      .card-accent { fill: #111111; stroke: #3b8eff; }
+      .chip { fill: #0d1a2e; stroke: #1e3a66; }
+      .h { fill: #ededed; }
+      .p { fill: #a1a1a1; }
+      .k { fill: #66a6ff; }
+      .kx { fill: #fb8b5e; }
+      .label { fill: #8f8f8f; }
+      .code, .eyebrow { fill: #7c7c7c; }
+      .wire { stroke: #5c5c5c; }
+      .head { fill: #5c5c5c; }
+      .cross { stroke: #f05252; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="539" rx="16"/>
+  <text class="eyebrow" x="20" y="34">GETTING INTO A TEST ROOM</text>
+
+  <!-- Debug mode -->
+  <rect class="card-off" x="20" y="48" width="360" height="92" rx="12"/>
+  <text class="h" x="36" y="74">Debug mode</text>
+  <text class="kx" x="364" y="74" text-anchor="end">off</text>
+  <text class="p" x="36" y="98">Switched off at power-on, and nothing the</text>
+  <text class="p" x="36" y="117">player can reach switches it on.</text>
+  <text class="code" x="364" y="132" text-anchor="end">gDebugMode</text>
+
+  <path class="wire" d="M 200 140 V 166"/>
+  <path class="head" d="M 194 162 h 12 l -6 9 z"/>
+  <path class="cross" d="M 190 147 l 20 14 M 210 147 l -20 14"/>
+  <text class="label" x="218" y="160">only if it were on</text>
+
+  <!-- The selector -->
+  <rect class="card-accent" x="20" y="174" width="360" height="108" rx="12"/>
+  <text class="h" x="36" y="200">The debug scene selector</text>
+  <text class="p" x="36" y="224">Opens when the Start menu is opened with</text>
+  <text class="p" x="36" y="243">B held, and warps to any scene by number.</text>
+  <text class="code" x="364" y="268" text-anchor="end">Menu_RunSelection</text>
+
+  <path class="wire" d="M 200 282 V 308"/>
+  <path class="head" d="M 194 304 h 12 l -6 9 z"/>
+
+  <!-- The rooms -->
+  <rect class="card" x="20" y="316" width="360" height="132" rx="12"/>
+  <text class="h" x="36" y="342">Three test rooms</text>
+  <rect class="chip" x="36" y="356" width="328" height="26" rx="13"/>
+  <text class="k" x="200" y="374" text-anchor="middle">the Djinn room, shared by eight scenes</text>
+  <rect class="chip" x="36" y="388" width="156" height="26" rx="13"/>
+  <text class="k" x="114" y="406" text-anchor="middle">the level room</text>
+  <rect class="chip" x="200" y="388" width="164" height="26" rx="13"/>
+  <text class="k" x="282" y="406" text-anchor="middle">the menu test room</text>
+  <text class="code" x="364" y="438" text-anchor="end">TestRoom0 … MenuTest</text>
+
+  <text class="p" x="20" y="484">No door, table or event of the game leads</text>
+  <text class="p" x="20" y="503">to them; the selector is the only way in.</text>
+</svg>

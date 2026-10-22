@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 470" role="img" aria-labelledby="title desc">
+  <title id="title">One word keeps the sound driver whole</title>
+  <desc id="desc">Two kinds of code change the sound driver's state: the game's calls, such as starting a song, which run during the frame, and the mixer, which the VBlank interrupt runs once a frame and which can arrive in the middle of a call. They share one lock word. A call takes the lock while it works and gives it back when done. If the VBlank arrives while the lock is taken, the mixer skips that frame's driver work rather than read half-changed state, and at the next VBlank, with the lock free, it works as usual. A call that finds the lock taken does nothing at all: it is dropped, not delayed.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .axis { stroke: #d4d4d4; stroke-width: 1.5; }
+    .call { fill: #0a72ef; }
+    .free { fill: #dcfce7; stroke: #16a34a; }
+    .held { fill: #fee2e2; stroke: #dc2626; }
+    .vb { fill: #f5f5f5; stroke: #d4d4d4; }
+    .h { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .l { fill: #525252; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .in { fill: #ffffff; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .ok { fill: #15803d; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .no { fill: #b91c1c; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .axis { stroke: #333333; }
+      .call { fill: #3b8eff; }
+      .free { fill: #0f2a18; stroke: #22c55e; }
+      .held { fill: #2a1010; stroke: #f05252; }
+      .vb { fill: #1a1a1a; stroke: #333333; }
+      .h { fill: #ededed; }
+      .p, .l { fill: #a1a1a1; }
+      .in { fill: #0a0a0a; }
+      .ok { fill: #4ade80; }
+      .no { fill: #f87171; }
+      .small, .code, .eyebrow { fill: #7c7c7c; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="469" rx="16"/>
+  <text class="eyebrow" x="20" y="34">TWO FRAMES</text>
+  <text class="code" x="380" y="34" text-anchor="end">work-&gt;lock · SOUND_LOCK</text>
+
+  <!-- The game's call -->
+  <text class="h" x="20" y="70">The game</text>
+  <rect class="call" x="96" y="80" width="170" height="30" rx="6"/>
+  <text class="in" x="181" y="100" text-anchor="middle">starts a song</text>
+
+  <!-- The lock word over time -->
+  <text class="h" x="20" y="148">The lock</text>
+  <rect class="free" x="20" y="158" width="76" height="30" rx="6"/>
+  <text class="ok" x="58" y="178" text-anchor="middle">free</text>
+  <rect class="held" x="96" y="158" width="170" height="30" rx="6"/>
+  <text class="no" x="181" y="178" text-anchor="middle">taken by the call</text>
+  <rect class="free" x="266" y="158" width="114" height="30" rx="6"/>
+  <text class="ok" x="323" y="178" text-anchor="middle">free again</text>
+
+  <!-- VBlanks -->
+  <text class="h" x="20" y="226">The mixer</text>
+  <text class="small" x="20" y="244">once a frame, in the blank</text>
+  <rect class="vb" x="150" y="256" width="100" height="58" rx="8"/>
+  <text class="no" x="200" y="280" text-anchor="middle">lock taken:</text>
+  <text class="no" x="200" y="298" text-anchor="middle">skips this frame</text>
+  <rect class="vb" x="290" y="256" width="90" height="58" rx="8"/>
+  <text class="ok" x="335" y="280" text-anchor="middle">lock free:</text>
+  <text class="ok" x="335" y="298" text-anchor="middle">works</text>
+  <path class="axis" d="M 200 192 V 256 M 335 192 V 256" stroke-dasharray="3 3"/>
+  <path class="axis" d="M 20 330 H 380"/>
+  <text class="small" x="380" y="346" text-anchor="end">time</text>
+
+  <text class="p" x="20" y="384">The mixer never reads the driver half-changed.</text>
+  <text class="p" x="20" y="403">A call that finds the lock taken does nothing:</text>
+  <text class="p" x="20" y="422">it is dropped, not delayed.</text>
+  <text class="code" x="380" y="450" text-anchor="end">SoundDriver_EnterMixer</text>
+</svg>

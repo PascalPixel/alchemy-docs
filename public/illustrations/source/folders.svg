@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 680" role="img" aria-labelledby="title desc">
+  <title id="title">The folders follow the cartridge</title>
+  <desc id="desc">The source is divided the way the cartridge divides the program. The main image is fourteen banks in a fixed order. The nine large banks each have a folder of their own: runtime, field, window, game, object, menu, shop, battle and effect. The five small banks after them each hold one thing, whose code sits in the folder it belongs with: the credits and the title intro in graphics, Lucky Dice in field, the slot machine in object, and the sound in sound. Separately, the code of each place is an overlay, loaded one at a time; the 96 overlays are in scene, menu and debug. Four more folders gather one kind of thing wherever it ends up: graphics, map, sound and system.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .big { fill: #0a72ef; }
+    .small-bank { fill: #a3a3a3; }
+    .ovl { fill: #16a34a; }
+    .lead { stroke: #d4d4d4; stroke-width: 1; }
+    .h { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .in { fill: #ffffff; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .f { fill: #0a0a0a; font: 500 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .l { fill: #737373; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .big { fill: #3b8eff; }
+      .small-bank { fill: #5c5c5c; }
+      .ovl { fill: #22c55e; }
+      .lead { stroke: #333333; }
+      .h, .f { fill: #ededed; }
+      .p { fill: #a1a1a1; }
+      .in { fill: #0a0a0a; }
+      .l { fill: #8f8f8f; }
+      .eyebrow, .code { fill: #7c7c7c; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="679" rx="16"/>
+  <text class="eyebrow" x="20" y="34">THE MAIN IMAGE: 14 BANKS, IN ORDER</text>
+  <text class="code" x="380" y="34" text-anchor="end">main.ld</text>
+
+  <!-- Bank column x 20..150, rows 24 high from y 46 -->
+  <text class="l" x="20" y="60">the bank</text><text class="l" x="172" y="60">its folder</text>
+  <rect class="big" x="20" y="66" width="130" height="22" rx="4"/><text class="in" x="32" y="81">runtime</text><path class="lead" d="M 154 77 H 166"/><text class="f" x="172" y="81">runtime/</text>
+  <rect class="big" x="20" y="90" width="130" height="22" rx="4"/><text class="in" x="32" y="105">field</text><path class="lead" d="M 154 101 H 166"/><text class="f" x="172" y="105">field/</text>
+  <rect class="big" x="20" y="114" width="130" height="22" rx="4"/><text class="in" x="32" y="129">window</text><path class="lead" d="M 154 125 H 166"/><text class="f" x="172" y="129">window/</text>
+  <rect class="big" x="20" y="138" width="130" height="22" rx="4"/><text class="in" x="32" y="153">game</text><path class="lead" d="M 154 149 H 166"/><text class="f" x="172" y="153">game/</text>
+  <rect class="big" x="20" y="162" width="130" height="22" rx="4"/><text class="in" x="32" y="177">object</text><path class="lead" d="M 154 173 H 166"/><text class="f" x="172" y="177">object/</text>
+  <rect class="big" x="20" y="186" width="130" height="22" rx="4"/><text class="in" x="32" y="201">menu</text><path class="lead" d="M 154 197 H 166"/><text class="f" x="172" y="201">menu/</text>
+  <rect class="big" x="20" y="210" width="130" height="22" rx="4"/><text class="in" x="32" y="225">shop</text><path class="lead" d="M 154 221 H 166"/><text class="f" x="172" y="225">shop/</text>
+  <rect class="big" x="20" y="234" width="130" height="22" rx="4"/><text class="in" x="32" y="249">battle</text><path class="lead" d="M 154 245 H 166"/><text class="f" x="172" y="249">battle/</text>
+  <rect class="big" x="20" y="258" width="130" height="22" rx="4"/><text class="in" x="32" y="273">effect</text><path class="lead" d="M 154 269 H 166"/><text class="f" x="172" y="273">effect/</text>
+  <rect class="small-bank" x="20" y="282" width="130" height="22" rx="4"/><text class="in" x="32" y="297">scroll</text><path class="lead" d="M 154 293 H 166"/><text class="f" x="172" y="297">graphics/</text><text class="l" x="252" y="297">the credits</text>
+  <rect class="small-bank" x="20" y="306" width="130" height="22" rx="4"/><text class="in" x="32" y="321">palette</text><path class="lead" d="M 154 317 H 166"/><text class="f" x="172" y="321">graphics/</text><text class="l" x="252" y="321">the title intro</text>
+  <rect class="small-bank" x="20" y="330" width="130" height="22" rx="4"/><text class="in" x="32" y="345">blank run</text><path class="lead" d="M 154 341 H 166"/><text class="f" x="172" y="345">field/</text><text class="l" x="252" y="345">Lucky Dice</text>
+  <rect class="small-bank" x="20" y="354" width="130" height="22" rx="4"/><text class="in" x="32" y="369">blank load</text><path class="lead" d="M 154 365 H 166"/><text class="f" x="172" y="369">object/</text><text class="l" x="252" y="369">the slot machine</text>
+  <rect class="small-bank" x="20" y="378" width="130" height="22" rx="4"/><text class="in" x="32" y="393">sound</text><path class="lead" d="M 154 389 H 166"/><text class="f" x="172" y="393">sound/</text>
+
+  <!-- Overlays -->
+  <text class="eyebrow" x="20" y="436">IN RAM, ONE AT A TIME: 96 OVERLAYS</text>
+  <rect class="ovl" x="20" y="448" width="130" height="22" rx="4"/><text class="in" x="32" y="463">the places</text><path class="lead" d="M 154 459 H 166"/><text class="f" x="172" y="463">scene/</text><text class="l" x="252" y="463">90 overlays</text>
+  <rect class="ovl" x="20" y="472" width="130" height="22" rx="4"/><text class="in" x="32" y="487">menu screens</text><path class="lead" d="M 154 483 H 166"/><text class="f" x="172" y="487">menu/</text><text class="l" x="252" y="487">3 overlays</text>
+  <rect class="ovl" x="20" y="496" width="130" height="22" rx="4"/><text class="in" x="32" y="511">test rooms</text><path class="lead" d="M 154 507 H 166"/><text class="f" x="172" y="511">debug/</text><text class="l" x="252" y="511">3 overlays</text>
+
+  <!-- Kinds of thing -->
+  <text class="eyebrow" x="20" y="552">ONE KIND OF THING, WHEREVER IT GOES</text>
+  <rect class="card" x="20" y="564" width="360" height="40" rx="10"/>
+  <text class="f" x="36" y="589">graphics/  map/  sound/  system/</text>
+
+  <text class="p" x="20" y="640">The cartridge keeps no file names, so every</text>
+  <text class="p" x="20" y="659">name here is ours, chosen for what it holds.</text>
+</svg>
