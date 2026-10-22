@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 560" role="img" aria-labelledby="title desc">
+  <title id="title">From the field menu to a screen and back</title>
+  <desc id="desc">The field menu is a row of icons: Psynergy, Djinn, Item and Status, with the Djinn icon left out until the first Djinni joins. Choosing one opens that screen, which runs its own steps a frame at a time. Backing out of a screen, or pressing Start, brings the icons back, and the Djinn screen always comes back to them. Choosing Psynergy or an item meant for the field closes the menu instead, and the field uses it, as Move pushes a stone pillar. Backing out of the icons returns to walking.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .card-accent { fill: #ffffff; stroke: #0a72ef; stroke-width: 1.5; }
+    .card-exit { fill: #fafafa; stroke: #a3a3a3; stroke-dasharray: 4 4; }
+    .chip { fill: #f0f6ff; stroke: #bcd7fb; }
+    .chip-wait { fill: #f5f5f5; stroke: #d4d4d4; }
+    .h { fill: #0a0a0a; font: 600 17px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .k { fill: #0a72ef; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kw { fill: #525252; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .label { fill: #737373; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .wire { fill: none; stroke: #a3a3a3; stroke-width: 1.5; }
+    .wire-accent { fill: none; stroke: #0a72ef; stroke-width: 1.5; }
+    .head { fill: #a3a3a3; }
+    .head-accent { fill: #0a72ef; }
+    .dot { fill: #0a72ef; }
+    .dot-grey { fill: #a3a3a3; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .card-accent { fill: #111111; stroke: #3b8eff; }
+      .card-exit { fill: #0a0a0a; stroke: #525252; }
+      .chip { fill: #0d1a2e; stroke: #1e3a66; }
+      .chip-wait { fill: #1a1a1a; stroke: #333333; }
+      .h { fill: #ededed; }
+      .p, .kw { fill: #a1a1a1; }
+      .small, .code, .eyebrow { fill: #7c7c7c; }
+      .label { fill: #8f8f8f; }
+      .k { fill: #66a6ff; }
+      .wire { stroke: #5c5c5c; }
+      .wire-accent { stroke: #3b8eff; }
+      .head, .dot-grey { fill: #5c5c5c; }
+      .head-accent, .dot { fill: #3b8eff; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="559" rx="16"/>
+  <text class="eyebrow" x="60" y="32">THE FIELD MENU</text>
+
+  <!-- the icons -->
+  <rect class="card-accent" x="60" y="44" width="320" height="104" rx="12"/>
+  <text class="h" x="80" y="72">A row of icons</text>
+  <rect class="chip" x="76" y="86" width="78" height="28" rx="14"/>
+  <text class="k" x="115" y="105" text-anchor="middle">Psynergy</text>
+  <rect class="chip-wait" x="160" y="86" width="60" height="28" rx="14" stroke-dasharray="3 3"/>
+  <text class="kw" x="190" y="105" text-anchor="middle">Djinn</text>
+  <rect class="chip" x="226" y="86" width="56" height="28" rx="14"/>
+  <text class="k" x="254" y="105" text-anchor="middle">Item</text>
+  <rect class="chip" x="288" y="86" width="72" height="28" rx="14"/>
+  <text class="k" x="324" y="105" text-anchor="middle">Status</text>
+  <text class="small" x="80" y="136">Djinn shows once the first Djinni joins.</text>
+
+  <!-- to a screen -->
+  <path class="wire" d="M 220 148 V 186"/>
+  <path class="head" d="M 214 182 h 12 l -6 9 z"/>
+  <text class="label" x="232" y="172">one is chosen</text>
+
+  <!-- the screen -->
+  <rect class="card" x="60" y="194" width="320" height="104" rx="12"/>
+  <text class="h" x="80" y="222">Its screen opens</text>
+  <text class="p" x="80" y="246">The field holds still behind it. The</text>
+  <text class="p" x="80" y="265">screen works through its own steps.</text>
+  <text class="code" x="80" y="287">PsynergyMenu_Run and the others</text>
+
+  <!-- back to the icons -->
+  <path class="wire-accent" d="M 60 246 H 30 V 96 H 54"/>
+  <path class="head-accent" d="M 51 90 v 12 l 9 -6 z"/>
+  <text class="k" transform="translate(22 172) rotate(-90)" text-anchor="middle">back out or Start</text>
+
+  <!-- to the field -->
+  <path class="wire" d="M 220 298 V 336"/>
+  <path class="head" d="M 214 332 h 12 l -6 9 z"/>
+  <text class="label" x="232" y="316">Psynergy or an item</text>
+  <text class="label" x="232" y="331">meant for the field</text>
+  <rect class="card-exit" x="60" y="344" width="320" height="86" rx="12"/>
+  <text class="h" x="80" y="372">The menu closes</text>
+  <text class="p" x="80" y="396">and the field uses it: Move pushes</text>
+  <text class="p" x="80" y="415">the stone pillar the leader faces.</text>
+
+  <!-- notes -->
+  <circle class="dot" cx="66" cy="462" r="4"/>
+  <text class="p" x="78" y="467">The Djinn screen always comes back to</text>
+  <text class="p" x="78" y="485">the icons.</text>
+  <circle class="dot-grey" cx="66" cy="510" r="4"/>
+  <text class="p" x="78" y="515">Backing out of the icons: walking again.</text>
+  <text class="code" x="380" y="32" text-anchor="end">Menu_RunTopSelection</text>
+</svg>

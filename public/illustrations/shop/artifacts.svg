@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 600" role="img" aria-labelledby="title desc">
+  <title id="title">Rare items are counted, not stocked</title>
+  <desc id="desc">Each rare item has one counter for the whole game. The first time a shop that lists it is opened, its counter goes up by one; buying one takes one off; selling or dropping one puts one back. A shop's Artifacts list is every item of its kind whose counter is above zero. On a new game, Bilibin's weapon shop lists the Witch's Wand alone, which its first visit has just counted. If Vault's weapon shop was opened first, the Magic Rod is already counted, and Bilibin's Artifacts list shows the Magic Rod as well.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card-accent { fill: #ffffff; stroke: #0a72ef; stroke-width: 1.5; }
+    .chip-ok { fill: #effaf2; stroke: #b5e3c2; }
+    .chip-no { fill: #fdf0f0; stroke: #f2c0c0; }
+    .frame { fill: none; stroke: #d4d4d4; }
+    .h2 { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .ko { fill: #15803d; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kn { fill: #b91c1c; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card-accent { fill: #111111; stroke: #3b8eff; }
+      .chip-ok { fill: #0c2214; stroke: #1d4d2c; }
+      .chip-no { fill: #2a0f0f; stroke: #5c2020; }
+      .frame { stroke: #333333; }
+      .h2 { fill: #ededed; }
+      .p { fill: #a1a1a1; }
+      .small, .code, .eyebrow { fill: #7c7c7c; }
+      .ko { fill: #4ade80; }
+      .kn { fill: #f87171; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="599" rx="16"/>
+  <text class="eyebrow" x="20" y="32">ONE COUNTER PER RARE ITEM, FOR THE WHOLE GAME</text>
+
+  <rect class="card-accent" x="20" y="44" width="360" height="138" rx="12"/>
+  <rect class="chip-ok" x="36" y="58" width="44" height="28" rx="14"/>
+  <text class="ko" x="58" y="77" text-anchor="middle">+1</text>
+  <text class="p" x="92" y="71">a shop that lists it opens for the</text>
+  <text class="p" x="92" y="88">first time</text>
+  <rect class="chip-no" x="36" y="102" width="44" height="28" rx="14"/>
+  <text class="kn" x="58" y="121" text-anchor="middle">−1</text>
+  <text class="p" x="92" y="121">the party buys one</text>
+  <rect class="chip-ok" x="36" y="140" width="44" height="28" rx="14"/>
+  <text class="ko" x="58" y="159" text-anchor="middle">+1</text>
+  <text class="p" x="92" y="159">the party sells or drops one</text>
+
+  <text class="h2" x="20" y="216">A shop's Artifacts list:</text>
+  <text class="p" x="20" y="236">every item of its kind counted above 0.</text>
+
+  <!-- example 1 -->
+  <text class="eyebrow" x="20" y="272">BILIBIN'S WEAPON SHOP, ON A NEW GAME</text>
+  <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAA+CAMAAADESThMAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAA2UExURQAAAFJSUv///6WlpQBKUgBSY///AAiEvQBacwhzrQBjjAhrnHMAALVzAP9zAP+1c5ycnDk5OUZA9BYAAAABYktHRAJmC3xkAAAAB3RJTUUH6goWFiQgluScCgAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNi0xMC0yMlQyMjozNTo1NyswMDowMDsoXtkAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjYtMTAtMjJUMjI6MzU6NTcrMDA6MDBKdeZlAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDI2LTEwLTIyVDIyOjM2OjMyKzAwOjAwYgBamQAAAjVJREFUeNrt3WuPgjAQheHC6npt0f//Z5dxdrQUimhMGE/O+wEv2ZiQxzQtsBJCaJqWQdY0QSIwajdg4f1hgIkrgYEbAP+P1gwmdQ0ERq0Alrc2DCYCgzcBvNls+34XFMKWOW+3IzB0FeD9fhnwnrnucCAwdBVg45vP/ubInHY6ERi6WWChO/fFmPq6LkZ5VRLLtm3X3hE2HYHBewqsyDEKcncrJXll0DZEk9hnBAbvQ8B6SnntnWHjCAzeImCdaulEq+sUU6BTOp/zIZrE/iIweAuBbaBO6cEs2xjzZRKB/UVg8D4ErB9GYH8RGLyXDlXaMskOXMpiSf9K32tbfYxx7d1iFoHBe2GIFub8EEd+oEPpj8fHoZC1d4xpBAbvBWAhrp0u7IpI7CUCg1cBHnfp0ynXEmCZgq29a0wiMHgVYOXUrTzK6QV9XkZg3xEYvAlgAzVS+wmAEAj8fREYvEngB6lRy/NyekXgb4jA4I2Ac1RLF0gcor8xAoM3ATzFW4/AviMweE+B53kJ7D0Cg1cA5wc2HrzXa53XLtkZfi0I7CUCgzcCzhdJdqpBHus/wmJfi3wrwCfmIgKDNwMsQ/PlYicNa8mUqpyaCfCBOYnA4A2A24mWAOfpZfE75qSmITB0A+DpUw3NTHqZ7HiIbpijCAxeATycWLWz2SSrXCa1zFFyYw4CA3cHLi+5e37DluEyKSUDXvtGMmzY/VYrBMbs7Xvp5Msk+fdvWya9+XHMWwT+nv4AThMz6lwdPIoAAAAASUVORK5CYII=" x="20" y="282" width="360" height="46.5" style="image-rendering: pixelated" preserveAspectRatio="none"/>
+  <rect class="frame" x="20" y="282" width="360" height="46.5"/>
+  <text class="small" x="20" y="350">Its first visit counts its own rare item: the Witch's Wand.</text>
+
+  <!-- example 2 -->
+  <text class="eyebrow" x="20" y="398">THE SAME SHOP, AFTER VAULT'S</text>
+  <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAA+CAMAAADESThMAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAA2UExURQAAAFJSUv///6WlpQBKUgBSY///AAiEvQBacwhzrQBjjAhrnP+1c3MAALVzAP9zAJycnDk5Of458qgAAAABYktHRAJmC3xkAAAAB3RJTUUH6goWFiQgluScCgAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNi0xMC0yMlQyMjozNTo1NyswMDowMDsoXtkAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjYtMTAtMjJUMjI6MzU6NTcrMDA6MDBKdeZlAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDI2LTEwLTIyVDIyOjM2OjMyKzAwOjAwYgBamQAAAtVJREFUeNrt3W1zqjAQhuFAfddE/f9/tl23KwGyIRGwdue5PxSnJTkzvZwMID0455qmRSZrGkcB2GoPYOL9QgYjVwAbrgf8u1ojM7GrA7DVBsD0rQ0yE4CNlwDebLY/7Qpybos+vP0ewKZTgA+HMuAD+uiORwCbTgEWvnyyzwl9aOczgE2XBU6j8qVr+Slv21b7B3KLO+/B8/31L8JqADZeJTDTUpdHAkxMqen1t4kQyzgQrxOAjbcQsLbM8k+9D+F6vVxC8D4m7pZ2LNNrBWDjVQIz7fURAYcQL9FjIplDiGmsMMeHWdp4NDcAG68KOAQhomJgptGBiZjfFLQU0xzed8AyEsDLB2DjLQTMk+WAZZlmZBnZ3xvAywdg41UB86mRMBEyL7TO8WFX2/I2BJm+f5rEbw85YYqBtfFobgA2XgUwLcqMyku093S6w3sx3ukkiEIUz0HI8aWODljwx+PR3ABsvMqDLEb1nrfCJMBdQhTPkbpUSfsIb2o8mhuAjacAj7v9xLQlwIRJ0wsw0dLFjXhGAb4kA/AyAdh4CjBz8lfa0gVGfj2sDHi4PAP4XQHYeAlgARVS+S8AnHsNOLU8A/hdAdh4SeCOVKjp9ZioDDi1PAP4XQHYeCPgGFXiE6TXlujdLrU8d7fNAnjdAGy8BHCKVy8PzJDan64AeP0AbLxJ4DzvFDAR6/EeAF4zABtvAEyNee93nVdu2ZHbbfjWmxog4qQxcQBeKgAbbwQcnyTJRw20zR0q8dtCbpuj1wR0LoyAaQzPwl9rxqN8ADZeBpiW5ttNPjTUEqDhEnssbO54NBWAjdcDbhOVAMfxre37wuaOR1M1DYBN1wNOf9TQZNJOc5rC5o5HJQHYeAPg/oFVm007zWkLmzselUQP5gCw4Z7Aw1vuph/Yop3mlD7wpT++u1Dy1w+isdbzUSsAttnLz9LRTnNeGU+XO2vHo5UD8P/pGzu/Gtq05uPBAAAAAElFTkSuQmCC" x="20" y="408" width="360" height="46.5" style="image-rendering: pixelated" preserveAspectRatio="none"/>
+  <rect class="frame" x="20" y="408" width="360" height="46.5"/>
+  <text class="small" x="20" y="476">Vault's visit already counted the Magic Rod, so it is</text>
+  <text class="small" x="20" y="492">here too, beside the Witch's Wand.</text>
+
+  <text class="p" x="20" y="540">A rare item is sold by every shop of its kind,</text>
+  <text class="p" x="20" y="559">and one the party gives up comes back on sale.</text>
+  <text class="code" x="380" y="586" text-anchor="end">Item_AdjustCounter</text>
+</svg>

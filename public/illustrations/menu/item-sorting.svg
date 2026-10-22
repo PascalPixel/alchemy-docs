@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 498" role="img" aria-labelledby="title desc">
+  <title id="title">Four ways to sort a bag</title>
+  <desc id="desc">Isaac's eleven items as he holds them, and after each of four presses of A with L held on the Item screen's member row. Each press sorts the bag by the next of four orders. First: the four things he wears, then the items that are not equipment (Antidote, Nut, Herb), then the rest. Second: what he wears, then the other equipment, then the Orb of Force and the items. Third: equipment first, by kind, weapons, helms, shields and armor, then the rest. Fourth: the items that are not equipment first.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .f0 { fill: #d97706; }
+    .f1 { fill: #16a34a; }
+    .f2 { fill: #7c3aed; }
+    .f3 { fill: #0a72ef; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .p { fill: #a1a1a1; }
+      .small, .code, .eyebrow { fill: #7c7c7c; }
+      .f0 { fill: #b45309; }
+      .f1 { fill: #15803d; }
+      .f2 { fill: #6d28d9; }
+      .f3 { fill: #1d5fc4; }
+    }
+  </style>
+  <defs>
+    <image id="i-broadsword" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkBAMAAAATLoWrAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAhUExURQBjjHMAAP9zAP+1c7VzAAD//5ycnP///zk5OTlzOQD/AJJWFdUAAAABYktHRAcWYYjrAAAAB3RJTUUH6goWFiIZn7uzhAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNi0xMC0yMlQyMjozNDoxMSswMDowMDNwDicAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjYtMTAtMjJUMjI6MzQ6MTErMDA6MDBCLbabAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDI2LTEwLTIyVDIyOjM0OjI1KzAwOjAwb/i0tAAAAGxJREFUKM+9z0sRwDAIRVEsxAIWsBALsRALsYCFWkBloZNFCUyyau/yzLx8AD6q4IGQUKUeCCph8ZJRIVrvS6j1YJFaH63SgVTY2pLJJRpvqOvZLG4YyQRY3sNIj4AbJjRMwD0ioRmvn0zpr24lg0+x5doC4gAAAABJRU5ErkJggg==" width="30" height="30" style="image-rendering: pixelated" preserveAspectRatio="none"/>
+    <image id="i-clothes" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkBAMAAAATLoWrAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAYUExURQBjjDk5OZycnAD//wAA/////zlzOQD/ACbqMx0AAAABYktHRAX4b+nHAAAAB3RJTUUH6goWFiIZn7uzhAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNi0xMC0yMlQyMjozNDoxMSswMDowMDNwDicAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjYtMTAtMjJUMjI6MzQ6MTErMDA6MDBCLbabAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDI2LTEwLTIyVDIyOjM0OjI1KzAwOjAwb/i0tAAAAGxJREFUKM+9z8ENwDAIA8Cs4BVYgRVYgRW6AuvXVH00CaKfqpby4CQrMMbngYjgjaBmpugJrm6uTyvIGXNaRxxuko4oDr6WoDkh09B1NY5g0BKPiaW4k3CJmIsFadJcLCh/WJaoaQB7c6e/cgIWnTNnPuAPEwAAAABJRU5ErkJggg==" width="30" height="30" style="image-rendering: pixelated" preserveAspectRatio="none"/>
+    <image id="i-shield" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkBAMAAAATLoWrAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAYUExURQBjjLVzAP9zADk5Of///3MAADlzOQD/AJCFGgMAAAABYktHRASPaNlRAAAAB3RJTUUH6goWFiIZn7uzhAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNi0xMC0yMlQyMjozNDoxMSswMDowMDNwDicAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjYtMTAtMjJUMjI6MzQ6MTErMDA6MDBCLbabAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDI2LTEwLTIyVDIyOjM0OjI1KzAwOjAwb/i0tAAAAGBJREFUKM/FzEENwDAMQ9FQMIVQMIVSKIVSCP05x7ZRdtusXPqkX7OfBneALwQfQ8iWJOo2K0iS55g9Qd+rbAn5ZK4nyQqNDTG72MKCZGBsYUXGeYYVCdcRlmTkXd701R51QSx/Q2+AjAAAAABJRU5ErkJggg==" width="30" height="30" style="image-rendering: pixelated" preserveAspectRatio="none"/>
+    <image id="i-helm" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkBAMAAAATLoWrAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAbUExURQBjjHMAAP+1c7VzAP9zAP///zk5OTlzOQD/AHDRIq4AAAABYktHRAX4b+nHAAAAB3RJTUUH6goWFiIZn7uzhAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNi0xMC0yMlQyMjozNDoxMSswMDowMDNwDicAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjYtMTAtMjJUMjI6MzQ6MTErMDA6MDBCLbabAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDI2LTEwLTIyVDIyOjM0OjI1KzAwOjAwb/i0tAAAAGhJREFUKM+9z0ERwDAIBEAsYAELZ+EsxAIWaiGyS56ENE0/vR87ww2IfIoekZ2QQt8J5GyVwEZkWxDbAYHGQb4nBPjIjmjN/OoR31AsqffcVYmMqeeuSqDK3FVJ4uPpiBWNeP7ogf7KDZ5qPvXRn39yAAAAAElFTkSuQmCC" width="30" height="30" style="image-rendering: pixelated" preserveAspectRatio="none"/>
+    <image id="i-herb" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkBAMAAAATLoWrAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAVUExURQBjjDlzOQD/ADk5Of///5ycnLVzALpne4IAAAABYktHRASPaNlRAAAAB3RJTUUH6goWFiIZn7uzhAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNi0xMC0yMlQyMjozNDoxMSswMDowMDNwDicAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjYtMTAtMjJUMjI6MzQ6MTErMDA6MDBCLbabAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDI2LTEwLTIyVDIyOjM0OjI1KzAwOjAwb/i0tAAAAHZJREFUKM+l0N0JgDAQA+BbISvcCl3hVugK7j+CyfXBKv1RDAr2g5Sg2bfgDcGxIfDk7u1jTiyJuvKQnI/eFamRBFuR5Rm3sU/KDUDJzEg3s2clmClZm6hiXZByRKjZyYh4vyb0NiCO5XlHDCdE3ZJdP2JFf3MCvQwj3VZQ538AAAAASUVORK5CYII=" width="30" height="30" style="image-rendering: pixelated" preserveAspectRatio="none"/>
+    <image id="i-antidote" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkBAMAAAATLoWrAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAASUExURQBjjAAA/wD/////ADlzOQD/ABEdb4IAAAAHdElNRQfqChYWIhmfu7OEAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDI2LTEwLTIyVDIyOjM0OjExKzAwOjAwM3AOJwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyNi0xMC0yMlQyMjozNDoxMSswMDowMEIttpsAAAAodEVYdGRhdGU6dGltZXN0YW1wADIwMjYtMTAtMjJUMjI6MzQ6MjUrMDA6MDBv+LS0AAAAX0lEQVQoz2NgoD4QZBBUEiQkBOQrGSsREALx0TRiEQJpRLMPlxCGYRhCYONRXYFFiEEJ00cYQi4uUIRHyCU01AWKcQuBeAyhQABm4BICGwvmuuATAgOw0Sgi2IQGGQAAoUIgz0iu9n4AAAAASUVORK5CYII=" width="30" height="30" style="image-rendering: pixelated" preserveAspectRatio="none"/>
+    <image id="i-nut" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkBAMAAAATLoWrAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAYUExURQBjjHMAAP9zAP+1c///ADk5OZycnP///0+rG00AAAABYktHRAcWYYjrAAAAB3RJTUUH6goWFiIZn7uzhAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNi0xMC0yMlQyMjozNDoxMSswMDowMDNwDicAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjYtMTAtMjJUMjI6MzQ6MTErMDA6MDBCLbabAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDI2LTEwLTIyVDIyOjM0OjI1KzAwOjAwb/i0tAAAAGdJREFUKM/FzsENwCAMA0BWyApegRVYwStkBdZvCJ+ilFCpj1p5nWQrpfwTQa2A5GTS2mqRpoxqRrDxeiTBxNv+AxV/FKAlI+9Re1fuSYaBnXZ78jfGuqbkWeb3ZMAXZDkTGYqRPucCqqY4t6KuhDoAAAAASUVORK5CYII=" width="30" height="30" style="image-rendering: pixelated" preserveAspectRatio="none"/>
+    <image id="i-longsword" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkBAMAAAATLoWrAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAYUExURQBjjHMAAP9zALVzAP+1cwD//5ycnP///2dms7EAAAABYktHRAcWYYjrAAAAB3RJTUUH6goWFiIZn7uzhAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNi0xMC0yMlQyMjozNDoxMSswMDowMDNwDicAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjYtMTAtMjJUMjI6MzQ6MTErMDA6MDBCLbabAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDI2LTEwLTIyVDIyOjM0OjI1KzAwOjAwb/i0tAAAAEdJREFUKM9jYKAREFQiJCQoCBQxJiSk5IIugk3IWMkFTQSbUGgahhimUGhaeaixEgEhkAiG4ehCaZiK0mioiKEcQwSb0NAFANU5GitijbjeAAAAAElFTkSuQmCC" width="30" height="30" style="image-rendering: pixelated" preserveAspectRatio="none"/>
+    <image id="i-cap" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkBAMAAAATLoWrAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURQBjjLVzAP9zAP+1c3MAAHahpH4AAAAHdElNRQfqChYWIhmfu7OEAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDI2LTEwLTIyVDIyOjM0OjExKzAwOjAwM3AOJwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyNi0xMC0yMlQyMjozNDoxMSswMDowMEIttpsAAAAodEVYdGRhdGU6dGltZXN0YW1wADIwMjYtMTAtMjJUMjI6MzQ6MjUrMDA6MDBv+LS0AAAASUlEQVQoz93PwQkAMAgDQFfICq6QFbL/TK2lDx+i39I8RA4CavZ24HRoICfDerqSmwWRYVBL4LF8RUF7l8CBQsJG2lNIHxX0eRYyoRcdkOuqmwAAAABJRU5ErkJggg==" width="30" height="30" style="image-rendering: pixelated" preserveAspectRatio="none"/>
+    <image id="i-shirt" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkBAMAAAATLoWrAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAASUExURQBjjDk5OTlzOQD/AHMAAP//APjV4BoAAAAHdElNRQfqChYWIhmfu7OEAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDI2LTEwLTIyVDIyOjM0OjExKzAwOjAwM3AOJwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyNi0xMC0yMlQyMjozNDoxMSswMDowMEIttpsAAAAodEVYdGRhdGU6dGltZXN0YW1wADIwMjYtMTAtMjJUMjI6MzQ6MjUrMDA6MDBv+LS0AAAAYUlEQVQoz9XQwQ3AIAwDQFbwCl7BK7CC91+lpi+QaPjwqR+RclJQQmvXA5I4EdR7F2qCZVqzbcgJHasojfUSK1JajFIRxhyZioLG1crb640bypB0ouw5L/pBsteP2NJf8wD6aCbrEI/c3QAAAABJRU5ErkJggg==" width="30" height="30" style="image-rendering: pixelated" preserveAspectRatio="none"/>
+    <image id="i-orb" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkBAMAAAATLoWrAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAbUExURQBjjHMAAP8AAP9zAP//AP///7VzAP+1c5ycnANslucAAAABYktHRAX4b+nHAAAAB3RJTUUH6goWFiIZn7uzhAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNi0xMC0yMlQyMjozNDoxMSswMDowMDNwDicAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjYtMTAtMjJUMjI6MzQ6MTErMDA6MDBCLbabAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDI2LTEwLTIyVDIyOjM0OjI1KzAwOjAwb/i0tAAAAF1JREFUKM/FzjENwDAMRNFQMAVTMIWjYApHIRQCu3a3VpGdoVL/+IbTjfF5knUkaoBKTSnupg2lhEtLckCW0hDUNH4oauItrIlzkVyTJYXB8ZAdBfIFGzrd+iGp6AJ+QCtvoz6+CQAAAABJRU5ErkJggg==" width="30" height="30" style="image-rendering: pixelated" preserveAspectRatio="none"/>
+  </defs>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="497" rx="16"/>
+  <text class="eyebrow" x="20" y="34">AS HE HOLDS THEM</text>
+  <use href="#i-herb" x="20" y="44"/>
+  <rect class="f1" x="20" y="77" width="30" height="4" rx="2"/>
+  <use href="#i-broadsword" x="53" y="44"/>
+  <rect class="f0" x="53" y="77" width="30" height="4" rx="2"/>
+  <use href="#i-longsword" x="86" y="44"/>
+  <rect class="f3" x="86" y="77" width="30" height="4" rx="2"/>
+  <use href="#i-antidote" x="119" y="44"/>
+  <rect class="f1" x="119" y="77" width="30" height="4" rx="2"/>
+  <use href="#i-clothes" x="152" y="44"/>
+  <rect class="f0" x="152" y="77" width="30" height="4" rx="2"/>
+  <use href="#i-orb" x="185" y="44"/>
+  <rect class="f2" x="185" y="77" width="30" height="4" rx="2"/>
+  <use href="#i-cap" x="218" y="44"/>
+  <rect class="f3" x="218" y="77" width="30" height="4" rx="2"/>
+  <use href="#i-shield" x="251" y="44"/>
+  <rect class="f0" x="251" y="77" width="30" height="4" rx="2"/>
+  <use href="#i-nut" x="284" y="44"/>
+  <rect class="f1" x="284" y="77" width="30" height="4" rx="2"/>
+  <use href="#i-shirt" x="317" y="44"/>
+  <rect class="f3" x="317" y="77" width="30" height="4" rx="2"/>
+  <use href="#i-helm" x="350" y="44"/>
+  <rect class="f0" x="350" y="77" width="30" height="4" rx="2"/>
+  <text class="eyebrow" x="20" y="110">PRESS 1</text>
+  <text class="small" x="82" y="110">worn, then items, then the rest</text>
+  <use href="#i-broadsword" x="20" y="120"/>
+  <rect class="f0" x="20" y="153" width="30" height="4" rx="2"/>
+  <use href="#i-helm" x="53" y="120"/>
+  <rect class="f0" x="53" y="153" width="30" height="4" rx="2"/>
+  <use href="#i-shield" x="86" y="120"/>
+  <rect class="f0" x="86" y="153" width="30" height="4" rx="2"/>
+  <use href="#i-clothes" x="119" y="120"/>
+  <rect class="f0" x="119" y="153" width="30" height="4" rx="2"/>
+  <use href="#i-antidote" x="152" y="120"/>
+  <rect class="f1" x="152" y="153" width="30" height="4" rx="2"/>
+  <use href="#i-nut" x="185" y="120"/>
+  <rect class="f1" x="185" y="153" width="30" height="4" rx="2"/>
+  <use href="#i-herb" x="218" y="120"/>
+  <rect class="f1" x="218" y="153" width="30" height="4" rx="2"/>
+  <use href="#i-longsword" x="251" y="120"/>
+  <rect class="f3" x="251" y="153" width="30" height="4" rx="2"/>
+  <use href="#i-cap" x="284" y="120"/>
+  <rect class="f3" x="284" y="153" width="30" height="4" rx="2"/>
+  <use href="#i-shirt" x="317" y="120"/>
+  <rect class="f3" x="317" y="153" width="30" height="4" rx="2"/>
+  <use href="#i-orb" x="350" y="120"/>
+  <rect class="f2" x="350" y="153" width="30" height="4" rx="2"/>
+  <text class="eyebrow" x="20" y="186">PRESS 2</text>
+  <text class="small" x="82" y="186">worn, then other equipment, then the rest</text>
+  <use href="#i-broadsword" x="20" y="196"/>
+  <rect class="f0" x="20" y="229" width="30" height="4" rx="2"/>
+  <use href="#i-helm" x="53" y="196"/>
+  <rect class="f0" x="53" y="229" width="30" height="4" rx="2"/>
+  <use href="#i-shield" x="86" y="196"/>
+  <rect class="f0" x="86" y="229" width="30" height="4" rx="2"/>
+  <use href="#i-clothes" x="119" y="196"/>
+  <rect class="f0" x="119" y="229" width="30" height="4" rx="2"/>
+  <use href="#i-longsword" x="152" y="196"/>
+  <rect class="f3" x="152" y="229" width="30" height="4" rx="2"/>
+  <use href="#i-cap" x="185" y="196"/>
+  <rect class="f3" x="185" y="229" width="30" height="4" rx="2"/>
+  <use href="#i-shirt" x="218" y="196"/>
+  <rect class="f3" x="218" y="229" width="30" height="4" rx="2"/>
+  <use href="#i-orb" x="251" y="196"/>
+  <rect class="f2" x="251" y="229" width="30" height="4" rx="2"/>
+  <use href="#i-antidote" x="284" y="196"/>
+  <rect class="f1" x="284" y="229" width="30" height="4" rx="2"/>
+  <use href="#i-nut" x="317" y="196"/>
+  <rect class="f1" x="317" y="229" width="30" height="4" rx="2"/>
+  <use href="#i-herb" x="350" y="196"/>
+  <rect class="f1" x="350" y="229" width="30" height="4" rx="2"/>
+  <text class="eyebrow" x="20" y="262">PRESS 3</text>
+  <text class="small" x="82" y="262">equipment by kind, then the rest</text>
+  <use href="#i-broadsword" x="20" y="272"/>
+  <rect class="f0" x="20" y="305" width="30" height="4" rx="2"/>
+  <use href="#i-longsword" x="53" y="272"/>
+  <rect class="f3" x="53" y="305" width="30" height="4" rx="2"/>
+  <use href="#i-cap" x="86" y="272"/>
+  <rect class="f3" x="86" y="305" width="30" height="4" rx="2"/>
+  <use href="#i-helm" x="119" y="272"/>
+  <rect class="f0" x="119" y="305" width="30" height="4" rx="2"/>
+  <use href="#i-shield" x="152" y="272"/>
+  <rect class="f0" x="152" y="305" width="30" height="4" rx="2"/>
+  <use href="#i-shirt" x="185" y="272"/>
+  <rect class="f3" x="185" y="305" width="30" height="4" rx="2"/>
+  <use href="#i-clothes" x="218" y="272"/>
+  <rect class="f0" x="218" y="305" width="30" height="4" rx="2"/>
+  <use href="#i-orb" x="251" y="272"/>
+  <rect class="f2" x="251" y="305" width="30" height="4" rx="2"/>
+  <use href="#i-antidote" x="284" y="272"/>
+  <rect class="f1" x="284" y="305" width="30" height="4" rx="2"/>
+  <use href="#i-nut" x="317" y="272"/>
+  <rect class="f1" x="317" y="305" width="30" height="4" rx="2"/>
+  <use href="#i-herb" x="350" y="272"/>
+  <rect class="f1" x="350" y="305" width="30" height="4" rx="2"/>
+  <text class="eyebrow" x="20" y="338">PRESS 4</text>
+  <text class="small" x="82" y="338">items first</text>
+  <use href="#i-antidote" x="20" y="348"/>
+  <rect class="f1" x="20" y="381" width="30" height="4" rx="2"/>
+  <use href="#i-nut" x="53" y="348"/>
+  <rect class="f1" x="53" y="381" width="30" height="4" rx="2"/>
+  <use href="#i-herb" x="86" y="348"/>
+  <rect class="f1" x="86" y="381" width="30" height="4" rx="2"/>
+  <use href="#i-broadsword" x="119" y="348"/>
+  <rect class="f0" x="119" y="381" width="30" height="4" rx="2"/>
+  <use href="#i-longsword" x="152" y="348"/>
+  <rect class="f3" x="152" y="381" width="30" height="4" rx="2"/>
+  <use href="#i-cap" x="185" y="348"/>
+  <rect class="f3" x="185" y="381" width="30" height="4" rx="2"/>
+  <use href="#i-helm" x="218" y="348"/>
+  <rect class="f0" x="218" y="381" width="30" height="4" rx="2"/>
+  <use href="#i-shield" x="251" y="348"/>
+  <rect class="f0" x="251" y="381" width="30" height="4" rx="2"/>
+  <use href="#i-shirt" x="284" y="348"/>
+  <rect class="f3" x="284" y="381" width="30" height="4" rx="2"/>
+  <use href="#i-clothes" x="317" y="348"/>
+  <rect class="f0" x="317" y="381" width="30" height="4" rx="2"/>
+  <use href="#i-orb" x="350" y="348"/>
+  <rect class="f2" x="350" y="381" width="30" height="4" rx="2"/>
+
+  <rect class="f0" x="20" y="404" width="10" height="10" rx="2"/><text class="p" x="36" y="414">worn</text>
+  <rect class="f1" x="92" y="404" width="10" height="10" rx="2"/><text class="p" x="108" y="414">items</text>
+  <rect class="f3" x="166" y="404" width="10" height="10" rx="2"/><text class="p" x="182" y="414">other equipment</text>
+  <rect class="f2" x="304" y="404" width="10" height="10" rx="2"/><text class="p" x="320" y="414">an Orb</text>
+  <text class="small" x="20" y="444">Each press of A with L held: the next order.</text>
+  <text class="code" x="380" y="470" text-anchor="end">InventoryMenu_SortByListOrder</text>
+</svg>

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 470" role="img" aria-labelledby="title desc">
+  <title id="title">The Djinn screen shows a change before making it</title>
+  <desc id="desc">The Djinn screen in Xian, about to put Isaac's Djinni Flint on standby. It asks "Is this OK?" and shows Isaac as he would be: his class from Knight to Squire, HP from 178 to 141, PP from 61 to 51, Attack from 121 to 107, Defense from 80 to 73 and Agility from 69 to 63, his Luck and his Psynergy unchanged. Nothing has changed yet: Isaac stays as he was until A confirms it.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .chip { fill: #f0f6ff; stroke: #bcd7fb; }
+    .chip-wait { fill: #f5f5f5; stroke: #d4d4d4; }
+    .frame { fill: none; stroke: #d4d4d4; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .k { fill: #0a72ef; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kw { fill: #525252; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .wire { fill: none; stroke: #a3a3a3; stroke-width: 1.5; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .chip { fill: #0d1a2e; stroke: #1e3a66; }
+      .chip-wait { fill: #1a1a1a; stroke: #333333; }
+      .frame { stroke: #333333; }
+      .p, .kw { fill: #a1a1a1; }
+      .small, .eyebrow { fill: #7c7c7c; }
+      .k { fill: #66a6ff; }
+      .wire { stroke: #5c5c5c; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="469" rx="16"/>
+  <text class="eyebrow" x="20" y="32">FLINT TO STANDBY: IS THIS OK?</text>
+
+  <image href="data:image/png;base64,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" x="20" y="44" width="360" height="60" style="image-rendering: pixelated" preserveAspectRatio="none"/>
+  <rect class="frame" x="20" y="44" width="360" height="60"/>
+
+  <image href="data:image/png;base64,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" x="20" y="116" width="180" height="180" style="image-rendering: pixelated" preserveAspectRatio="none"/>
+  <rect class="frame" x="20" y="116" width="180" height="180"/>
+
+  <text class="eyebrow" x="216" y="134">AS HE WOULD BE</text>
+  <text class="p" x="216" y="158">Knight</text><text class="k" x="380" y="158" text-anchor="end">Squire</text>
+  <text class="p" x="216" y="182">HP 178</text><text class="k" x="380" y="182" text-anchor="end">141</text>
+  <text class="p" x="216" y="206">PP 61</text><text class="k" x="380" y="206" text-anchor="end">51</text>
+  <text class="p" x="216" y="230">Attack 121</text><text class="k" x="380" y="230" text-anchor="end">107</text>
+  <text class="p" x="216" y="254">Defense 80</text><text class="k" x="380" y="254" text-anchor="end">73</text>
+  <text class="p" x="216" y="278">Agility 69</text><text class="k" x="380" y="278" text-anchor="end">63</text>
+  <path class="wire" d="M 300 154 H 330 M 300 178 H 340 M 300 202 H 350 M 306 226 H 344 M 306 250 H 350 M 306 274 H 350" stroke-dasharray="2 3"/>
+
+  <!-- the rule -->
+  <rect class="card" x="20" y="316" width="360" height="104" rx="12"/>
+  <rect class="chip-wait" x="36" y="330" width="110" height="28" rx="14"/>
+  <text class="kw" x="91" y="349" text-anchor="middle">While it asks</text>
+  <text class="p" x="158" y="349">Isaac is as he was</text>
+  <rect class="chip" x="36" y="370" width="110" height="28" rx="14"/>
+  <text class="k" x="91" y="389" text-anchor="middle">A</text>
+  <text class="p" x="158" y="389">only now is the change made</text>
+  <text class="small" x="20" y="446">Setting, giving and trading a Djinni are previewed the same way.</text>
+</svg>
