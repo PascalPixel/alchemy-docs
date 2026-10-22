@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 560" role="img" aria-labelledby="title desc">
+  <title id="title">Same meaning, different instructions</title>
+  <desc id="desc">Two ways of writing the same thing in C, from a small test compiled with alchemy-gcc, the compiler the game is built with. Both keep the low ten bits of a random number. Written as Random16() and 0x3ff in one expression, the compiler copies the result aside, loads the mask from a constant and combines them: three instructions after the call. Written as a mask assigned first and then combined with Random16(), it shifts the number left and back right instead: two instructions. Both are correct C with the same result, but only the instructions the original cartridge has will match, so each place in the game keeps the spelling that gives them.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .src { fill: #f5f5f5; }
+    .ins { fill: #f0f6ff; stroke: #bcd7fb; }
+    .ins2 { fill: #fff7ed; stroke: #fed7aa; }
+    .wire { fill: none; stroke: #a3a3a3; stroke-width: 1.5; }
+    .head { fill: #a3a3a3; }
+    .h { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .label { fill: #737373; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .c { fill: #0a0a0a; font: 500 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .i { fill: #0a72ef; font: 500 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .i2 { fill: #b45309; font: 500 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .src { fill: #1a1a1a; }
+      .ins { fill: #0d1a2e; stroke: #1e3a66; }
+      .ins2 { fill: #1f1206; stroke: #4a2a0c; }
+      .wire { stroke: #5c5c5c; }
+      .head { fill: #5c5c5c; }
+      .h, .c { fill: #ededed; }
+      .p { fill: #a1a1a1; }
+      .label { fill: #8f8f8f; }
+      .i { fill: #66a6ff; }
+      .i2 { fill: #fbbf24; }
+      .eyebrow { fill: #7c7c7c; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="559" rx="16"/>
+  <text class="eyebrow" x="20" y="34">KEEP THE LOW TEN BITS OF A RANDOM NUMBER</text>
+
+  <!-- First spelling -->
+  <rect class="card" x="20" y="48" width="360" height="196" rx="12"/>
+  <text class="h" x="36" y="74">In one expression</text>
+  <rect class="src" x="36" y="86" width="328" height="30" rx="6"/>
+  <text class="c" x="48" y="106">speed = Random16() &amp; 0x3ff;</text>
+  <path class="wire" d="M 200 116 V 130"/>
+  <path class="head" d="M 194 126 h 12 l -6 9 z"/>
+  <text class="label" x="36" y="152">after the call, three instructions:</text>
+  <rect class="ins" x="36" y="160" width="328" height="24" rx="5"/>
+  <text class="i" x="48" y="177">add  r3, r0, #0</text><text class="label" x="352" y="177" text-anchor="end">copy the number aside</text>
+  <rect class="ins" x="36" y="186" width="328" height="24" rx="5"/>
+  <text class="i" x="48" y="203">ldr  r0, =1023</text><text class="label" x="352" y="203" text-anchor="end">load the mask</text>
+  <rect class="ins" x="36" y="212" width="328" height="24" rx="5"/>
+  <text class="i" x="48" y="229">and  r0, r3</text><text class="label" x="352" y="229" text-anchor="end">combine</text>
+
+  <!-- Second spelling -->
+  <rect class="card" x="20" y="256" width="360" height="178" rx="12"/>
+  <text class="h" x="36" y="282">The mask first</text>
+  <rect class="src" x="36" y="294" width="328" height="30" rx="6"/>
+  <text class="c" x="48" y="314">speed = 0x3ff; speed &amp;= Random16();</text>
+  <path class="wire" d="M 200 324 V 338"/>
+  <path class="head" d="M 194 334 h 12 l -6 9 z"/>
+  <text class="label" x="36" y="360">after the call, two instructions:</text>
+  <rect class="ins2" x="36" y="368" width="328" height="24" rx="5"/>
+  <text class="i2" x="48" y="385">lsl  r0, r0, #22</text><text class="label" x="352" y="385" text-anchor="end">push the high bits out</text>
+  <rect class="ins2" x="36" y="394" width="328" height="24" rx="5"/>
+  <text class="i2" x="48" y="411">lsr  r0, r0, #22</text><text class="label" x="352" y="411" text-anchor="end">and back</text>
+
+  <text class="p" x="20" y="470">The same result either way, but only the</text>
+  <text class="p" x="20" y="489">original's instructions match, so each place</text>
+  <text class="p" x="20" y="508">keeps the spelling that gives them.</text>
+  <text class="label" x="20" y="536">A small test compiled with alchemy-gcc.</text>
+</svg>
