@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 590" role="img" aria-labelledby="title desc">
+  <title id="title">Rolls made before the animation</title>
+  <desc id="desc">Some rolls are made before the animation plays, because the animation has to show their result. A plain Attack lands 31 times in 32 and misses once; a deluded attacker also misses 153 times in 256; a target that cannot act is never missed. Separately, one blow in 32 is a critical hit, which deals a quarter more damage and then the target's level divided by 5, plus 6. An ability that strikes more than once rolls once for all its targets: Gust, Rapid Smash, Slice and Sonic Smash succeed 153 times in 256, about 60 percent, and Flying Attack, Double Fang, Twin Beaks and Swift Strike one time in 4. Sonic Smash and Swift Strike then strike three times, the others twice.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .card-accent { fill: #ffffff; stroke: #0a72ef; stroke-width: 1.5; }
+    .card-exit { fill: #fafafa; stroke: #a3a3a3; stroke-dasharray: 4 4; }
+    .chip { fill: #f0f6ff; stroke: #bcd7fb; }
+    .chip-exit { fill: #fff3f0; stroke: #f6c3b7; }
+    .chip-wait { fill: #f5f5f5; stroke: #d4d4d4; }
+    .chip-ok { fill: #effaf2; stroke: #b4e3c2; }
+    .h { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .big { fill: #0a0a0a; font: 600 17px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .sub { fill: #8f8f8f; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .k { fill: #0a72ef; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kb { fill: #0a72ef; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kx { fill: #c2410c; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kw { fill: #525252; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .ko { fill: #15803d; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .label { fill: #737373; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .wire { fill: none; stroke: #a3a3a3; stroke-width: 1.5; }
+    .wire-accent { fill: none; stroke: #0a72ef; stroke-width: 1.5; }
+    .wire-dash { fill: none; stroke: #a3a3a3; stroke-width: 1.5; stroke-dasharray: 3 4; }
+    .head { fill: #a3a3a3; }
+    .head-accent { fill: #0a72ef; }
+    .dot { fill: #0a72ef; }
+    .bar { fill: #0a72ef; }
+    .bar-soft { fill: #0a72ef; fill-opacity: 0.35; }
+    .bar-muted { fill: #d4d4d4; }
+    .bar-exit { fill: #ea580c; }
+    .bar-ok { fill: #16a34a; }
+    .rule { stroke: #e5e5e5; stroke-width: 1; fill: none; }
+    .axis { stroke: #a3a3a3; stroke-width: 1; fill: none; }
+    .line-accent { fill: none; stroke: #0a72ef; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .line-ok { fill: none; stroke: #16a34a; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .unit { fill: #0a72ef; }
+    .foe { fill: #737373; }
+    .foe-soft { fill: #d4d4d4; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .card-accent { fill: #111111; stroke: #3b8eff; }
+      .card-exit { fill: #0a0a0a; stroke: #525252; }
+      .chip { fill: #0d1a2e; stroke: #1e3a66; }
+      .chip-exit { fill: #2a130c; stroke: #5c2a1a; }
+      .chip-wait { fill: #1a1a1a; stroke: #333333; }
+      .chip-ok { fill: #0c2214; stroke: #1d4d2c; }
+      .h, .big { fill: #ededed; }
+      .p, .kw { fill: #a1a1a1; }
+      .sub, .small, .code, .eyebrow { fill: #7c7c7c; }
+      .label { fill: #8f8f8f; }
+      .k, .kb { fill: #66a6ff; }
+      .kx { fill: #fb8b5e; }
+      .ko { fill: #4ade80; }
+      .wire, .wire-dash { stroke: #5c5c5c; }
+      .wire-accent { stroke: #3b8eff; }
+      .head { fill: #5c5c5c; }
+      .head-accent, .dot, .bar, .unit { fill: #3b8eff; }
+      .bar-soft { fill: #3b8eff; fill-opacity: 0.35; }
+      .bar-muted, .foe-soft { fill: #333333; }
+      .bar-exit { fill: #fb8b5e; }
+      .bar-ok { fill: #22c55e; }
+      .rule { stroke: #262626; }
+      .axis { stroke: #5c5c5c; }
+      .line-accent { stroke: #3b8eff; }
+      .line-ok { stroke: #22c55e; }
+      .foe { fill: #8f8f8f; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="589" rx="16"/>
+  <text class="eyebrow" x="20" y="30">ROLLED BEFORE THE ANIMATION PLAYS</text>
+
+  <!-- the attack -->
+  <rect class="card" x="20" y="44" width="360" height="282" rx="12"/>
+  <text class="big" x="36" y="72">A plain Attack</text>
+
+  <text class="h" x="36" y="102">Does it land?</text>
+  <!-- 32 cells of 9.5 units from x 36 -->
+  <rect class="bar" x="36" y="112" width="294" height="20" rx="3"/>
+  <rect class="bar-exit" x="333" y="112" width="31" height="20" rx="3"/>
+  <text class="sub" x="36" y="150">31 in 32 land</text>
+  <text class="kx" x="364" y="150" text-anchor="end">1 misses</text>
+  <text class="sub" x="36" y="170">A deluded attacker also misses 153 in 256.</text>
+  <text class="sub" x="36" y="188">A target that can't act is never missed.</text>
+
+  <text class="h" x="36" y="222">A critical hit?</text>
+  <rect class="bar" x="36" y="232" width="31" height="20" rx="3"/>
+  <rect class="bar-muted" x="70" y="232" width="294" height="20" rx="3"/>
+  <text class="k" x="36" y="270">1 in 32</text>
+  <text class="sub" x="364" y="270" text-anchor="end">the rest: an ordinary blow</text>
+  <text class="sub" x="36" y="290">A critical deals a quarter more, then</text>
+  <text class="sub" x="36" y="308">adds the target's level ÷ 5, plus 6.</text>
+
+  <!-- extra blows -->
+  <rect class="card" x="20" y="340" width="360" height="192" rx="12"/>
+  <text class="big" x="36" y="368">More than one blow</text>
+  <text class="sub" x="36" y="390">one roll for all the targets</text>
+  <rect class="bar" x="36" y="402" width="196" height="16" rx="3"/>
+  <rect class="bar-muted" x="234" y="402" width="130" height="16" rx="3"/>
+  <text class="kw" x="36" y="438">153 in 256: Gust, Rapid Smash,</text>
+  <text class="kw" x="36" y="455">Slice, Sonic Smash</text>
+  <rect class="bar" x="36" y="466" width="82" height="16" rx="3"/>
+  <rect class="bar-muted" x="120" y="466" width="244" height="16" rx="3"/>
+  <text class="kw" x="36" y="502">1 in 4: Flying Attack, Double Fang,</text>
+  <text class="kw" x="36" y="519">Twin Beaks, Swift Strike</text>
+
+  <text class="small" x="20" y="556">Sonic Smash and Swift Strike strike three times;</text>
+  <text class="small" x="20" y="572">the others twice. The animation shows each blow.</text>
+</svg>

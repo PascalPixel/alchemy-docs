@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 486" role="img" aria-labelledby="title desc">
+  <title id="title">The Long Sword's row</title>
+  <desc id="desc">The Long Sword's row of the item table, read column by column, beside what each column does in the game. Its price, 200, is what a shop asks in coins. Its type, a weapon, means a character holds one weapon at a time. Its equip mask has one bit for each of the eight characters, in the order Isaac, Garet, Ivan, Mia, Felix, Jenna, Sheba, Piers; three are set, so Isaac, Garet and Felix can equip it and the others cannot. Its first bonus, 14, is added to Attack while it is equipped, before the character's class scales it.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .card-accent { fill: #ffffff; stroke: #0a72ef; stroke-width: 1.5; }
+    .card-exit { fill: #fafafa; stroke: #a3a3a3; stroke-dasharray: 4 4; }
+    .chip { fill: #f0f6ff; stroke: #bcd7fb; }
+    .chip-exit { fill: #fff3f0; stroke: #f6c3b7; }
+    .chip-wait { fill: #f5f5f5; stroke: #d4d4d4; }
+    .chip-ok { fill: #effaf2; stroke: #b4e3c2; }
+    .h { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .big { fill: #0a0a0a; font: 600 17px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .sub { fill: #8f8f8f; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .k { fill: #0a72ef; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kb { fill: #0a72ef; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kx { fill: #c2410c; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kw { fill: #525252; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .ko { fill: #15803d; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .label { fill: #737373; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .wire { fill: none; stroke: #a3a3a3; stroke-width: 1.5; }
+    .wire-accent { fill: none; stroke: #0a72ef; stroke-width: 1.5; }
+    .wire-dash { fill: none; stroke: #a3a3a3; stroke-width: 1.5; stroke-dasharray: 3 4; }
+    .head { fill: #a3a3a3; }
+    .head-accent { fill: #0a72ef; }
+    .dot { fill: #0a72ef; }
+    .bar { fill: #0a72ef; }
+    .bar-soft { fill: #0a72ef; fill-opacity: 0.35; }
+    .bar-muted { fill: #d4d4d4; }
+    .bar-exit { fill: #ea580c; }
+    .bar-ok { fill: #16a34a; }
+    .rule { stroke: #e5e5e5; stroke-width: 1; fill: none; }
+    .axis { stroke: #a3a3a3; stroke-width: 1; fill: none; }
+    .line-accent { fill: none; stroke: #0a72ef; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .line-ok { fill: none; stroke: #16a34a; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .unit { fill: #0a72ef; }
+    .foe { fill: #737373; }
+    .foe-soft { fill: #d4d4d4; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .card-accent { fill: #111111; stroke: #3b8eff; }
+      .card-exit { fill: #0a0a0a; stroke: #525252; }
+      .chip { fill: #0d1a2e; stroke: #1e3a66; }
+      .chip-exit { fill: #2a130c; stroke: #5c2a1a; }
+      .chip-wait { fill: #1a1a1a; stroke: #333333; }
+      .chip-ok { fill: #0c2214; stroke: #1d4d2c; }
+      .h, .big { fill: #ededed; }
+      .p, .kw { fill: #a1a1a1; }
+      .sub, .small, .code, .eyebrow { fill: #7c7c7c; }
+      .label { fill: #8f8f8f; }
+      .k, .kb { fill: #66a6ff; }
+      .kx { fill: #fb8b5e; }
+      .ko { fill: #4ade80; }
+      .wire, .wire-dash { stroke: #5c5c5c; }
+      .wire-accent { stroke: #3b8eff; }
+      .head { fill: #5c5c5c; }
+      .head-accent, .dot, .bar, .unit { fill: #3b8eff; }
+      .bar-soft { fill: #3b8eff; fill-opacity: 0.35; }
+      .bar-muted, .foe-soft { fill: #333333; }
+      .bar-exit { fill: #fb8b5e; }
+      .bar-ok { fill: #22c55e; }
+      .rule { stroke: #262626; }
+      .axis { stroke: #5c5c5c; }
+      .line-accent { stroke: #3b8eff; }
+      .line-ok { stroke: #22c55e; }
+      .foe { fill: #8f8f8f; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="485" rx="16"/>
+  <text class="eyebrow" x="20" y="30">THE LONG SWORD, ITEM 1</text>
+
+  <!-- price -->
+  <rect class="card" x="20" y="44" width="360" height="70" rx="12"/>
+  <text class="code" x="36" y="68">price</text>
+  <text class="kb" x="364" y="68" text-anchor="end">200</text>
+  <text class="p" x="36" y="96">A shop sells it for 200 coins.</text>
+
+  <!-- type -->
+  <rect class="card" x="20" y="126" width="360" height="70" rx="12"/>
+  <text class="code" x="36" y="150">type</text>
+  <text class="kb" x="364" y="150" text-anchor="end">weapon</text>
+  <text class="p" x="36" y="178">One weapon at a time per character.</text>
+
+  <!-- equip mask -->
+  <rect class="card" x="20" y="208" width="360" height="152" rx="12"/>
+  <text class="code" x="36" y="232">equip_mask</text>
+  <text class="sub" x="364" y="232" text-anchor="end">one bit a character</text>
+  <!-- 8 boxes, 40 wide, from x 36 step 41 -->
+  <rect class="bar" x="36" y="246" width="38" height="38" rx="8"/>
+  <rect class="bar" x="77" y="246" width="38" height="38" rx="8"/>
+  <rect class="bar-muted" x="118" y="246" width="38" height="38" rx="8"/>
+  <rect class="bar-muted" x="159" y="246" width="38" height="38" rx="8"/>
+  <rect class="bar" x="200" y="246" width="38" height="38" rx="8"/>
+  <rect class="bar-muted" x="241" y="246" width="38" height="38" rx="8"/>
+  <rect class="bar-muted" x="282" y="246" width="38" height="38" rx="8"/>
+  <rect class="bar-muted" x="323" y="246" width="38" height="38" rx="8"/>
+  <text class="small" x="55" y="302" text-anchor="middle">Isaac</text>
+  <text class="small" x="96" y="302" text-anchor="middle">Garet</text>
+  <text class="small" x="137" y="302" text-anchor="middle">Ivan</text>
+  <text class="small" x="178" y="302" text-anchor="middle">Mia</text>
+  <text class="small" x="219" y="302" text-anchor="middle">Felix</text>
+  <text class="small" x="260" y="302" text-anchor="middle">Jenna</text>
+  <text class="small" x="301" y="302" text-anchor="middle">Sheba</text>
+  <text class="small" x="342" y="302" text-anchor="middle">Piers</text>
+  <text class="p" x="36" y="336">Isaac, Garet and Felix can equip it;</text>
+  <text class="p" x="36" y="353">for the others the shop says Can't equip.</text>
+
+  <!-- attack -->
+  <rect class="card" x="20" y="372" width="360" height="96" rx="12"/>
+  <text class="code" x="36" y="396">primary_bonus</text>
+  <text class="kb" x="364" y="396" text-anchor="end">+14</text>
+  <text class="p" x="36" y="424">Added to Attack while equipped,</text>
+  <text class="p" x="36" y="443">before the class multiplies it.</text>
+</svg>

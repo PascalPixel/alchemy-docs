@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 576" role="img" aria-labelledby="title desc">
+  <title id="title">The fall-off with distance</title>
+  <desc id="desc">Five enemies in a line, the middle one aimed at. An ability's range counts places, not pixels: a range of 1 reaches the aimed enemy alone, 2 one place either side, 3 two places either side. Each place away keeps a smaller share. Psynergy damage and healing keep 100, 80 and 60 percent; a summon 100, 70 and 40; the enemies' unleashed moves 100, 50 and 30; and the chance of an added effect 100, 60 and 30. A downed enemy still holds its place, and an ability that hits a whole side treats everyone as aimed.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .card-accent { fill: #ffffff; stroke: #0a72ef; stroke-width: 1.5; }
+    .card-exit { fill: #fafafa; stroke: #a3a3a3; stroke-dasharray: 4 4; }
+    .chip { fill: #f0f6ff; stroke: #bcd7fb; }
+    .chip-exit { fill: #fff3f0; stroke: #f6c3b7; }
+    .chip-wait { fill: #f5f5f5; stroke: #d4d4d4; }
+    .chip-ok { fill: #effaf2; stroke: #b4e3c2; }
+    .h { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .big { fill: #0a0a0a; font: 600 17px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .sub { fill: #8f8f8f; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .k { fill: #0a72ef; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kb { fill: #0a72ef; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kx { fill: #c2410c; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kw { fill: #525252; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .ko { fill: #15803d; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .label { fill: #737373; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .wire { fill: none; stroke: #a3a3a3; stroke-width: 1.5; }
+    .wire-accent { fill: none; stroke: #0a72ef; stroke-width: 1.5; }
+    .wire-dash { fill: none; stroke: #a3a3a3; stroke-width: 1.5; stroke-dasharray: 3 4; }
+    .head { fill: #a3a3a3; }
+    .head-accent { fill: #0a72ef; }
+    .dot { fill: #0a72ef; }
+    .bar { fill: #0a72ef; }
+    .bar-soft { fill: #0a72ef; fill-opacity: 0.35; }
+    .bar-muted { fill: #d4d4d4; }
+    .bar-exit { fill: #ea580c; }
+    .bar-ok { fill: #16a34a; }
+    .rule { stroke: #e5e5e5; stroke-width: 1; fill: none; }
+    .axis { stroke: #a3a3a3; stroke-width: 1; fill: none; }
+    .line-accent { fill: none; stroke: #0a72ef; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .line-ok { fill: none; stroke: #16a34a; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .unit { fill: #0a72ef; }
+    .foe { fill: #737373; }
+    .foe-soft { fill: #d4d4d4; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .card-accent { fill: #111111; stroke: #3b8eff; }
+      .card-exit { fill: #0a0a0a; stroke: #525252; }
+      .chip { fill: #0d1a2e; stroke: #1e3a66; }
+      .chip-exit { fill: #2a130c; stroke: #5c2a1a; }
+      .chip-wait { fill: #1a1a1a; stroke: #333333; }
+      .chip-ok { fill: #0c2214; stroke: #1d4d2c; }
+      .h, .big { fill: #ededed; }
+      .p, .kw { fill: #a1a1a1; }
+      .sub, .small, .code, .eyebrow { fill: #7c7c7c; }
+      .label { fill: #8f8f8f; }
+      .k, .kb { fill: #66a6ff; }
+      .kx { fill: #fb8b5e; }
+      .ko { fill: #4ade80; }
+      .wire, .wire-dash { stroke: #5c5c5c; }
+      .wire-accent { stroke: #3b8eff; }
+      .head { fill: #5c5c5c; }
+      .head-accent, .dot, .bar, .unit { fill: #3b8eff; }
+      .bar-soft { fill: #3b8eff; fill-opacity: 0.35; }
+      .bar-muted, .foe-soft { fill: #333333; }
+      .bar-exit { fill: #fb8b5e; }
+      .bar-ok { fill: #22c55e; }
+      .rule { stroke: #262626; }
+      .axis { stroke: #5c5c5c; }
+      .line-accent { stroke: #3b8eff; }
+      .line-ok { stroke: #22c55e; }
+      .foe { fill: #8f8f8f; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="575" rx="16"/>
+  <text class="eyebrow" x="20" y="30">FIVE ENEMIES IN A LINE</text>
+
+  <!-- places: x 130, 188, 246, 304, 362 -->
+  <circle class="foe" cx="130" cy="62" r="11"/>
+  <circle class="foe" cx="188" cy="62" r="11"/>
+  <circle class="unit" cx="246" cy="62" r="13"/>
+  <circle class="foe" cx="304" cy="62" r="11"/>
+  <circle class="foe" cx="362" cy="62" r="11"/>
+  <text class="small" x="130" y="94" text-anchor="middle">2 away</text>
+  <text class="small" x="188" y="94" text-anchor="middle">1 away</text>
+  <text class="k" x="246" y="94" text-anchor="middle">aimed</text>
+  <text class="small" x="304" y="94" text-anchor="middle">1 away</text>
+  <text class="small" x="362" y="94" text-anchor="middle">2 away</text>
+
+  <!-- ranges -->
+  <text class="label" x="20" y="124">range 1</text>
+  <rect class="bar-soft" x="228" y="114" width="36" height="12" rx="6"/>
+  <text class="label" x="20" y="146">range 2</text>
+  <rect class="bar-soft" x="170" y="136" width="152" height="12" rx="6"/>
+  <text class="label" x="20" y="168">range 3</text>
+  <rect class="bar-soft" x="112" y="158" width="268" height="12" rx="6"/>
+
+  <path class="rule" d="M 20 188 H 380"/>
+  <text class="eyebrow" x="20" y="210">THE SHARE EACH PLACE KEEPS</text>
+
+  <!-- bars: 0.36 units a percent -->
+  <text class="h" x="20" y="252">Psynergy</text>
+  <text class="sub" x="20" y="270">and healing</text>
+  <rect class="bar" x="118" y="244" width="24" height="21.6"/>
+  <rect class="bar" x="176" y="236.8" width="24" height="28.8"/>
+  <rect class="bar" x="234" y="229.6" width="24" height="36"/>
+  <rect class="bar" x="292" y="236.8" width="24" height="28.8"/>
+  <rect class="bar" x="350" y="244" width="24" height="21.6"/>
+  <text class="small" x="130" y="282" text-anchor="middle">60%</text>
+  <text class="small" x="188" y="282" text-anchor="middle">80%</text>
+  <text class="small" x="246" y="282" text-anchor="middle">100%</text>
+  <text class="small" x="304" y="282" text-anchor="middle">80%</text>
+  <text class="small" x="362" y="282" text-anchor="middle">60%</text>
+
+  <text class="h" x="20" y="334">A summon</text>
+  <rect class="bar" x="118" y="327.6" width="24" height="14.4"/>
+  <rect class="bar" x="176" y="316.8" width="24" height="25.2"/>
+  <rect class="bar" x="234" y="306" width="24" height="36"/>
+  <rect class="bar" x="292" y="316.8" width="24" height="25.2"/>
+  <rect class="bar" x="350" y="327.6" width="24" height="14.4"/>
+  <text class="small" x="130" y="359" text-anchor="middle">40%</text>
+  <text class="small" x="188" y="359" text-anchor="middle">70%</text>
+  <text class="small" x="246" y="359" text-anchor="middle">100%</text>
+  <text class="small" x="304" y="359" text-anchor="middle">70%</text>
+  <text class="small" x="362" y="359" text-anchor="middle">40%</text>
+
+  <text class="h" x="20" y="404">Unleashed</text>
+  <text class="sub" x="20" y="422">by enemies</text>
+  <rect class="bar" x="118" y="408.2" width="24" height="10.8"/>
+  <rect class="bar" x="176" y="401" width="24" height="18"/>
+  <rect class="bar" x="234" y="383" width="24" height="36"/>
+  <rect class="bar" x="292" y="401" width="24" height="18"/>
+  <rect class="bar" x="350" y="408.2" width="24" height="10.8"/>
+  <text class="small" x="130" y="436" text-anchor="middle">30%</text>
+  <text class="small" x="188" y="436" text-anchor="middle">50%</text>
+  <text class="small" x="246" y="436" text-anchor="middle">100%</text>
+  <text class="small" x="304" y="436" text-anchor="middle">50%</text>
+  <text class="small" x="362" y="436" text-anchor="middle">30%</text>
+
+  <text class="h" x="20" y="481">Added effect</text>
+  <text class="sub" x="20" y="499">its chance</text>
+  <rect class="bar-ok" x="118" y="485.2" width="24" height="10.8"/>
+  <rect class="bar-ok" x="176" y="474.4" width="24" height="21.6"/>
+  <rect class="bar-ok" x="234" y="460" width="24" height="36"/>
+  <rect class="bar-ok" x="292" y="474.4" width="24" height="21.6"/>
+  <rect class="bar-ok" x="350" y="485.2" width="24" height="10.8"/>
+  <text class="small" x="130" y="513" text-anchor="middle">30%</text>
+  <text class="small" x="188" y="513" text-anchor="middle">60%</text>
+  <text class="small" x="246" y="513" text-anchor="middle">100%</text>
+  <text class="small" x="304" y="513" text-anchor="middle">60%</text>
+  <text class="small" x="362" y="513" text-anchor="middle">30%</text>
+
+  <text class="small" x="20" y="544">A downed enemy still holds its place. Hitting a whole side:</text>
+  <text class="small" x="20" y="560">everyone counts as aimed.</text>
+</svg>

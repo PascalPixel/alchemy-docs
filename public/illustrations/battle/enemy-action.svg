@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 640" role="img" aria-labelledby="title desc">
+  <title id="title">How an enemy picks its action</title>
+  <desc id="desc">A Gryphon's eight actions from its row of the enemy table, each with its chance under its strategy, which favours the top of the list: Wing Flutter 53 in 256, Tornado 47, Twin Beaks 41, Impact 35, Attack 29, Sonic Slash 23, Bind 17 and Ward 11. As the round starts the enemy draws once: a guard, Defend or Total Defense, is kept and raised at once; anything else waits. At its turn it draws again until it gets an action it can use: too little PP, a seal, or nobody worth aiming at means another draw, and after 18 failed draws it defends. Other enemies draw evenly, favour their first action strongly, or go down the list in order.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .card-accent { fill: #ffffff; stroke: #0a72ef; stroke-width: 1.5; }
+    .card-exit { fill: #fafafa; stroke: #a3a3a3; stroke-dasharray: 4 4; }
+    .chip { fill: #f0f6ff; stroke: #bcd7fb; }
+    .chip-exit { fill: #fff3f0; stroke: #f6c3b7; }
+    .chip-wait { fill: #f5f5f5; stroke: #d4d4d4; }
+    .chip-ok { fill: #effaf2; stroke: #b4e3c2; }
+    .h { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .big { fill: #0a0a0a; font: 600 17px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .sub { fill: #8f8f8f; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .k { fill: #0a72ef; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kb { fill: #0a72ef; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kx { fill: #c2410c; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kw { fill: #525252; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .ko { fill: #15803d; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .label { fill: #737373; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .wire { fill: none; stroke: #a3a3a3; stroke-width: 1.5; }
+    .wire-accent { fill: none; stroke: #0a72ef; stroke-width: 1.5; }
+    .wire-dash { fill: none; stroke: #a3a3a3; stroke-width: 1.5; stroke-dasharray: 3 4; }
+    .head { fill: #a3a3a3; }
+    .head-accent { fill: #0a72ef; }
+    .dot { fill: #0a72ef; }
+    .bar { fill: #0a72ef; }
+    .bar-soft { fill: #0a72ef; fill-opacity: 0.35; }
+    .bar-muted { fill: #d4d4d4; }
+    .bar-exit { fill: #ea580c; }
+    .bar-ok { fill: #16a34a; }
+    .rule { stroke: #e5e5e5; stroke-width: 1; fill: none; }
+    .axis { stroke: #a3a3a3; stroke-width: 1; fill: none; }
+    .line-accent { fill: none; stroke: #0a72ef; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .line-ok { fill: none; stroke: #16a34a; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .unit { fill: #0a72ef; }
+    .foe { fill: #737373; }
+    .foe-soft { fill: #d4d4d4; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .card-accent { fill: #111111; stroke: #3b8eff; }
+      .card-exit { fill: #0a0a0a; stroke: #525252; }
+      .chip { fill: #0d1a2e; stroke: #1e3a66; }
+      .chip-exit { fill: #2a130c; stroke: #5c2a1a; }
+      .chip-wait { fill: #1a1a1a; stroke: #333333; }
+      .chip-ok { fill: #0c2214; stroke: #1d4d2c; }
+      .h, .big { fill: #ededed; }
+      .p, .kw { fill: #a1a1a1; }
+      .sub, .small, .code, .eyebrow { fill: #7c7c7c; }
+      .label { fill: #8f8f8f; }
+      .k, .kb { fill: #66a6ff; }
+      .kx { fill: #fb8b5e; }
+      .ko { fill: #4ade80; }
+      .wire, .wire-dash { stroke: #5c5c5c; }
+      .wire-accent { stroke: #3b8eff; }
+      .head { fill: #5c5c5c; }
+      .head-accent, .dot, .bar, .unit { fill: #3b8eff; }
+      .bar-soft { fill: #3b8eff; fill-opacity: 0.35; }
+      .bar-muted, .foe-soft { fill: #333333; }
+      .bar-exit { fill: #fb8b5e; }
+      .bar-ok { fill: #22c55e; }
+      .rule { stroke: #262626; }
+      .axis { stroke: #5c5c5c; }
+      .line-accent { stroke: #3b8eff; }
+      .line-ok { stroke: #22c55e; }
+      .foe { fill: #8f8f8f; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="639" rx="16"/>
+  <text class="eyebrow" x="20" y="30">A GRYPHON'S EIGHT ACTIONS</text>
+  <text class="small" x="380" y="30" text-anchor="end">chance in 256</text>
+
+  <!-- 3.4 units for each 1 in 256; bars start at x 136 -->
+  <text class="kw" x="20" y="58">Wing Flutter</text>
+  <rect class="bar" x="136" y="46" width="180.2" height="16" rx="3"/>
+  <text class="small" x="380" y="58" text-anchor="end">53</text>
+  <text class="kw" x="20" y="84">Tornado</text>
+  <rect class="bar" x="136" y="72" width="159.8" height="16" rx="3"/>
+  <text class="small" x="380" y="84" text-anchor="end">47</text>
+  <text class="kw" x="20" y="110">Twin Beaks</text>
+  <rect class="bar" x="136" y="98" width="139.4" height="16" rx="3"/>
+  <text class="small" x="380" y="110" text-anchor="end">41</text>
+  <text class="kw" x="20" y="136">Impact</text>
+  <rect class="bar" x="136" y="124" width="119" height="16" rx="3"/>
+  <text class="small" x="380" y="136" text-anchor="end">35</text>
+  <text class="kw" x="20" y="162">Attack</text>
+  <rect class="bar" x="136" y="150" width="98.6" height="16" rx="3"/>
+  <text class="small" x="380" y="162" text-anchor="end">29</text>
+  <text class="kw" x="20" y="188">Sonic Slash</text>
+  <rect class="bar" x="136" y="176" width="78.2" height="16" rx="3"/>
+  <text class="small" x="380" y="188" text-anchor="end">23</text>
+  <text class="kw" x="20" y="214">Bind</text>
+  <rect class="bar" x="136" y="202" width="57.8" height="16" rx="3"/>
+  <text class="small" x="380" y="214" text-anchor="end">17</text>
+  <text class="kw" x="20" y="240">Ward</text>
+  <rect class="bar" x="136" y="228" width="37.4" height="16" rx="3"/>
+  <text class="small" x="380" y="240" text-anchor="end">11</text>
+  <text class="code" x="20" y="268">ACTION_STRATEGY_FALLING</text>
+
+  <!-- round start -->
+  <rect class="card-accent" x="20" y="284" width="360" height="104" rx="12"/>
+  <circle class="dot" cx="43" cy="310" r="5"/>
+  <text class="h" x="56" y="315">As the round starts: one draw</text>
+  <text class="p" x="36" y="340">A guard it draws (Defend, Total Defense)</text>
+  <text class="p" x="36" y="359">is kept and raised at once.</text>
+  <text class="p" x="36" y="378">Anything else waits for its turn.</text>
+
+  <path class="wire" d="M 200 388 V 404"/>
+  <path class="head" d="M 194 400 h 12 l -6 9 z"/>
+
+  <!-- its turn -->
+  <rect class="card" x="20" y="412" width="360" height="118" rx="12"/>
+  <text class="h" x="36" y="438">At its turn: draw until it can</text>
+  <text class="p" x="36" y="462">Too little PP, a seal, or nobody worth</text>
+  <text class="p" x="36" y="481">aiming at: draw again.</text>
+  <rect class="chip-exit" x="36" y="494" width="200" height="26" rx="13"/>
+  <text class="kx" x="136" y="512" text-anchor="middle">18 failed draws: defend</text>
+
+  <!-- other strategies -->
+  <text class="eyebrow" x="20" y="558">OTHER ENEMIES</text>
+  <rect class="chip-wait" x="20" y="570" width="112" height="28" rx="14"/>
+  <text class="kw" x="76" y="589" text-anchor="middle">32 each</text>
+  <rect class="chip-wait" x="140" y="570" width="128" height="28" rx="14"/>
+  <text class="kw" x="204" y="589" text-anchor="middle">113 down to 5</text>
+  <rect class="chip-wait" x="276" y="570" width="104" height="28" rx="14"/>
+  <text class="kw" x="328" y="589" text-anchor="middle">in order</text>
+  <text class="small" x="20" y="622">chances in 256, or no chance: the list in order</text>
+</svg>

@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 470" role="img" aria-labelledby="title desc">
+  <title id="title">One inventory slot</title>
+  <desc id="desc">An inventory slot is one 16-bit number in four parts. From the left: five bits for how many are stacked, less one; one bit set when the item is broken; one bit set when it is equipped; and nine bits for the item's id, 0 to 511. Two examples. Three Herbs: the count part holds 2, neither broken nor equipped, and the id is 180, the Herb. A Long Sword, equipped: the count part holds 0, the equipped bit is set, and the id is 1, the Long Sword. An empty slot is all zeros.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .card-accent { fill: #ffffff; stroke: #0a72ef; stroke-width: 1.5; }
+    .card-exit { fill: #fafafa; stroke: #a3a3a3; stroke-dasharray: 4 4; }
+    .chip { fill: #f0f6ff; stroke: #bcd7fb; }
+    .chip-exit { fill: #fff3f0; stroke: #f6c3b7; }
+    .chip-wait { fill: #f5f5f5; stroke: #d4d4d4; }
+    .chip-ok { fill: #effaf2; stroke: #b4e3c2; }
+    .h { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .big { fill: #0a0a0a; font: 600 17px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .sub { fill: #8f8f8f; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .k { fill: #0a72ef; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kb { fill: #0a72ef; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kx { fill: #c2410c; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kw { fill: #525252; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .ko { fill: #15803d; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .label { fill: #737373; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .wire { fill: none; stroke: #a3a3a3; stroke-width: 1.5; }
+    .wire-accent { fill: none; stroke: #0a72ef; stroke-width: 1.5; }
+    .wire-dash { fill: none; stroke: #a3a3a3; stroke-width: 1.5; stroke-dasharray: 3 4; }
+    .head { fill: #a3a3a3; }
+    .head-accent { fill: #0a72ef; }
+    .dot { fill: #0a72ef; }
+    .bar { fill: #0a72ef; }
+    .bar-soft { fill: #0a72ef; fill-opacity: 0.35; }
+    .bar-muted { fill: #d4d4d4; }
+    .bar-exit { fill: #ea580c; }
+    .bar-ok { fill: #16a34a; }
+    .rule { stroke: #e5e5e5; stroke-width: 1; fill: none; }
+    .axis { stroke: #a3a3a3; stroke-width: 1; fill: none; }
+    .line-accent { fill: none; stroke: #0a72ef; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .line-ok { fill: none; stroke: #16a34a; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .unit { fill: #0a72ef; }
+    .foe { fill: #737373; }
+    .foe-soft { fill: #d4d4d4; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .card-accent { fill: #111111; stroke: #3b8eff; }
+      .card-exit { fill: #0a0a0a; stroke: #525252; }
+      .chip { fill: #0d1a2e; stroke: #1e3a66; }
+      .chip-exit { fill: #2a130c; stroke: #5c2a1a; }
+      .chip-wait { fill: #1a1a1a; stroke: #333333; }
+      .chip-ok { fill: #0c2214; stroke: #1d4d2c; }
+      .h, .big { fill: #ededed; }
+      .p, .kw { fill: #a1a1a1; }
+      .sub, .small, .code, .eyebrow { fill: #7c7c7c; }
+      .label { fill: #8f8f8f; }
+      .k, .kb { fill: #66a6ff; }
+      .kx { fill: #fb8b5e; }
+      .ko { fill: #4ade80; }
+      .wire, .wire-dash { stroke: #5c5c5c; }
+      .wire-accent { stroke: #3b8eff; }
+      .head { fill: #5c5c5c; }
+      .head-accent, .dot, .bar, .unit { fill: #3b8eff; }
+      .bar-soft { fill: #3b8eff; fill-opacity: 0.35; }
+      .bar-muted, .foe-soft { fill: #333333; }
+      .bar-exit { fill: #fb8b5e; }
+      .bar-ok { fill: #22c55e; }
+      .rule { stroke: #262626; }
+      .axis { stroke: #5c5c5c; }
+      .line-accent { stroke: #3b8eff; }
+      .line-ok { stroke: #22c55e; }
+      .foe { fill: #8f8f8f; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="469" rx="16"/>
+  <text class="eyebrow" x="20" y="30">ONE SLOT, SIXTEEN BITS</text>
+
+  <!-- parts: 16 cells of 22 from x 24 -->
+  <rect class="chip-wait" x="24" y="46" width="108" height="40" rx="8"/>
+  <rect class="chip-exit" x="134" y="46" width="20" height="40" rx="6"/>
+  <rect class="chip-ok" x="156" y="46" width="20" height="40" rx="6"/>
+  <rect class="chip" x="178" y="46" width="196" height="40" rx="8"/>
+  <text class="kw" x="78" y="71" text-anchor="middle">how many − 1</text>
+  <text class="k" x="276" y="71" text-anchor="middle">which item</text>
+  <text class="kx" x="144" y="106" text-anchor="middle">broken</text>
+  <text class="ko" x="166" y="124" text-anchor="middle">equipped</text>
+  <path class="axis" d="M 144 90 V 94 M 166 90 V 110"/>
+
+  <!-- example 1: three Herbs -->
+  <text class="h" x="24" y="164">Three Herbs</text>
+  <g class="kw" text-anchor="middle">
+    <text x="35" y="198">0</text><text x="57" y="198">0</text><text x="79" y="198">0</text><text x="101" y="198">1</text><text x="123" y="198">0</text>
+    <text x="144" y="198">0</text><text x="166" y="198">0</text>
+    <text x="189" y="198">0</text><text x="211" y="198">1</text><text x="233" y="198">0</text><text x="255" y="198">1</text><text x="277" y="198">1</text><text x="299" y="198">0</text><text x="321" y="198">1</text><text x="343" y="198">0</text><text x="365" y="198">0</text>
+  </g>
+  <path class="rule" d="M 24 180 H 374 M 24 206 H 374"/>
+  <text class="sub" x="78" y="228" text-anchor="middle">2: three</text>
+  <text class="sub" x="276" y="228" text-anchor="middle">180: the Herb</text>
+
+  <!-- example 2: the Long Sword equipped -->
+  <text class="h" x="24" y="280">A Long Sword, equipped</text>
+  <g class="kw" text-anchor="middle">
+    <text x="35" y="314">0</text><text x="57" y="314">0</text><text x="79" y="314">0</text><text x="101" y="314">0</text><text x="123" y="314">0</text>
+    <text x="144" y="314">0</text>
+  </g>
+  <text class="ko" x="166" y="314" text-anchor="middle">1</text>
+  <g class="kw" text-anchor="middle">
+    <text x="189" y="314">0</text><text x="211" y="314">0</text><text x="233" y="314">0</text><text x="255" y="314">0</text><text x="277" y="314">0</text><text x="299" y="314">0</text><text x="321" y="314">0</text><text x="343" y="314">0</text><text x="365" y="314">1</text>
+  </g>
+  <path class="rule" d="M 24 296 H 374 M 24 322 H 374"/>
+  <text class="sub" x="78" y="344" text-anchor="middle">0: just one</text>
+  <text class="sub" x="276" y="344" text-anchor="middle">1: the Long Sword</text>
+
+  <rect class="card-exit" x="20" y="372" width="360" height="80" rx="12"/>
+  <text class="p" x="36" y="396">An empty slot is all zeros. A stack</text>
+  <text class="p" x="36" y="415">grows to 30; each character has 15 slots.</text>
+  <text class="code" x="36" y="438">BattleUnit.inventory</text>
+</svg>
