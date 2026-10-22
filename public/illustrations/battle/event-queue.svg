@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 560" role="img" aria-labelledby="title desc">
+  <title id="title">One target's events, played in order</title>
+  <desc id="desc">Quake reaches Garet. The rules work out his damage at once and change his HP, then queue what the player should see, in order: the hit, the number 14, his name, the message "Garet takes 14 damage!!!", and a refresh of how he is drawn. Playback then plays the queue. The hit makes him flinch and flash for nine frames; the number and the name take no time, since they only fill in the message's blanks; the message waits until the player presses A; the refresh takes no time. Then a few more events that take no time, and the next target is worked out. If the hit had felled him, a defeat, his name and a defeat message would come in place of the refresh.</desc>
+  <style>
+    .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .card { fill: #ffffff; stroke: #e5e5e5; }
+    .card-accent { fill: #ffffff; stroke: #0a72ef; stroke-width: 1.5; }
+    .card-exit { fill: #fafafa; stroke: #a3a3a3; stroke-dasharray: 4 4; }
+    .chip { fill: #f0f6ff; stroke: #bcd7fb; }
+    .chip-exit { fill: #fff3f0; stroke: #f6c3b7; }
+    .chip-wait { fill: #f5f5f5; stroke: #d4d4d4; }
+    .chip-ok { fill: #effaf2; stroke: #b4e3c2; }
+    .h { fill: #0a0a0a; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .big { fill: #0a0a0a; font: 600 17px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .sub { fill: #8f8f8f; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .small { fill: #8f8f8f; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .k { fill: #0a72ef; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kb { fill: #0a72ef; font: 600 15px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kx { fill: #c2410c; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .kw { fill: #525252; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .ko { fill: #15803d; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .label { fill: #737373; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .wire { fill: none; stroke: #a3a3a3; stroke-width: 1.5; }
+    .wire-accent { fill: none; stroke: #0a72ef; stroke-width: 1.5; }
+    .wire-dash { fill: none; stroke: #a3a3a3; stroke-width: 1.5; stroke-dasharray: 3 4; }
+    .head { fill: #a3a3a3; }
+    .head-accent { fill: #0a72ef; }
+    .dot { fill: #0a72ef; }
+    .bar { fill: #0a72ef; }
+    .bar-soft { fill: #0a72ef; fill-opacity: 0.35; }
+    .bar-muted { fill: #d4d4d4; }
+    .bar-exit { fill: #ea580c; }
+    .bar-ok { fill: #16a34a; }
+    .rule { stroke: #e5e5e5; stroke-width: 1; fill: none; }
+    .axis { stroke: #a3a3a3; stroke-width: 1; fill: none; }
+    .line-accent { fill: none; stroke: #0a72ef; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .line-ok { fill: none; stroke: #16a34a; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .unit { fill: #0a72ef; }
+    .foe { fill: #737373; }
+    .foe-soft { fill: #d4d4d4; }
+    @media (prefers-color-scheme: dark) {
+      .panel { fill: #0a0a0a; stroke: #262626; }
+      .card { fill: #111111; stroke: #2e2e2e; }
+      .card-accent { fill: #111111; stroke: #3b8eff; }
+      .card-exit { fill: #0a0a0a; stroke: #525252; }
+      .chip { fill: #0d1a2e; stroke: #1e3a66; }
+      .chip-exit { fill: #2a130c; stroke: #5c2a1a; }
+      .chip-wait { fill: #1a1a1a; stroke: #333333; }
+      .chip-ok { fill: #0c2214; stroke: #1d4d2c; }
+      .h, .big { fill: #ededed; }
+      .p, .kw { fill: #a1a1a1; }
+      .sub, .small, .code, .eyebrow { fill: #7c7c7c; }
+      .label { fill: #8f8f8f; }
+      .k, .kb { fill: #66a6ff; }
+      .kx { fill: #fb8b5e; }
+      .ko { fill: #4ade80; }
+      .wire, .wire-dash { stroke: #5c5c5c; }
+      .wire-accent { stroke: #3b8eff; }
+      .head { fill: #5c5c5c; }
+      .head-accent, .dot, .bar, .unit { fill: #3b8eff; }
+      .bar-soft { fill: #3b8eff; fill-opacity: 0.35; }
+      .bar-muted, .foe-soft { fill: #333333; }
+      .bar-exit { fill: #fb8b5e; }
+      .bar-ok { fill: #22c55e; }
+      .rule { stroke: #262626; }
+      .axis { stroke: #5c5c5c; }
+      .line-accent { stroke: #3b8eff; }
+      .line-ok { stroke: #22c55e; }
+      .foe { fill: #8f8f8f; }
+    }
+  </style>
+
+  <rect class="panel" x="0.5" y="0.5" width="399" height="559" rx="16"/>
+  <text class="eyebrow" x="20" y="30">QUAKE REACHES GARET</text>
+
+  <!-- the rules -->
+  <rect class="card-accent" x="20" y="44" width="360" height="84" rx="12"/>
+  <circle class="dot" cx="43" cy="70" r="5"/>
+  <text class="h" x="56" y="75">The rules, all at once</text>
+  <text class="p" x="36" y="99">Garet loses 14 HP now, and what</text>
+  <text class="p" x="36" y="117">the player should see is queued.</text>
+
+  <path class="wire" d="M 200 128 V 148"/>
+  <path class="head" d="M 194 144 h 12 l -6 9 z"/>
+
+  <!-- the queue, played top to bottom -->
+  <text class="eyebrow" x="20" y="176">THE QUEUE</text>
+  <text class="eyebrow" x="380" y="176" text-anchor="end">HOW LONG IT TAKES</text>
+
+  <rect class="chip" x="20" y="188" width="236" height="40" rx="10"/>
+  <text class="k" x="34" y="213">Hit: he flinches and flashes</text>
+  <text class="kw" x="380" y="213" text-anchor="end">9 frames</text>
+
+  <rect class="chip-wait" x="20" y="236" width="236" height="40" rx="10"/>
+  <text class="kw" x="34" y="261">Number: 14</text>
+  <text class="sub" x="380" y="261" text-anchor="end">no time</text>
+
+  <rect class="chip-wait" x="20" y="284" width="236" height="40" rx="10"/>
+  <text class="kw" x="34" y="309">Name: Garet</text>
+  <text class="sub" x="380" y="309" text-anchor="end">no time</text>
+
+  <rect class="chip" x="20" y="332" width="236" height="40" rx="10"/>
+  <text class="k" x="34" y="357">Garet takes 14 damage!!!</text>
+  <text class="kw" x="380" y="357" text-anchor="end">until A</text>
+
+  <rect class="chip-wait" x="20" y="380" width="236" height="40" rx="10"/>
+  <text class="kw" x="34" y="405">Refresh: redraw him</text>
+  <text class="sub" x="380" y="405" text-anchor="end">no time</text>
+
+  <!-- the blanks -->
+  <path class="wire-dash" d="M 256 256 H 270 V 352 H 262 M 256 304 H 270"/>
+  <path class="head" d="M 264 346 v 12 l -8 -6 z"/>
+
+  <path class="wire" d="M 138 420 V 440"/>
+  <path class="head" d="M 132 436 h 12 l -6 9 z"/>
+  <rect class="card-exit" x="20" y="448" width="360" height="52" rx="12"/>
+  <text class="p" x="36" y="479">A few more that take no time; then the next target.</text>
+
+  <text class="small" x="20" y="524">The number and name go first: the message fills its</text>
+  <text class="small" x="20" y="540">blanks from them as it is written.</text>
+</svg>
