@@ -62,7 +62,12 @@ function write(path: string, text: string) {
 
 // The URL of every page written, for the redirects' check.
 const pagesWritten = new Set<string>();
+// Every page's text, whether from a Markdown file or the C's comments, says
+// its open questions in words (openQuestions) and its games by name
+// (gameNames); its title keeps what the source wrote.
 function page(path: string, front: Record<string, string>, body: string) {
+  if (front.description) front = { ...front, description: gameNames(front.description) };
+  body = gameNames(openQuestions(body));
   pagesWritten.add(`/${path.replace(/^\([^/)]*\)\//, '').replace(/\.mdx?$/, '').replace(/(^|\/)index$/, '')}`.replace(/(.)\/$/, '$1'));
   const head = Object.entries(front)
     .filter(([, v]) => v)
@@ -1123,10 +1128,14 @@ const SITE = 'https://alchemy.pascalpixel.com';
 // Site settings: the pages with fixed URLs, by what links to them. A game's
 // places are its map list, and the guide to its source is its src
 // folder's README (the reference, the source itself, is at /tbs/source).
+// The glossary is a page of the game's own, placed while its file exists,
+// but fixed so that the folder guides it links stay under the section pages
+// that explain them.
 const FIXED: [string, string][] = [
   ['README.md', '/'],
   ['INSTALL.md', '/start'],
   ['games/tbs/src/MATCHING.md', '/tbs/matching'],
+  ['games/tbs/glossary.md', '/tbs/glossary'],
   ['games/tbs/src/field/maps.s', '/tbs/places'],
   ['games/tbs/src', '/tbs/code'],
 ];
@@ -1320,7 +1329,6 @@ function prose(source: string, target: string, extra = '') {
     .split(/(```[\s\S]*?```|`[^`]*`)/)
     .map((p, i) => (i % 2 ? p.replace(/^`(?:\.\.\/)+([\w./-]+)`$/, '`$1`') : p.replace(/<(?![a-z/!])/g, '&lt;').replace(/[{}]/g, (c) => `\\${c}`)))
     .join('');
-  text = openQuestions(text);
   page(target, { title, description, source }, extra ? `${text.trimEnd()}\n\n${extra}` : text);
 }
 
@@ -1341,22 +1349,74 @@ function pathLabel(label: string, resolved: string): string {
 // question, from its mark to the paragraph's end, becomes a paragraph of its
 // own after the sentences before it, which lib/remark-open-questions.ts shows
 // as a note; a mark in a list item or a table, or a second one in the same
-// question, becomes the label alone. Code is left as written.
+// question, becomes the label alone. A `- XXX (picture):` item is the
+// worklist's picture still to make, not a question for a reader: the page
+// leaves it out, with its continuation lines, and a list or an `Open
+// questions:` line it leaves empty. Code is left as written.
 const XXX_MARK = /\bXXX(?: \(([a-z ]+)\))?:/;
 const XXX_LABEL: Record<string, string> = { '': 'Open question', 'no evidence': 'Open question (no evidence in reach)', picture: 'Picture still to make' };
 const xxxLabel = (kind = '') => `**${XXX_LABEL[kind] ?? `Open question (${kind})`}:**`;
+// A list item, with the lines indented under it, that is a picture still to make.
+function dropPictures(segment: string): string {
+  const lines = segment.split('\n');
+  const out: string[] = [];
+  for (let i = 0; i < lines.length; i++) {
+    const m = lines[i].match(/^(\s*)[-*+] XXX \(picture\):/);
+    if (!m) {
+      out.push(lines[i]);
+      continue;
+    }
+    while (i + 1 < lines.length && lines[i + 1].trim() && lines[i + 1].search(/\S/) > m[1].length) i++;
+  }
+  // A heading or an `Open questions:` line whose list is gone goes with it.
+  return out
+    .join('\n')
+    .replace(/^(?:#{2,6} [^\n]*[Oo]pen questions[^\n]*|(?:\/\/\/ )?Open questions:)\n(?:[ \t]*\n)*(?=#{1,6} |$(?![\s\S]))/gm, '');
+}
+// The source writes the games as ☀️ and ⚓️; a reader who arrives at a page
+// cold doesn't know them, so the text says the game's name. Beside the name
+// itself (☀️ **The Broken Seal**, **The Broken Seal** (☀️, build `tbs`)) the
+// mark goes; between a determiner and the noun it describes it loses its
+// article (no Broken Seal code, the six Broken Seal editions); anywhere else
+// it is the title (nothing in The Broken Seal calls it). Code and page titles
+// keep the marks.
+const GAME_MARKS: [RegExp, string][] = [
+  [/☀️?/, 'The Broken Seal'],
+  [/⚓️?/, 'The Lost Age'],
+];
+const DETERMINERS = new Set(['a', 'an', 'the', 'no', 'any', 'every', 'each', 'all', 'both', 'some', 'its', 'their', 'this', 'that', 'these', 'those', 'one', 'two', 'three', 'four', 'five', 'six', 'twelve', 'other']);
+function gameNames(text: string): string {
+  if (!/[☀⚓]/.test(text)) return text;
+  return text
+    .split(/(```[\s\S]*?```|`[^`]*`)/)
+    .map((part, i) => {
+      if (i % 2) return part;
+      for (const [mark, name] of GAME_MARKS) {
+        const m = mark.source;
+        const bare = name.replace(/^The /, '');
+        part = part
+          .replace(new RegExp(`${m} ?(?=[*\\[ ]*(?:Golden Sun: )?${name})`, 'g'), '')
+          .replace(new RegExp(`(${name}\\**) \\(${m}(?:, |\\))`, 'g'), (_, before: string, offset: number, all: string) => `${before}${all[offset + _.length - 1] === ')' ? '' : ' ('}`)
+          .replace(new RegExp(`(\\b[A-Za-z]+) ${m}(?=[ -][A-Za-z])`, 'g'), (all, word: string) => (DETERMINERS.has(word.toLowerCase()) ? `${word} ${bare}` : all))
+          .replace(new RegExp(m, 'g'), name);
+      }
+      return part;
+    })
+    .join('');
+}
 function openQuestions(text: string): string {
+  // A comment that points to another's mark (`see the XXX there`) means its question.
   const labels = (s: string) =>
     s
       .split(/(`[^`]*`)/)
-      .map((p, i) => (i % 2 ? p : p.replace(new RegExp(XXX_MARK.source, 'g'), (_, kind?: string) => xxxLabel(kind))))
+      .map((p, i) => (i % 2 ? p : p.replace(new RegExp(XXX_MARK.source, 'g'), (_, kind?: string) => xxxLabel(kind)).replace(/\bXXX\b(?!:| \()/g, 'open question')))
       .join('');
   return text
     .split(/(```[\s\S]*?```)/)
     .map((segment, i) =>
       i % 2
         ? segment
-        : segment
+        : dropPictures(segment)
             .split(/(\n[ \t]*\n)/)
             .map((block, j) => {
               if (j % 2 || !block.includes('XXX')) return block;
@@ -1368,7 +1428,7 @@ function openQuestions(text: string): string {
                 const found = k % 2 ? -1 : parts[k].search(XXX_MARK);
                 if (found >= 0) at = offset + found;
               }
-              if (at < 0) return block;
+              if (at < 0) return labels(block);
               const before = block.slice(0, at).trimEnd();
               const question = labels(block.slice(at));
               return before ? `${before}\n\n${question}` : question;
