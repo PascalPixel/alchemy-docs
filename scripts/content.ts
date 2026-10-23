@@ -1287,15 +1287,29 @@ function prose(source: string, target: string, extra = '') {
     if (/^[a-z]+:/.test(link) || link.startsWith('/') || !link) return all;
     const resolved = normalize(join(dirname(source), link));
     if (bang) return `![${label}](${picture(resolved) ?? `${github.replace('/blob/', '/raw/')}/${resolved}`}${hash})`;
-    return `[${label}](${siteLink(resolved)}${hash})`;
+    return `[${pathLabel(label, resolved)}](${siteLink(resolved)}${hash})`;
   });
-  // MDX would read a bare < or { as markup.
+  // MDX would read a bare < or { as markup. A bare relative path in code
+  // (`../window/battle_command/targets.c`) loses its ../, which means
+  // nothing on the site.
   text = text
     .split(/(```[\s\S]*?```|`[^`]*`)/)
-    .map((p, i) => (i % 2 ? p : p.replace(/<(?![a-z/!])/g, '&lt;').replace(/[{}]/g, (c) => `\\${c}`)))
+    .map((p, i) => (i % 2 ? p.replace(/^`(?:\.\.\/)+([\w./-]+)`$/, '`$1`') : p.replace(/<(?![a-z/!])/g, '&lt;').replace(/[{}]/g, (c) => `\\${c}`)))
     .join('');
   page(target, { title, description, source }, extra ? `${text.trimEnd()}\n\n${extra}` : text);
 }
+
+// A link whose text is the relative path it links (`../window`,
+// `../game/enemies.tsv`) reads on the site as the page it goes to: a guide's
+// title, a file's name, or a folder's path inside the game without its ../.
+function pathLabel(label: string, resolved: string): string {
+  const m = label.match(/^(`?)((?:\.\.\/)+)([^`]*)\1$/);
+  if (!m) return label;
+  const heading = headingOf(resolved) ?? headingOf(`${resolved}/README.md`);
+  if (heading) return heading;
+  return `\`${/\.\w+$/.test(m[3]) ? basename(m[3]) : m[3].replace(/\/$/, '')}\``;
+}
+
 
 // Where an arranged page's file goes: its URL as a path under the guide's
 // folder group, a folder with an index for every page that holds others (and
