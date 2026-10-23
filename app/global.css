@@ -40,10 +40,12 @@ img[src*='/pictures/'] {
   border-radius: 0;
 }
 
-/* The code's names run long (Event_LeaveToValeInteriorsShopsWestBySecondDoor),
-   so inline code, headings and the on-page table of contents may break a name
-   anywhere rather than run off a phone's screen. Code blocks keep scrolling. */
-main,
+/* The code's names run long (Event_LeaveToValeInteriorsShopsWestBySecondDoor).
+   lib/remark-code-breaks.ts puts a <wbr> after each underscore, slash and dot
+   of inline code, and a name breaks there first; a piece still too long for
+   its line breaks anywhere, so it never runs off a phone's screen. Headings
+   and the on-page table of contents break the same way. Code blocks keep
+   their lines and scroll. */
 :not(pre) > code,
 h1,
 h2,
@@ -51,32 +53,55 @@ h3,
 h4,
 #nd-toc a,
 #nd-tocnav a {
-  /* break-word, not anywhere: anywhere also lets a table's columns shrink to
-     one character, where break-word keeps their width and the table scrolls. */
+  overflow-wrap: anywhere;
+}
+main {
   overflow-wrap: break-word;
 }
-/* A heading that is a name (a place page's event, a reference entry) has no
-   spaces to break at, so it breaks between any two letters. */
-h2 > code,
-h3 > code,
-h2 a > code,
-h3 a > code {
-  word-break: break-all;
-  white-space: normal;
-}
-h2 > a,
-h3 > a {
-  min-width: 0;
-}
+
+/* Tables on a phone: the explaining column must stay readable, so a code
+   name in the first column wraps (at its underscores first) rather than
+   taking the width, the first column takes at most about 40% of a narrow
+   screen, and a table with more columns than fit still scrolls sideways
+   inside its frame (fumadocs wraps each table in a scrolling div). */
 main table {
-  display: block;
-  overflow-x: auto;
+  width: 100%;
 }
 main th,
 main td {
-  min-width: 6ch;
+  min-width: 7ch;
+  vertical-align: top;
 }
-main td:first-child,
-main th:first-child {
+main td:last-child,
+main th:last-child {
+  min-width: 14ch;
+}
+@media (max-width: 640px) {
+  main td:first-child,
+  main th:first-child {
+    max-width: 40vw;
+    min-width: 12ch;
+  }
+  main th,
+  main td {
+    padding-inline: 0.5rem;
+  }
+}
+
+/* A code block wider than its frame (a bit layout), or a table wider than
+   the screen, scrolls; a shadow at the edge it scrolls toward shows there is
+   more, and goes when the end is reached (the local backgrounds scroll with
+   the content and cover it there). */
+figure.shiki > div:has(> pre),
+div.overflow-auto:has(> table) {
+  background:
+    linear-gradient(to right, var(--color-fd-card) 30%, transparent) left / 2rem 100% no-repeat local,
+    linear-gradient(to left, var(--color-fd-card) 30%, transparent) right / 2rem 100% no-repeat local,
+    linear-gradient(to right, var(--scroll-shadow), transparent) left / 1rem 100% no-repeat scroll,
+    linear-gradient(to left, var(--scroll-shadow), transparent) right / 1rem 100% no-repeat scroll;
+  --scroll-shadow: color-mix(in oklab, var(--color-fd-foreground) 30%, transparent);
+}
+:not(pre) > code.nowrap {
   white-space: nowrap;
+  overflow-wrap: normal;
 }
