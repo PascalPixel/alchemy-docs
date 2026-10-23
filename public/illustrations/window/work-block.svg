@@ -14,6 +14,8 @@
     .code { fill: #8f8f8f; font: 400 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
     .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
     .dot { fill: #0a72ef; }
+    .px { image-rendering: pixelated; }
+    .slot { fill: none; stroke: #a3a3a3; stroke-dasharray: 3 3; }
     .dot-grey { fill: #a3a3a3; }
     .w3 { fill: none; stroke: #0a72ef; stroke-width: 2; }
     @media (prefers-color-scheme: dark) {
@@ -26,6 +28,7 @@
       .h2 { fill: #ededed; }
       .small, .code, .eyebrow { fill: #7c7c7c; }
       .k { fill: #66a6ff; }
+      .slot { stroke: #5c5c5c; }
       .dot-grey { fill: #5c5c5c; }
       .dot { fill: #3b8eff; }
       .w3 { stroke: #3b8eff; }
@@ -98,8 +101,11 @@
 
   <!-- portraits -->
   <g class="chip"><rect x="36" y="480" width="40" height="40" rx="4"/><rect x="84" y="480" width="40" height="40" rx="4"/></g>
-  <circle class="dot" cx="56" cy="496" r="7" fill-opacity="0.5"/><path class="dot" d="M 44 516 q 12 -14 24 0 z" fill-opacity="0.5"/>
-  <circle class="dot" cx="104" cy="496" r="7" fill-opacity="0.5"/><path class="dot" d="M 92 516 q 12 -14 24 0 z" fill-opacity="0.5"/>
+  <!-- Garet's sister's portrait in its slot, cut from the sprites of
+       render guide talk-layers-3d in Vale, at its own size; the second slot
+       is empty while she talks. -->
+  <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgBAMAAACBVGfHAAAAJ1BMVEWEEIzOQgD/YwDenHuEMQAASnP/5629e1r3xoxaGAB7WgBSOQD///8mq07RAAABX0lEQVQoz02SsU7DMBRFHZqhsL3UwGzzBSQorTIR5A7eWPiCSlYGliqoRlkjpRlbKRKyxIDEYDV8QcvP8ewQxNt8dO71cxRCCAkiziDi/IYtn4ibWcw5cM7TGJaPDqQInKBiRp0SrFB4wPMKkw5MYg4UI0nMI1i6Cg6gtSthjF0iQLFs2zkAj7wRcCgbpYo1AGNUEnLGrhcKp0UCuQezxoGipjgOwKvyRnuX5wJBALpPldr2vRbeCKlu0SnbuRXCGYQmValU/XXSLwMQmfnEiDT2F4TaFFhK30eDJPQKwW2eVJkwDiwSv0idlHYAqd8DN9NWdv+AqitrfMdGPQ8ZnXXemCrln1eXByMcmPxGtr3pcv/ZG7yhUUVmjBzAdOg8mNEIN+7W7Phn0Dc8z/vjaATU2GTeV2I0AtnJ75OtqOkGA+Se9lYD3Z0PBjV7pvUaJAk7t9iF/gjdD0F3tronP/uwiYjTOo1tAAAAAElFTkSuQmCC" class="px" data-crop="crops/window/talk-portrait.png" x="40" y="484" width="32" height="32"/>
+  <rect class="slot" x="88" y="484" width="32" height="32" rx="3"/>
   <text class="h2" x="148" y="496">2 portraits</text>
   <text class="small" x="148" y="514">the faces beside a message</text>
 
