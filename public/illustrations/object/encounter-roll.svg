@@ -1,13 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 592" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 640" role="img" aria-labelledby="title desc">
   <title id="title">How a random battle starts</title>
-  <desc id="desc">Each frame the leader moves, a counter fills by a step, and a battle starts when it is full. The step is bigger on ground whose zone has a higher rate, bigger when the party's level is above the zone's, and varies by a random amount drawn again after each battle; it grows with the leader's speed, so the counter measures distance walked rather than time. There are no battles at all while Cloak is active, on ground with no zone, while a flag turns them off, or with Avoid active where the party's level is above the zone's. When the counter is full, one of the zone's enemy groups is drawn by weight. In the Sol Sanctum's corridor, Vermin come one time in six, Bats one in three, Wild Mushrooms one in three, and a mix of the three one in six.</desc>
+  <desc id="desc">Each frame the leader moves, a counter fills by a step, and a battle starts when it is full. Each zone sets how far the party walks between battles: the higher the zone's rate, the smaller the steps and the farther apart its battles. Each level, up to five, by which the party's average level is above the zone's raises that rate, so a party that has outgrown a zone meets its battles less often. A random part, drawn again after each battle, varies the gap. The steps grow with the leader's speed, so the counter measures distance walked rather than time. There are no battles at all while Cloak is active, on ground with no zone, while a flag turns them off, or with Avoid active where the party's level is above the zone's. When the counter is full, one of the zone's enemy groups is drawn by weight. In the Sol Sanctum's corridor, Vermin come one time in six, Bats one in three, Wild Mushrooms one in three, and a mix of the three one in six.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
     .card-exit { fill: #fafafa; stroke: #a3a3a3; stroke-dasharray: 4 4; }
     .meter { fill: #f5f5f5; stroke: #d4d4d4; }
     .fill1 { fill: #0a72ef; fill-opacity: 0.85; }
-    .fill2 { fill: #0a72ef; fill-opacity: 0.55; }
     .tick { stroke: #ffffff; stroke-width: 2; }
     .full { stroke: #c2410c; stroke-width: 2; stroke-dasharray: 3 3; }
     .chip-exit { fill: #fff3f0; stroke: #f6c3b7; }
@@ -18,9 +17,9 @@
     .k { fill: #0a72ef; font: 600 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
     .kx { fill: #c2410c; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
     .tagx { fill: #c2410c; font: 600 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-    .small { fill: #737373; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-    .code { fill: #8f8f8f; font: 400 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-    .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
+    .small { fill: #737373; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { fill: #8f8f8f; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
     .dot { fill: #0a72ef; }
     @media (prefers-color-scheme: dark) {
       .panel { fill: #0a0a0a; stroke: #262626; }
@@ -28,7 +27,6 @@
       .card-exit { fill: #0a0a0a; stroke: #525252; }
       .meter { fill: #1a1a1a; stroke: #333333; }
       .fill1 { fill: #3b8eff; }
-      .fill2 { fill: #3b8eff; }
       .tick { stroke: #111111; }
       .full { stroke: #fb8b5e; }
       .chip-exit { fill: #2a130c; stroke: #5c2a1a; }
@@ -44,56 +42,58 @@
     }
   </style>
 
-  <rect class="panel" x="0.5" y="0.5" width="399" height="591" rx="16"/>
+  <rect class="panel" x="0.5" y="0.5" width="399" height="639" rx="16"/>
   <text class="eyebrow" x="20" y="32">EACH FRAME THE LEADER MOVES</text>
 
   <!-- The counter -->
-  <rect class="card" x="20" y="44" width="360" height="200" rx="12"/>
+  <rect class="card" x="20" y="44" width="360" height="232" rx="12"/>
   <text class="h" x="36" y="70">A counter fills a step at a time</text>
   <rect class="meter" x="36" y="84" width="300" height="22" rx="6"/>
   <rect class="fill1" x="36" y="84" width="196" height="22" rx="6"/>
   <path class="tick" d="M 70 84 V 106 M 108 84 V 106 M 140 84 V 106 M 178 84 V 106 M 212 84 V 106"/>
   <path class="full" d="M 336 78 V 112"/>
   <text class="tagx" x="344" y="100">full</text>
-  <text class="small" x="36" y="124">one step each frame</text>
-  <text class="small" x="336" y="124" text-anchor="end">a battle starts</text>
-  <circle class="dot" cx="42" cy="148" r="3.5"/>
-  <text class="p" x="52" y="153">The ground's zone sets the size of a step.</text>
-  <circle class="dot" cx="42" cy="172" r="3.5"/>
-  <text class="p" x="52" y="177">Steps grow when the party outlevels it.</text>
-  <circle class="dot" cx="42" cy="196" r="3.5"/>
-  <text class="p" x="52" y="201">A random part, drawn after each battle,</text>
-  <text class="p" x="52" y="219">varies the gap between battles.</text>
-  <text class="code" x="364" y="236" text-anchor="end">gGameState.encounterSteps</text>
+  <text class="small" x="36" y="126">one step each frame</text>
+  <text class="small" x="336" y="126" text-anchor="end">a battle starts</text>
+  <circle class="dot" cx="42" cy="152" r="3.5"/>
+  <text class="p" x="52" y="157">Each zone sets how far the party walks</text>
+  <text class="p" x="52" y="175">between battles: a higher rate means</text>
+  <text class="p" x="52" y="193">smaller steps.</text>
+  <circle class="dot" cx="42" cy="212" r="3.5"/>
+  <text class="p" x="52" y="217">A party above the zone's level adds to</text>
+  <text class="p" x="52" y="235">the rate, so it meets fewer battles.</text>
+  <circle class="dot" cx="42" cy="254" r="3.5"/>
+  <text class="p" x="52" y="259">A random part varies each gap anew.</text>
 
   <!-- No battles -->
-  <rect class="card-exit" x="20" y="256" width="360" height="136" rx="12"/>
-  <text class="h" x="36" y="282">No battles at all</text>
-  <rect class="chip-exit" x="36" y="294" width="64" height="26" rx="13"/>
-  <text class="kx" x="68" y="312" text-anchor="middle">Cloak</text>
-  <rect class="chip-exit" x="106" y="294" width="150" height="26" rx="13"/>
-  <text class="kx" x="181" y="312" text-anchor="middle">ground with no zone</text>
-  <rect class="chip-exit" x="36" y="326" width="156" height="26" rx="13"/>
-  <text class="kx" x="114" y="344" text-anchor="middle">a flag turns them off</text>
-  <rect class="chip-exit" x="36" y="358" width="292" height="26" rx="13"/>
-  <text class="kx" x="182" y="376" text-anchor="middle">Avoid, where the party outlevels the zone</text>
+  <rect class="card-exit" x="20" y="288" width="360" height="136" rx="12"/>
+  <text class="h" x="36" y="314">No battles at all</text>
+  <rect class="chip-exit" x="36" y="326" width="76" height="28" rx="14"/>
+  <text class="kx" x="74" y="345" text-anchor="middle">Cloak</text>
+  <rect class="chip-exit" x="118" y="326" width="166" height="28" rx="14"/>
+  <text class="kx" x="201" y="345" text-anchor="middle">ground with no zone</text>
+  <rect class="chip-exit" x="36" y="358" width="176" height="28" rx="14"/>
+  <text class="kx" x="124" y="377" text-anchor="middle">a flag turns them off</text>
+  <rect class="chip-exit" x="36" y="390" width="328" height="28" rx="14"/>
+  <text class="kx" x="200" y="409" text-anchor="middle">Avoid, where the party is above the zone</text>
 
   <!-- Which enemies -->
-  <rect class="card" x="20" y="404" width="360" height="172" rx="12"/>
-  <text class="h" x="36" y="430">When it is full: which enemies?</text>
-  <text class="p" x="36" y="452">One of the zone's groups, drawn by weight.</text>
-  <text class="eyebrow" x="36" y="480">THE SOL SANCTUM'S CORRIDOR</text>
-  <rect class="w0" x="36" y="490" width="54" height="34" rx="6"/>
-  <rect class="w1" x="92" y="490" width="106" height="34" rx="6"/>
-  <rect class="w0" x="200" y="490" width="106" height="34" rx="6"/>
-  <rect class="w1" x="308" y="490" width="56" height="34" rx="6"/>
-  <text class="k" x="63" y="512" text-anchor="middle">Vermin</text>
-  <text class="k" x="145" y="512" text-anchor="middle">Bats</text>
-  <text class="k" x="253" y="512" text-anchor="middle">Wild Mushrooms</text>
-  <text class="k" x="336" y="512" text-anchor="middle">a mix</text>
-  <text class="small" x="63" y="542" text-anchor="middle">1 in 6</text>
-  <text class="small" x="145" y="542" text-anchor="middle">1 in 3</text>
-  <text class="small" x="253" y="542" text-anchor="middle">1 in 3</text>
-  <text class="small" x="336" y="542" text-anchor="middle">1 in 6</text>
-  <text class="code" x="364" y="566" text-anchor="end">Encounter_SelectEnemyGroup · encounter.tsv</text>
+  <rect class="card" x="20" y="436" width="360" height="184" rx="12"/>
+  <text class="h" x="36" y="462">When it is full: which enemies?</text>
+  <text class="p" x="36" y="484">One of the zone's groups, drawn by weight.</text>
+  <text class="eyebrow" x="36" y="512">THE SOL SANCTUM'S CORRIDOR</text>
+  <rect class="w0" x="36" y="522" width="54" height="48" rx="6"/>
+  <rect class="w1" x="92" y="522" width="106" height="48" rx="6"/>
+  <rect class="w0" x="200" y="522" width="106" height="48" rx="6"/>
+  <rect class="w1" x="308" y="522" width="56" height="48" rx="6"/>
+  <text class="k" x="63" y="551" text-anchor="middle">Vermin</text>
+  <text class="k" x="145" y="551" text-anchor="middle">Bats</text>
+  <text class="k" x="253" y="543" text-anchor="middle">Wild</text>
+  <text class="k" x="253" y="560" text-anchor="middle">Mushrooms</text>
+  <text class="k" x="336" y="551" text-anchor="middle">a mix</text>
+  <text class="small" x="63" y="590" text-anchor="middle">1 in 6</text>
+  <text class="small" x="145" y="590" text-anchor="middle">1 in 3</text>
+  <text class="small" x="253" y="590" text-anchor="middle">1 in 3</text>
+  <text class="small" x="336" y="590" text-anchor="middle">1 in 6</text>
+  <text class="code" x="380" y="630" text-anchor="end">Encounter_SelectEnemyGroup</text>
 </svg>
