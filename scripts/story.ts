@@ -842,9 +842,11 @@ const SHOW_MESSAGE = new Set(['Engine_ScriptShowMessage', 'Script_ShowMessage', 
 const ASK_MESSAGE = new Set(['Engine_ScriptAskYesNo', 'Script_AskYesNo', 'FieldScript_AskYesNoAndShowResponse']);
 const TWO_MESSAGES = new Set(['Engine_ScriptShowTwoMessagesAndWait', 'Script_ShowTwoMessagesAndWait', 'Battle_ShowPairedUnitWorkAndWait']);
 const DIRECT_MESSAGE = new Set(['Engine_MessageShowCentered', 'Message_ShowCentered', 'FieldMessage_ShowCentered', 'FieldMessage_Show', 'FieldMessage_ShowFar']);
-const FLAG_SET = new Set(['GameFlag_Set', 'FLAG_SET', 'Engine_GameFlagSet', 'FieldScript_GameFlagSet', 'GameFlag_SetBitFar', 'GameFlag_SetBit']);
-const FLAG_CLEAR = new Set(['GameFlag_Clear', 'Engine_GameFlagClear', 'FieldScript_GameFlagClear', 'GameFlag_ClearBitFar', 'GameFlag_ClearBit']);
-const FLAG_TEST = new Set(['GameFlag_IsSet', 'FLAG_CHECK', 'Engine_GameFlagIsSet', 'FieldScript_GameFlagIsSet', 'GameFlag_TestFar', 'GameFlag_Test']);
+// The game flags' verbs, their far-call stubs and the script layer's inlines;
+// Engine_GameFlagSet is the void import two maps match with.
+const FLAG_SET = new Set(['GameFlag_Set', 'GameFlag_SetFar', 'Script_SetFlag', 'Engine_GameFlagSet']);
+const FLAG_CLEAR = new Set(['GameFlag_Clear', 'GameFlag_ClearFar', 'Script_ClearFlag']);
+const FLAG_TEST = new Set(['GameFlag_Get', 'GameFlag_GetFar', 'Script_GetFlag']);
 const MAX_VALUES = 48;
 
 const litKey = (l: Lit) => `${l.pos ? '+' : '-'}${l.k}`;

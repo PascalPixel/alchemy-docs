@@ -80,7 +80,7 @@ function page(path: string, front: Record<string, string>, body: string) {
 // and Markdown would read as syntax are escaped, code spans kept as written.
 // A name the code uses, written bare in a comment: anything with an
 // underscore (KALAY_TO_WORLD_MAP, MapId_Kalay, Map_TakeWarp), a global
-// and the fields it is read through (gGameState.mapId), a message
+// and the fields it is read through (gSaveBlock.mapId), a message
 // (MsgKalayWelcomeInPeace) or a file name (kalay_interiors.c). Prose shows it
 // as code, which linkNames links; codeDeclared catches the other names the
 // code declares once every file is read.
@@ -1166,12 +1166,16 @@ const MOVED_ANCHORS: Record<string, Record<string, string>> = {
   // battle animations, cues songs, the scheduler the task runner, render
   // outputs window sprites, field objects objects.
   '/tbs/world': { 'field-objects-and-their-scripts': '/tbs/world#objects-and-their-scripts' },
+  // The folds of October 2026 gave the engine's views of an object one
+  // struct, and a battle sprite one struct.
+  '/tbs/world/field': { 'one-object-many-views': '/tbs/world/field#one-object-a-few-views' },
   '/tbs/world/layout': { 'tile-animation-and-blend-scripts': '/tbs/world/layout#tileset-animation-and-blend-scripts' },
   '/tbs/battle': { effects: '/tbs/battle#animations', 'rules-and-effects-run-together': '/tbs/battle#rules-and-animations-run-together' },
   '/tbs/battle/battle': {
     'first-strikes-and-escape': '/tbs/battle/battle#first-strikes-and-fleeing',
     'planning-an-action': '/tbs/battle/battle#building-a-turn',
     'rules-and-pictures-meet-at-the-event-queue': '/tbs/battle/battle#rules-and-pictures-meet-at-the-playback-queue',
+    'one-sprite-several-structs': '/tbs/battle/battle#one-sprite-one-struct',
   },
   '/tbs/battle/battle_anim': {
     'how-a-move-picks-its-effect': '/tbs/battle/battle_anim#how-a-move-picks-its-animation',
