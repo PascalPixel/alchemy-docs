@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 602" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 578" role="img" aria-labelledby="title desc">
   <title id="title">Two pools of particles</title>
-  <desc id="desc">A particle is one spark, ember or shard: its position, its speed and one spare number for its life or picture. An effect has two fixed pools of them. Its own holds 64, and Heat Wave keeps a target's seven fireballs in the first seven. The second, 1,170 more, borrows the memory that holds the field's map, which the battle does not need while an effect plays. Heat Wave divides its first 1,024 into ranges: hit flashes, the forty sparks each hit throws, and the two trails each fireball leaves every frame; it leaves the rest unused. A finished particle's place is reused, so neither pool grows.</desc>
+  <desc id="desc">A particle is one spark, ember or shard: its position, its speed and one spare number for its life or picture. An effect has two fixed pools of them. Its own holds 64, and Heat Wave keeps a target's seven fireballs in the first seven. The second, 1,170 more, borrows the memory that holds the field's map, which the battle does not need while an effect plays. Heat Wave divides its first 1,024 into ranges: hit flashes, which it keeps but never draws, the forty sparks each hit throws, and the two trails each fireball leaves every frame; it leaves the rest unused. A finished particle's place is reused, so neither pool grows.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
@@ -56,7 +56,7 @@
     }
   </style>
 
-  <rect class="panel" x="0.5" y="0.5" width="399" height="601" rx="16"/>
+  <rect class="panel" x="0.5" y="0.5" width="399" height="577" rx="16"/>
 
   <text class="eyebrow" x="20" y="30">WHERE HEAT WAVE'S PARTICLES LIVE</text>
   <text class="p" x="20" y="54">A particle is one spark, ember or shard: where</text>
@@ -78,8 +78,8 @@
   <text class="small" x="340.05" y="352" text-anchor="middle">unused</text>
 
   <rect class="c-flash" x="40" y="368" width="12" height="12" rx="2"/>
-  <text class="kw" x="60" y="378">Hit flashes</text>
-  <text class="small" x="60" y="395">one for each hit, though Heat Wave draws none</text>
+  <text class="kw" x="60" y="378">Hit flashes, kept but not shown</text>
+  <text class="small" x="60" y="395">one a hit: Heat Wave lights it, never draws it</text>
 
   <rect class="c-spark" x="40" y="408" width="12" height="12" rx="2"/>
   <text class="kw" x="60" y="418">Sparks</text>
@@ -92,6 +92,4 @@
   <text class="p" x="20" y="514">Each effect splits the pools into ranges of its</text>
   <text class="p" x="20" y="533">own. A finished particle's place is taken by the</text>
   <text class="p" x="20" y="552">next, so neither pool ever grows.</text>
-  <text class="code" x="20" y="584">work-&gt;particles</text>
-  <text class="code" x="380" y="584" text-anchor="end">PARTICLES</text>
 </svg>

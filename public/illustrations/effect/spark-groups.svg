@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 570" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 544" role="img" aria-labelledby="title desc">
   <title id="title">A burst of sparks</title>
   <desc id="desc">One burst of Nova, drawn on the canvas, with every second frame of a third of its sparks overlaid. A big white flash shows for two frames. Around it a ring of twelve small flashes lights up, each a little further out and a little later than the one before. Sparks fly out in every direction, fall, bounce back at half their speed from a line near the bottom of the canvas, and shrink as their lives run out. Blast and Fire Bomb throw one burst of 128 sparks, Nova and Cluster Bomb one of 255, and Supernova and Carpet Bomb three bursts of 192, eight frames apart.</desc>
   <style>
@@ -55,7 +55,7 @@
     }
   </style>
 
-  <rect class="panel" x="0.5" y="0.5" width="399" height="569" rx="16"/>
+  <rect class="panel" x="0.5" y="0.5" width="399" height="543" rx="16"/>
 
   <text class="eyebrow" x="40" y="32">ONE BURST OF NOVA, ON PART OF THE CANVAS</text>
   <rect class="stage" x="40" y="44" width="240" height="280"/>
@@ -89,5 +89,4 @@
 
   <text class="kw" x="40" y="494">Supernova, Carpet Bomb</text>
   <text class="small" x="40" y="511">three of 192, eight frames apart</text><path class="star" d="M 292 480 l 4 8 l 8 3 l -8 3 l -4 8 l -4 -8 l -8 -3 l 8 -3 z"/><path class="star" d="M 316 480 l 4 8 l 8 3 l -8 3 l -4 8 l -4 -8 l -8 -3 l 8 -3 z"/><path class="star" d="M 340 480 l 4 8 l 8 3 l -8 3 l -4 8 l -4 -8 l -8 -3 l 8 -3 z"/>
-  <text class="code" x="20" y="552">BattleEffect_RunSparkGroups</text>
 </svg>

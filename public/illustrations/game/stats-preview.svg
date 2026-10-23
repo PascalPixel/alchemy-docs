@@ -88,8 +88,7 @@
 
   <rect class="card-accent" x="60" y="180" width="320" height="56" rx="12"/>
   <text class="kb" x="36" y="214" text-anchor="middle">3</text>
-  <text class="h" x="80" y="206">Work out every stat again</text>
-  <text class="code" x="80" y="225">Unit_Calculate</text>
+  <text class="h" x="80" y="214">Work out every stat again</text>
 
   <rect class="card" x="60" y="248" width="320" height="104" rx="12"/>
   <text class="kb" x="36" y="282" text-anchor="middle">4</text>

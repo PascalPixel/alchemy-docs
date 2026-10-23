@@ -114,5 +114,4 @@
   <text class="p" x="36" y="524">+5% a level the party is ahead.</text>
   <text class="p" x="36" y="550">A failed try: the enemies take the</text>
   <text class="p" x="36" y="569">rest of the round, as in a surprise.</text>
-  <text class="code" x="364" y="462" text-anchor="end">BattleEscape_CheckSuccess</text>
 </svg>

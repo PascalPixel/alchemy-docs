@@ -109,5 +109,4 @@
   <rect class="bar" x="277" y="366" width="4" height="14" rx="1"/>
   <text class="small" x="279" y="398" text-anchor="middle">95</text>
   <text class="p" x="36" y="430">One byte each.</text>
-  <text class="code" x="36" y="446">gItemCounters</text>
 </svg>

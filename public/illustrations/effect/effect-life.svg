@@ -64,7 +64,6 @@
   <text class="h17" x="96" y="186">Move</text>
   <text class="p" x="80" y="210">Every spark, ember and shard takes one</text>
   <text class="p" x="80" y="229">step along its path.</text>
-  <text class="code" x="80" y="244">EffectStep_AdvanceWithGravity2D</text>
   <path class="wire-accent" d="M 350 174 a 12 12 0 1 1 -10 -5"/>
   <path class="head-accent" d="M 336 164 l 8 1 l -4 7 z"/>
 
@@ -75,7 +74,6 @@
   <text class="h17" x="80" y="312">Draw on the canvas</text>
   <text class="p" x="80" y="336">Each picture is stamped into the canvas,</text>
   <text class="p" x="80" y="355">a small picture kept out of sight.</text>
-  <text class="code" x="80" y="372">BattleEffect_BuildBlitter</text>
 
   <path class="wire" d="M 220 382 V 406"/>
   <path class="head" d="M 214 402 h 12 l -6 9 z"/>
@@ -85,7 +83,6 @@
   <text class="p" x="80" y="464">The effect waits for the next frame, while</text>
   <text class="p" x="80" y="483">the canvas is copied to the screen and</text>
   <text class="p" x="80" y="502">what stays on it fades a little.</text>
-  <text class="code" x="80" y="520">EFFECT_PRESENT_FRAME</text>
 
   <path class="wire-accent" d="M 60 470 H 30 V 204 H 54"/>
   <path class="head-accent" d="M 51 198 v 12 l 9 -6 z"/>
@@ -97,5 +94,4 @@
   <rect class="card-exit" x="60" y="562" width="320" height="62" rx="12"/>
   <text class="h17" x="80" y="588">Clean up</text>
   <text class="p" x="80" y="610">Stop the copying, free what was built.</text>
-  <text class="code" x="360" y="588" text-anchor="end">EFFECT_FINISH_CANVAS</text>
 </svg>

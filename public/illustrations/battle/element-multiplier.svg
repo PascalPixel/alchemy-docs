@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 500" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 480" role="img" aria-labelledby="title desc">
   <title id="title">The element multiplier</title>
   <desc id="desc">A graph of the damage multiplier against how far the attacker's Power in the ability's element is ahead of the target's Resist in it, from 200 points behind to 200 ahead. For Psynergy the multiplier is a straight line from nothing at 200 behind, through 1 at an even match, to double at 200 ahead: half a percent for each point. A blow feels the element at half strength, from 0.5 to 1.5. Past 200 points either way it stops changing. Avalanche's 20 points ahead in the worked example gives about 1.1. An ability with no element is always at 1.</desc>
   <style>
@@ -73,7 +73,7 @@
     }
   </style>
 
-  <rect class="panel" x="0.5" y="0.5" width="399" height="499" rx="16"/>
+  <rect class="panel" x="0.5" y="0.5" width="399" height="479" rx="16"/>
   <text class="eyebrow" x="20" y="30">HOW MUCH THE ELEMENT COUNTS</text>
 
   <!-- plot: x 60..340 is -200..+200 points (0.7 a point); y 300 is x0, 200 x1, 100 x2 -->
@@ -107,7 +107,6 @@
   <text class="h" x="46" y="399">A blow</text>
   <text class="sub" x="134" y="399">half as much: ×0.5 to ×1.5</text>
 
-  <rect class="card-exit" x="20" y="420" width="360" height="62" rx="12"/>
-  <text class="p" x="36" y="444">No element: always ×1.</text>
-  <text class="code" x="36" y="466">Battle_GetElementMultiplier</text>
+  <rect class="card-exit" x="20" y="420" width="360" height="40" rx="12"/>
+  <text class="p" x="36" y="445">No element: always ×1.</text>
 </svg>

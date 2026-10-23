@@ -102,7 +102,6 @@
   <text class="kw" x="20" y="240">Ward</text>
   <rect class="bar" x="136" y="228" width="37.4" height="16" rx="3"/>
   <text class="small" x="380" y="240" text-anchor="end">11</text>
-  <text class="code" x="20" y="268">ACTION_STRATEGY_FALLING</text>
 
   <!-- round start -->
   <rect class="card-accent" x="20" y="284" width="360" height="104" rx="12"/>

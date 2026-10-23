@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 502" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 486" role="img" aria-labelledby="title desc">
   <title id="title">How trails fade</title>
   <desc id="desc">After the canvas is copied to the screen, the effect's transfer mode decides what the canvas keeps for the next frame. Four strips show a spark that has moved right for fifteen frames. Cleared, as Quake does, it leaves no trail. Halved each frame, as Heat Wave does, it leaves a short trail that is gone in six frames. Kept at three quarters, as the Djinn attacks do, the trail lasts twelve frames. Lowered by a fixed step of 4, as Drain does, the trail lasts sixteen frames and stays bright to the end.</desc>
   <style>
@@ -47,7 +47,7 @@
     }
   </style>
 
-  <rect class="panel" x="0.5" y="0.5" width="399" height="501" rx="16"/>
+  <rect class="panel" x="0.5" y="0.5" width="399" height="485" rx="16"/>
 
   <text class="eyebrow" x="20" y="30">AFTER EACH COPY, THE CANVAS IS</text>
   <text class="p" x="20" y="54">A spark moving right for fifteen frames,</text>
@@ -72,5 +72,4 @@
   <path class="wire" d="M 40 442 H 354"/>
   <path class="head" d="M 352 436 v 12 l 9 -6 z"/>
   <text class="small" x="40" y="460">the spark's way: 4 pixels a frame</text>
-  <text class="code" x="20" y="484">BattleEffect_ProcessPendingGraphicsTransfer</text>
 </svg>
