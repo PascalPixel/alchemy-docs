@@ -1,11 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 520" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 540" role="img" aria-labelledby="title desc">
   <title id="title">What one cell of a layout says</title>
-  <desc id="desc">A layout is a grid of square cells, 16 pixels on a side. Each cell says three things. What is drawn there: one metatile, a picture 16 pixels square made of 2 by 2 tiles, each tile an 8-pixel square picture, the smallest piece the console builds a background from. How high its ground is: flat, a slope or a step, which decides whether the leader can step onto it. And what standing there does: nothing on open ground, or a wall, a spot this map's events name such as a door, a chest or a ladder, ground where battles start, or a ledge to jump down.</desc>
+  <desc id="desc">Nine cells of Vale, a grass corner against a cliff, as the game draws them, with the middle cell outlined and its four tiles dotted. A layout is a grid of square cells, 16 pixels on a side. Each cell says three things. What is drawn there: one metatile, a picture 16 pixels square made of 2 by 2 tiles, each tile an 8-pixel square picture, the smallest piece the console builds a background from. How high its ground is: flat, a slope or a step, which decides whether the leader can step onto it. And what standing there does: nothing on open ground, or a wall, a spot this map's events name such as a door, a chest or a ladder, ground where battles start, or a ledge to jump down.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
-    .cell { fill: #ffffff; stroke: #d4d4d4; }
-    .cell-on { fill: #f0f6ff; stroke: #0a72ef; stroke-width: 2; }
-    .tile { fill: none; stroke: #93c5fd; stroke-width: 1; stroke-dasharray: 2 2; }
+    .cell-on { fill: none; stroke: #0a72ef; stroke-width: 2; }
+    .px { image-rendering: pixelated; }
+    .grid { fill: none; stroke: #ffffff; stroke-opacity: 0.6; stroke-width: 1; }
+    .tile-on { fill: none; stroke: #ffffff; stroke-width: 1; stroke-dasharray: 2 2; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
     .lead { stroke: #0a72ef; stroke-width: 1.5; fill: none; }
     .chip { fill: #f5f5f5; stroke: #d4d4d4; }
@@ -18,9 +19,7 @@
     .num { fill: #0a72ef; }
     @media (prefers-color-scheme: dark) {
       .panel { fill: #0a0a0a; stroke: #262626; }
-      .cell { fill: #111111; stroke: #333333; }
-      .cell-on { fill: #0d1a2e; stroke: #3b8eff; }
-      .tile { stroke: #2b5299; }
+      .cell-on { fill: none; stroke: #3b8eff; }
       .card { fill: #111111; stroke: #2e2e2e; }
       .lead { stroke: #3b8eff; }
       .chip { fill: #1a1a1a; stroke: #333333; }
@@ -32,32 +31,32 @@
     }
   </style>
 
-  <rect class="panel" x="0.5" y="0.5" width="399" height="519" rx="16"/>
+  <rect class="panel" x="0.5" y="0.5" width="399" height="539" rx="16"/>
   <text class="eyebrow" x="20" y="32">ONE CELL OF A LAYOUT</text>
 
-  <!-- the grid -->
-  <rect class="cell" x="20" y="48" width="40" height="40"/><rect class="cell" x="60" y="48" width="40" height="40"/><rect class="cell" x="100" y="48" width="40" height="40"/>
-  <rect class="cell" x="20" y="88" width="40" height="40"/><rect class="cell" x="100" y="88" width="40" height="40"/>
-  <rect class="cell" x="20" y="128" width="40" height="40"/><rect class="cell" x="60" y="128" width="40" height="40"/><rect class="cell" x="100" y="128" width="40" height="40"/>
-  <rect class="cell-on" x="60" y="88" width="40" height="40"/>
-  <path class="tile" d="M 80 88 V 128 M 60 108 H 100"/>
-  <text class="tag" x="80" y="190" text-anchor="middle">a cell: 16 pixels</text>
-  <text class="tag" x="80" y="207" text-anchor="middle">square</text>
-  <path class="lead" d="M 100 108 H 160"/>
+  <!-- the grid: nine cells of Vale, from render place, scene ValeGate, map-0.png cut 48x48+400+432 on the 16-pixel cell grid, drawn at three times their size -->
+  <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAAASFBMVEWUYzmEUjlzSjFjOSlSIRhaKSGcc0q1nFLGtVrWxmutjFpCGCFSxmNanEJKpYR79zFKnHut/1Jz7zFz9zFj5zGU/znW/1JKrZQ2LWS7AAADfUlEQVRIx31WgZajIBAbQAZELKu29f//9BLEVtl9R1tFmTBJmHm7IsZYN3jnrLfWGmNUQxyjxHGMIQYJKQRNIcZwDEGU9cPgeLXOiBENWJYwjkFj1IRowQ94gpJ4hA7T4JwbBsH2RoDgzjEmXEICHgCmBaQCnJsIQAqRZCxQiDP4qYBCBZgEog0AHgAg3DoA1LhKKtmELIYApkNmTQ3grHHTALnACK7OWCBOQKSeACdSSrAC+QBQsPfWWPB3nuqNkWQVEkyg0pEAGsR4hQaFPwBIUu/h1KHCSlRjxi8A0VAFT7wLwjA4p3bwA4xVgZMShQAgxlQBMTHeyOCDhbUCkmqmYaJCuKMVEOtIxmE7yMcbAOD+YClK1U6eALoDECZB6RI40yYFBTCHo36QA+AnOzGtgXsVoAY8AgGsmQAPRSbjp0m4gYib7KDw1oLdAQBVAuA9VAZ1ojJB8mQFzHEEkwFBB8pgS4FwFkkAYGmCHgEWOzNhLTuFHGznmUbBNypY4cF5fHBQYMRyUerElM7iXa0RsAWNMXENCXBC5A83RTIxYQbnGWWWH4r+QNF71kpIpu8XyeUHEMnznPNPDjlntWTkSJyV0/WLLCWvc57XPOcCcNmQo/EAwLi+X6QspZT1pyAas7xsSAEvwJesKffeL7JgFHzLutTplrd2KNCJk+r75chQamzFbdszPx8g5SBbyOveL1K6sRGRQck69VKV3/rlD8Bzg46HwaYoIdv3iyyXYM5fG0d+PMTyY/t+kVt81bC9XkiRWa8g1vdLE13WFl+2miI/s+qDx9H3ixzR6wfB8OehAwcitu8X+cZ/XdqeryfOA0kA6PpF7vELXXrxS3dRu/5Xvxz8P5qb6DqAePi+X6SLP87hiK/n0feLhHyJLh/HVnzqrO8XAJo/yzd+Wd8sxvrU9wvg+Z4BDnD3pb3s+4Xg3OKPGISzbN9EvVu9XPpFwpwboxOFKwLf5LW0wr/0CzTkazwyUETtjnfjdOsXasjnzl8lCzUvy3qt5WOQ0jeqIhBFl05uvwAXj5ryz/x6P+cVcNX7n1HX20l/++HTH/29rVdbr/1w9kd/Xy8Z1vXSD1xvz2fd3/qFNVXKjBf7fPLZ97KvbWfcVzzs5Vxnp88zvnMQvmW8hB3znTi+4pj3cx2AUL/4my/7HiJi64u94sI+80+I8N+UY/0fC91Wcnf8ghgAAAAASUVORK5CYII=" class="px" data-crop="crops/world/vale-cells.png" x="20" y="48" width="144" height="144"/>
+  <path class="grid" d="M 68 48 V 192 M 116 48 V 192 M 20 96 H 164 M 20 144 H 164"/>
+  <path class="tile-on" d="M 92 96 V 144 M 68 120 H 116"/>
+  <rect class="cell-on" x="68" y="96" width="48" height="48"/>
+  <text class="tag" x="92" y="214" text-anchor="middle">a cell: 16 pixels square</text>
+  <path class="lead" d="M 164 106 H 180"/>
 
   <!-- the three things -->
-  <rect class="card" x="160" y="44" width="220" height="104" rx="10"/>
-  <circle class="num" cx="178" cy="66" r="5"/>
-  <text class="h" x="194" y="71">What is drawn</text>
-  <text class="p" x="176" y="96">one metatile: a 16-pixel</text>
-  <text class="p" x="176" y="115">picture of 2 by 2 tiles, each</text>
-  <text class="p" x="176" y="134">an 8-pixel square (dotted)</text>
+  <rect class="card" x="180" y="44" width="200" height="124" rx="10"/>
+  <circle class="num" cx="198" cy="66" r="5"/>
+  <text class="h" x="214" y="71">What is drawn</text>
+  <text class="p" x="196" y="96">one metatile: a picture</text>
+  <text class="p" x="196" y="115">16 pixels square, made</text>
+  <text class="p" x="196" y="134">of 2 by 2 tiles of 8</text>
+  <text class="p" x="196" y="153">pixels (dotted)</text>
 
-  <rect class="card" x="160" y="158" width="220" height="74" rx="10"/>
-  <circle class="num" cx="178" cy="180" r="5"/>
-  <text class="h" x="194" y="185">How high the ground is</text>
-  <text class="p" x="176" y="210">flat, a slope or a step</text>
+  <rect class="card" x="180" y="178" width="200" height="74" rx="10"/>
+  <circle class="num" cx="198" cy="200" r="5"/>
+  <text class="h" x="214" y="205">How high it is</text>
+  <text class="p" x="196" y="230">flat, a slope or a step</text>
 
+  <g transform="translate(0 20)">
   <rect class="card" x="20" y="244" width="360" height="148" rx="10"/>
   <circle class="num" cx="38" cy="266" r="5"/>
   <text class="h" x="54" y="271">What standing there does</text>
@@ -71,5 +70,6 @@
   <text class="p" x="20" y="426">The engine reads the ground to decide where</text>
   <text class="p" x="20" y="445">the leader can step; the map's events read</text>
   <text class="p" x="20" y="464">what standing there does to decide what happens.</text>
-  <text class="code" x="380" y="500" text-anchor="end">struct MapGridCell</text>
+  </g>
+  <text class="code" x="380" y="520" text-anchor="end">struct MapGridCell</text>
 </svg>

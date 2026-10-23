@@ -1,8 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 452" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 652" role="img" aria-labelledby="title desc">
   <title id="title">Everything that moves runs a script</title>
-  <desc id="desc">Three object events and their scripts. The leader moves by the direction pad, waits one frame and repeats, for good. The camera follows the leader, waits one frame and repeats. A footprint waits 120 frames and then disappears. Each frame every object runs its steps in order until one says to wait, which ends its turn until the next frame.</desc>
+  <desc id="desc">Three object events and their scripts. The leader moves by the direction pad, waits one frame and repeats, for good. The camera follows the leader, waits one frame and repeats. A footprint waits 120 frames and then disappears. Each frame every object runs its steps in order until one says to wait, which ends its turn until the next frame. Below, Isaac in Imil's snow as the game draws him, with the footprints his steps left beside him.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .px { image-rendering: pixelated; }
+    .edge { fill: none; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
     .chip { fill: #f0f6ff; stroke: #bcd7fb; }
     .chip-wait { fill: #f5f5f5; stroke: #d4d4d4; }
@@ -20,6 +22,7 @@
     .end { fill: #a3a3a3; }
     @media (prefers-color-scheme: dark) {
       .panel { fill: #0a0a0a; stroke: #262626; }
+      .edge { stroke: #262626; }
       .card { fill: #111111; stroke: #2e2e2e; }
       .chip { fill: #0d1a2e; stroke: #1e3a66; }
       .chip-wait { fill: #1a1a1a; stroke: #333333; }
@@ -34,7 +37,7 @@
     }
   </style>
 
-  <rect class="panel" x="0.5" y="0.5" width="399" height="451" rx="16"/>
+  <rect class="panel" x="0.5" y="0.5" width="399" height="651" rx="16"/>
   <text class="eyebrow" x="20" y="30">THREE OF THE 64 OBJECT EVENTS</text>
 
   <!-- The leader -->
@@ -76,8 +79,16 @@
   <text class="k" x="257" y="328" text-anchor="middle">Disappear</text>
   <text class="code" x="352" y="353" text-anchor="end">SC_WAIT(120) · SC_FREE</text>
 
+  <!-- From render guide snow: snow.gif frame 16 cut 96x48+88+60, at three times its size. -->
+  <image href="data:image/png;base64,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" class="px" data-crop="crops/field/snow-footprints.png" x="56" y="374" width="288" height="144"/>
+  <rect class="edge" x="56" y="374" width="288" height="144"/>
+  <text class="p" x="20" y="542">In Imil's snow each step leaves a footprint, an</text>
+  <text class="p" x="20" y="561">object of its own, gone 120 frames later.</text>
+
   <!-- The rule -->
+  <g transform="translate(0 200)">
   <text class="p" x="20" y="390">Every frame, each object runs its steps in</text>
   <text class="p" x="20" y="409">order until one says to wait. That ends its</text>
   <text class="p" x="20" y="428">turn until the next frame.</text>
+  </g>
 </svg>
