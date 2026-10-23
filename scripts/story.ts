@@ -838,7 +838,7 @@ type Frame = {
 
 const UNKNOWN: Val = { t: 'unknown' };
 const SET_MESSAGE = new Set(['Engine_ScriptSetMessage', 'MESSAGE_SET', 'Script_SetMessage', 'FieldScript_SetMessageId']);
-const SHOW_MESSAGE = new Set(['Engine_ScriptShowMessage', 'Script_ShowMessage', 'MESSAGE_PUT', 'Engine_ScriptOpenMessage', 'Script_OpenMessage', 'MESSAGE_OPEN', 'Engine_ScriptShowMessageAndWait', 'Script_ShowMessageAndWait', 'FieldScript_ShowMessageAndWait', 'FieldMessage_ShowAtObject', 'FieldScript_ShowSpeakerMessage']);
+const SHOW_MESSAGE = new Set(['Engine_ScriptShowMessage', 'Script_ShowMessage', 'MESSAGE_PUT', 'Engine_ScriptOpenMessage', 'Script_OpenMessage', 'MESSAGE_OPEN', 'Engine_ScriptShowMessageAndWait', 'Script_ShowMessageAndWait', 'FieldScript_ShowMessageAndWait', 'FieldScript_ShowMessageThenWait', 'FieldMessage_ShowAtObject', 'FieldScript_ShowSpeakerMessage']);
 const ASK_MESSAGE = new Set(['Engine_ScriptAskYesNo', 'Script_AskYesNo', 'FieldScript_AskYesNoAndShowResponse']);
 const TWO_MESSAGES = new Set(['Engine_ScriptShowTwoMessagesAndWait', 'Script_ShowTwoMessagesAndWait', 'Battle_ShowPairedUnitWorkAndWait']);
 const DIRECT_MESSAGE = new Set(['Engine_MessageShowCentered', 'Message_ShowCentered', 'FieldMessage_ShowCentered', 'FieldMessage_Show', 'FieldMessage_ShowFar']);
