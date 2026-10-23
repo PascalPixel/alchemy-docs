@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 520" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 540" role="img" aria-labelledby="title desc">
   <title id="title">The game runs one map at a time</title>
-  <desc id="desc">The whole game is a loop of maps, which goes round once for each map, not once a frame. At power-on the first map is the title. Each time round, the game first drops everything the last map left behind. Then it runs the next map. A field map, such as a town, a dungeon or the world map, has its code loaded and runs until the party takes a warp, and the warp names the next map and the warp destination where the party arrives. A battle or a minigame runs and then sends the party back, usually to the field map it came from, exactly where it stood. Then the loop goes round again, for as long as the game runs.</desc>
+  <desc id="desc">The whole game is a loop of maps, which goes round once for each map, not once a frame. At power-on comes the title screen, which the game runs as a map, like a town. Each time round, the game first drops everything the last map left behind. Then it runs the next map. A field map, such as a town, a dungeon or the world map, has its code loaded and runs until the party takes a warp, and the warp names the next map and the warp destination where the party arrives. A battle or a minigame is not a map: a number above the maps stands for it, and it runs instead of a map and then sends the party back, usually to the field map it came from, exactly where it stood. Then the loop goes round again, for as long as the game runs. A random battle runs from the same loop: the field map ends, and is loaded again after.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
@@ -37,12 +37,14 @@
     }
   </style>
 
-  <rect class="panel" x="0.5" y="0.5" width="399" height="519" rx="16"/>
+  <rect class="panel" x="0.5" y="0.5" width="399" height="539" rx="16"/>
   <text class="eyebrow" x="50" y="32">THE WHOLE GAME, FROM POWER-ON</text>
 
   <!-- Power on -->
-  <rect class="start" x="50" y="44" width="330" height="40" rx="10"/>
-  <text class="p" x="66" y="69">Power on: the first map is the title.</text>
+  <rect class="start" x="50" y="44" width="330" height="54" rx="10"/>
+  <text class="p" x="66" y="66">Power on: the title screen, which the</text>
+  <text class="p" x="66" y="86">game runs as a map, like a town.</text>
+  <g transform="translate(0 14)">
   <path class="wire" d="M 215 84 V 98"/>
   <path class="head" d="M 209 94 h 12 l -6 9 z"/>
 
@@ -74,10 +76,12 @@
   <circle class="dotx" cx="238" cy="243" r="5"/>
   <text class="h" x="250" y="249">A battle</text>
   <text class="p" x="234" y="274">Or a minigame.</text>
-  <text class="p" x="234" y="298">It runs, then sends</text>
-  <text class="p" x="234" y="316">the party back, most</text>
-  <text class="p" x="234" y="334">often to where it</text>
-  <text class="p" x="234" y="352">stood before.</text>
+  <text class="p" x="234" y="298">Not a map: it runs</text>
+  <text class="p" x="234" y="316">instead of one, then</text>
+  <text class="p" x="234" y="334">sends the party back,</text>
+  <text class="p" x="234" y="352">most often to where</text>
+  <text class="p" x="234" y="370">it stood before.</text>
+  <text class="code" x="234" y="410">MAP_BATTLE</text>
 
   <!-- Round again -->
   <path class="wire-accent" d="M 130 418 V 446 H 30 V 149 H 44"/>
@@ -85,7 +89,8 @@
   <path class="head-accent" d="M 41 143 v 12 l 9 -6 z"/>
   <text class="k" transform="translate(22 300) rotate(-90)" text-anchor="middle">then the next map, again and again</text>
 
-  <text class="p" x="50" y="478">A random battle is a map like any other:</text>
-  <text class="p" x="50" y="497">the field map ends, and is loaded again after.</text>
+  <text class="p" x="50" y="478">A random battle runs from the same loop: the</text>
+  <text class="p" x="50" y="497">field map ends, and is loaded again after.</text>
+  </g>
   <text class="code" x="380" y="32" text-anchor="end">Game_Run</text>
 </svg>
