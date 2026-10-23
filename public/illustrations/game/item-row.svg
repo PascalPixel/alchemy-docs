@@ -78,19 +78,19 @@
 
   <!-- price -->
   <rect class="card" x="20" y="44" width="360" height="70" rx="12"/>
-  <text class="code" x="36" y="68">price</text>
+  <text class="h" x="36" y="68">Price</text>
   <text class="kb" x="364" y="68" text-anchor="end">200</text>
   <text class="p" x="36" y="96">A shop sells it for 200 coins.</text>
 
   <!-- type -->
   <rect class="card" x="20" y="126" width="360" height="70" rx="12"/>
-  <text class="code" x="36" y="150">type</text>
+  <text class="h" x="36" y="150">Type</text>
   <text class="kb" x="364" y="150" text-anchor="end">weapon</text>
   <text class="p" x="36" y="178">One weapon at a time per character.</text>
 
   <!-- equip mask -->
   <rect class="card" x="20" y="208" width="360" height="152" rx="12"/>
-  <text class="code" x="36" y="232">equip_mask</text>
+  <text class="h" x="36" y="232">Who can equip it</text>
   <text class="sub" x="364" y="232" text-anchor="end">one bit a character</text>
   <!-- 8 boxes, 40 wide, from x 36 step 41 -->
   <rect class="bar" x="36" y="246" width="38" height="38" rx="8"/>
@@ -109,12 +109,12 @@
   <text class="small" x="260" y="302" text-anchor="middle">Jenna</text>
   <text class="small" x="301" y="302" text-anchor="middle">Sheba</text>
   <text class="small" x="342" y="302" text-anchor="middle">Piers</text>
-  <text class="p" x="36" y="336">Isaac, Garet and Felix can equip it;</text>
-  <text class="p" x="36" y="353">for the others the shop says Can't equip.</text>
+  <text class="p" x="36" y="333">Isaac, Garet and Felix can equip it;</text>
+  <text class="p" x="36" y="350">for the others the shop says Can't equip.</text>
 
   <!-- attack -->
   <rect class="card" x="20" y="372" width="360" height="96" rx="12"/>
-  <text class="code" x="36" y="396">primary_bonus</text>
+  <text class="h" x="36" y="396">Attack bonus</text>
   <text class="kb" x="364" y="396" text-anchor="end">+14</text>
   <text class="p" x="36" y="424">Added to Attack while equipped,</text>
   <text class="p" x="36" y="443">before the class multiplies it.</text>

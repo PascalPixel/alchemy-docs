@@ -88,7 +88,6 @@
 
   <!-- the item table -->
   <text class="h" x="20" y="126">The item table, a row each</text>
-  <text class="code" x="380" y="126" text-anchor="end">items.tsv</text>
   <text class="small" x="30" y="144">264</text>
   <text class="sub" x="66" y="144">1,400 coins, a ring</text>
   <text class="kb" x="30" y="171">265</text>
@@ -98,7 +97,6 @@
 
   <!-- the names -->
   <text class="h" x="20" y="258">The item names</text>
-  <text class="code" x="380" y="258" text-anchor="end">MsgItemName + id</text>
   <text class="small" x="30" y="276">264</text>
   <text class="sub" x="66" y="276">Sleep Ring</text>
   <text class="kb" x="30" y="303">265</text>
@@ -108,7 +106,6 @@
 
   <!-- the item screen lines -->
   <text class="h" x="20" y="390">The Item screen's lines</text>
-  <text class="code" x="380" y="390" text-anchor="end">MsgItemPlainName + id</text>
   <text class="small" x="30" y="408">264</text>
   <text class="sub" x="66" y="408">Ring: Use to Lull enemies to sleep</text>
   <text class="kb" x="30" y="435">265</text>

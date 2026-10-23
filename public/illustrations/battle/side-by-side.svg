@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 600" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 588" role="img" aria-labelledby="title desc">
   <title id="title">The animation and the damage, side by side</title>
   <desc id="desc">One action, with time running down the page. On the left the animation runs in its own loop, frame after frame. On the right the damage task waits. When the blow lands the animation says so, and from then on both run at once: the animation keeps drawing while the task works out the first target's damage and shows its messages, then the next target's, then the last. The battle moves on only when both are done. The animation decides when the damage appears; the rules alone decide how much it is.</desc>
   <style>
@@ -73,7 +73,7 @@
     }
   </style>
 
-  <rect class="panel" x="0.5" y="0.5" width="399" height="599" rx="16"/>
+  <rect class="panel" x="0.5" y="0.5" width="399" height="587" rx="16"/>
   <text class="eyebrow" x="20" y="30">ONE ACTION, TIME RUNNING DOWN</text>
 
   <!-- column heads -->
@@ -90,13 +90,14 @@
   <rect class="card-accent" x="20" y="172" width="168" height="66" rx="10"/>
   <circle class="dot" cx="38" cy="194" r="5"/>
   <text class="h" x="50" y="199">The blow lands</text>
-  <text class="code" x="34" y="224">EFFECT_SHOW_DAMAGE</text>
+  <text class="sub" x="34" y="222">and says so</text>
 
   <rect class="chip" x="20" y="252" width="168" height="220" rx="10"/>
   <text class="k" x="34" y="278">Keeps drawing</text>
   <text class="sub" x="34" y="300">to its last frame,</text>
-  <text class="sub" x="34" y="318">not waiting for the damage</text>
-  <path class="wire-accent" d="M 104 330 V 440"/>
+  <text class="sub" x="34" y="318">without waiting for</text>
+  <text class="sub" x="34" y="336">the damage</text>
+  <path class="wire-accent" d="M 104 348 V 440"/>
   <path class="head-accent" d="M 98 436 h 12 l -6 9 z"/>
 
   <!-- right lane -->
@@ -128,9 +129,8 @@
   <!-- both done -->
   <path class="wire" d="M 104 472 V 494 M 296 450 V 494"/>
   <path class="head" d="M 98 490 h 12 l -6 9 z M 290 490 h 12 l -6 9 z"/>
-  <rect class="card-exit" x="20" y="502" width="360" height="54" rx="12"/>
-  <text class="h" x="36" y="526">The battle moves on when both are done</text>
-  <text class="code" x="36" y="545">BattleEvent_WaitForReady</text>
+  <rect class="card-exit" x="20" y="502" width="360" height="40" rx="12"/>
+  <text class="h" x="36" y="528">The battle moves on when both are done</text>
 
-  <text class="small" x="20" y="580">The animation picks when; the rules alone decide how much.</text>
+  <text class="small" x="20" y="568">The animation picks when; the rules alone decide how much.</text>
 </svg>

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 560" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 546" role="img" aria-labelledby="title desc">
   <title id="title">How Psynergy damage is worked out</title>
   <desc id="desc">Isaac casts Avalanche at three enemies in a row, aiming at the first. Avalanche's power is 160, the damage at an even match. Isaac's Venus Power is 20 points ahead of each target's Venus Resist, which multiplies it by about 1.1, to 175. The distance from the aimed enemy then keeps 100 percent for the aimed one, 80 percent one place away and 60 percent two places away: 175, 140 and 105. Last, 0 to 3 is added at random, so the three take 175 to 178, 140 to 143 and 105 to 108. A defending target takes half of that, and one behind Total Defense a tenth.</desc>
   <style>
@@ -73,7 +73,7 @@
     }
   </style>
 
-  <rect class="panel" x="0.5" y="0.5" width="399" height="559" rx="16"/>
+  <rect class="panel" x="0.5" y="0.5" width="399" height="545" rx="16"/>
   <text class="eyebrow" x="20" y="30">ISAAC CASTS AVALANCHE</text>
 
   <!-- the three targets -->
@@ -134,12 +134,11 @@
 
   <!-- the guard -->
   <path class="rule" d="M 20 398 H 380"/>
-  <text class="h" x="20" y="424">÷ the guard</text>
+  <text class="h" x="20" y="424">If the target defends</text>
   <text class="p" x="20" y="448">A target that defends takes half;</text>
   <text class="p" x="20" y="467">behind Total Defense, a tenth.</text>
 
   <!-- the rule -->
-  <rect class="card-exit" x="20" y="486" width="360" height="56" rx="12"/>
-  <text class="p" x="36" y="510">Every step rounds down.</text>
-  <text class="code" x="36" y="530">Battle_CalculatePsynergyPower</text>
+  <rect class="card-exit" x="20" y="486" width="360" height="40" rx="12"/>
+  <text class="p" x="36" y="511">Every step rounds down.</text>
 </svg>
