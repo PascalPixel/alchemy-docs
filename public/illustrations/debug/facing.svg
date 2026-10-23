@@ -1,11 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 880" role="img" aria-labelledby="title desc">
   <title id="title">One person, four conversations</title>
-  <desc id="desc">The menu test room, where most of the people placed run a test when spoken to, among them two Felixes. Outside the Japanese edition, Felix gives a different test depending on which way the leader faces when talking to him. Facing north, from below him, the leader gets the weapon shop's lines; facing west, from his right, the armour shop's; facing east, from his left, the item shop's; facing south, from above, the Sanctum's. Each is a separate talk event that names the facing it needs. A second Felix does the same with the Warrior's shops.</desc>
+  <desc id="desc">The menu test room, where most of the people placed run a test when spoken to, among them two Felixes. Outside the Japanese edition, Felix gives a different test depending on which way the leader faces when talking to him. Facing north, from below him, Isaac, the leader, gets the weapon shop's lines; facing west, from his right, the armour shop's; facing east, from his left, the item shop's; facing south, from above, the Sanctum's. Each is a separate talk event that names the facing it needs. A second Felix does the same with the Warrior's shops.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
     .felix { fill: #0a72ef; }
-    .leader { fill: #f59e0b; }
     .wire { fill: none; stroke: #d97706; stroke-width: 2; }
     .head { fill: #d97706; }
     .grid { stroke: #ececec; stroke-width: 1; }
@@ -24,7 +23,6 @@
       .panel { fill: #0a0a0a; stroke: #262626; }
       .card { fill: #111111; stroke: #2e2e2e; }
       .felix { fill: #3b8eff; }
-      .leader { fill: #f59e0b; }
       .wire { stroke: #f59e0b; }
       .head { fill: #f59e0b; }
       .grid { stroke: #1f1f1f; }
@@ -57,43 +55,44 @@
   <!-- render guide moment's sprites plane, cropped 24x32+148+19 -->
   <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAgCAMAAAA/gEgKAAAAclBMVEUAAAApKSkYGBg5OTk5OQA5AABzOQBzczlSUlJzOTm1cznn57W1tXO1cwD/57XntXO1c3Pn5+fn53O1tbX///8AAACcnJxzcwDntbU5czk5tXMAOTk5c3MAc3MAcznntTn/tQCEhIS1tTlzc3NjY2POzs7yTdFVAAAAAXRSTlMAQObYZgAAARdJREFUKM9tkt1igjAMhW0T0iZEwLlaGIrbdO//iotetcC5PF+a3x4OldxhX35rOW/BHvaCEb3fTYPYGMStbQCJMNR+ZGJDJCHUbzC0itJqe6QKgMVqEOGjULOqQNIpkVgVtyrdd51iP2yAdKfw0fszVx0jobafSTt3CU0uAFn2sRv6rlfrqhiFpwzSmzRCtWCYvibHooIzzNXg19syv1rDeVnKnesI8w3wfp/mQctMQxv8ckP6nrz+FICZ7Bq2P0JfjcGM+dcnk3e5Bo5y1mFQ5UxFv/y6rDN7AJ/Lwd96xAjxCRhXfvw7XeI4rm1LJ8osAXaAcNgBCYLYF2GXVr5NAA7AGkgr4CC6dH2eYfMkPtJbm+or+x/f0A6ZgjWMEAAAAABJRU5ErkJggg==" class="px" data-crop="crops/debug/felix.png" x="176" y="186" width="48" height="64" preserveAspectRatio="none"/>
 
+  <!-- Isaac, the leader here, in each facing: render guide moment in Vale
+       (MOMENT_PLACE 4,1, MOMENT_STAND 370,627,facing), his sprite cropped
+       from the sprites plane and trimmed; drawn at twice its size. -->
+
   <!-- From below, facing north -->
-  <circle class="leader" cx="200" cy="300" r="9"/>
-  <path class="wire" d="M 200 290 V 262"/>
-  <path class="head" d="M 194 264 l 6 -9 l 6 9 z"/>
-  <text class="lb" x="200" y="330" text-anchor="middle">facing north</text>
-  <text class="l" x="200" y="346" text-anchor="middle">the weapon shop's lines</text>
+  <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAeCAMAAAD95QUdAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAACfUExURQAAAOfntee1c+e1tXNzObVzAHM5OXNzALVzObW1Oee1AOdzALVzc+e1Of/ntf/nc+fnc///tf//c1JSUv+1OTk5ObW1c87OznNzczk5AHM5AGNjY5ycnDk5cykpKTlztbW1/7W15xgYGHO154SEhLXn/+fn/7Xn5wAAOf+1c+dzOf9zOTk5tedzc+c5Of85ObU5OXNztQA5OQA5cwAAAPfXig8AAAABdFJOUwBA5thmAAAAB3RJTUUH6goXDjQj76ZKTAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNi0xMC0yM1QxNDo1MjozNSswMDowMBJd/NoAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjYtMTAtMjNUMTQ6NTI6MzUrMDA6MDBjAERmAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDI2LTEwLTIzVDE0OjUyOjM1KzAwOjAwNBVluQAAAS1JREFUKM9d0dtygyAQBmBDWA4pFK3FqATNsW1sStPG93+2LhqTaf7hAr5ZYMUkiZmR5DFz+igE/q8Z54JzACGvpRwWgGt4AjaCkhpQhJBaTGc8E9BaYOQAFEwqiTGZAQ10lIXQWfaSGXOVHEAbpFejU7BDv1wKDQb36EI8D+0KvFhj8EIxj7Isqzp2A5xXbpXNovmmqjGVbRPvUgS53tjtdmvtZueboSGZ7jeHt8P7svQfY8/eUXIk3fFTWj/CydvVVxe+Q43TQby31nXhXDdXYc62KoRz/tNaF5/DFYR2IazW613risKhKIIFuPXU/BaFyuO3i3C2PuaS0OkHXPBIHJf7y1tXOlfm9gY9o4oyxVg/Qc+Ecg6x7yfJxcwpo/L+XrQv9jhuMFjMOP8Dcn8ccsyrjV0AAAAASUVORK5CYII=" class="px" data-crop="crops/field/isaac-facing-north.png" x="183" y="270" width="34" height="60"/>
+  <path class="wire" d="M 200 268 V 258"/>
+  <path class="head" d="M 194 260 l 6 -9 l 6 9 z"/>
+  <text class="lb" x="200" y="352" text-anchor="middle">facing north</text>
+  <text class="l" x="200" y="368" text-anchor="middle">the weapon shop's lines</text>
 
   <!-- From above, facing south -->
-  <circle class="leader" cx="200" cy="132" r="9"/>
-  <path class="wire" d="M 200 142 V 170"/>
-  <path class="head" d="M 194 168 l 6 9 l 6 -9 z"/>
-  <text class="lb" x="200" y="96" text-anchor="middle">facing south</text>
-  <text class="l" x="200" y="112" text-anchor="middle">the Sanctum's lines</text>
+  <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAfCAMAAAA2uda4AAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAACWUExURQAAALW1ObVzAHM5ObW1c3NzObVzOXNzAFJSUue1OYSEhOe1cykpKefntf//tf/nc+fnc//ntf//5zk5OedzAOe1tbVzc+fn57W1tbW15wAAObXn587Ozjlzczk5czlztXNzc3O1/3O1tf+1tZycnGNjY3NztbW1AAA5c7W1//9zOedztXNz53M5ALU5OXO15wA5OQAAAJNfGP0AAAABdFJOUwBA5thmAAAAB3RJTUUH6goXDjQimKF62gAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNi0xMC0yM1QxNDo1MjozNCswMDowMLQq924AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjYtMTAtMjNUMTQ6NTI6MzQrMDA6MDDFd0/SAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDI2LTEwLTIzVDE0OjUyOjM0KzAwOjAwkmJuDQAAATlJREFUKM9VkY1ywiAQhJHjDuIlxpiC1tpLUmur1lZ5/5crSepPd2CG+2ZZ4FDqpom+rxUYVEjqUai1df8A2Mxai9d6Slprsjb5/hKZsyxVCevRlWMxYy5ZczEf00FzReWinCx4PkbVWmfVZFYy85OulTIzY5OpyMo5Z9p6peYmAPnlqiBakoZi2GXIP6+rar30aFZDdO38S082HkegXsV4X1Xem+Z1JG33Fvx268N7Nx2JNtNd2+tj8zmAvaA7+KQDoOx7IiKu88fjV+dqkZ44V9dyCuEkALuhSUTYABTFNzQ/1L8LmUPTnVerc9cE5oQcB5Tm1J1PjWDg3XDl9iKS5yIXB9dmX3JJIJd75106z4l7/A0gB4T3OjokcGnEK4hABGlijFeCTHFHhuLNZLiNccomPiQNGpa/vzUYqSQSb1kAAAAASUVORK5CYII=" class="px" data-crop="crops/field/isaac-facing-south.png" x="183" y="104" width="34" height="62"/>
+  <path class="wire" d="M 200 168 V 176"/>
+  <path class="head" d="M 194 174 l 6 9 l 6 -9 z"/>
+  <text class="lb" x="200" y="76" text-anchor="middle">facing south</text>
+  <text class="l" x="200" y="92" text-anchor="middle">the Sanctum's lines</text>
 
   <!-- From the left, facing east -->
-  <circle class="leader" cx="116" cy="216" r="9"/>
-  <path class="wire" d="M 126 216 H 166"/>
-  <path class="head" d="M 164 210 l 9 6 l -9 6 z"/>
-  <text class="lb" x="70" y="250" text-anchor="middle">facing east</text>
-  <text class="l" x="70" y="266" text-anchor="middle">the item shop's</text>
-  <text class="l" x="70" y="281" text-anchor="middle">lines</text>
+  <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAgCAMAAAAVMLmlAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAACEUExURQAAALVzAOe1c7W1czk5ObVzOXNzOXNzALW1Of/nc+fntee1OXM5OYSEhHM5ACkpKee1AOfnc//ntTk5AP//57Vzc2NjY/+1c1JSUue1tf+1tRgYGJycnHNzc3NztbW15zk5tbXn57Xn/7W1/+fnAHNz5zkAADk5czlztXO15wA5OQAAAO6Ak8UAAAABdFJOUwBA5thmAAAAB3RJTUUH6goXDjQimKF62gAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNi0xMC0yM1QxNDo1MjozNCswMDowMLQq924AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjYtMTAtMjNUMTQ6NTI6MzQrMDA6MDDFd0/SAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDI2LTEwLTIzVDE0OjUyOjM0KzAwOjAwkmJuDQAAAP9JREFUGNNV0OtawyAMBuAcCKyWHtZa7A7WTqdMuf/7Mx2dc/nFywd5AgC5EB6KHsT8GLIRYZth3QapKJ7KEkCEENXofKUJY107h4gbWQ43VvNNq9qKAdCkLajrmMT1yrIsCnruOhyCHtZOhe6ULziMC7FuEVsscbfQuR61saBcCXWPNdPO7XfhOlTT19p5v+cxD1kdBiIa/Pqc4+v0NplZMsNBTu8fYcpXYazs+XwOnyubLxOjMXF9LhziHL33ceUlznN1+r7c/mZ8DdNdMIrY+PNHS51E+JeyNHca442XdaqUFJ5pSFkpiJYNKWWKfnq3peoWJ2YmOsLt9lK6+AU4oBEYG0z7XwAAAABJRU5ErkJggg==" class="px" data-crop="crops/field/isaac-facing-east.png" x="112" y="186" width="28" height="64"/>
+  <path class="wire" d="M 144 222 H 164"/>
+  <path class="head" d="M 162 216 l 9 6 l -9 6 z"/>
+  <text class="lb" x="70" y="278" text-anchor="middle">facing east</text>
+  <text class="l" x="70" y="294" text-anchor="middle">the item shop's</text>
+  <text class="l" x="70" y="309" text-anchor="middle">lines</text>
 
   <!-- From the right, facing west -->
-  <circle class="leader" cx="284" cy="216" r="9"/>
-  <path class="wire" d="M 274 216 H 234"/>
-  <path class="head" d="M 236 210 l -9 6 l 9 6 z"/>
-  <text class="lb" x="330" y="250" text-anchor="middle">facing west</text>
-  <text class="l" x="330" y="266" text-anchor="middle">the armour shop's</text>
-  <text class="l" x="330" y="281" text-anchor="middle">lines</text>
+  <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAgCAMAAAAVMLmlAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAACEUExURQAAALVzAOe1c7W1c3NzObVzOTk5Oee1Oefntf/nc7W1OXNzAISEhHM5OXM5AOfnc+e1ACkpKTk5AP/ntWNjY7Vzc///51JSUv+1c+e1tf+1tRgYGDk5tXNztbW153Nzc5ycnLW1/7Xn/7Xn53Nz5+fnADk5czkAADlztXO15wA5OQAAAORU9IwAAAABdFJOUwBA5thmAAAAB3RJTUUH6goXDjQj76ZKTAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNi0xMC0yM1QxNDo1MjozNSswMDowMBJd/NoAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjYtMTAtMjNUMTQ6NTI6MzUrMDA6MDBjAERmAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDI2LTEwLTIzVDE0OjUyOjM1KzAwOjAwNBVluQAAAP1JREFUGNNV0Ot6gyAMBmCSEJgHrAec0+rarpN14/7vb6hUn/KLl4TvCQixLhAvC19J9NxJYlb0LGv9liQIaSY35yaDIABkXpo5BYAsKwogKRSfgss01GQlRJ0xUtNgUoaO0GxbaJp3TBKtF3YtfOiwT0LWwh40lABlARsZOERDvd3th6xHKqAuljE6GoaQXNTVNpZpEbE953FqHtX0OV2u8VF2srevO59t5Led51nmXXywU8o59ROjnDHGje4cox6/93wc3UPsnuyl2//tz0nmg8Jxg/JgxXRUmY0ySkX5FsmEA+9XeRuCmK1f7XM8NeHjeaO4IhKRj1r7d/wDYS8RG4rMp4kAAAAASUVORK5CYII=" class="px" data-crop="crops/field/isaac-facing-west.png" x="260" y="186" width="28" height="64"/>
+  <path class="wire" d="M 256 222 H 236"/>
+  <path class="head" d="M 238 216 l -9 6 l 9 6 z"/>
+  <text class="lb" x="330" y="278" text-anchor="middle">facing west</text>
+  <text class="l" x="330" y="294" text-anchor="middle">the armour shop's</text>
+  <text class="l" x="330" y="309" text-anchor="middle">lines</text>
 
-  <!-- Key -->
-  <circle class="leader" cx="28" cy="384" r="6"/>
-  <text class="l" x="40" y="388">the leader, talking to Felix</text>
-
-  <text class="p" x="20" y="426">Each conversation is a talk event of its own</text>
-  <text class="p" x="20" y="445">that names the facing it needs. A second Felix</text>
-  <text class="p" x="20" y="464">does the same with the Warrior's shops.</text>
+  <text class="p" x="20" y="414">Isaac, the leader, talks to Felix from each side.</text>
+  <text class="p" x="20" y="433">Each conversation is a talk event of its own that</text>
+  <text class="p" x="20" y="452">names the facing it needs. A second Felix does</text>
+  <text class="p" x="20" y="471">the same with the Warrior's shops.</text>
   <text class="code" x="380" y="500" text-anchor="end">MAP_EVENT_TALK · debug/test.c</text>
   </g>
 </svg>
