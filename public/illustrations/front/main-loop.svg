@@ -79,7 +79,7 @@
   <text class="p" x="234" y="334">sends the party back,</text>
   <text class="p" x="234" y="352">most often to where</text>
   <text class="p" x="234" y="370">it stood before.</text>
-  <text class="code" x="234" y="410">MAP_BATTLE</text>
+  <text class="code" x="234" y="410">RUN_BATTLE</text>
 
   <!-- Round again -->
   <path class="wire-accent" d="M 130 418 V 446 H 30 V 149 H 44"/>
