@@ -562,7 +562,7 @@ type SceneRow = { id: number; name: string; overlay: number; group: number; kind
 
 const scenes: SceneRow[] = [];
 for (const line of readFileSync(gamePath('src/field/maps.s'), 'utf8').split('\n')) {
-  const m = line.match(/^\s*map_record\s+(\w*)\s*,\s*(\w+)\s*,\s*(\w+)\s*,\s*(\w+)\s*,\s*(\w+)/);
+  const m = line.match(/^\s*map_header\s+(\w*)\s*,\s*(\w+)\s*,\s*(\w+)\s*,\s*(\w+)\s*,\s*(\w+)/);
   if (m) scenes.push({ id: scenes.length, name: m[1], overlay: Number(m[2]), group: Number(m[3]), kind: Number(m[4]), map: Number(m[5]), file: '' });
 }
 sceneIdByName = new Map(scenes.filter((s) => s.name).map((s) => [s.name, s.id]));
@@ -838,10 +838,10 @@ type Frame = {
 
 const UNKNOWN: Val = { t: 'unknown' };
 const SET_MESSAGE = new Set(['Engine_ScriptSetMessage', 'MESSAGE_SET', 'Script_SetMessage', 'FieldScript_SetMessageId']);
-const SHOW_MESSAGE = new Set(['Engine_ScriptShowMessage', 'Script_ShowMessage', 'MESSAGE_PUT', 'Engine_ScriptOpenMessage', 'Script_OpenMessage', 'MESSAGE_OPEN', 'Engine_ScriptShowMessageAndWait', 'Script_ShowMessageAndWait', 'FieldScript_ShowMessageAndWait', 'UiText_OpenMessageAtObject', 'FieldScript_ShowSpeakerMessage']);
+const SHOW_MESSAGE = new Set(['Engine_ScriptShowMessage', 'Script_ShowMessage', 'MESSAGE_PUT', 'Engine_ScriptOpenMessage', 'Script_OpenMessage', 'MESSAGE_OPEN', 'Engine_ScriptShowMessageAndWait', 'Script_ShowMessageAndWait', 'FieldScript_ShowMessageAndWait', 'FieldMessage_ShowAtObject', 'FieldScript_ShowSpeakerMessage']);
 const ASK_MESSAGE = new Set(['Engine_ScriptAskYesNo', 'Script_AskYesNo', 'FieldScript_AskYesNoAndShowResponse']);
 const TWO_MESSAGES = new Set(['Engine_ScriptShowTwoMessagesAndWait', 'Script_ShowTwoMessagesAndWait', 'Battle_ShowPairedUnitWorkAndWait']);
-const DIRECT_MESSAGE = new Set(['Engine_MessageShowCentered', 'Message_ShowCentered', 'UiText_ShowCenteredMessage', 'UiText_ShowPositionedMessageAndWait', 'UiText_ShowPositionedMessageAndWaitFar']);
+const DIRECT_MESSAGE = new Set(['Engine_MessageShowCentered', 'Message_ShowCentered', 'FieldMessage_ShowCentered', 'FieldMessage_Show', 'FieldMessage_ShowFar']);
 const FLAG_SET = new Set(['GameFlag_Set', 'FLAG_SET', 'Engine_GameFlagSet', 'FieldScript_GameFlagSet', 'GameFlag_SetBitFar', 'GameFlag_SetBit']);
 const FLAG_CLEAR = new Set(['GameFlag_Clear', 'Engine_GameFlagClear', 'FieldScript_GameFlagClear', 'GameFlag_ClearBitFar', 'GameFlag_ClearBit']);
 const FLAG_TEST = new Set(['GameFlag_IsSet', 'FLAG_CHECK', 'Engine_GameFlagIsSet', 'FieldScript_GameFlagIsSet', 'GameFlag_TestFar', 'GameFlag_Test']);

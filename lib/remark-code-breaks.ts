@@ -1,6 +1,6 @@
 // Lets a long code name in running text or a table break where a reader
 // would split it: after an underscore, a slash, a dot or an arrow
-// (`BattleEffect_` | `ProcessPendingGraphicsTransfer`, `games/` | `tbs/`).
+// (`BattleAnim_` | `ProcessPendingGraphicsTransfer`, `games/` | `tbs/`).
 // Each inline code span gets a <wbr> at those places; the CSS then lets a
 // piece still too long for its line break anywhere (overflow-wrap: anywhere),
 // which a browser does only when no <wbr> fits; a short one stays whole.

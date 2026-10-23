@@ -38,7 +38,7 @@ const github = 'https://github.com/PascalPixel/alchemy/blob/main';
 const stored = readManifest(docs);
 // The Broken Seal's maps by symbol, numbered as field/maps.s lists them.
 const sceneIds = new Map(
-  [...readFileSync(join(repo, 'games/tbs/src/field/maps.s'), 'utf8').matchAll(/^\tmap_record (\w*),/gm)].map((m, i) => [m[1], i] as const),
+  [...readFileSync(join(repo, 'games/tbs/src/field/maps.s'), 'utf8').matchAll(/^\tmap_header (\w*),/gm)].map((m, i) => [m[1], i] as const),
 );
 
 type Game = 'tbs' | 'tla';
@@ -595,7 +595,7 @@ const includedBy = new Map<SourceFile, SourceFile[]>();
 // ---------------------------------------------------------------------------
 // The recordings beside the code that plays them. A handler's comment names
 // every ability that reaches it in its reach line (`Abilities: Gaia, Mother
-// Gaia (BATTLE_EFFECT_GAIA); none (BATTLE_EFFECT_X).`, the form effect/README.md
+// Gaia (BATTLE_ANIM_GAIA); none (BATTLE_ANIM_X).`, the form effect/README.md
 // sets), and public/abilities/index.tsv holds the casts recorded from the
 // game by ability id. A name is matched against actions.tsv's ability column
 // and, where several rows share it, to the rows whose effect word in
@@ -626,10 +626,10 @@ const reachProblems: string[] = [];
 // The enum each reach-line prefix names, and whether an ability row reaches
 // one of its values.
 const REACH: [string, string, (value: number, act: Row, word: number) => boolean][] = [
-  ['BATTLE_EFFECT_', 'BattleEffectKind', (v, _, w) => !(w & 0xc000) && (w & 0xfff) === v],
-  ['SUMMON_EFFECT_', 'SummonEffectKind', (v, _, w) => !!(w & 0x8000) && (w & 0xfff) === v],
+  ['BATTLE_ANIM_', 'BattleAnimId', (v, _, w) => !(w & 0xc000) && (w & 0xfff) === v],
+  ['SUMMON_ANIM_', 'SummonAnimId', (v, _, w) => !!(w & 0x8000) && (w & 0xfff) === v],
   ['CASTING_IMPACT_', 'CastingImpact', (v, _, w) => (w & 0xc000) === 0x4000 && (w & 0xfff) === v + 100],
-  ['FIELD_KIND_', 'FieldKind', (v, act) => int(act.type) === v],
+  ['FIELD_PSYNERGY_', 'FieldPsynergy', (v, act) => int(act.type) === v],
 ];
 
 let abilityRows: { acts: Row[]; words: number[] } | undefined;
@@ -666,7 +666,7 @@ function reachedIds(d: Decl, at: string): { ids: number[]; field: number[] } {
       const hit = rows.filter((id) => kind[2](value, acts[id], words[id] ?? 0));
       if (!rows.length) reachProblems.push(`${at}: “${name}” is no ability in actions.tsv (${effect})`);
       else if (!hit.length) reachProblems.push(`${at}: no row of “${name}” (${rows.join(', ')}) reaches ${effect}`);
-      (kind[0] === 'FIELD_KIND_' ? field : ids).push(...hit);
+      (kind[0] === 'FIELD_PSYNERGY_' ? field : ids).push(...hit);
     }
   }
   return { ids, field };
@@ -1157,11 +1157,36 @@ const MOVED_ANCHORS: Record<string, Record<string, string>> = {
     'one-grid-three-layers': '/tbs/world/layout#one-grid-three-layers',
     'placeholder-blocks': '/tbs/world/layout#placeholder-metatiles',
     'chests-and-psynergy-stones': '/tbs/world/layout#chests-and-psynergy-stones',
-    'tile-animation-and-blend-scripts': '/tbs/world/layout#tile-animation-and-blend-scripts',
+    'tile-animation-and-blend-scripts': '/tbs/world/layout#tileset-animation-and-blend-scripts',
     'the-world-maps-data': '/tbs/world/layout#the-world-maps-data',
     'the-colosso-paths': '/tbs/world/layout#the-colosso-paths',
     design: '/tbs/world/layout#design',
   },
+  // The concept names of October 2026 renamed these headings: effects are
+  // battle animations, cues songs, the scheduler the task runner, render
+  // outputs window sprites, field objects objects.
+  '/tbs/world': { 'field-objects-and-their-scripts': '/tbs/world#objects-and-their-scripts' },
+  '/tbs/world/layout': { 'tile-animation-and-blend-scripts': '/tbs/world/layout#tileset-animation-and-blend-scripts' },
+  '/tbs/battle': { effects: '/tbs/battle#animations', 'rules-and-effects-run-together': '/tbs/battle#rules-and-animations-run-together' },
+  '/tbs/battle/battle': {
+    'first-strikes-and-escape': '/tbs/battle/battle#first-strikes-and-fleeing',
+    'planning-an-action': '/tbs/battle/battle#building-a-turn',
+    'rules-and-pictures-meet-at-the-event-queue': '/tbs/battle/battle#rules-and-pictures-meet-at-the-playback-queue',
+  },
+  '/tbs/battle/effect': {
+    'how-a-move-picks-its-effect': '/tbs/battle/effect#how-a-move-picks-its-animation',
+    'the-presentation-word': '/tbs/battle/effect#the-animation-word',
+    'effect-families': '/tbs/battle/effect#animation-families',
+    'how-effects-fit-with-the-rest-of-the-game': '/tbs/battle/effect#how-animations-fit-with-the-rest-of-the-game',
+  },
+  '/tbs/menus/window': { 'the-decoded-text-ring': '/tbs/menus/window#the-text-buffer', 'render-outputs': '/tbs/menus/window#window-sprites' },
+  '/tbs/menus/menu': { 'the-status-screen': '/tbs/menus/menu#the-summary-screen' },
+  '/tbs/engine': { 'sound-cues': '/tbs/engine#songs' },
+  '/tbs/engine/graphics': { 'two-backdrops-in-one-background-memory': '/tbs/engine/graphics#two-battle-backgrounds-in-one-background-memory' },
+  '/tbs/engine/runtime': { 'the-task-scheduler': '/tbs/engine/runtime#the-task-runner' },
+  '/tbs/engine/sound': { 'what-a-cue-number-means': '/tbs/engine/sound#what-a-song-number-means' },
+  '/tbs/glossary': { 'field-object': '/tbs/glossary#object' },
+  '/tbs/matching': { 'battle-effects': '/tbs/matching#battle-animations' },
 };
 // The root's sidebar label: the README's own heading is the site's name.
 const ROOT_LABEL = 'Introduction';
@@ -1642,7 +1667,7 @@ function messageRows(path: string): { rows: Map<string, MessageRow[]>; tablesOf:
 function searched(row: MessageRow | undefined): string {
   const value = row && /^(0x[0-9a-f]+|\d+)$/i.test(row.control) ? Number(row.control) : undefined;
   const target = row?.control.match(/^BG_EVENT\(\s*(\w+)\s*\)$/)?.[1] ?? (value !== undefined && (value & 0xf) === 3 ? enumOf('BgEventTarget').find((e) => e.value === ((value >> 4) & 0x1f))?.name : undefined);
-  const thing = !target || target === 'BG_EVENT_UNNAMED' ? 'spot' : target.replace(/^BG_EVENT_/, '').toLowerCase().replace(/_/g, ' ');
+  const thing = !target || target === 'BG_EVENT_SILENT' ? 'spot' : target.replace(/^BG_EVENT_/, '').toLowerCase().replace(/_/g, ' ');
   return `${/^[aeiou]/.test(thing) ? 'an' : 'a'} ${thing}`;
 }
 

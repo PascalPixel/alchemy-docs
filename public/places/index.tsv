@@ -456,9 +456,9 @@ goma-cave-stream	28	Goma Cave		entrance	0									goma-cave-stream/entrance.png
 goma-cave-stream	28	Goma Cave		map	0									goma-cave-stream/map-0.png
 goma-cave-stream	28	Goma Cave		map	1									goma-cave-stream/map-1.png
 goma-cave-stream	28	Goma Cave		map	5									goma-cave-stream/map-5.png
-goma-cave-stream	28	Goma Cave	goma-cave-waterway-stump-moved: FLAG_GOMA_CAVE_WATERWAY_STUMP_MOVED	entrance	0									goma-cave-stream_goma-cave-waterway-stump-moved/entrance.png
-goma-cave-stream	28	Goma Cave	goma-cave-waterway-stump-moved: FLAG_GOMA_CAVE_WATERWAY_STUMP_MOVED	map	0									goma-cave-stream_goma-cave-waterway-stump-moved/map-0.png
-goma-cave-stream	28	Goma Cave	goma-cave-waterway-stump-moved: FLAG_GOMA_CAVE_WATERWAY_STUMP_MOVED	map	1									goma-cave-stream_goma-cave-waterway-stump-moved/map-1.png
+goma-cave-stream	28	Goma Cave	goma-cave-stream-stump-moved: FLAG_GOMA_CAVE_STREAM_STUMP_MOVED	entrance	0									goma-cave-stream_goma-cave-waterway-stump-moved/entrance.png
+goma-cave-stream	28	Goma Cave	goma-cave-stream-stump-moved: FLAG_GOMA_CAVE_STREAM_STUMP_MOVED	map	0									goma-cave-stream_goma-cave-waterway-stump-moved/map-0.png
+goma-cave-stream	28	Goma Cave	goma-cave-stream-stump-moved: FLAG_GOMA_CAVE_STREAM_STUMP_MOVED	map	1									goma-cave-stream_goma-cave-waterway-stump-moved/map-1.png
 gondowan-cave-river	157	Gondowan Cave		entrance	1									gondowan-cave-river/entrance.png
 gondowan-cave-river	157	Gondowan Cave		map	1									gondowan-cave-river/map-1.png
 gondowan-cave-river	157	Gondowan Cave		map	3									gondowan-cave-river/map-3.png
@@ -769,19 +769,19 @@ lunpa-fortress-upper-floor	161	Lunpa Fortress	lunpa-fortress-west-guard-beaten: 
 lunpa-fortress-upper-floor	161	Lunpa Fortress	lunpa-fortress-west-guard-beaten: FLAG_LUNPA_TRADE_REOPENED, FLAG_LUNPA_FORTRESS_COLUMN_LOWERED, FLAG_LUNPA_FORTRESS_FIRST_SWITCH_UNCOVERED, FLAG_LUNPA_FORTRESS_PASSAGE_UNCOVERED, FLAG_LUNPA_FORTRESS_SECOND_SWITCH_UNCOVERED, FLAG_LUNPA_FORTRESS_FIRST_SWITCH_FLIPPED, FLAG_LUNPA_FORTRESS_SECOND_SWITCH_FLIPPED, FLAG_LUNPA_FORTRESS_HALL_GUARD_BEATEN, FLAG_LUNPA_FORTRESS_THREE_GUARDS_BEATEN, FLAG_LUNPA_FORTRESS_EAST_GUARD_BEATEN, FLAG_LUNPA_FORTRESS_WEST_GUARD_BEATEN	map	23									lunpa-fortress-upper-floor_lunpa-fortress-west-guard-beaten/map-23.png
 lunpa-fortress-upper-floor	161	Lunpa Fortress	lunpa-fortress-west-guard-beaten: FLAG_LUNPA_TRADE_REOPENED, FLAG_LUNPA_FORTRESS_COLUMN_LOWERED, FLAG_LUNPA_FORTRESS_FIRST_SWITCH_UNCOVERED, FLAG_LUNPA_FORTRESS_PASSAGE_UNCOVERED, FLAG_LUNPA_FORTRESS_SECOND_SWITCH_UNCOVERED, FLAG_LUNPA_FORTRESS_FIRST_SWITCH_FLIPPED, FLAG_LUNPA_FORTRESS_SECOND_SWITCH_FLIPPED, FLAG_LUNPA_FORTRESS_HALL_GUARD_BEATEN, FLAG_LUNPA_FORTRESS_THREE_GUARDS_BEATEN, FLAG_LUNPA_FORTRESS_EAST_GUARD_BEATEN, FLAG_LUNPA_FORTRESS_WEST_GUARD_BEATEN	map	4									lunpa-fortress-upper-floor_lunpa-fortress-west-guard-beaten/map-4.png
 lunpa-fortress-upper-floor	161	Lunpa Fortress	lunpa-fortress-west-guard-beaten: FLAG_LUNPA_TRADE_REOPENED, FLAG_LUNPA_FORTRESS_COLUMN_LOWERED, FLAG_LUNPA_FORTRESS_FIRST_SWITCH_UNCOVERED, FLAG_LUNPA_FORTRESS_PASSAGE_UNCOVERED, FLAG_LUNPA_FORTRESS_SECOND_SWITCH_UNCOVERED, FLAG_LUNPA_FORTRESS_FIRST_SWITCH_FLIPPED, FLAG_LUNPA_FORTRESS_SECOND_SWITCH_FLIPPED, FLAG_LUNPA_FORTRESS_HALL_GUARD_BEATEN, FLAG_LUNPA_FORTRESS_THREE_GUARDS_BEATEN, FLAG_LUNPA_FORTRESS_EAST_GUARD_BEATEN, FLAG_LUNPA_FORTRESS_WEST_GUARD_BEATEN	map	7									lunpa-fortress-upper-floor_lunpa-fortress-west-guard-beaten/map-7.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		entrance	0									lunpa-suhalla/entrance.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		map	0									lunpa-suhalla/map-0.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		map	1									lunpa-suhalla/map-1.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		map	10									lunpa-suhalla/map-10.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		map	11									lunpa-suhalla/map-11.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		map	2									lunpa-suhalla/map-2.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		map	3									lunpa-suhalla/map-3.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		map	4									lunpa-suhalla/map-4.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		map	5									lunpa-suhalla/map-5.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		map	6									lunpa-suhalla/map-6.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		map	7									lunpa-suhalla/map-7.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		map	8									lunpa-suhalla/map-8.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		map	9									lunpa-suhalla/map-9.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		entrance	0									lunpa-suhalla/entrance.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		map	0									lunpa-suhalla/map-0.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		map	1									lunpa-suhalla/map-1.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		map	10									lunpa-suhalla/map-10.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		map	11									lunpa-suhalla/map-11.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		map	2									lunpa-suhalla/map-2.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		map	3									lunpa-suhalla/map-3.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		map	4									lunpa-suhalla/map-4.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		map	5									lunpa-suhalla/map-5.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		map	6									lunpa-suhalla/map-6.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		map	7									lunpa-suhalla/map-7.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		map	8									lunpa-suhalla/map-8.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		map	9									lunpa-suhalla/map-9.png
 lunpa	104	Lunpa		entrance	0									lunpa/entrance.png
 lunpa	104	Lunpa		map	0									lunpa/map-0.png
 lunpa	104	Lunpa	lunpa-nut-caught: FLAG_LUNPA_TRADE_REOPENED, FLAG_LUNPA_CAVE_REUNION_SEEN, FLAG_LUNPA_NUT_CAUGHT	entrance	0									lunpa_lunpa-nut-caught/entrance.png
@@ -917,8 +917,8 @@ sol-entrance	19	Sol Entrance		entrance	0									sol-entrance/entrance.png
 sol-entrance	19	Sol Entrance		map	0									sol-entrance/map-0.png
 sol-entrance	19	Sol Entrance	party-left-vale: FLAG_SOL_SANCTUM_ENTERED, FLAG_SEARCHING_FOR_HIDDEN_PASSAGE, FLAG_SOL_SANCTUM_INNER_STATUES_SEEN, FLAG_SOL_SANCTUM_ERUPTED, FLAG_PARTY_LEFT_VALE	entrance	0									sol-entrance_party-left-vale/entrance.png
 sol-entrance	19	Sol Entrance	party-left-vale: FLAG_SOL_SANCTUM_ENTERED, FLAG_SEARCHING_FOR_HIDDEN_PASSAGE, FLAG_SOL_SANCTUM_INNER_STATUES_SEEN, FLAG_SOL_SANCTUM_ERUPTED, FLAG_PARTY_LEFT_VALE	map	0									sol-entrance_party-left-vale/map-0.png
-sol-entrance	19	Sol Entrance	vale-returned-from-mt-aleph: FLAG_SOL_SANCTUM_ENTERED, FLAG_SEARCHING_FOR_HIDDEN_PASSAGE, FLAG_SOL_SANCTUM_INNER_STATUES_SEEN, FLAG_SOL_SANCTUM_ERUPTED, FLAG_PARTY_LEFT_VALE, FLAG_SOL_SANCTUM_FIRST_GEM_PLACED, FLAG_SOL_SANCTUM_SECOND_GEM_PLACED, FLAG_VALE_RETURNED_FROM_MT_ALEPH	entrance	0									sol-entrance_vale-returned-from-mt-aleph/entrance.png
-sol-entrance	19	Sol Entrance	vale-returned-from-mt-aleph: FLAG_SOL_SANCTUM_ENTERED, FLAG_SEARCHING_FOR_HIDDEN_PASSAGE, FLAG_SOL_SANCTUM_INNER_STATUES_SEEN, FLAG_SOL_SANCTUM_ERUPTED, FLAG_PARTY_LEFT_VALE, FLAG_SOL_SANCTUM_FIRST_GEM_PLACED, FLAG_SOL_SANCTUM_SECOND_GEM_PLACED, FLAG_VALE_RETURNED_FROM_MT_ALEPH	map	0									sol-entrance_vale-returned-from-mt-aleph/map-0.png
+sol-entrance	19	Sol Entrance	vale-returned-from-mt-aleph: FLAG_SOL_SANCTUM_ENTERED, FLAG_SEARCHING_FOR_HIDDEN_PASSAGE, FLAG_SOL_SANCTUM_INNER_STATUES_SEEN, FLAG_SOL_SANCTUM_ERUPTED, FLAG_PARTY_LEFT_VALE, FLAG_SOL_SANCTUM_FIRST_SMALL_JEWEL_SET, FLAG_SOL_SANCTUM_SECOND_SMALL_JEWEL_SET, FLAG_VALE_RETURNED_FROM_MT_ALEPH	entrance	0									sol-entrance_vale-returned-from-mt-aleph/entrance.png
+sol-entrance	19	Sol Entrance	vale-returned-from-mt-aleph: FLAG_SOL_SANCTUM_ENTERED, FLAG_SEARCHING_FOR_HIDDEN_PASSAGE, FLAG_SOL_SANCTUM_INNER_STATUES_SEEN, FLAG_SOL_SANCTUM_ERUPTED, FLAG_PARTY_LEFT_VALE, FLAG_SOL_SANCTUM_FIRST_SMALL_JEWEL_SET, FLAG_SOL_SANCTUM_SECOND_SMALL_JEWEL_SET, FLAG_VALE_RETURNED_FROM_MT_ALEPH	map	0									sol-entrance_vale-returned-from-mt-aleph/map-0.png
 sol-sanctum-corridor	15	Sol Sanctum		entrance	0									sol-sanctum-corridor/entrance.png
 sol-sanctum-corridor	15	Sol Sanctum		map	0									sol-sanctum-corridor/map-0.png
 sol-sanctum-elemental-star-room	17	Elemental Star Room		entrance	0									sol-sanctum-elemental-star-room/entrance.png
@@ -961,8 +961,8 @@ sol-sanctum-reliefs	16	Sol Sanctum		map	3									sol-sanctum-reliefs/map-3.png
 sol-sanctum-reliefs	16	Sol Sanctum		map	4									sol-sanctum-reliefs/map-4.png
 sol-sanctum-reliefs	16	Sol Sanctum		map	6									sol-sanctum-reliefs/map-6.png
 sol-sanctum-reliefs	16	Sol Sanctum		map	8									sol-sanctum-reliefs/map-8.png
-sol-sanctum-reliefs	16	Sol Sanctum	sol-sanctum-first-gem-placed: FLAG_SOL_SANCTUM_ENTERED, FLAG_SEARCHING_FOR_HIDDEN_PASSAGE, FLAG_SOL_SANCTUM_INNER_STATUES_SEEN, FLAG_SOL_SANCTUM_ERUPTED, FLAG_PARTY_LEFT_VALE, FLAG_SOL_SANCTUM_FIRST_GEM_PLACED	map	1									sol-sanctum-reliefs_sol-sanctum-first-gem-placed/map-1.png
-sol-sanctum-reliefs	16	Sol Sanctum	sol-sanctum-second-gem-placed: FLAG_SOL_SANCTUM_ENTERED, FLAG_SEARCHING_FOR_HIDDEN_PASSAGE, FLAG_SOL_SANCTUM_INNER_STATUES_SEEN, FLAG_SOL_SANCTUM_ERUPTED, FLAG_PARTY_LEFT_VALE, FLAG_SOL_SANCTUM_FIRST_GEM_PLACED, FLAG_SOL_SANCTUM_SECOND_GEM_PLACED	map	14									sol-sanctum-reliefs_sol-sanctum-second-gem-placed/map-14.png
+sol-sanctum-reliefs	16	Sol Sanctum	sol-sanctum-first-small-jewel-set: FLAG_SOL_SANCTUM_ENTERED, FLAG_SEARCHING_FOR_HIDDEN_PASSAGE, FLAG_SOL_SANCTUM_INNER_STATUES_SEEN, FLAG_SOL_SANCTUM_ERUPTED, FLAG_PARTY_LEFT_VALE, FLAG_SOL_SANCTUM_FIRST_SMALL_JEWEL_SET	map	1									sol-sanctum-reliefs_sol-sanctum-first-gem-placed/map-1.png
+sol-sanctum-reliefs	16	Sol Sanctum	sol-sanctum-second-small-jewel-set: FLAG_SOL_SANCTUM_ENTERED, FLAG_SEARCHING_FOR_HIDDEN_PASSAGE, FLAG_SOL_SANCTUM_INNER_STATUES_SEEN, FLAG_SOL_SANCTUM_ERUPTED, FLAG_PARTY_LEFT_VALE, FLAG_SOL_SANCTUM_FIRST_SMALL_JEWEL_SET, FLAG_SOL_SANCTUM_SECOND_SMALL_JEWEL_SET	map	14									sol-sanctum-reliefs_sol-sanctum-second-gem-placed/map-14.png
 sol-sanctum-statue	12	Sol Sanctum		entrance	0									sol-sanctum-statue/entrance.png
 sol-sanctum-statue	12	Sol Sanctum		map	0									sol-sanctum-statue/map-0.png
 sol-sanctum-statue	12	Sol Sanctum	sol-sanctum-center-statue-moved: FLAG_SOL_SANCTUM_NORTHWEST_SEAL_OPEN, FLAG_SOL_SANCTUM_SOUTHWEST_SEAL_OPEN, FLAG_SOL_SANCTUM_SOUTHEAST_SEAL_OPEN, FLAG_SOL_SANCTUM_ERUPTED, FLAG_SOL_SANCTUM_LEFT_BEAM_SHINING, FLAG_SOL_SANCTUM_RIGHT_BEAM_SHINING, FLAG_SOL_SANCTUM_CENTER_STATUE_MOVED	entrance	0									sol-sanctum-statue_sol-sanctum-center-statue-moved/entrance.png
@@ -1403,12 +1403,12 @@ vault-jail	22	2=Lunpa; *=Vault		map	1									vault-jail/map-1.png
 vault-jail	22	2=Lunpa; *=Vault		map	2									vault-jail/map-2.png
 vault-revisit	23	Vault		entrance	0									vault-revisit/entrance.png
 vault-revisit	23	Vault		map	0									vault-revisit/map-0.png
-vault-revisit	23	Vault	vault-dog-shown-passage: FLAG_VAULT_DJINNI_CALLED_BY_BELL, FLAG_VAULT_DOG_SHOWN_PASSAGE	entrance	0									vault-revisit_vault-dog-shown-passage/entrance.png
-vault-revisit	23	Vault	vault-dog-shown-passage: FLAG_VAULT_DJINNI_CALLED_BY_BELL, FLAG_VAULT_DOG_SHOWN_PASSAGE	map	0									vault-revisit_vault-dog-shown-passage/map-0.png
+vault-revisit	23	Vault	vault-dog-shown-passage: FLAG_VAULT_SAP_CALLED_BY_BELL, FLAG_VAULT_DOG_SHOWN_PASSAGE	entrance	0									vault-revisit_vault-dog-shown-passage/entrance.png
+vault-revisit	23	Vault	vault-dog-shown-passage: FLAG_VAULT_SAP_CALLED_BY_BELL, FLAG_VAULT_DOG_SHOWN_PASSAGE	map	0									vault-revisit_vault-dog-shown-passage/map-0.png
 vault	20	Vault		entrance	0									vault/entrance.png
 vault	20	Vault		map	0									vault/map-0.png
-vault	20	Vault	vault-dog-shown-passage: FLAG_VAULT_SUSPECTS_MIND_READ, FLAG_VAULT_IVAN_JOINED_ROD_SEARCH, FLAG_VAULT_THIEVES_JAILED, FLAG_VAULT_DJINNI_CALLED_BY_BELL, FLAG_VAULT_DOG_SHOWN_PASSAGE	entrance	0									vault_vault-dog-shown-passage/entrance.png
-vault	20	Vault	vault-dog-shown-passage: FLAG_VAULT_SUSPECTS_MIND_READ, FLAG_VAULT_IVAN_JOINED_ROD_SEARCH, FLAG_VAULT_THIEVES_JAILED, FLAG_VAULT_DJINNI_CALLED_BY_BELL, FLAG_VAULT_DOG_SHOWN_PASSAGE	map	0									vault_vault-dog-shown-passage/map-0.png
+vault	20	Vault	vault-dog-shown-passage: FLAG_VAULT_SUSPECTS_MIND_READ, FLAG_VAULT_IVAN_JOINED_ROD_SEARCH, FLAG_VAULT_THIEVES_JAILED, FLAG_VAULT_SAP_CALLED_BY_BELL, FLAG_VAULT_DOG_SHOWN_PASSAGE	entrance	0									vault_vault-dog-shown-passage/entrance.png
+vault	20	Vault	vault-dog-shown-passage: FLAG_VAULT_SUSPECTS_MIND_READ, FLAG_VAULT_IVAN_JOINED_ROD_SEARCH, FLAG_VAULT_THIEVES_JAILED, FLAG_VAULT_SAP_CALLED_BY_BELL, FLAG_VAULT_DOG_SHOWN_PASSAGE	map	0									vault_vault-dog-shown-passage/map-0.png
 vault	20	Vault	vault-ivan-joined-rod-search: FLAG_VAULT_SUSPECTS_MIND_READ, FLAG_VAULT_IVAN_JOINED_ROD_SEARCH	entrance	0									vault_vault-ivan-joined-rod-search/entrance.png
 vault	20	Vault	vault-ivan-joined-rod-search: FLAG_VAULT_SUSPECTS_MIND_READ, FLAG_VAULT_IVAN_JOINED_ROD_SEARCH	map	0									vault_vault-ivan-joined-rod-search/map-0.png
 vault	20	Vault	vault-suspects-mind-read: FLAG_VAULT_SUSPECTS_MIND_READ	entrance	0									vault_vault-suspects-mind-read/entrance.png
@@ -2154,8 +2154,8 @@ imil-interiors	51	7=Imil Sanctum; *=Imil		event	8	Imil_AskAboutRestaurantMenu	1	
 imil-interiors	51	7=Imil Sanctum; *=Imil		event	4	Imil_AskAboutWeapons	2		05440				05439, 05440, 05441	imil-interiors/events/Imil_AskAboutWeapons-2.png
 imil-interiors	51	7=Imil Sanctum; *=Imil		event-gif	4	Imil_AskAboutWeapons						137	05439, 05440, 05441	imil-interiors/events/Imil_AskAboutWeapons.gif
 imil-interiors	51	7=Imil Sanctum; *=Imil		event	4	Imil_AskAboutWeapons	1		05439				05439, 05440, 05441	imil-interiors/events/Imil_AskAboutWeapons.png
-imil-interiors	51	7=Imil Sanctum; *=Imil		event-gif	7	Imil_ReadApprenticeMind						99	05491, 05466	imil-interiors/events/Imil_ReadApprenticeMind.gif
-imil-interiors	51	7=Imil Sanctum; *=Imil		event	7	Imil_ReadApprenticeMind	1		05466				05491, 05466	imil-interiors/events/Imil_ReadApprenticeMind.png
+imil-interiors	51	7=Imil Sanctum; *=Imil		event-gif	7	Imil_ReadJustinsMind						99	05491, 05466	imil-interiors/events/Imil_ReadApprenticeMind.gif
+imil-interiors	51	7=Imil Sanctum; *=Imil		event	7	Imil_ReadJustinsMind	1		05466				05491, 05466	imil-interiors/events/Imil_ReadApprenticeMind.png
 imil-interiors	51	7=Imil Sanctum; *=Imil		event	1	Imil_ReadOldManInBedMind	2		05486				05486	imil-interiors/events/Imil_ReadOldManInBedMind-2.png
 imil-interiors	51	7=Imil Sanctum; *=Imil		event	1	Imil_ReadOldManInBedMind	3		05486				05486	imil-interiors/events/Imil_ReadOldManInBedMind-3.png
 imil-interiors	51	7=Imil Sanctum; *=Imil		event-gif	1	Imil_ReadOldManInBedMind						185	05486	imil-interiors/events/Imil_ReadOldManInBedMind.gif
@@ -2163,9 +2163,9 @@ imil-interiors	51	7=Imil Sanctum; *=Imil		event	1	Imil_ReadOldManInBedMind	1		05
 imil-interiors	51	7=Imil Sanctum; *=Imil		event	0	Imil_ReadOldWomanMind	2		05427				05487, 05435, 05427	imil-interiors/events/Imil_ReadOldWomanMind-2.png
 imil-interiors	51	7=Imil Sanctum; *=Imil		event-gif	0	Imil_ReadOldWomanMind						146	05487, 05435, 05427	imil-interiors/events/Imil_ReadOldWomanMind.gif
 imil-interiors	51	7=Imil Sanctum; *=Imil		event	0	Imil_ReadOldWomanMind	1		05427				05487, 05435, 05427	imil-interiors/events/Imil_ReadOldWomanMind.png
-imil-interiors	51	7=Imil Sanctum; *=Imil		event	7	Imil_ReadSecondApprenticeMind	2		05467				05493, 05467	imil-interiors/events/Imil_ReadSecondApprenticeMind-2.png
-imil-interiors	51	7=Imil Sanctum; *=Imil		event-gif	7	Imil_ReadSecondApprenticeMind						141	05493, 05467	imil-interiors/events/Imil_ReadSecondApprenticeMind.gif
-imil-interiors	51	7=Imil Sanctum; *=Imil		event	7	Imil_ReadSecondApprenticeMind	1		05467				05493, 05467	imil-interiors/events/Imil_ReadSecondApprenticeMind.png
+imil-interiors	51	7=Imil Sanctum; *=Imil		event	7	Imil_ReadMegansMind	2		05467				05493, 05467	imil-interiors/events/Imil_ReadSecondApprenticeMind-2.png
+imil-interiors	51	7=Imil Sanctum; *=Imil		event-gif	7	Imil_ReadMegansMind						141	05493, 05467	imil-interiors/events/Imil_ReadSecondApprenticeMind.gif
+imil-interiors	51	7=Imil Sanctum; *=Imil		event	7	Imil_ReadMegansMind	1		05467				05493, 05467	imil-interiors/events/Imil_ReadSecondApprenticeMind.png
 imil-interiors	51	7=Imil Sanctum; *=Imil		event-gif	4	Imil_TalkToArmorMerchant						87	05709, 05443	imil-interiors/events/Imil_TalkToArmorMerchant.gif
 imil-interiors	51	7=Imil Sanctum; *=Imil		event	4	Imil_TalkToArmorMerchant	1		05709				05709, 05443	imil-interiors/events/Imil_TalkToArmorMerchant.png
 imil-interiors	51	7=Imil Sanctum; *=Imil		event-gif	3	Imil_TalkToItemMerchant						76	05711, 05446, 05447	imil-interiors/events/Imil_TalkToItemMerchant.gif
@@ -2179,10 +2179,10 @@ imil-interiors	51	7=Imil Sanctum; *=Imil		event-gif	1	Imil_TalkToOldManInBed				
 imil-interiors	51	7=Imil Sanctum; *=Imil		event	1	Imil_TalkToOldManInBed	1		05484				05700, 05701, 05702, 05484, 05428, 05429, 05430, 05431	imil-interiors/events/Imil_TalkToOldManInBed.png
 imil-interiors	51	7=Imil Sanctum; *=Imil		event-gif	0	Imil_TalkToOldWoman						74	05485	imil-interiors/events/Imil_TalkToOldWoman.gif
 imil-interiors	51	7=Imil Sanctum; *=Imil		event	0	Imil_TalkToOldWoman	1		05485				05485	imil-interiors/events/Imil_TalkToOldWoman.png
-imil-interiors	51	7=Imil Sanctum; *=Imil		event	7	Imil_TalkToSecondApprentice	2		05464				05492, 05463, 05464, 05465	imil-interiors/events/Imil_TalkToSecondApprentice-2.png
-imil-interiors	51	7=Imil Sanctum; *=Imil		event	7	Imil_TalkToSecondApprentice	3		05464				05492, 05463, 05464, 05465	imil-interiors/events/Imil_TalkToSecondApprentice-3.png
-imil-interiors	51	7=Imil Sanctum; *=Imil		event-gif	7	Imil_TalkToSecondApprentice						189	05492, 05463, 05464, 05465	imil-interiors/events/Imil_TalkToSecondApprentice.gif
-imil-interiors	51	7=Imil Sanctum; *=Imil		event	7	Imil_TalkToSecondApprentice	1		05463				05492, 05463, 05464, 05465	imil-interiors/events/Imil_TalkToSecondApprentice.png
+imil-interiors	51	7=Imil Sanctum; *=Imil		event	7	Imil_TalkToMegan	2		05464				05492, 05463, 05464, 05465	imil-interiors/events/Imil_TalkToSecondApprentice-2.png
+imil-interiors	51	7=Imil Sanctum; *=Imil		event	7	Imil_TalkToMegan	3		05464				05492, 05463, 05464, 05465	imil-interiors/events/Imil_TalkToSecondApprentice-3.png
+imil-interiors	51	7=Imil Sanctum; *=Imil		event-gif	7	Imil_TalkToMegan						189	05492, 05463, 05464, 05465	imil-interiors/events/Imil_TalkToSecondApprentice.gif
+imil-interiors	51	7=Imil Sanctum; *=Imil		event	7	Imil_TalkToMegan	1		05463				05492, 05463, 05464, 05465	imil-interiors/events/Imil_TalkToSecondApprentice.png
 imil-interiors	51	7=Imil Sanctum; *=Imil		event-gif	4	Imil_TalkToWeaponMerchant						84	05707, 05438	imil-interiors/events/Imil_TalkToWeaponMerchant.gif
 imil-interiors	51	7=Imil Sanctum; *=Imil		event	4	Imil_TalkToWeaponMerchant	1		05707				05707, 05438	imil-interiors/events/Imil_TalkToWeaponMerchant.png
 imil-interiors	51	7=Imil Sanctum; *=Imil		event	2	MsgImilCoughTheEpidemicHasHitAlmost	2		05436				05436	imil-interiors/events/MsgImilCoughTheEpidemicHasHitAlmost-2.png
@@ -2416,135 +2416,135 @@ kolima-interiors	37	Kolima		event	4	MsgKolimaInteriorsWithNoMoreWorkHereKolima	1
 kolima-interiors	37	Kolima		event	7	MsgKolimaInteriorsYouSavedKolimaWowThatMakes	2		05793				05793	kolima-interiors/events/MsgKolimaInteriorsYouSavedKolimaWowThatMakes-2.png
 kolima-interiors	37	Kolima		event-gif	7	MsgKolimaInteriorsYouSavedKolimaWowThatMakes						116	05793	kolima-interiors/events/MsgKolimaInteriorsYouSavedKolimaWowThatMakes.gif
 kolima-interiors	37	Kolima		event	7	MsgKolimaInteriorsYouSavedKolimaWowThatMakes	1		05793				05793	kolima-interiors/events/MsgKolimaInteriorsYouSavedKolimaWowThatMakes.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	4	EventScript_ReadArmorMerchantsThoughts						102	09464, 07135	lunpa-suhalla/events/Event_ReadArmorMerchantsThoughts.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	4	EventScript_ReadArmorMerchantsThoughts	1		07135				09464, 07135	lunpa-suhalla/events/Event_ReadArmorMerchantsThoughts.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	EventScript_ReadChefsThoughts						107	07131	lunpa-suhalla/events/Event_ReadChefsThoughts.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	EventScript_ReadChefsThoughts	1		07131				07131	lunpa-suhalla/events/Event_ReadChefsThoughts.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	5	EventScript_ReadItemMerchantsThoughts						100	09466, 07136	lunpa-suhalla/events/Event_ReadItemMerchantsThoughts.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	5	EventScript_ReadItemMerchantsThoughts	1		07136				09466, 07136	lunpa-suhalla/events/Event_ReadItemMerchantsThoughts.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	4	EventScript_ReadWeaponMerchantsThoughts						101	09462, 07134	lunpa-suhalla/events/Event_ReadWeaponMerchantsThoughts.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	4	EventScript_ReadWeaponMerchantsThoughts	1		07134				09462, 07134	lunpa-suhalla/events/Event_ReadWeaponMerchantsThoughts.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	4	EventScript_TalkToArmorMerchant						81	09463, 07118	lunpa-suhalla/events/Event_TalkToArmorMerchant.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	4	EventScript_TalkToArmorMerchant	1		07118				09463, 07118	lunpa-suhalla/events/Event_TalkToArmorMerchant.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	EventScript_TalkToChef	2		07126				07125, 07126, 07127	lunpa-suhalla/events/Event_TalkToChef-2.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	EventScript_TalkToChef	3		07126				07125, 07126, 07127	lunpa-suhalla/events/Event_TalkToChef-3.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	EventScript_TalkToChef						187	07125, 07126, 07127	lunpa-suhalla/events/Event_TalkToChef.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	EventScript_TalkToChef	1		07125				07125, 07126, 07127	lunpa-suhalla/events/Event_TalkToChef.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	Event_TalkToInnClerk	2		09471				09470, 09471, 09472	lunpa-suhalla/events/Event_TalkToInnClerk-2.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	Event_TalkToInnClerk	3		09471				09470, 09471, 09472	lunpa-suhalla/events/Event_TalkToInnClerk-3.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	Event_TalkToInnClerk						170	09470, 09471, 09472	lunpa-suhalla/events/Event_TalkToInnClerk.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	Event_TalkToInnClerk	1		09470				09470, 09471, 09472	lunpa-suhalla/events/Event_TalkToInnClerk.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	EventScript_TalkToInnkeeper	2		07121				09467, 09468, 09469, 07120, 07121, 07122	lunpa-suhalla/events/Event_TalkToInnkeeper-2.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	EventScript_TalkToInnkeeper						124	09467, 09468, 09469, 07120, 07121, 07122	lunpa-suhalla/events/Event_TalkToInnkeeper.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	EventScript_TalkToInnkeeper	1		07120				09467, 09468, 09469, 07120, 07121, 07122	lunpa-suhalla/events/Event_TalkToInnkeeper.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	5	EventScript_TalkToItemMerchant	2		07119				09465, 07119	lunpa-suhalla/events/Event_TalkToItemMerchant-2.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	5	EventScript_TalkToItemMerchant						122	09465, 07119	lunpa-suhalla/events/Event_TalkToItemMerchant.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	5	EventScript_TalkToItemMerchant	1		07119				09465, 07119	lunpa-suhalla/events/Event_TalkToItemMerchant.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	11	Event_TalkToTemplePriest	2		07132				09479, 07132	lunpa-suhalla/events/Event_TalkToTemplePriest-2.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	11	Event_TalkToTemplePriest						120	09479, 07132	lunpa-suhalla/events/Event_TalkToTemplePriest.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	11	Event_TalkToTemplePriest	1		07132				09479, 07132	lunpa-suhalla/events/Event_TalkToTemplePriest.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	10	Event_TalkToTravelingPriest						73	09835	lunpa-suhalla/events/Event_TalkToTravelingPriest.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	10	Event_TalkToTravelingPriest	1		09835				09835	lunpa-suhalla/events/Event_TalkToTravelingPriest.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	4	EventScript_TalkToWeaponMerchant	2		07117				09461, 07117	lunpa-suhalla/events/Event_TalkToWeaponMerchant-2.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	4	EventScript_TalkToWeaponMerchant						113	09461, 07117	lunpa-suhalla/events/Event_TalkToWeaponMerchant.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	4	EventScript_TalkToWeaponMerchant	1		07117				09461, 07117	lunpa-suhalla/events/Event_TalkToWeaponMerchant.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsChefReopened	2		09474				09474	lunpa-suhalla/events/MsgLunpaInteriorsChefReopened-2.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	MsgLunpaInteriorsChefReopened						126	09474	lunpa-suhalla/events/MsgLunpaInteriorsChefReopened.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsChefReopened	1		09474				09474	lunpa-suhalla/events/MsgLunpaInteriorsChefReopened.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	MsgLunpaInteriorsChefReopenedThoughts						105	09478	lunpa-suhalla/events/MsgLunpaInteriorsChefReopenedThoughts.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsChefReopenedThoughts	1		09478				09478	lunpa-suhalla/events/MsgLunpaInteriorsChefReopenedThoughts.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	0	MsgLunpaInteriorsFirstHomeAReopened	2		09449				09449	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeAReopened-2.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	0	MsgLunpaInteriorsFirstHomeAReopened						117	09449	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeAReopened.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	0	MsgLunpaInteriorsFirstHomeAReopened	1		09449				09449	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeAReopened.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	0	MsgLunpaInteriorsFirstHomeAReopenedThoughts						102	09451	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeAReopenedThoughts.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	0	MsgLunpaInteriorsFirstHomeAReopenedThoughts	1		09451				09451	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeAReopenedThoughts.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	0	MsgLunpaInteriorsFirstHomeASealed	2		07105				07105	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeASealed-2.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	0	MsgLunpaInteriorsFirstHomeASealed						118	07105	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeASealed.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	0	MsgLunpaInteriorsFirstHomeASealed	1		07105				07105	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeASealed.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	0	MsgLunpaInteriorsFirstHomeASealedThoughts						96	07107	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeASealedThoughts.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	0	MsgLunpaInteriorsFirstHomeASealedThoughts	1		07107				07107	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeASealedThoughts.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	0	MsgLunpaInteriorsFirstHomeBReopened	2		09450				09450	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeBReopened-2.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	0	MsgLunpaInteriorsFirstHomeBReopened						127	09450	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeBReopened.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	0	MsgLunpaInteriorsFirstHomeBReopened	1		09450				09450	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeBReopened.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	0	MsgLunpaInteriorsFirstHomeBReopenedThoughts	2		09452				09452	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeBReopenedThoughts-2.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	0	MsgLunpaInteriorsFirstHomeBReopenedThoughts						133	09452	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeBReopenedThoughts.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	0	MsgLunpaInteriorsFirstHomeBReopenedThoughts	1		09452				09452	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeBReopenedThoughts.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	0	MsgLunpaInteriorsFirstHomeBSealed						75	07106	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeBSealed.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	0	MsgLunpaInteriorsFirstHomeBSealed	1		07106				07106	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeBSealed.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	0	MsgLunpaInteriorsFirstHomeBSealedThoughts						102	07108	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeBSealedThoughts.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	0	MsgLunpaInteriorsFirstHomeBSealedThoughts	1		07108				07108	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeBSealedThoughts.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnClerkReopenedThoughts	2		09476				09476	lunpa-suhalla/events/MsgLunpaInteriorsInnClerkReopenedThoughts-2.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	MsgLunpaInteriorsInnClerkReopenedThoughts						158	09476	lunpa-suhalla/events/MsgLunpaInteriorsInnClerkReopenedThoughts.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnClerkReopenedThoughts	1		09476				09476	lunpa-suhalla/events/MsgLunpaInteriorsInnClerkReopenedThoughts.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnClerkSealed	2		07123				07123	lunpa-suhalla/events/MsgLunpaInteriorsInnClerkSealed-2.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	MsgLunpaInteriorsInnClerkSealed						121	07123	lunpa-suhalla/events/MsgLunpaInteriorsInnClerkSealed.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnClerkSealed	1		07123				07123	lunpa-suhalla/events/MsgLunpaInteriorsInnClerkSealed.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	MsgLunpaInteriorsInnClerkSealedThoughts						108	07129	lunpa-suhalla/events/MsgLunpaInteriorsInnClerkSealedThoughts.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnClerkSealedThoughts	1		07129				07129	lunpa-suhalla/events/MsgLunpaInteriorsInnClerkSealedThoughts.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnWorkerReopened	2		09473				09473	lunpa-suhalla/events/MsgLunpaInteriorsInnWorkerReopened-2.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	MsgLunpaInteriorsInnWorkerReopened						110	09473	lunpa-suhalla/events/MsgLunpaInteriorsInnWorkerReopened.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnWorkerReopened	1		09473				09473	lunpa-suhalla/events/MsgLunpaInteriorsInnWorkerReopened.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	MsgLunpaInteriorsInnWorkerReopenedThoughts						105	09477	lunpa-suhalla/events/MsgLunpaInteriorsInnWorkerReopenedThoughts.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnWorkerReopenedThoughts	1		09477				09477	lunpa-suhalla/events/MsgLunpaInteriorsInnWorkerReopenedThoughts.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnWorkerSealed	2		07124				07124	lunpa-suhalla/events/MsgLunpaInteriorsInnWorkerSealed-2.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	MsgLunpaInteriorsInnWorkerSealed						107	07124	lunpa-suhalla/events/MsgLunpaInteriorsInnWorkerSealed.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnWorkerSealed	1		07124				07124	lunpa-suhalla/events/MsgLunpaInteriorsInnWorkerSealed.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	MsgLunpaInteriorsInnWorkerSealedThoughts						96	07130	lunpa-suhalla/events/MsgLunpaInteriorsInnWorkerSealedThoughts.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnWorkerSealedThoughts	1		07130				07130	lunpa-suhalla/events/MsgLunpaInteriorsInnWorkerSealedThoughts.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnkeeperReopenedThoughts	2		09475				09475	lunpa-suhalla/events/MsgLunpaInteriorsInnkeeperReopenedThoughts-2.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	MsgLunpaInteriorsInnkeeperReopenedThoughts						162	09475	lunpa-suhalla/events/MsgLunpaInteriorsInnkeeperReopenedThoughts.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnkeeperReopenedThoughts	1		09475				09475	lunpa-suhalla/events/MsgLunpaInteriorsInnkeeperReopenedThoughts.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	MsgLunpaInteriorsInnkeeperSealedThoughts						113	07128	lunpa-suhalla/events/MsgLunpaInteriorsInnkeeperSealedThoughts.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnkeeperSealedThoughts	1		07128				07128	lunpa-suhalla/events/MsgLunpaInteriorsInnkeeperSealedThoughts.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	2	MsgLunpaInteriorsSecondHomeAReopened	2		09453				09453	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeAReopened-2.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	2	MsgLunpaInteriorsSecondHomeAReopened						107	09453	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeAReopened.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	2	MsgLunpaInteriorsSecondHomeAReopened	1		09453				09453	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeAReopened.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	2	MsgLunpaInteriorsSecondHomeAReopenedThoughts						103	09455	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeAReopenedThoughts.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	2	MsgLunpaInteriorsSecondHomeAReopenedThoughts	1		09455				09455	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeAReopenedThoughts.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	2	MsgLunpaInteriorsSecondHomeASealed	2		07109				07109	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeASealed-2.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	2	MsgLunpaInteriorsSecondHomeASealed						114	07109	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeASealed.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	2	MsgLunpaInteriorsSecondHomeASealed	1		07109				07109	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeASealed.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	2	MsgLunpaInteriorsSecondHomeASealedThoughts						102	07111	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeASealedThoughts.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	2	MsgLunpaInteriorsSecondHomeASealedThoughts	1		07111				07111	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeASealedThoughts.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	2	MsgLunpaInteriorsSecondHomeBReopened	2		09454				09454	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeBReopened-2.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	2	MsgLunpaInteriorsSecondHomeBReopened						111	09454	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeBReopened.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	2	MsgLunpaInteriorsSecondHomeBReopened	1		09454				09454	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeBReopened.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	2	MsgLunpaInteriorsSecondHomeBReopenedThoughts	2		09456				09456	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeBReopenedThoughts-2.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	2	MsgLunpaInteriorsSecondHomeBReopenedThoughts						146	09456	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeBReopenedThoughts.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	2	MsgLunpaInteriorsSecondHomeBReopenedThoughts	1		09456				09456	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeBReopenedThoughts.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	2	MsgLunpaInteriorsSecondHomeBSealed						79	07110	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeBSealed.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	2	MsgLunpaInteriorsSecondHomeBSealed	1		07110				07110	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeBSealed.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	2	MsgLunpaInteriorsSecondHomeBSealedThoughts	2		07112				07112	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeBSealedThoughts-2.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	2	MsgLunpaInteriorsSecondHomeBSealedThoughts						146	07112	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeBSealedThoughts.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	2	MsgLunpaInteriorsSecondHomeBSealedThoughts	1		07112				07112	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeBSealedThoughts.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	11	MsgLunpaInteriorsTemplePriestReopenedThoughts	2		09480				09480	lunpa-suhalla/events/MsgLunpaInteriorsTemplePriestReopenedThoughts-2.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	11	MsgLunpaInteriorsTemplePriestReopenedThoughts	3		09480				09480	lunpa-suhalla/events/MsgLunpaInteriorsTemplePriestReopenedThoughts-3.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	11	MsgLunpaInteriorsTemplePriestReopenedThoughts						192	09480	lunpa-suhalla/events/MsgLunpaInteriorsTemplePriestReopenedThoughts.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	11	MsgLunpaInteriorsTemplePriestReopenedThoughts	1		09480				09480	lunpa-suhalla/events/MsgLunpaInteriorsTemplePriestReopenedThoughts.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	11	MsgLunpaInteriorsTemplePriestSealedThoughts						110	07133	lunpa-suhalla/events/MsgLunpaInteriorsTemplePriestSealedThoughts.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	11	MsgLunpaInteriorsTemplePriestSealedThoughts	1		07133				07133	lunpa-suhalla/events/MsgLunpaInteriorsTemplePriestSealedThoughts.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	3	MsgLunpaInteriorsThirdHomeAReopened	2		09457				09457	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeAReopened-2.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	3	MsgLunpaInteriorsThirdHomeAReopened						124	09457	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeAReopened.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	3	MsgLunpaInteriorsThirdHomeAReopened	1		09457				09457	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeAReopened.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	3	MsgLunpaInteriorsThirdHomeAReopenedThoughts	2		09459				09459	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeAReopenedThoughts-2.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	3	MsgLunpaInteriorsThirdHomeAReopenedThoughts						156	09459	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeAReopenedThoughts.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	3	MsgLunpaInteriorsThirdHomeAReopenedThoughts	1		09459				09459	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeAReopenedThoughts.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	3	MsgLunpaInteriorsThirdHomeASealed	2		07113				07113	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeASealed-2.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	3	MsgLunpaInteriorsThirdHomeASealed						136	07113	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeASealed.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	3	MsgLunpaInteriorsThirdHomeASealed	1		07113				07113	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeASealed.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	3	MsgLunpaInteriorsThirdHomeASealedThoughts						103	07115	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeASealedThoughts.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	3	MsgLunpaInteriorsThirdHomeASealedThoughts	1		07115				07115	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeASealedThoughts.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	3	MsgLunpaInteriorsThirdHomeBReopened	2		09458				09458	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeBReopened-2.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	3	MsgLunpaInteriorsThirdHomeBReopened						119	09458	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeBReopened.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	3	MsgLunpaInteriorsThirdHomeBReopened	1		09458				09458	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeBReopened.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	3	MsgLunpaInteriorsThirdHomeBReopenedThoughts						94	09460	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeBReopenedThoughts.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	3	MsgLunpaInteriorsThirdHomeBReopenedThoughts	1		09460				09460	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeBReopenedThoughts.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	3	MsgLunpaInteriorsThirdHomeBSealed						82	07114	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeBSealed.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	3	MsgLunpaInteriorsThirdHomeBSealed	1		07114				07114	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeBSealed.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	3	MsgLunpaInteriorsThirdHomeBSealedThoughts						91	07116	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeBSealedThoughts.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	3	MsgLunpaInteriorsThirdHomeBSealedThoughts	1		07116				07116	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeBSealedThoughts.png
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	10	MsgLunpaInteriorsTravelingPriestThoughts						99	09836	lunpa-suhalla/events/MsgLunpaInteriorsTravelingPriestThoughts.gif
-lunpa-suhalla	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	10	MsgLunpaInteriorsTravelingPriestThoughts	1		09836				09836	lunpa-suhalla/events/MsgLunpaInteriorsTravelingPriestThoughts.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	4	EventScript_ReadArmorMerchantsThoughts						102	09464, 07135	lunpa-suhalla/events/Event_ReadArmorMerchantsThoughts.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	4	EventScript_ReadArmorMerchantsThoughts	1		07135				09464, 07135	lunpa-suhalla/events/Event_ReadArmorMerchantsThoughts.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	EventScript_ReadChefsThoughts						107	07131	lunpa-suhalla/events/Event_ReadChefsThoughts.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	EventScript_ReadChefsThoughts	1		07131				07131	lunpa-suhalla/events/Event_ReadChefsThoughts.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	5	EventScript_ReadItemMerchantsThoughts						100	09466, 07136	lunpa-suhalla/events/Event_ReadItemMerchantsThoughts.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	5	EventScript_ReadItemMerchantsThoughts	1		07136				09466, 07136	lunpa-suhalla/events/Event_ReadItemMerchantsThoughts.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	4	EventScript_ReadWeaponMerchantsThoughts						101	09462, 07134	lunpa-suhalla/events/Event_ReadWeaponMerchantsThoughts.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	4	EventScript_ReadWeaponMerchantsThoughts	1		07134				09462, 07134	lunpa-suhalla/events/Event_ReadWeaponMerchantsThoughts.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	4	EventScript_TalkToArmorMerchant						81	09463, 07118	lunpa-suhalla/events/Event_TalkToArmorMerchant.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	4	EventScript_TalkToArmorMerchant	1		07118				09463, 07118	lunpa-suhalla/events/Event_TalkToArmorMerchant.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	EventScript_TalkToChef	2		07126				07125, 07126, 07127	lunpa-suhalla/events/Event_TalkToChef-2.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	EventScript_TalkToChef	3		07126				07125, 07126, 07127	lunpa-suhalla/events/Event_TalkToChef-3.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	EventScript_TalkToChef						187	07125, 07126, 07127	lunpa-suhalla/events/Event_TalkToChef.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	EventScript_TalkToChef	1		07125				07125, 07126, 07127	lunpa-suhalla/events/Event_TalkToChef.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	Event_TalkToInnClerk	2		09471				09470, 09471, 09472	lunpa-suhalla/events/Event_TalkToInnClerk-2.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	Event_TalkToInnClerk	3		09471				09470, 09471, 09472	lunpa-suhalla/events/Event_TalkToInnClerk-3.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	Event_TalkToInnClerk						170	09470, 09471, 09472	lunpa-suhalla/events/Event_TalkToInnClerk.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	Event_TalkToInnClerk	1		09470				09470, 09471, 09472	lunpa-suhalla/events/Event_TalkToInnClerk.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	EventScript_TalkToInnkeeper	2		07121				09467, 09468, 09469, 07120, 07121, 07122	lunpa-suhalla/events/Event_TalkToInnkeeper-2.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	EventScript_TalkToInnkeeper						124	09467, 09468, 09469, 07120, 07121, 07122	lunpa-suhalla/events/Event_TalkToInnkeeper.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	EventScript_TalkToInnkeeper	1		07120				09467, 09468, 09469, 07120, 07121, 07122	lunpa-suhalla/events/Event_TalkToInnkeeper.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	5	EventScript_TalkToItemMerchant	2		07119				09465, 07119	lunpa-suhalla/events/Event_TalkToItemMerchant-2.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	5	EventScript_TalkToItemMerchant						122	09465, 07119	lunpa-suhalla/events/Event_TalkToItemMerchant.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	5	EventScript_TalkToItemMerchant	1		07119				09465, 07119	lunpa-suhalla/events/Event_TalkToItemMerchant.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	11	Event_TalkToTemplePriest	2		07132				09479, 07132	lunpa-suhalla/events/Event_TalkToTemplePriest-2.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	11	Event_TalkToTemplePriest						120	09479, 07132	lunpa-suhalla/events/Event_TalkToTemplePriest.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	11	Event_TalkToTemplePriest	1		07132				09479, 07132	lunpa-suhalla/events/Event_TalkToTemplePriest.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	10	Event_TalkToTravelingPriest						73	09835	lunpa-suhalla/events/Event_TalkToTravelingPriest.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	10	Event_TalkToTravelingPriest	1		09835				09835	lunpa-suhalla/events/Event_TalkToTravelingPriest.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	4	EventScript_TalkToWeaponMerchant	2		07117				09461, 07117	lunpa-suhalla/events/Event_TalkToWeaponMerchant-2.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	4	EventScript_TalkToWeaponMerchant						113	09461, 07117	lunpa-suhalla/events/Event_TalkToWeaponMerchant.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	4	EventScript_TalkToWeaponMerchant	1		07117				09461, 07117	lunpa-suhalla/events/Event_TalkToWeaponMerchant.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsChefReopened	2		09474				09474	lunpa-suhalla/events/MsgLunpaInteriorsChefReopened-2.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	MsgLunpaInteriorsChefReopened						126	09474	lunpa-suhalla/events/MsgLunpaInteriorsChefReopened.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsChefReopened	1		09474				09474	lunpa-suhalla/events/MsgLunpaInteriorsChefReopened.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	MsgLunpaInteriorsChefReopenedThoughts						105	09478	lunpa-suhalla/events/MsgLunpaInteriorsChefReopenedThoughts.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsChefReopenedThoughts	1		09478				09478	lunpa-suhalla/events/MsgLunpaInteriorsChefReopenedThoughts.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	0	MsgLunpaInteriorsFirstHomeAReopened	2		09449				09449	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeAReopened-2.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	0	MsgLunpaInteriorsFirstHomeAReopened						117	09449	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeAReopened.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	0	MsgLunpaInteriorsFirstHomeAReopened	1		09449				09449	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeAReopened.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	0	MsgLunpaInteriorsFirstHomeAReopenedThoughts						102	09451	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeAReopenedThoughts.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	0	MsgLunpaInteriorsFirstHomeAReopenedThoughts	1		09451				09451	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeAReopenedThoughts.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	0	MsgLunpaInteriorsFirstHomeASealed	2		07105				07105	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeASealed-2.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	0	MsgLunpaInteriorsFirstHomeASealed						118	07105	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeASealed.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	0	MsgLunpaInteriorsFirstHomeASealed	1		07105				07105	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeASealed.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	0	MsgLunpaInteriorsFirstHomeASealedThoughts						96	07107	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeASealedThoughts.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	0	MsgLunpaInteriorsFirstHomeASealedThoughts	1		07107				07107	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeASealedThoughts.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	0	MsgLunpaInteriorsFirstHomeBReopened	2		09450				09450	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeBReopened-2.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	0	MsgLunpaInteriorsFirstHomeBReopened						127	09450	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeBReopened.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	0	MsgLunpaInteriorsFirstHomeBReopened	1		09450				09450	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeBReopened.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	0	MsgLunpaInteriorsFirstHomeBReopenedThoughts	2		09452				09452	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeBReopenedThoughts-2.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	0	MsgLunpaInteriorsFirstHomeBReopenedThoughts						133	09452	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeBReopenedThoughts.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	0	MsgLunpaInteriorsFirstHomeBReopenedThoughts	1		09452				09452	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeBReopenedThoughts.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	0	MsgLunpaInteriorsFirstHomeBSealed						75	07106	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeBSealed.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	0	MsgLunpaInteriorsFirstHomeBSealed	1		07106				07106	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeBSealed.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	0	MsgLunpaInteriorsFirstHomeBSealedThoughts						102	07108	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeBSealedThoughts.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	0	MsgLunpaInteriorsFirstHomeBSealedThoughts	1		07108				07108	lunpa-suhalla/events/MsgLunpaInteriorsFirstHomeBSealedThoughts.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnClerkReopenedThoughts	2		09476				09476	lunpa-suhalla/events/MsgLunpaInteriorsInnClerkReopenedThoughts-2.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	MsgLunpaInteriorsInnClerkReopenedThoughts						158	09476	lunpa-suhalla/events/MsgLunpaInteriorsInnClerkReopenedThoughts.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnClerkReopenedThoughts	1		09476				09476	lunpa-suhalla/events/MsgLunpaInteriorsInnClerkReopenedThoughts.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnClerkSealed	2		07123				07123	lunpa-suhalla/events/MsgLunpaInteriorsInnClerkSealed-2.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	MsgLunpaInteriorsInnClerkSealed						121	07123	lunpa-suhalla/events/MsgLunpaInteriorsInnClerkSealed.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnClerkSealed	1		07123				07123	lunpa-suhalla/events/MsgLunpaInteriorsInnClerkSealed.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	MsgLunpaInteriorsInnClerkSealedThoughts						108	07129	lunpa-suhalla/events/MsgLunpaInteriorsInnClerkSealedThoughts.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnClerkSealedThoughts	1		07129				07129	lunpa-suhalla/events/MsgLunpaInteriorsInnClerkSealedThoughts.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnWorkerReopened	2		09473				09473	lunpa-suhalla/events/MsgLunpaInteriorsInnWorkerReopened-2.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	MsgLunpaInteriorsInnWorkerReopened						110	09473	lunpa-suhalla/events/MsgLunpaInteriorsInnWorkerReopened.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnWorkerReopened	1		09473				09473	lunpa-suhalla/events/MsgLunpaInteriorsInnWorkerReopened.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	MsgLunpaInteriorsInnWorkerReopenedThoughts						105	09477	lunpa-suhalla/events/MsgLunpaInteriorsInnWorkerReopenedThoughts.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnWorkerReopenedThoughts	1		09477				09477	lunpa-suhalla/events/MsgLunpaInteriorsInnWorkerReopenedThoughts.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnWorkerSealed	2		07124				07124	lunpa-suhalla/events/MsgLunpaInteriorsInnWorkerSealed-2.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	MsgLunpaInteriorsInnWorkerSealed						107	07124	lunpa-suhalla/events/MsgLunpaInteriorsInnWorkerSealed.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnWorkerSealed	1		07124				07124	lunpa-suhalla/events/MsgLunpaInteriorsInnWorkerSealed.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	MsgLunpaInteriorsInnWorkerSealedThoughts						96	07130	lunpa-suhalla/events/MsgLunpaInteriorsInnWorkerSealedThoughts.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnWorkerSealedThoughts	1		07130				07130	lunpa-suhalla/events/MsgLunpaInteriorsInnWorkerSealedThoughts.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnkeeperReopenedThoughts	2		09475				09475	lunpa-suhalla/events/MsgLunpaInteriorsInnkeeperReopenedThoughts-2.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	MsgLunpaInteriorsInnkeeperReopenedThoughts						162	09475	lunpa-suhalla/events/MsgLunpaInteriorsInnkeeperReopenedThoughts.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnkeeperReopenedThoughts	1		09475				09475	lunpa-suhalla/events/MsgLunpaInteriorsInnkeeperReopenedThoughts.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	6	MsgLunpaInteriorsInnkeeperSealedThoughts						113	07128	lunpa-suhalla/events/MsgLunpaInteriorsInnkeeperSealedThoughts.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	6	MsgLunpaInteriorsInnkeeperSealedThoughts	1		07128				07128	lunpa-suhalla/events/MsgLunpaInteriorsInnkeeperSealedThoughts.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	2	MsgLunpaInteriorsSecondHomeAReopened	2		09453				09453	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeAReopened-2.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	2	MsgLunpaInteriorsSecondHomeAReopened						107	09453	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeAReopened.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	2	MsgLunpaInteriorsSecondHomeAReopened	1		09453				09453	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeAReopened.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	2	MsgLunpaInteriorsSecondHomeAReopenedThoughts						103	09455	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeAReopenedThoughts.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	2	MsgLunpaInteriorsSecondHomeAReopenedThoughts	1		09455				09455	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeAReopenedThoughts.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	2	MsgLunpaInteriorsSecondHomeASealed	2		07109				07109	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeASealed-2.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	2	MsgLunpaInteriorsSecondHomeASealed						114	07109	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeASealed.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	2	MsgLunpaInteriorsSecondHomeASealed	1		07109				07109	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeASealed.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	2	MsgLunpaInteriorsSecondHomeASealedThoughts						102	07111	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeASealedThoughts.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	2	MsgLunpaInteriorsSecondHomeASealedThoughts	1		07111				07111	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeASealedThoughts.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	2	MsgLunpaInteriorsSecondHomeBReopened	2		09454				09454	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeBReopened-2.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	2	MsgLunpaInteriorsSecondHomeBReopened						111	09454	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeBReopened.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	2	MsgLunpaInteriorsSecondHomeBReopened	1		09454				09454	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeBReopened.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	2	MsgLunpaInteriorsSecondHomeBReopenedThoughts	2		09456				09456	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeBReopenedThoughts-2.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	2	MsgLunpaInteriorsSecondHomeBReopenedThoughts						146	09456	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeBReopenedThoughts.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	2	MsgLunpaInteriorsSecondHomeBReopenedThoughts	1		09456				09456	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeBReopenedThoughts.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	2	MsgLunpaInteriorsSecondHomeBSealed						79	07110	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeBSealed.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	2	MsgLunpaInteriorsSecondHomeBSealed	1		07110				07110	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeBSealed.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	2	MsgLunpaInteriorsSecondHomeBSealedThoughts	2		07112				07112	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeBSealedThoughts-2.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	2	MsgLunpaInteriorsSecondHomeBSealedThoughts						146	07112	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeBSealedThoughts.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	2	MsgLunpaInteriorsSecondHomeBSealedThoughts	1		07112				07112	lunpa-suhalla/events/MsgLunpaInteriorsSecondHomeBSealedThoughts.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	11	MsgLunpaInteriorsTemplePriestReopenedThoughts	2		09480				09480	lunpa-suhalla/events/MsgLunpaInteriorsTemplePriestReopenedThoughts-2.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	11	MsgLunpaInteriorsTemplePriestReopenedThoughts	3		09480				09480	lunpa-suhalla/events/MsgLunpaInteriorsTemplePriestReopenedThoughts-3.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	11	MsgLunpaInteriorsTemplePriestReopenedThoughts						192	09480	lunpa-suhalla/events/MsgLunpaInteriorsTemplePriestReopenedThoughts.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	11	MsgLunpaInteriorsTemplePriestReopenedThoughts	1		09480				09480	lunpa-suhalla/events/MsgLunpaInteriorsTemplePriestReopenedThoughts.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	11	MsgLunpaInteriorsTemplePriestSealedThoughts						110	07133	lunpa-suhalla/events/MsgLunpaInteriorsTemplePriestSealedThoughts.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	11	MsgLunpaInteriorsTemplePriestSealedThoughts	1		07133				07133	lunpa-suhalla/events/MsgLunpaInteriorsTemplePriestSealedThoughts.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	3	MsgLunpaInteriorsThirdHomeAReopened	2		09457				09457	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeAReopened-2.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	3	MsgLunpaInteriorsThirdHomeAReopened						124	09457	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeAReopened.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	3	MsgLunpaInteriorsThirdHomeAReopened	1		09457				09457	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeAReopened.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	3	MsgLunpaInteriorsThirdHomeAReopenedThoughts	2		09459				09459	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeAReopenedThoughts-2.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	3	MsgLunpaInteriorsThirdHomeAReopenedThoughts						156	09459	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeAReopenedThoughts.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	3	MsgLunpaInteriorsThirdHomeAReopenedThoughts	1		09459				09459	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeAReopenedThoughts.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	3	MsgLunpaInteriorsThirdHomeASealed	2		07113				07113	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeASealed-2.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	3	MsgLunpaInteriorsThirdHomeASealed						136	07113	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeASealed.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	3	MsgLunpaInteriorsThirdHomeASealed	1		07113				07113	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeASealed.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	3	MsgLunpaInteriorsThirdHomeASealedThoughts						103	07115	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeASealedThoughts.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	3	MsgLunpaInteriorsThirdHomeASealedThoughts	1		07115				07115	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeASealedThoughts.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	3	MsgLunpaInteriorsThirdHomeBReopened	2		09458				09458	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeBReopened-2.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	3	MsgLunpaInteriorsThirdHomeBReopened						119	09458	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeBReopened.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	3	MsgLunpaInteriorsThirdHomeBReopened	1		09458				09458	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeBReopened.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	3	MsgLunpaInteriorsThirdHomeBReopenedThoughts						94	09460	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeBReopenedThoughts.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	3	MsgLunpaInteriorsThirdHomeBReopenedThoughts	1		09460				09460	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeBReopenedThoughts.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	3	MsgLunpaInteriorsThirdHomeBSealed						82	07114	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeBSealed.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	3	MsgLunpaInteriorsThirdHomeBSealed	1		07114				07114	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeBSealed.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	3	MsgLunpaInteriorsThirdHomeBSealedThoughts						91	07116	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeBSealedThoughts.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	3	MsgLunpaInteriorsThirdHomeBSealedThoughts	1		07116				07116	lunpa-suhalla/events/MsgLunpaInteriorsThirdHomeBSealedThoughts.png
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event-gif	10	MsgLunpaInteriorsTravelingPriestThoughts						99	09836	lunpa-suhalla/events/MsgLunpaInteriorsTravelingPriestThoughts.gif
+lunpa-interiors	105	7,11=Lunpa Temple; 10=Gate to Suhalla; *=Lunpa		event	10	MsgLunpaInteriorsTravelingPriestThoughts	1		09836				09836	lunpa-suhalla/events/MsgLunpaInteriorsTravelingPriestThoughts.png
 sanctum	9	1,2,20,21=Vale Sanctum; 10,11,12=Vault Sanctum; 29=Altin Sanctum; 32=Xian Sanctum; 35=Bilibin Sanctum; *=Sanctum		event	1	EventScript_AskAboutNewAdepts	2		07166				07165, 07166, 07167, 07168, 07169	sanctum/events/Event_AskAboutNewAdepts-2.png
 sanctum	9	1,2,20,21=Vale Sanctum; 10,11,12=Vault Sanctum; 29=Altin Sanctum; 32=Xian Sanctum; 35=Bilibin Sanctum; *=Sanctum		event-gif	1	EventScript_AskAboutNewAdepts						133	07165, 07166, 07167, 07168, 07169	sanctum/events/Event_AskAboutNewAdepts.gif
 sanctum	9	1,2,20,21=Vale Sanctum; 10,11,12=Vault Sanctum; 29=Altin Sanctum; 32=Xian Sanctum; 35=Bilibin Sanctum; *=Sanctum		event	1	EventScript_AskAboutNewAdepts	1		07165				07165, 07166, 07167, 07168, 07169	sanctum/events/Event_AskAboutNewAdepts.png
@@ -3270,23 +3270,23 @@ tolbi	135	Tolbi		event-gif	3	Tolbi_TalkToSnackVendor						189	09064, 09065, 0906
 tolbi	135	Tolbi		event	3	Tolbi_TalkToSnackVendor	1		09064				09064, 09065, 09066	tolbi/events/Tolbi_TalkToSnackVendor.png
 tolbi	135	Tolbi		event-gif	20	Tolbi_TalkToYoungerSibling						76	09062, 08675, 08086, 09074, 08694, 08107	tolbi/events/Tolbi_TalkToYoungerSibling.gif
 tolbi	135	Tolbi		event	20	Tolbi_TalkToYoungerSibling	1		08086				09062, 08675, 08086, 09074, 08694, 08107	tolbi/events/Tolbi_TalkToYoungerSibling.png
-altin-interiors	76	Altin		event	9	Houses_AskAboutMineBeasts	2		06475				06474, 06475, 06476	altin-interiors/events/Houses_AskAboutMineBeasts-2.png
-altin-interiors	76	Altin		event-gif	9	Houses_AskAboutMineBeasts						135	06474, 06475, 06476	altin-interiors/events/Houses_AskAboutMineBeasts.gif
-altin-interiors	76	Altin		event	9	Houses_AskAboutMineBeasts	1		06474				06474, 06475, 06476	altin-interiors/events/Houses_AskAboutMineBeasts.png
-altin-interiors	76	Altin		event	3	Houses_AskAboutMonsters	2		06370				06369, 06370, 06371	altin-interiors/events/Houses_AskAboutMonsters-2.png
-altin-interiors	76	Altin		event	3	Houses_AskAboutMonsters	3		06370				06369, 06370, 06371	altin-interiors/events/Houses_AskAboutMonsters-3.png
-altin-interiors	76	Altin		event-gif	3	Houses_AskAboutMonsters						152	06369, 06370, 06371	altin-interiors/events/Houses_AskAboutMonsters.gif
-altin-interiors	76	Altin		event	3	Houses_AskAboutMonsters	1		06369				06369, 06370, 06371	altin-interiors/events/Houses_AskAboutMonsters.png
-altin-interiors	76	Altin		event	2	Houses_AskAboutWayWest	2		06362				06361, 06362, 06363	altin-interiors/events/Houses_AskAboutWayWest-2.png
-altin-interiors	76	Altin		event-gif	2	Houses_AskAboutWayWest						139	06361, 06362, 06363	altin-interiors/events/Houses_AskAboutWayWest.gif
-altin-interiors	76	Altin		event	2	Houses_AskAboutWayWest	1		06361				06361, 06362, 06363	altin-interiors/events/Houses_AskAboutWayWest.png
-altin-interiors	76	Altin		event	1	Houses_AskAboutXianGirl	2		06450				06450, 06451, 06452	altin-interiors/events/Houses_AskAboutXianGirl-2.png
-altin-interiors	76	Altin		event	1	Houses_AskAboutXianGirl	3		06451				06450, 06451, 06452	altin-interiors/events/Houses_AskAboutXianGirl-3.png
-altin-interiors	76	Altin		event-gif	1	Houses_AskAboutXianGirl						159	06450, 06451, 06452	altin-interiors/events/Houses_AskAboutXianGirl.gif
-altin-interiors	76	Altin		event	1	Houses_AskAboutXianGirl	1		06450				06450, 06451, 06452	altin-interiors/events/Houses_AskAboutXianGirl.png
-altin-interiors	76	Altin		event	8	Houses_TalkToInnkeeper	2		06390				06471, 06389, 06390, 06391	altin-interiors/events/Houses_TalkToInnkeeper-2.png
-altin-interiors	76	Altin		event-gif	8	Houses_TalkToInnkeeper						142	06471, 06389, 06390, 06391	altin-interiors/events/Houses_TalkToInnkeeper.gif
-altin-interiors	76	Altin		event	8	Houses_TalkToInnkeeper	1		06389				06471, 06389, 06390, 06391	altin-interiors/events/Houses_TalkToInnkeeper.png
+altin-interiors	76	Altin		event	9	AltinInteriors_AskAboutMineBeasts	2		06475				06474, 06475, 06476	altin-interiors/events/Houses_AskAboutMineBeasts-2.png
+altin-interiors	76	Altin		event-gif	9	AltinInteriors_AskAboutMineBeasts						135	06474, 06475, 06476	altin-interiors/events/Houses_AskAboutMineBeasts.gif
+altin-interiors	76	Altin		event	9	AltinInteriors_AskAboutMineBeasts	1		06474				06474, 06475, 06476	altin-interiors/events/Houses_AskAboutMineBeasts.png
+altin-interiors	76	Altin		event	3	AltinInteriors_AskAboutMonsters	2		06370				06369, 06370, 06371	altin-interiors/events/Houses_AskAboutMonsters-2.png
+altin-interiors	76	Altin		event	3	AltinInteriors_AskAboutMonsters	3		06370				06369, 06370, 06371	altin-interiors/events/Houses_AskAboutMonsters-3.png
+altin-interiors	76	Altin		event-gif	3	AltinInteriors_AskAboutMonsters						152	06369, 06370, 06371	altin-interiors/events/Houses_AskAboutMonsters.gif
+altin-interiors	76	Altin		event	3	AltinInteriors_AskAboutMonsters	1		06369				06369, 06370, 06371	altin-interiors/events/Houses_AskAboutMonsters.png
+altin-interiors	76	Altin		event	2	AltinInteriors_AskAboutWayWest	2		06362				06361, 06362, 06363	altin-interiors/events/Houses_AskAboutWayWest-2.png
+altin-interiors	76	Altin		event-gif	2	AltinInteriors_AskAboutWayWest						139	06361, 06362, 06363	altin-interiors/events/Houses_AskAboutWayWest.gif
+altin-interiors	76	Altin		event	2	AltinInteriors_AskAboutWayWest	1		06361				06361, 06362, 06363	altin-interiors/events/Houses_AskAboutWayWest.png
+altin-interiors	76	Altin		event	1	AltinInteriors_AskAboutXianGirl	2		06450				06450, 06451, 06452	altin-interiors/events/Houses_AskAboutXianGirl-2.png
+altin-interiors	76	Altin		event	1	AltinInteriors_AskAboutXianGirl	3		06451				06450, 06451, 06452	altin-interiors/events/Houses_AskAboutXianGirl-3.png
+altin-interiors	76	Altin		event-gif	1	AltinInteriors_AskAboutXianGirl						159	06450, 06451, 06452	altin-interiors/events/Houses_AskAboutXianGirl.gif
+altin-interiors	76	Altin		event	1	AltinInteriors_AskAboutXianGirl	1		06450				06450, 06451, 06452	altin-interiors/events/Houses_AskAboutXianGirl.png
+altin-interiors	76	Altin		event	8	AltinInteriors_TalkToInnkeeper	2		06390				06471, 06389, 06390, 06391	altin-interiors/events/Houses_TalkToInnkeeper-2.png
+altin-interiors	76	Altin		event-gif	8	AltinInteriors_TalkToInnkeeper						142	06471, 06389, 06390, 06391	altin-interiors/events/Houses_TalkToInnkeeper.gif
+altin-interiors	76	Altin		event	8	AltinInteriors_TalkToInnkeeper	1		06389				06471, 06389, 06390, 06391	altin-interiors/events/Houses_TalkToInnkeeper.png
 altin-interiors	76	Altin		event	8	Houses_TalkToWeaponSeller	2		06376				06375, 06376, 06377, 06465, 06378	altin-interiors/events/Houses_TalkToWeaponSeller-2.png
 altin-interiors	76	Altin		event	8	Houses_TalkToWeaponSeller	3		06376				06375, 06376, 06377, 06465, 06378	altin-interiors/events/Houses_TalkToWeaponSeller-3.png
 altin-interiors	76	Altin		event-gif	8	Houses_TalkToWeaponSeller						164	06375, 06376, 06377, 06465, 06378	altin-interiors/events/Houses_TalkToWeaponSeller.gif
@@ -3507,21 +3507,21 @@ altin	75	Altin		event-gif	1	MsgAltinYouCameToAltinAtA						104	06347	altin/event
 altin	75	Altin		event	1	MsgAltinYouCameToAltinAtA	1		06347				06347	altin/events/MsgAltinYouCameToAltinAtA.png
 altin	75	Altin		event-gif	10	MsgAltinYouFoughtPrettyWellDespiteAll						109	06445	altin/events/MsgAltinYouFoughtPrettyWellDespiteAll.gif
 altin	75	Altin		event	10	MsgAltinYouFoughtPrettyWellDespiteAll	1		06445				06445	altin/events/MsgAltinYouFoughtPrettyWellDespiteAll.png
-altin	75	Altin		event	1	Village_AskAboutFirstVisit	2		06335				06333, 06334, 06335, 06336, 06337	altin/events/Village_AskAboutFirstVisit-2.png
-altin	75	Altin		event	1	Village_AskAboutFirstVisit	3		06336				06333, 06334, 06335, 06336, 06337	altin/events/Village_AskAboutFirstVisit-3.png
-altin	75	Altin		event	1	Village_AskAboutFirstVisit	4		06336				06333, 06334, 06335, 06336, 06337	altin/events/Village_AskAboutFirstVisit-4.png
-altin	75	Altin		event-gif	1	Village_AskAboutFirstVisit						230	06333, 06334, 06335, 06336, 06337	altin/events/Village_AskAboutFirstVisit.gif
-altin	75	Altin		event	1	Village_AskAboutFirstVisit	1		06333				06333, 06334, 06335, 06336, 06337	altin/events/Village_AskAboutFirstVisit.png
-altin	75	Altin		event	3	Village_AskAboutHydros	2		06425				06424, 06425, 06426	altin/events/Village_AskAboutHydros-2.png
-altin	75	Altin		event-gif	3	Village_AskAboutHydros						138	06424, 06425, 06426	altin/events/Village_AskAboutHydros.gif
-altin	75	Altin		event	3	Village_AskAboutHydros	1		06424				06424, 06425, 06426	altin/events/Village_AskAboutHydros.png
-altin	75	Altin		event-gif	13	Village_CheckPillarMoved						110		altin/events/Village_CheckPillarMoved.gif
-altin	75	Altin		event-gif	2	Village_EnterDoor						35		altin/events/Village_EnterDoor.gif
-altin	75	Altin		event-gif	10	Village_ScareOffBeast						234		altin/events/Village_ScareOffBeast.gif
+altin	75	Altin		event	1	Altin_AskAboutFirstVisit	2		06335				06333, 06334, 06335, 06336, 06337	altin/events/Village_AskAboutFirstVisit-2.png
+altin	75	Altin		event	1	Altin_AskAboutFirstVisit	3		06336				06333, 06334, 06335, 06336, 06337	altin/events/Village_AskAboutFirstVisit-3.png
+altin	75	Altin		event	1	Altin_AskAboutFirstVisit	4		06336				06333, 06334, 06335, 06336, 06337	altin/events/Village_AskAboutFirstVisit-4.png
+altin	75	Altin		event-gif	1	Altin_AskAboutFirstVisit						230	06333, 06334, 06335, 06336, 06337	altin/events/Village_AskAboutFirstVisit.gif
+altin	75	Altin		event	1	Altin_AskAboutFirstVisit	1		06333				06333, 06334, 06335, 06336, 06337	altin/events/Village_AskAboutFirstVisit.png
+altin	75	Altin		event	3	Altin_AskAboutHydros	2		06425				06424, 06425, 06426	altin/events/Village_AskAboutHydros-2.png
+altin	75	Altin		event-gif	3	Altin_AskAboutHydros						138	06424, 06425, 06426	altin/events/Village_AskAboutHydros.gif
+altin	75	Altin		event	3	Altin_AskAboutHydros	1		06424				06424, 06425, 06426	altin/events/Village_AskAboutHydros.png
+altin	75	Altin		event-gif	13	Altin_CheckPillarMoved						110		altin/events/Village_CheckPillarMoved.gif
+altin	75	Altin		event-gif	2	Altin_EnterDoor						35		altin/events/Village_EnterDoor.gif
+altin	75	Altin		event-gif	10	Altin_ScareOffBeast						234		altin/events/Village_ScareOffBeast.gif
 altin	75	Altin		event	10	Village_TalkToThirstyVillager	2		06343				06431, 06432, 06433, 06343	altin/events/Village_TalkToThirstyVillager-2.png
 altin	75	Altin		event-gif	10	Village_TalkToThirstyVillager						276	06431, 06432, 06433, 06343	altin/events/Village_TalkToThirstyVillager.gif
 altin	75	Altin		event	10	Village_TalkToThirstyVillager	1		06343				06431, 06432, 06433, 06343	altin/events/Village_TalkToThirstyVillager.png
-altin	75	Altin		event-gif	10	Village_WalkThroughDoorway						22		altin/events/Village_WalkThroughDoorway.gif
+altin	75	Altin		event-gif	10	Altin_WalkThroughDoorway						22		altin/events/Village_WalkThroughDoorway.gif
 bilibin-barricade	35	Bilibin Barricade		event-gif	1	Bilibin_UpdateRiverPillarCells						108		bilibin-barricade/events/Bilibin_UpdateRiverPillarCells.gif
 bilibin-barricade	35	Bilibin Barricade		event-gif	0	EventScript_CheckAhead						41		bilibin-barricade/events/Event_CheckAhead.gif
 bilibin-barricade	35	Bilibin Barricade		event-gif	0	EventScript_InspectHumanShapedTree						66	05232	bilibin-barricade/events/Event_InspectHumanShapedTree.gif
@@ -4494,15 +4494,15 @@ tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	11	EventScript_HopWest				
 tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	13	EventScript_HopWestUnlessAtCell32x50						41		tunnel-ruins-great-statue/events/Event_HopWestUnlessAtCell32x50.gif
 tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	3	EventScript_PushFirstPillars						31		tunnel-ruins-great-statue/events/Event_PushFirstPillars.gif
 tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	8	EventScript_PushSecondPillars						31		tunnel-ruins-great-statue/events/Event_PushSecondPillars.gif
-tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	0	EventScript_PushSinkingPillarA						76		tunnel-ruins-great-statue/events/Event_PushSinkingPillarA.gif
-tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	11	EventScript_PushSinkingPillarB						78		tunnel-ruins-great-statue/events/Event_PushSinkingPillarB.gif
+tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	0	EventScript_PushNorthwestSinkingPillar						76		tunnel-ruins-great-statue/events/Event_PushSinkingPillarA.gif
+tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	11	EventScript_PushSoutheastSinkingPillar						78		tunnel-ruins-great-statue/events/Event_PushSinkingPillarB.gif
 tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	0	EventScript_PushSmallPillars						29		tunnel-ruins-great-statue/events/Event_PushSmallPillars.gif
 tunnel-ruins-great-statue	172	Tunnel Ruins		event	1	EventScript_ReadFirstStatue	2		09865				09866, 09865	tunnel-ruins-great-statue/events/Event_ReadFirstStatue-2.png
 tunnel-ruins-great-statue	172	Tunnel Ruins		event	1	EventScript_ReadFirstStatue	3		09865				09866, 09865	tunnel-ruins-great-statue/events/Event_ReadFirstStatue-3.png
 tunnel-ruins-great-statue	172	Tunnel Ruins		event	1	EventScript_ReadFirstStatue	4		09865				09866, 09865	tunnel-ruins-great-statue/events/Event_ReadFirstStatue-4.png
 tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	1	EventScript_ReadFirstStatue						193	09866, 09865	tunnel-ruins-great-statue/events/Event_ReadFirstStatue.gif
 tunnel-ruins-great-statue	172	Tunnel Ruins		event	1	EventScript_ReadFirstStatue	1		09865				09866, 09865	tunnel-ruins-great-statue/events/Event_ReadFirstStatue.png
-tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	0	EventScript_SinkPillarA						108		tunnel-ruins-great-statue/events/Event_SinkPillarA.gif
+tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	0	EventScript_SinkNorthwestPillar						108		tunnel-ruins-great-statue/events/Event_SinkPillarA.gif
 tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	3	TunnelRuins_UpdateFirstPillarCells						250		tunnel-ruins-great-statue/events/TunnelRuins_UpdateFirstPillarCells.gif
 tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	8	TunnelRuins_UpdateSecondPillarCells						250		tunnel-ruins-great-statue/events/TunnelRuins_UpdateSecondPillarCells.gif
 tunnel-ruins-great-statue	172	Tunnel Ruins		event-gif	12	TunnelRuins_UpdateSmallPillarCells						106		tunnel-ruins-great-statue/events/TunnelRuins_UpdateSmallPillarCells.gif
@@ -5219,17 +5219,17 @@ colosseum	140	2,4=Colosseum Tunnel; *=Colosseum		event	12	MsgColosseumEntranceYo
 colosseum	140	2,4=Colosseum Tunnel; *=Colosseum		event	5	MsgColossoDidntThinkBattles	2		08307				08307	colosseum/events/MsgColossoDidntThinkBattles-2.png
 colosseum	140	2,4=Colosseum Tunnel; *=Colosseum		event-gif	5	MsgColossoDidntThinkBattles						158	08307	colosseum/events/MsgColossoDidntThinkBattles.gif
 colosseum	140	2,4=Colosseum Tunnel; *=Colosseum		event	5	MsgColossoDidntThinkBattles	1		08307				08307	colosseum/events/MsgColossoDidntThinkBattles.png
-fuchin-falls-cave-dragon-statue	67	Fuchin Falls Cave		event-gif	8	Fuchin_ReadShadowInscription						71	06115	fuchin-falls-cave-dragon-statue/events/Fuchin_ReadShadowInscription.gif
-fuchin-falls-cave-dragon-statue	67	Fuchin Falls Cave		event	8	Fuchin_ReadShadowInscription	1		06115				06115	fuchin-falls-cave-dragon-statue/events/Fuchin_ReadShadowInscription.png
-fuchin-falls-cave-dragon-statue	67	Fuchin Falls Cave		event	6	Fuchin_SearchDragonStatue	2		06116				06117, 06116	fuchin-falls-cave-dragon-statue/events/Fuchin_SearchDragonStatue-2.png
-fuchin-falls-cave-dragon-statue	67	Fuchin Falls Cave		event-gif	6	Fuchin_SearchDragonStatue						96	06117, 06116	fuchin-falls-cave-dragon-statue/events/Fuchin_SearchDragonStatue.gif
-fuchin-falls-cave-dragon-statue	67	Fuchin Falls Cave		event	6	Fuchin_SearchDragonStatue	1		06116				06117, 06116	fuchin-falls-cave-dragon-statue/events/Fuchin_SearchDragonStatue.png
-fuchin-falls-cave-dragons-eye	64	Fuchin Falls Cave		event-gif	1	Fuchin_CollectDragonsEye						133		fuchin-falls-cave-dragons-eye/events/Fuchin_CollectDragonsEye.gif
-fuchin-falls-cave-dragons-eye	64	Fuchin Falls Cave		event	1	Fuchin_CollectDragonsEye	1							fuchin-falls-cave-dragons-eye/events/Fuchin_CollectDragonsEye.png
-fuchin-falls-cave-entrance	62	Fuchin Falls Cave		event-gif	0	Fuchin_ReadDragonFlameInscription						73	06113	fuchin-falls-cave-entrance/events/Fuchin_ReadDragonFlameInscription.gif
-fuchin-falls-cave-entrance	62	Fuchin Falls Cave		event	0	Fuchin_ReadDragonFlameInscription	1		06113				06113	fuchin-falls-cave-entrance/events/Fuchin_ReadDragonFlameInscription.png
-fuchin-falls-cave-orb-of-force	66	Fuchin Falls Cave		event-gif	1	Fuchin_ReadKiInscription						72	06114	fuchin-falls-cave-orb-of-force/events/Fuchin_ReadKiInscription.gif
-fuchin-falls-cave-orb-of-force	66	Fuchin Falls Cave		event	1	Fuchin_ReadKiInscription	1		06114				06114	fuchin-falls-cave-orb-of-force/events/Fuchin_ReadKiInscription.png
+fuchin-falls-cave-dragon-statue	67	Fuchin Falls Cave		event-gif	8	FuchinFallsCave_ReadShadowInscription						71	06115	fuchin-falls-cave-dragon-statue/events/Fuchin_ReadShadowInscription.gif
+fuchin-falls-cave-dragon-statue	67	Fuchin Falls Cave		event	8	FuchinFallsCave_ReadShadowInscription	1		06115				06115	fuchin-falls-cave-dragon-statue/events/Fuchin_ReadShadowInscription.png
+fuchin-falls-cave-dragon-statue	67	Fuchin Falls Cave		event	6	FuchinFallsCave_SearchDragonStatue	2		06116				06117, 06116	fuchin-falls-cave-dragon-statue/events/Fuchin_SearchDragonStatue-2.png
+fuchin-falls-cave-dragon-statue	67	Fuchin Falls Cave		event-gif	6	FuchinFallsCave_SearchDragonStatue						96	06117, 06116	fuchin-falls-cave-dragon-statue/events/Fuchin_SearchDragonStatue.gif
+fuchin-falls-cave-dragon-statue	67	Fuchin Falls Cave		event	6	FuchinFallsCave_SearchDragonStatue	1		06116				06117, 06116	fuchin-falls-cave-dragon-statue/events/Fuchin_SearchDragonStatue.png
+fuchin-falls-cave-dragons-eye	64	Fuchin Falls Cave		event-gif	1	FuchinFallsCave_CollectDragonsEye						133		fuchin-falls-cave-dragons-eye/events/Fuchin_CollectDragonsEye.gif
+fuchin-falls-cave-dragons-eye	64	Fuchin Falls Cave		event	1	FuchinFallsCave_CollectDragonsEye	1							fuchin-falls-cave-dragons-eye/events/Fuchin_CollectDragonsEye.png
+fuchin-falls-cave-entrance	62	Fuchin Falls Cave		event-gif	0	FuchinFallsCave_ReadDragonFlameInscription						73	06113	fuchin-falls-cave-entrance/events/Fuchin_ReadDragonFlameInscription.gif
+fuchin-falls-cave-entrance	62	Fuchin Falls Cave		event	0	FuchinFallsCave_ReadDragonFlameInscription	1		06113				06113	fuchin-falls-cave-entrance/events/Fuchin_ReadDragonFlameInscription.png
+fuchin-falls-cave-orb-of-force	66	Fuchin Falls Cave		event-gif	1	FuchinFallsCave_ReadKiInscription						72	06114	fuchin-falls-cave-orb-of-force/events/Fuchin_ReadKiInscription.gif
+fuchin-falls-cave-orb-of-force	66	Fuchin Falls Cave		event	1	FuchinFallsCave_ReadKiInscription	1		06114				06114	fuchin-falls-cave-orb-of-force/events/Fuchin_ReadKiInscription.png
 imil-falls-cave	52	Imil Falls Cave		event-gif	1	Imil_MoveAcrossIce						51		imil-falls-cave/events/Imil_MoveAcrossIce.gif
 imil-falls-cave	52	Imil Falls Cave		event-gif	1	Imil_RecruitFever						316		imil-falls-cave/events/Imil_RecruitFever.gif
 imil-falls-cave	52	Imil Falls Cave		event	1	Imil_RecruitFever	1							imil-falls-cave/events/Imil_RecruitFever.png
@@ -5476,15 +5476,15 @@ lunpa-fortress-upper-floor	161	Lunpa Fortress		event	24	EventScript_TalkToAttend
 lunpa-fortress-upper-floor	161	Lunpa Fortress		event	24	EventScript_TalkToAttendant	4		09298				09574, 09303, 09295, 09296, 09297, 09298, 09299, 09300, 09301, 09302	lunpa-fortress-upper-floor/events/Event_TalkToAttendant-4.png
 lunpa-fortress-upper-floor	161	Lunpa Fortress		event-gif	24	EventScript_TalkToAttendant						671	09574, 09303, 09295, 09296, 09297, 09298, 09299, 09300, 09301, 09302	lunpa-fortress-upper-floor/events/Event_TalkToAttendant.gif
 lunpa-fortress-upper-floor	161	Lunpa Fortress		event	24	EventScript_TalkToAttendant	1		09295				09574, 09303, 09295, 09296, 09297, 09298, 09299, 09300, 09301, 09302	lunpa-fortress-upper-floor/events/Event_TalkToAttendant.png
-lunpa-fortress-upper-floor	161	Lunpa Fortress		event	31	EventScript_TalkToBeatenGuardA	2		09279				09279	lunpa-fortress-upper-floor/events/Event_TalkToBeatenGuardA-2.png
-lunpa-fortress-upper-floor	161	Lunpa Fortress		event-gif	31	EventScript_TalkToBeatenGuardA						114	09279	lunpa-fortress-upper-floor/events/Event_TalkToBeatenGuardA.gif
-lunpa-fortress-upper-floor	161	Lunpa Fortress		event	31	EventScript_TalkToBeatenGuardA	1		09279				09279	lunpa-fortress-upper-floor/events/Event_TalkToBeatenGuardA.png
-lunpa-fortress-upper-floor	161	Lunpa Fortress		event	12	EventScript_TalkToBeatenGuardB	2		09280				09280	lunpa-fortress-upper-floor/events/Event_TalkToBeatenGuardB-2.png
-lunpa-fortress-upper-floor	161	Lunpa Fortress		event-gif	12	EventScript_TalkToBeatenGuardB						125	09280	lunpa-fortress-upper-floor/events/Event_TalkToBeatenGuardB.gif
-lunpa-fortress-upper-floor	161	Lunpa Fortress		event	12	EventScript_TalkToBeatenGuardB	1		09280				09280	lunpa-fortress-upper-floor/events/Event_TalkToBeatenGuardB.png
-lunpa-fortress-upper-floor	161	Lunpa Fortress		event	31	EventScript_TalkToBeatenGuardC	2		09281				09281	lunpa-fortress-upper-floor/events/Event_TalkToBeatenGuardC-2.png
-lunpa-fortress-upper-floor	161	Lunpa Fortress		event-gif	31	EventScript_TalkToBeatenGuardC						131	09281	lunpa-fortress-upper-floor/events/Event_TalkToBeatenGuardC.gif
-lunpa-fortress-upper-floor	161	Lunpa Fortress		event	31	EventScript_TalkToBeatenGuardC	1		09281				09281	lunpa-fortress-upper-floor/events/Event_TalkToBeatenGuardC.png
+lunpa-fortress-upper-floor	161	Lunpa Fortress		event	31	EventScript_TalkToBeatenWestGuardOfThree	2		09279				09279	lunpa-fortress-upper-floor/events/Event_TalkToBeatenGuardA-2.png
+lunpa-fortress-upper-floor	161	Lunpa Fortress		event-gif	31	EventScript_TalkToBeatenWestGuardOfThree						114	09279	lunpa-fortress-upper-floor/events/Event_TalkToBeatenGuardA.gif
+lunpa-fortress-upper-floor	161	Lunpa Fortress		event	31	EventScript_TalkToBeatenWestGuardOfThree	1		09279				09279	lunpa-fortress-upper-floor/events/Event_TalkToBeatenGuardA.png
+lunpa-fortress-upper-floor	161	Lunpa Fortress		event	12	EventScript_TalkToBeatenMiddleGuardOfThree	2		09280				09280	lunpa-fortress-upper-floor/events/Event_TalkToBeatenGuardB-2.png
+lunpa-fortress-upper-floor	161	Lunpa Fortress		event-gif	12	EventScript_TalkToBeatenMiddleGuardOfThree						125	09280	lunpa-fortress-upper-floor/events/Event_TalkToBeatenGuardB.gif
+lunpa-fortress-upper-floor	161	Lunpa Fortress		event	12	EventScript_TalkToBeatenMiddleGuardOfThree	1		09280				09280	lunpa-fortress-upper-floor/events/Event_TalkToBeatenGuardB.png
+lunpa-fortress-upper-floor	161	Lunpa Fortress		event	31	EventScript_TalkToBeatenEastGuardOfThree	2		09281				09281	lunpa-fortress-upper-floor/events/Event_TalkToBeatenGuardC-2.png
+lunpa-fortress-upper-floor	161	Lunpa Fortress		event-gif	31	EventScript_TalkToBeatenEastGuardOfThree						131	09281	lunpa-fortress-upper-floor/events/Event_TalkToBeatenGuardC.gif
+lunpa-fortress-upper-floor	161	Lunpa Fortress		event	31	EventScript_TalkToBeatenEastGuardOfThree	1		09281				09281	lunpa-fortress-upper-floor/events/Event_TalkToBeatenGuardC.png
 lunpa-fortress-upper-floor	161	Lunpa Fortress		event-gif	24	EventScript_TalkToDonpa						60	09569, 09570, 09571, 09572, 09573, 09575, 09293	lunpa-fortress-upper-floor/events/Event_TalkToDonpa.gif
 lunpa-fortress-upper-floor	161	Lunpa Fortress		event	24	EventScript_TalkToDonpa	1		09293				09569, 09570, 09571, 09572, 09573, 09575, 09293	lunpa-fortress-upper-floor/events/Event_TalkToDonpa.png
 lunpa-fortress-upper-floor	161	Lunpa Fortress		event	0	MsgLunpaChildMustGrowUp	2		09308				09308	lunpa-fortress-upper-floor/events/MsgLunpaChildMustGrowUp-2.png
