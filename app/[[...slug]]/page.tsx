@@ -5,6 +5,7 @@ import { getMDXComponents } from '@/components/mdx';
 import type { Metadata } from 'next';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
 import { Lightbox } from 'fumadocs-ui/components/image-zoom';
+import { TOCPopover } from '@/components/toc-popover';
 import { gitConfig, isList } from '@/lib/shared';
 
 export default async function Page(props: PageProps<'/[[...slug]]'>) {
@@ -16,7 +17,7 @@ export default async function Page(props: PageProps<'/[[...slug]]'>) {
   // A reference page lists its sections, not its hundreds of members.
   const toc = isList(page.url) ? page.data.toc.filter((t) => t.depth <= 2) : page.data.toc;
   return (
-    <DocsPage toc={toc} full={page.data.full}>
+    <DocsPage toc={toc} full={page.data.full} tableOfContentPopover={{ component: <TOCPopover /> }}>
       <DocsTitle>{page.data.title}</DocsTitle>
       {page.data.source && (
         <p className="text-sm text-fd-muted-foreground border-b pb-6">
