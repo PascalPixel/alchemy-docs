@@ -8,6 +8,7 @@ import { remarkMdxMermaid } from 'fumadocs-core/mdx-plugins';
 import { onImageError, remarkRenders } from './remark-renders';
 import { remarkFigures } from './remark-figures';
 import { remarkCodeBreaks } from './remark-code-breaks';
+import { remarkOpenQuestions } from './remark-open-questions';
 
 const docs = defineDocs({
   dir: 'content/docs',
@@ -18,9 +19,10 @@ const docs = defineDocs({
     // Pictures keep their paths rather than being bundled, so the site's CSS
     // can tell a recording from an asset sheet by where it lives. The renders
     // are in the Blob store: their sizes come from its manifest. Then a
-    // paragraph of pictures becomes captioned figures (remark-figures) and
-    // inline code gets its break points (remark-code-breaks).
-    mdxOptions: applyMdxPreset({ remarkImageOptions: { useImport: false, onError: onImageError }, remarkPlugins: (v) => [remarkRenders, remarkMdxMermaid, ...v, remarkFigures, remarkCodeBreaks] }),
+    // paragraph of pictures becomes captioned figures (remark-figures),
+    // inline code gets its break points (remark-code-breaks) and an open
+    // question its note (remark-open-questions).
+    mdxOptions: applyMdxPreset({ remarkImageOptions: { useImport: false, onError: onImageError }, remarkPlugins: (v) => [remarkRenders, remarkMdxMermaid, ...v, remarkFigures, remarkCodeBreaks, remarkOpenQuestions] }),
   },
   meta: {
     schema: metaSchema,

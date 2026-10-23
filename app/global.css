@@ -95,6 +95,24 @@ dialog img.render {
   image-rendering: pixelated;
 }
 
+/* An open question (`XXX:` in the source; lib/remark-open-questions.ts). */
+.open-question {
+  margin: 1.25rem 0;
+  padding: 0.625rem 0.875rem;
+  border: 1px solid var(--color-fd-border);
+  border-inline-start: 3px solid oklch(0.75 0.15 75);
+  border-radius: 0.5rem;
+  background: var(--color-fd-card);
+  font-size: 0.9375rem;
+}
+.open-question-label {
+  font-weight: 600;
+  color: oklch(0.55 0.13 65);
+}
+.dark .open-question-label {
+  color: oklch(0.8 0.13 80);
+}
+
 /* The code's names run long (Event_LeaveToValeInteriorsShopsWestBySecondDoor).
    lib/remark-code-breaks.ts puts a <wbr> after each underscore, slash and dot
    of inline code, and a name breaks there first; a piece still too long for

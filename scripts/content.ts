@@ -1296,6 +1296,7 @@ function prose(source: string, target: string, extra = '') {
     .split(/(```[\s\S]*?```|`[^`]*`)/)
     .map((p, i) => (i % 2 ? p.replace(/^`(?:\.\.\/)+([\w./-]+)`$/, '`$1`') : p.replace(/<(?![a-z/!])/g, '&lt;').replace(/[{}]/g, (c) => `\\${c}`)))
     .join('');
+  text = openQuestions(text);
   page(target, { title, description, source }, extra ? `${text.trimEnd()}\n\n${extra}` : text);
 }
 
@@ -1310,6 +1311,48 @@ function pathLabel(label: string, resolved: string): string {
   return `\`${/\.\w+$/.test(m[3]) ? basename(m[3]) : m[3].replace(/\/$/, '')}\``;
 }
 
+// The source marks what isn't known with `XXX:` (and H4's `XXX (no evidence):`
+// and `XXX (picture):`). A reader would take the mark for an unfinished
+// editor's note, so a page says it in words, as a bold label: a paragraph's
+// question, from its mark to the paragraph's end, becomes a paragraph of its
+// own after the sentences before it, which lib/remark-open-questions.ts shows
+// as a note; a mark in a list item or a table, or a second one in the same
+// question, becomes the label alone. Code is left as written.
+const XXX_MARK = /\bXXX(?: \(([a-z ]+)\))?:/;
+const XXX_LABEL: Record<string, string> = { '': 'Open question', 'no evidence': 'Open question (no evidence in reach)', picture: 'Picture still to make' };
+const xxxLabel = (kind = '') => `**${XXX_LABEL[kind] ?? `Open question (${kind})`}:**`;
+function openQuestions(text: string): string {
+  const labels = (s: string) =>
+    s
+      .split(/(`[^`]*`)/)
+      .map((p, i) => (i % 2 ? p : p.replace(new RegExp(XXX_MARK.source, 'g'), (_, kind?: string) => xxxLabel(kind))))
+      .join('');
+  return text
+    .split(/(```[\s\S]*?```)/)
+    .map((segment, i) =>
+      i % 2
+        ? segment
+        : segment
+            .split(/(\n[ \t]*\n)/)
+            .map((block, j) => {
+              if (j % 2 || !block.includes('XXX')) return block;
+              // Only a paragraph is split: not a heading, list, table, quote or picture.
+              if (/^\s*(#|[-*+] |\d+\. |\||>|<|!\[)/.test(block) || /^\s/.test(block)) return labels(block);
+              const parts = block.split(/(`[^`]*`)/);
+              let at = -1;
+              for (let k = 0, offset = 0; k < parts.length && at < 0; offset += parts[k].length, k++) {
+                const found = k % 2 ? -1 : parts[k].search(XXX_MARK);
+                if (found >= 0) at = offset + found;
+              }
+              if (at < 0) return block;
+              const before = block.slice(0, at).trimEnd();
+              const question = labels(block.slice(at));
+              return before ? `${before}\n\n${question}` : question;
+            })
+            .join(''),
+    )
+    .join('');
+}
 
 // Where an arranged page's file goes: its URL as a path under the guide's
 // folder group, a folder with an index for every page that holds others (and
