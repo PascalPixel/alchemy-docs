@@ -148,7 +148,7 @@ scorch	/tbs/source/src/effect/parts/casting_impact-c#battlefx_runcastingimpact
 ember	/tbs/source/src/effect/parts/healing-c#battlefx_runpsycrystal
 flash	/tbs/source/src/effect/parts/stat_change-c#battlefx_runflash
 torch	/tbs/source/src/effect/parts/torch-c#battlefx_runtorch
-gust	/tbs/source/src/effect/parts/burst_scene-c#battlefx_rungust
+gust	/tbs/source/src/effect/parts/burst_sequence-c#battlefx_rungust
 breeze	/tbs/source/src/effect/parts/stat_change-c#battlefx_runward
 zephyr	/tbs/source/src/effect/parts/stat_change-c#battlefx_runzephyr
 smog	/tbs/source/src/effect/parts/casting_impact-c#battlefx_runcastingimpact

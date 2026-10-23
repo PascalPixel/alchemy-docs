@@ -30,7 +30,7 @@
 //
 // How messages are found. A scene's event sets the current message
 // (MESSAGE_SET) and each "show" command shows it and moves on to the next
-// (MESSAGE_PUT, Event_ShowMessage, Event_AskYesNo shows three); an event table
+// (MESSAGE_PUT, Script_ShowMessage, Script_AskYesNo shows three); an event table
 // row can show one message itself. Each event is followed through its
 // statements with the current message's possible values, each value with the
 // flags its path has tested, and through the scene's own helper functions it
@@ -275,7 +275,7 @@ function builtinValue(name: string): number | undefined {
   const msg = messageBySymbol.get(name) ?? messageBySymbol.get(name.replace(/^TEXT_MESSAGE_NUMBER_/, ''));
   if (msg !== undefined) return msg;
   if (name === 'MsgEnd' || name === 'TEXT_MESSAGE_NUMBER_MsgEnd') return messages.length;
-  const scene = name.startsWith('SceneId_') ? sceneIdByName.get(name.slice(8)) : undefined;
+  const scene = name.startsWith('MapId_') ? sceneIdByName.get(name.slice(6)) : undefined;
   return scene;
 }
 
@@ -472,7 +472,7 @@ function constEval(text: string, scope: Scope): number | undefined {
   return v;
 }
 
-// An initializer element can stand for several words (SCENE_EXIT_IF writes
+// An initializer element can stand for several words (MAP_WARP_IF writes
 // two): expanded, split at its top-level commas, each word evaluated.
 function evalWords(text: string, scope: Scope): (number | undefined)[] {
   return splitTop(expand(tokenize(text), scope)).map((p) => {
@@ -561,8 +561,8 @@ function walkFiles(rel: string, test: (name: string) => boolean, into: string[] 
 type SceneRow = { id: number; name: string; overlay: number; group: number; kind: number; map: number; file: string };
 
 const scenes: SceneRow[] = [];
-for (const line of readFileSync(gamePath('src/field/scenes.s'), 'utf8').split('\n')) {
-  const m = line.match(/^\s*scene\s+(\w*)\s*,\s*(\w+)\s*,\s*(\w+)\s*,\s*(\w+)\s*,\s*(\w+)/);
+for (const line of readFileSync(gamePath('src/field/maps.s'), 'utf8').split('\n')) {
+  const m = line.match(/^\s*map_record\s+(\w*)\s*,\s*(\w+)\s*,\s*(\w+)\s*,\s*(\w+)\s*,\s*(\w+)/);
   if (m) scenes.push({ id: scenes.length, name: m[1], overlay: Number(m[2]), group: Number(m[3]), kind: Number(m[4]), map: Number(m[5]), file: '' });
 }
 sceneIdByName = new Map(scenes.filter((s) => s.name).map((s) => [s.name, s.id]));
@@ -583,9 +583,9 @@ for (const s of scenes) if (s.file) scenesOfFile.set(s.file, [...(scenesOfFile.g
 const sceneLabel = (id: number) => `${id}${scenes[id]?.name ? ` ${scenes[id].name}` : ''}`;
 const shortFile = (f: string) => f.replace(/^games\/tbs\/src\//, '');
 
-// Area names, as Scene_GetAreaNameIndex resolves them: the first rule of
-// gScene_AreaNameRules for the scene (or its group) and the entrance (-1 for
-// any), added to MsgDebugEntryName.
+// Area names, as MapSec_GetNameIndex resolves them: the first rule of
+// gMapSec_NameRules for the map (or its map section) and the warp
+// destination (-1 for any), added to MsgDebugEntryName.
 type AreaNames = { byEntrance: [number, string][]; fallback: string; messages: number[] };
 
 function deriveAreas(): Map<number, AreaNames> {
@@ -611,8 +611,8 @@ function deriveAreas(): Map<number, AreaNames> {
   const rules: Rule[] = [];
   let inTable = false;
   const stack: boolean[] = [];
-  for (const line of readFileSync(gamePath('src/object/scene_rules.s'), 'utf8').split('\n')) {
-    if (/^gScene_AreaNameRules:/.test(line)) inTable = true;
+  for (const line of readFileSync(gamePath('src/object/map_rules.s'), 'utf8').split('\n')) {
+    if (/^gMapSec_NameRules:/.test(line)) inTable = true;
     else if (inTable && /^\w+:|^\s*\.global/.test(line)) inTable = false;
     if (!inTable) continue;
     const cond = line.match(/^\s*\.if\s+(\w+)/);
@@ -620,10 +620,10 @@ function deriveAreas(): Map<number, AreaNames> {
     else if (/^\s*\.else/.test(line)) stack.push(!stack.pop());
     else if (/^\s*\.endif/.test(line)) stack.pop();
     if (!stack.every(Boolean)) continue;
-    const m = line.match(/^\s*(scene|group)_name\s+(\w+)\s*,\s*(-?\w+)\s*,\s*(\w+)/);
+    const m = line.match(/^\s*(map|group)_name\s+(\w+)\s*,\s*(-?\w+)\s*,\s*(\w+)/);
     if (!m) continue;
-    const id = m[1] === 'scene' ? sceneIdByName.get(m[2]) : Number(m[2]);
-    if (id !== undefined) rules.push({ scene: m[1] === 'scene', id, entrance: Number(m[3]), index: Number(m[4]) });
+    const id = m[1] === 'map' ? sceneIdByName.get(m[2]) : Number(m[2]);
+    if (id !== undefined) rules.push({ scene: m[1] === 'map', id, entrance: Number(m[3]), index: Number(m[4]) });
   }
   const base = messageBySymbol.get('MsgDebugEntryName') ?? 0;
   const nameOf = (scene: SceneRow, entrance: number) => {
@@ -689,7 +689,7 @@ if (tableAreas) {
 
 const globalScope = new Scope();
 for (const h of walkFiles(`${GAME}/include`, (n) => n.endsWith('.h'))) {
-  if (h.includes('/include/unit/scene/')) continue;
+  if (h.includes('/include/unit/map/')) continue;
   collectConstants(parseC(h), globalScope);
 }
 resolveEnums();
@@ -797,18 +797,18 @@ function buildTU(file: string): TU {
       const p = inc?.childForFieldName('path');
       if (!p || p.type !== 'string_literal') continue;
       const target = join(dirname(rel), p.text.slice(1, -1));
-      if (target.startsWith(`${GAME}/src/scene/`) && existsSync(join(repo, target))) visit(target);
+      if (target.startsWith(`${GAME}/src/map/`) && existsSync(join(repo, target))) visit(target);
     }
   };
   visit(file);
-  const unit = `${GAME}/include/unit/scene/${basename(file, '.c')}.h`;
+  const unit = `${GAME}/include/unit/map/${basename(file, '.c')}.h`;
   if (existsSync(join(repo, unit))) collectConstants(parseC(unit), scope);
-  const entryPath = gamePath('src/scene/entry', `${basename(file, '.c')}.s`);
+  const entryPath = gamePath('src/map/entry', `${basename(file, '.c')}.s`);
   const entry = existsSync(entryPath) ? [...readFileSync(entryPath, 'utf8').matchAll(/^\s*overlay_veneer\s+(\w+)/gm)].map((m) => m[1]) : [];
   return { file, scope, fns, tables, scenes: scenesOfFile.get(file) ?? [], entry };
 }
 
-const sceneFiles = walkFiles(`${GAME}/src/scene`, (n) => n.endsWith('.c')).filter((f) => dirname(f) === `${GAME}/src/scene`);
+const sceneFiles = walkFiles(`${GAME}/src/map`, (n) => n.endsWith('.c')).filter((f) => dirname(f) === `${GAME}/src/map`);
 const tus = sceneFiles.map(buildTU);
 resolveEnums();
 
@@ -837,14 +837,14 @@ type Frame = {
 };
 
 const UNKNOWN: Val = { t: 'unknown' };
-const SET_MESSAGE = new Set(['Engine_EventSetMessage', 'MESSAGE_SET', 'Event_SetMessage', 'Event_SetMessageId']);
-const SHOW_MESSAGE = new Set(['Engine_EventShowMessage', 'Event_ShowMessage', 'MESSAGE_PUT', 'Engine_EventOpenMessage', 'Event_OpenMessage', 'MESSAGE_OPEN', 'Engine_EventShowMessageAndWait', 'Event_ShowMessageAndWait', 'FieldEvent_ShowMessageAndWait', 'UiText_OpenMessageAtObject', 'Event_ShowSpeakerMessage']);
-const ASK_MESSAGE = new Set(['Engine_EventAskYesNo', 'Event_AskYesNo', 'FieldEvent_AskYesNoAndShowResponse']);
-const TWO_MESSAGES = new Set(['Engine_EventShowTwoMessagesAndWait', 'Event_ShowTwoMessagesAndWait', 'Battle_ShowPairedUnitWorkAndWait']);
+const SET_MESSAGE = new Set(['Engine_ScriptSetMessage', 'MESSAGE_SET', 'Script_SetMessage', 'FieldScript_SetMessageId']);
+const SHOW_MESSAGE = new Set(['Engine_ScriptShowMessage', 'Script_ShowMessage', 'MESSAGE_PUT', 'Engine_ScriptOpenMessage', 'Script_OpenMessage', 'MESSAGE_OPEN', 'Engine_ScriptShowMessageAndWait', 'Script_ShowMessageAndWait', 'FieldScript_ShowMessageAndWait', 'UiText_OpenMessageAtObject', 'FieldScript_ShowSpeakerMessage']);
+const ASK_MESSAGE = new Set(['Engine_ScriptAskYesNo', 'Script_AskYesNo', 'FieldScript_AskYesNoAndShowResponse']);
+const TWO_MESSAGES = new Set(['Engine_ScriptShowTwoMessagesAndWait', 'Script_ShowTwoMessagesAndWait', 'Battle_ShowPairedUnitWorkAndWait']);
 const DIRECT_MESSAGE = new Set(['Engine_MessageShowCentered', 'Message_ShowCentered', 'UiText_ShowCenteredMessage', 'UiText_ShowPositionedMessageAndWait', 'UiText_ShowPositionedMessageAndWaitFar']);
-const FLAG_SET = new Set(['GameFlag_Set', 'FLAG_SET', 'Engine_GameFlagSet', 'FieldEvent_GameFlagSet', 'GameFlag_SetBitFar', 'GameFlag_SetBit']);
-const FLAG_CLEAR = new Set(['GameFlag_Clear', 'Engine_GameFlagClear', 'FieldEvent_GameFlagClear', 'GameFlag_ClearBitFar', 'GameFlag_ClearBit']);
-const FLAG_TEST = new Set(['GameFlag_IsSet', 'FLAG_CHECK', 'Engine_GameFlagIsSet', 'FieldEvent_GameFlagIsSet', 'GameFlag_TestFar', 'GameFlag_Test']);
+const FLAG_SET = new Set(['GameFlag_Set', 'FLAG_SET', 'Engine_GameFlagSet', 'FieldScript_GameFlagSet', 'GameFlag_SetBitFar', 'GameFlag_SetBit']);
+const FLAG_CLEAR = new Set(['GameFlag_Clear', 'Engine_GameFlagClear', 'FieldScript_GameFlagClear', 'GameFlag_ClearBitFar', 'GameFlag_ClearBit']);
+const FLAG_TEST = new Set(['GameFlag_IsSet', 'FLAG_CHECK', 'Engine_GameFlagIsSet', 'FieldScript_GameFlagIsSet', 'GameFlag_TestFar', 'GameFlag_Test']);
 const MAX_VALUES = 48;
 
 const litKey = (l: Lit) => `${l.pos ? '+' : '-'}${l.k}`;
@@ -1021,10 +1021,10 @@ function conditionLits(node: Node | null, st: State, fr: Frame): { t: Lit[]; f: 
     return { t: inner.f, f: inner.t };
   }
   // A scene test. The parser knows no typedefs, so it reads
-  // `scene == (s32)&SceneId_X` as `(scene == (s32)) & SceneId_X`: the
+  // `mapId == (s32)&MapId_X` as `(mapId == (s32)) & MapId_X`: the
   // comparison is matched in the text.
   const text = node.text.replace(/\s+/g, ' ');
-  const scene = text.match(/^(?:[\w.>-]*\bscene\b)\s*(==|!=)\s*((?:\(\s*\w+\s*\)\s*)?&?\s*SceneId_\w+)$/) ?? text.match(/^((?:\(\s*\w+\s*\)\s*)?&?\s*SceneId_\w+)\s*(==|!=)\s*(?:[\w.>-]*\bscene\b)$/);
+  const scene = text.match(/^(?:[\w.>-]*\bmapId\b)\s*(==|!=)\s*((?:\(\s*\w+\s*\)\s*)?&?\s*MapId_\w+)$/) ?? text.match(/^((?:\(\s*\w+\s*\)\s*)?&?\s*MapId_\w+)\s*(==|!=)\s*(?:[\w.>-]*\bmapId\b)$/);
   if (scene) {
     const [op, side] = scene[1].startsWith('=') || scene[1].startsWith('!') ? [scene[1], scene[2]] : [scene[2], scene[1]];
     const id = constEval(side, fr.tu.scope);
@@ -1052,7 +1052,7 @@ function conditionLits(node: Node | null, st: State, fr: Frame): { t: Lit[]; f: 
       const flip = (x: { t: Lit[]; f: Lit[] }) => (op === '==' ? { t: x.f, f: x.t } : x);
       for (const [a, b] of [[left, right], [right, left]] as [Node | null, Node | null][]) {
         if (!a || !b) continue;
-        if (/SceneId_\w+/.test(a.text) && /scene/i.test(b.text)) {
+        if (/MapId_\w+/.test(a.text) && /map/i.test(b.text)) {
           const id = constEval(a.text, fr.tu.scope);
           if (id !== undefined) {
             const t = [{ k: `s${id}`, pos: true }];
@@ -1164,7 +1164,7 @@ function evalCall(node: Node, st: State, fr: Frame) {
     st.msg = absEval(a[0], st, fr).map((v) => ({ v, cond: [...st.pc] }));
     record(st, fr, 0, 'centered', '', node);
     st.msg = saved;
-  } else if (name === 'Event_SkipMessages') {
+  } else if (name === 'Script_SkipMessages') {
     shift(st, absEval(a[0], st, fr));
   } else if (FLAG_SET.has(name)) flagOp('set', a[0], st, fr);
   else if (FLAG_CLEAR.has(name)) flagOp('clear', a[0], st, fr);
@@ -1402,7 +1402,7 @@ function tableRowTexts(init: Node, scope: Scope): string[][] {
 function eventRows(tu: TU, uses: Map<string, TableUse>): Row[] {
   const rows: Row[] = [];
   for (const t of tu.tables.values()) {
-    if (!/SceneEvent/.test(t.type)) continue;
+    if (!/\bMapEvent\b/.test(t.type)) continue;
     const use = uses.get(t.name) ?? [{ slot: 'events', scenes: tu.scenes, lits: [] }];
     const tableScenes = uniq(use.flatMap((u) => u.scenes));
     const tableLits = use[0].lits.filter((l) => use.every((u) => u.lits.some((m) => litKey(m) === litKey(l))));
@@ -1416,7 +1416,7 @@ function eventRows(tu: TU, uses: Map<string, TableUse>): Row[] {
       const own = conditionLit(constEval(e[2], tu.scope));
       const key = `${control >>> 0}:${trigger}`;
       // A row is reached only when the earlier rows for the same trigger did
-      // not hold (Scene_FindEvent takes the first); a search ignores them.
+      // not hold (Map_FindEvent takes the first); a search ignores them.
       const failed = kind === 3 ? [] : earlier.filter((x) => x.key === key).flatMap((x) => (x.lits.length === 1 ? [{ k: x.lits[0].k, pos: !x.lits[0].pos }] : []));
       earlier.push({ key, lits: own });
       const handler = (e[3].match(/\b[A-Za-z_]\w*\b/g) ?? []).find((n) => tu.fns.has(n));
@@ -1506,7 +1506,7 @@ for (const tu of tus) {
     }
   }
   for (const t of tu.tables.values()) {
-    if (/SceneEvent/.test(t.type)) continue;
+    if (/\bMapEvent\b/.test(t.type)) continue;
     for (const id of t.init.descendantsOfType('identifier')) if (id && tu.fns.has(id.text)) add(id.text, `listed in ${t.name}`);
   }
   for (const fn of tu.fns.values()) if (!kinds.has(fn.name) && !called.has(fn.name)) add(fn.name, 'not called');
@@ -1536,7 +1536,7 @@ for (const tu of tus) {
   for (const t of tu.tables.values()) {
     const use = uses.get(t.name);
     const tScenes = use ? uniq(use.flatMap((u) => u.scenes)) : tu.scenes;
-    if (/ScenePlacement/.test(t.type)) {
+    if (/\bObjectEventTemplate\b/.test(t.type)) {
       tableRowTexts(t.init, tu.scope).forEach((e, i) => {
         if (e.length < 2) return;
         for (const l of conditionLit(constEval(e[1], tu.scope))) {
@@ -1545,7 +1545,7 @@ for (const tu of tus) {
           flagSites.push({ n, scenes: tScenes, global: false, op: 'test', site: `${file}:${t.name}[actor ${8 + i}]`, sense: l.pos ? 'set' : 'clear', written: '' });
         }
       });
-    } else if (/SceneEntrance/.test(t.type)) {
+    } else if (/\bMapWarpDest\b/.test(t.type)) {
       tableRowTexts(t.init, tu.scope).forEach((e) => {
         const flag = e.length > 1 ? constEval(e[1], tu.scope) : undefined;
         if (flag !== undefined && flag !== -1 && (flag & 0xffff) !== 0xffff) flagSites.push({ n: flag & 0xffff, scenes: tScenes, global: false, op: 'test', site: `${file}:${t.name}[entrance ${e[0]}]`, sense: 'set', written: '' });
@@ -1579,7 +1579,7 @@ for (const tu of tus) {
 
 // The rest of the game's C: messages its functions and tables name, and the
 // flags they set, clear and test by number.
-const otherFiles = walkFiles(`${GAME}/src`, (n) => /\.[ch]$/.test(n)).filter((f) => !f.startsWith(`${GAME}/src/scene/`));
+const otherFiles = walkFiles(`${GAME}/src`, (n) => /\.[ch]$/.test(n)).filter((f) => !f.startsWith(`${GAME}/src/map/`));
 for (const f of otherFiles) {
   const root = parseC(f);
   const scope = new Scope(globalScope);
@@ -1623,7 +1623,7 @@ function flagKeys(n: number, sceneIds: number[], global = false): string[] {
 
 function flagLabel(n: number, tu?: TU): string {
   const global = flagDocs.get(n)?.names[0];
-  if (global && (n < 0x200 || n >= 0x400 || /^FLAG_SCENE_TEMP_/.test(global))) return global;
+  if (global && (n < 0x200 || n >= 0x400 || /^FLAG_MAP_TEMP_[0-9A-F]{2}$/.test(global))) return global;
   if (tu) {
     let local = localFlagNames.get(tu.file);
     if (!local) {
@@ -1641,7 +1641,7 @@ function flagLabel(n: number, tu?: TU): string {
   return global ?? (n < 0x200 || n >= 0x400 ? globalFlagNames().get(n) : undefined) ?? hex(n);
 }
 
-// FLAG_ names the shared headers declare outside flags.h, as field_scene.h
+// FLAG_ names the shared headers declare outside flags.h, as map_tables.h
 // does FLAG_VALE_PARTY_LEFT.
 function globalFlagNames(): Map<number, string> {
   if (globalFlagNamesCache) return globalFlagNamesCache;
@@ -1746,7 +1746,7 @@ for (const m of messages) {
       siteText = uniq(rs.map((r) => `${r.file}:${r.where} ref`)).sort().join('; ');
       const scenesOfRefs = uniq(rs.flatMap((r) => scenesOfFile.get(`${GAME}/src/${r.file}`) ?? []));
       places = placeOfScenes(scenesOfRefs);
-      reason = rs.every((r) => !r.file.startsWith('scene/')) ? 'named by code outside the scenes (the main program or a menu overlay), which shows it itself' : 'named in a scene, but not followed to a show command';
+      reason = rs.every((r) => !r.file.startsWith('map/')) ? 'named by code outside the scenes (the main program or a menu overlay), which shows it itself' : 'named in a scene, but not followed to a show command';
     } else if (indexedBy.has(m.id) || (base && base.id !== m.id && indexedBy.has(base.id))) {
       // A name table and the like: the code adds a computed index.
       const first = indexedBy.has(m.id) ? m : base!;
@@ -1789,7 +1789,7 @@ tsv(
   flagList.map((r) => {
     const doc = flagDocs.get(r.n);
     const global = r.n < 0x200 || r.n >= 0x400;
-    const names = uniq([...(global || /^FLAG_SCENE_TEMP/.test(doc?.names[0] ?? '') ? (doc?.names ?? []) : []), ...r.names]);
+    const names = uniq([...(global || /^FLAG_MAP_TEMP_[0-9A-F]{2}$/.test(doc?.names[0] ?? '') ? (doc?.names ?? []) : []), ...r.names]);
     return [r.key, hex(r.n), names.join(', '), global && doc ? [doc.section, doc.doc].filter(Boolean).join(': ') : '', [...r.set].sort().join('; '), [...r.clear].sort().join('; '), [...r.test].sort().join('; ')];
   }),
 );
@@ -1999,10 +1999,10 @@ for (const m of messages) {
 }
 
 // People the scenes name: the actor constants the code makes speak or be
-// talked to (JILL, ACTOR_LORD_MCCOY), read as words ("Jill", "Lord McCoy").
+// talked to (JILL, LOCALID_LORD_MCCOY), read as words ("Jill", "Lord McCoy").
 const actorNames = new Map<string, Set<string>>(); // lower-case phrase → file:CONSTANT
 const addActor = (file: string, ident: string) => {
-  const phrase = ident.replace(/^ACTOR_/, '').replace(/_\d+$/, '').replace(/_/g, ' ').toLowerCase();
+  const phrase = ident.replace(/^(?:LOCALID|OBJ_EVENT)_/, '').replace(/_\d+$/, '').replace(/_/g, ' ').toLowerCase();
   if (phrase.length < 3) return;
   actorNames.set(phrase, new Set([...(actorNames.get(phrase) ?? []), `${file}:${ident}`]));
 };
@@ -2075,8 +2075,8 @@ tsv('glossary.tsv', ['term', 'kind', 'name message', 'actors', 'first message', 
 // are the beats. A beat that needs a flag set comes after the beats that can
 // first set it; one that needs it clear comes before them. Only the party and
 // Djinn flags (below 0x100) and the story flags (0x800 to 0xdff) order beats,
-// as the scene README divides the flags: a scene flag lasts one visit and a
-// place flag one stay, so neither says what happened earlier in the story.
+// as the maps README divides the flags: a map flag lasts one visit and a
+// map section flag one stay, so neither says what happened earlier in the story.
 // Where the "before" orders of clear flags close a cycle with other orders
 // they are dropped, since an event that sets a flag in one answer and needs
 // it clear in another is read as one beat; a cycle left after that is broken
