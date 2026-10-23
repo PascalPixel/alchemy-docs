@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 520" role="img" aria-labelledby="title desc">
   <title id="title">The game runs one scene at a time</title>
-  <desc id="desc">The whole game is one loop. At power-on the first scene is the title. Each time round, the game first drops everything the last scene left behind. Then it runs the next scene. A place, such as a town, a dungeon or the world map, has its code loaded and runs until the party takes an exit, and the exit names the next scene and where the party arrives. A battle or a minigame runs and then sends the party back, usually to the place it came from, exactly where it stood. Then the loop goes round again, for as long as the game runs.</desc>
+  <desc id="desc">The whole game is a loop of scenes, which goes round once for each scene, not once a frame. At power-on the first scene is the title. Each time round, the game first drops everything the last scene left behind. Then it runs the next scene. A place, such as a town, a dungeon or the world map, has its code loaded and runs until the party takes an exit, and the exit names the next scene and where the party arrives. A battle or a minigame runs and then sends the party back, usually to the place it came from, exactly where it stood. Then the loop goes round again, for as long as the game runs.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
