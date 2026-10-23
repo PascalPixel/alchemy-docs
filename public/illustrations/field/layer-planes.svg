@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 550" role="img" aria-labelledby="title desc">
   <title id="title">Vale's four planes</title>
-  <desc id="desc">A screen of Vale pulled apart into the four planes the console stacks to draw it, numbered from back to front. 1, the ground layer, BG3: grass, water and paths. 2, the middle layer, BG2: walls and edges. 3, the sprites: Isaac and the other actors. 4, the overhead layer, BG1: what is drawn over them. The console draws them in this order, so Isaac stands in front of the middle layer and behind the overhead one.</desc>
+  <desc id="desc">A screen of Vale pulled apart into the four planes the console stacks to draw it, numbered from back to front. 1, the ground layer, BG3: grass, water and paths. 2, the middle layer, BG2: walls and edges. 3, the sprites: Isaac and the other object events. 4, the overhead layer, BG1: what is drawn over them. The console draws them in this order, so Isaac stands in front of the middle layer and behind the overhead one.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .badge { fill: #0a72ef; stroke: #ffffff; stroke-width: 2; }
@@ -41,12 +41,12 @@
   <circle class="badge" cx="30" cy="415" r="10"/>
   <text class="bn" x="30" y="419.5" text-anchor="middle">3</text>
   <text class="h" x="48" y="420">Sprites</text>
-  <text class="p" x="380" y="420" text-anchor="end">Isaac and the other actors</text>
+  <text class="p" x="380" y="420" text-anchor="end">Isaac and other object events</text>
   <circle class="badge" cx="30" cy="445" r="10"/>
   <text class="bn" x="30" y="449.5" text-anchor="middle">4</text>
   <text class="h" x="48" y="450">Overhead</text><text class="code" x="128" y="450">BG1</text>
   <text class="p" x="380" y="450" text-anchor="end">what is drawn over them</text>
   <text class="p" x="20" y="492">Isaac is drawn between planes 2 and 4: in</text>
   <text class="p" x="20" y="511">front of the middle layer, behind the overhead one.</text>
-  <text class="code" x="380" y="540" text-anchor="end">Map_LoadLayeredScene</text>
+  <text class="code" x="380" y="540" text-anchor="end">MapGrid_LoadLayout</text>
 </svg>

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 468" role="img" aria-labelledby="title desc">
   <title id="title">Three kinds of counter</title>
-  <desc id="desc">Where the party spends coins, a town has three kinds of counter. A shop, for weapons, armor or items, offers four things: Buy, Sell, its rare items (Artifacts) and Repair. A sanctum serves one member at a time: it revives, cures poison, drives out a haunting or takes off cursed equipment, for a fee. An inn charges for each member still standing and gives them back their HP and PP overnight. Each is opened by the scene of its town, when the player talks to the keeper.</desc>
+  <desc id="desc">Where the party spends coins, a town has three kinds of counter. A shop, for weapons, armor or items, offers four things: Buy, Sell, its rare items (Artifacts) and Repair. A sanctum serves one member at a time: it revives, cures poison, drives out a haunting or takes off cursed equipment, for a fee. An inn charges for each member still standing and gives them back their HP and PP overnight. Each is opened by the map of its town, when the player talks to the keeper.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
@@ -66,5 +66,5 @@
   <text class="p" x="36" y="370">A price for each member still standing;</text>
   <text class="p" x="36" y="389">by morning their HP and PP are full.</text>
 
-  <text class="small" x="20" y="440">Each is opened by its town's scene when the</text><text class="small" x="20" y="456">player talks to the keeper.</text>
+  <text class="small" x="20" y="440">Each is opened by its town's map when the</text><text class="small" x="20" y="456">player talks to the keeper.</text>
 </svg>

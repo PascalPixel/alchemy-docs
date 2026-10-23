@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 560" role="img" aria-labelledby="title desc">
   <title id="title">One grid, three windows</title>
-  <desc id="desc">A layered map is one square grid of 128 by 128 cells, each 16 pixels square. Each of its three layers is a rectangle cut from that grid, and the map's header says where each rectangle starts. In Goma Cave's entrance room the ground layer starts at cell 0, 0 and holds the cave floor and its pool; the middle layer starts at cell 0, 34, below it, and holds the rock walls; the overhead layer starts at cell 50, 0, to the right, and holds only the glow of the torches. The rest of the grid is unused.</desc>
+  <desc id="desc">A layout is one square grid of 128 by 128 cells, each 16 pixels square. Each of its three layers is a rectangle cut from that grid, and the layout's header says where each rectangle starts. In Goma Cave's entrance room the ground layer starts at cell 0, 0 and holds the cave floor and its pool; the middle layer starts at cell 0, 34, below it, and holds the rock walls; the overhead layer starts at cell 50, 0, to the right, and holds only the glow of the torches. The rest of the grid is unused.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .sheet { fill: #ffffff; stroke: #d4d4d4; }
@@ -69,5 +69,5 @@
   <rect class="f2" x="20" y="502" width="10" height="10" rx="2"/>
   <text class="h" x="38" y="512">Overhead</text>
   <text class="p" x="118" y="512">from cell 50, 0: torch glow, in front</text>
-  <text class="small" x="20" y="540">The map's header says where each window starts.</text>
+  <text class="small" x="20" y="540">The layout's header says where each window starts.</text>
 </svg>

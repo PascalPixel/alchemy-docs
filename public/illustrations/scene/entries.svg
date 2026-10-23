@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 520" role="img" aria-labelledby="title desc">
-  <title id="title">Six questions a place answers</title>
-  <desc id="desc">The field engine knows a place only through six questions it asks the place's own code. When the party arrives it asks, in order: what happens here (the events, kept for the whole visit), where the party arrives (the entrances), who stands where (the placements), and whether anything needs setting up (the initialization, which can play an arrival cutscene). At every step it asks whether the leader stands in an exit area. As the party leaves it asks where the exit leads. Each answer comes from a function, so a place can answer differently as the story moves on.</desc>
+  <title id="title">Six questions a map answers</title>
+  <desc id="desc">The field engine knows a map only through six questions it asks the map's own code. When the party arrives it asks, in order: what happens here (the map events, kept for the whole visit), where the party arrives (the warp destinations), who stands where (the object event templates), and whether anything needs setting up first (the initialization, which can play an arrival cutscene). At every step it asks whether the leader stands in a warp region. As the party leaves it asks where the warp leads. Each answer comes from a function, so a map can answer differently as the story goes on.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .band { fill: #ffffff; stroke: #e5e5e5; }
@@ -35,13 +35,13 @@
   <text class="code" x="352" y="80" text-anchor="end">events</text>
   <rect class="q" x="36" y="102" width="328" height="40" rx="8"/>
   <text class="k" x="50" y="127">Where does the party arrive?</text>
-  <text class="code" x="352" y="126" text-anchor="end">entrances</text>
+  <text class="code" x="352" y="126" text-anchor="end">warpDests</text>
   <rect class="q" x="36" y="148" width="328" height="40" rx="8"/>
   <text class="k" x="50" y="173">Who stands where?</text>
-  <text class="code" x="352" y="172" text-anchor="end">placements</text>
+  <text class="code" x="352" y="172" text-anchor="end">objectEventTemplates</text>
   <rect class="q" x="36" y="194" width="328" height="40" rx="8"/>
   <text class="k" x="50" y="219">Anything to set up first?</text>
-  <text class="code" x="352" y="218" text-anchor="end">initialization</text>
+  <text class="code" x="352" y="218" text-anchor="end">initialize</text>
 
   <path class="wire" d="M 200 244 V 258"/>
   <path class="head" d="M 194 254 h 12 l -6 9 z"/>
@@ -50,7 +50,7 @@
   <rect class="band" x="20" y="266" width="360" height="86" rx="12"/>
   <text class="eyebrow" x="36" y="290">AT EVERY STEP</text>
   <rect class="q" x="36" y="302" width="328" height="40" rx="8"/>
-  <text class="k" x="50" y="327">Is the leader in an exit area?</text>
+  <text class="k" x="50" y="327">Is the leader in a warp region?</text>
   <text class="code" x="352" y="326" text-anchor="end">regions</text>
 
   <path class="wire" d="M 200 352 V 366"/>
@@ -60,9 +60,9 @@
   <rect class="band" x="20" y="374" width="360" height="86" rx="12"/>
   <text class="eyebrow" x="36" y="398">AS THE PARTY LEAVES</text>
   <rect class="q" x="36" y="410" width="328" height="40" rx="8"/>
-  <text class="k" x="50" y="435">Where does this exit lead?</text>
-  <text class="code" x="352" y="434" text-anchor="end">exits</text>
+  <text class="k" x="50" y="435">Where does this warp lead?</text>
+  <text class="code" x="352" y="434" text-anchor="end">warps</text>
 
   <text class="p" x="20" y="486">Each answer comes from a function, so a</text>
-  <text class="p" x="20" y="505">place can answer differently as the story goes on.</text>
+  <text class="p" x="20" y="505">map can answer differently as the story goes on.</text>
 </svg>

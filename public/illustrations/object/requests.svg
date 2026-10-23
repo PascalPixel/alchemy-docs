@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 572" role="img" aria-labelledby="title desc">
   <title id="title">What can stop the walk, in the order the game deals with it</title>
-  <desc id="desc">Twelve things can interrupt the walk, and the game checks them from the top of the list down, dealing with the first one it finds and then starting again from the top. Leaving the scene comes first, then an event that something asked for (a script, a fall to poison, the world map screen), then a battle. Then the ground: the cell the leader stepped onto, and a ledge or climbing spot pushed against. Then the buttons: A, which becomes talking to someone, searching the spot ahead or the menu; the menu; talking; searching; Psynergy; an item; and Start. When nothing is left, walking resumes.</desc>
+  <desc id="desc">Twelve things can interrupt the walk, and the game checks them from the top of the list down, dealing with the first one it finds and then starting again from the top. Leaving the map comes first, then a script that something asked for (a fall to poison, the world map screen), then a battle. Then the ground: the cell the leader stepped onto, and a ledge or climbing spot pushed against. Then the buttons: A, which becomes talking to someone, searching the spot ahead or the menu; the menu; talking; searching; Psynergy; an item; and Start. When nothing is left, walking resumes.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .row { fill: #ffffff; stroke: #e5e5e5; }
@@ -36,12 +36,12 @@
   <text class="eyebrow" x="60" y="32">CHECKED FROM THE TOP, ONE AT A TIME</text>
 
   <!-- Leaving -->
-  <text class="group" x="60" y="58">LEAVING, EVENTS AND BATTLES</text>
+  <text class="group" x="60" y="58">LEAVING, SCRIPTS AND BATTLES</text>
   <rect class="row-exit" x="60" y="66" width="320" height="30" rx="8"/>
-  <text class="px" x="74" y="86">Leave the scene</text>
-  <text class="code" x="368" y="85" text-anchor="end">exit</text>
+  <text class="px" x="74" y="86">Leave the map</text>
+  <text class="code" x="368" y="85" text-anchor="end">warp</text>
   <rect class="row" x="60" y="100" width="320" height="30" rx="8"/>
-  <text class="p" x="74" y="120">Run an event something asked for</text>
+  <text class="p" x="74" y="120">Run a script something asked for</text>
   <text class="code" x="368" y="119" text-anchor="end">event</text>
   <rect class="row-exit" x="60" y="134" width="320" height="30" rx="8"/>
   <text class="px" x="74" y="154">Start a battle</text>

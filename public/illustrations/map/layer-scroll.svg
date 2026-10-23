@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 492" role="img" aria-labelledby="title desc">
   <title id="title">How each layer follows the camera</title>
-  <desc id="desc">In the north of Suhalla Desert, when the camera moves 16 pixels, the ground layer and the middle layer move 16 pixels with it, but the overhead layer, the sand haze, moves 20, a quarter faster. The haze also drifts by itself every frame, even while the camera stands still. Its picture is a square 256 pixels on a side, repeated across the screen: the layer wraps round. The map's header sets all of this for each layer, along with how far the camera may go.</desc>
+  <desc id="desc">In the north of Suhalla Desert, when the camera moves 16 pixels, the ground layer and the middle layer move 16 pixels with it, but the overhead layer, the sand haze, moves 20, a quarter faster. The haze also drifts by itself every frame, even while the camera stands still. Its picture is a square 256 pixels on a side, repeated across the screen: the layer wraps round. The layout's header sets all of this for each layer, along with how far the camera may go.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
@@ -84,7 +84,7 @@
   <text class="p" x="236" y="397">repeated: the layer</text>
   <text class="p" x="236" y="416">wraps round.</text>
 
-  <text class="small" x="20" y="452">The map's header sets this for each layer, and how</text>
+  <text class="small" x="20" y="452">The layout's header sets this for each layer, and how</text>
   <text class="small" x="20" y="468">far the camera may go.</text>
-  <text class="code" x="380" y="482" text-anchor="end">LayeredSceneHeader</text>
+  <text class="code" x="380" y="482" text-anchor="end">LayoutHeader</text>
 </svg>

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 600" role="img" aria-labelledby="title desc">
   <title id="title">One shop, one row</title>
-  <desc id="desc">Each shop is one row of the stock table: room for 24 ordinary items, then 8 rare items, then the kind of shop: weapons, armor or items. Bilibin's weapon shop uses five of the ordinary places, for the Long Sword, Broad Sword, Hunter's Sword, Battle Axe and Heavy Mace, one rare place, for the Witch's Wand, and is a weapon shop; the rest of the row is empty. Its Buy list shows the five weapons. The table has 35 rows; a town's scene opens its shop by the row number, with the keeper whose face the shop's lines show.</desc>
+  <desc id="desc">Each shop is one row of the stock table: room for 24 ordinary items, then 8 rare items, then the kind of shop: weapons, armor or items. Bilibin's weapon shop uses five of the ordinary places, for the Long Sword, Broad Sword, Hunter's Sword, Battle Axe and Heavy Mace, one rare place, for the Witch's Wand, and is a weapon shop; the rest of the row is empty. Its Buy list shows the five weapons. The table has 35 rows; a town's map opens its shop by the row number, with the keeper whose face the shop's lines show.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
@@ -120,7 +120,7 @@
   <text class="eyebrow" x="20" y="470">ITS KIND</text>
   <text class="p" x="20" y="492">a weapon shop</text>
 
-  <text class="p" x="20" y="518">The table has 35 rows. A town's scene opens</text>
+  <text class="p" x="20" y="518">The table has 35 rows. A town's map opens</text>
   <text class="p" x="20" y="537">its shop by row number, with the keeper</text>
   <text class="p" x="20" y="556">whose face the shop's lines show.</text>
   <text class="code" x="380" y="586" text-anchor="end">sStockTable · Shop_Run</text>

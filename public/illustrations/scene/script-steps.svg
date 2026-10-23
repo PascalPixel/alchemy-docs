@@ -91,5 +91,5 @@
   <text class="p" x="20" y="478">Each step that takes time waits inside itself,</text>
   <text class="p" x="20" y="497">so the script is a plain list of what happens,</text>
   <text class="p" x="20" y="516">and the walk resumes only after the last line.</text>
-  <text class="code" x="380" y="544" text-anchor="end">Event_ReactToAnotherTremor</text>
+  <text class="code" x="380" y="544" text-anchor="end">EventScript_ReactToAnotherTremor</text>
 </svg>

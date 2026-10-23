@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 580" role="img" aria-labelledby="title desc">
   <title id="title">A message's five planes</title>
-  <desc id="desc">Garet's sister talking in Vale, pulled apart into the five planes the console stacks to draw it, numbered from back to front. 1, the map's ground layer, BG3. 2, its middle layer, BG2. 3, its overhead layer, BG1. 4, the window layer, BG0, with the message window's frame. 5, the sprites: the letters of the message, her portrait and the actors. Every window shares the one window layer, in front of the map's three, and what a window carries is drawn as sprites in front of everything.</desc>
+  <desc id="desc">Garet's sister talking in Vale, pulled apart into the five planes the console stacks to draw it, numbered from back to front. 1, the map's ground layer, BG3. 2, its middle layer, BG2. 3, its overhead layer, BG1. 4, the window layer, BG0, with the message window's frame. 5, the sprites: the letters of the message, her portrait and the object events. Every window shares the one window layer, in front of the map's three, and what a window carries is drawn as sprites in front of everything.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .badge { fill: #0a72ef; stroke: #ffffff; stroke-width: 2; }
@@ -51,7 +51,7 @@
   <circle class="badge" cx="30" cy="475" r="10"/>
   <text class="bn" x="30" y="479.5" text-anchor="middle">5</text>
   <text class="h" x="48" y="480">Sprites</text>
-  <text class="p" x="380" y="480" text-anchor="end">letters, portrait, actors</text>
+  <text class="p" x="380" y="480" text-anchor="end">letters, portrait, object events</text>
   <text class="p" x="20" y="522">The window's letters and portrait are sprites,</text>
   <text class="p" x="20" y="541">in front of everything.</text>
   <text class="code" x="380" y="570" text-anchor="end">UiWindow_Create</text>

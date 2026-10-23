@@ -75,5 +75,5 @@
   <text class="p" x="20" y="426">Each conversation is a talk event of its own</text>
   <text class="p" x="20" y="445">that names the facing it needs. A second Felix</text>
   <text class="p" x="20" y="464">does the same with the Warrior's shops.</text>
-  <text class="code" x="380" y="500" text-anchor="end">EVENT_TALK · debug/test.c</text>
+  <text class="code" x="380" y="500" text-anchor="end">MAP_EVENT_TALK · debug/test.c</text>
 </svg>

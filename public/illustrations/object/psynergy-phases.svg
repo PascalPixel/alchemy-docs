@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 560" role="img" aria-labelledby="title desc">
   <title id="title">Psynergy on the field, step by step</title>
-  <desc id="desc">Isaac uses Move on the stone pillar in Vale. First the game checks Psynergy can be used here (not in the Battle Arena, not Reveal on the world map, not Retreat where it is blocked) and takes the PP. Then it runs the scene's event for before the cast, if the scene has one. Then the effect plays: Move's hand appears, and it pushes the thing ahead only because the scene has an event for Move on that pillar; with no such event the effect plays at nothing. Last it runs the scene's event for after the cast: in Vale, recording which column the pillar now stands in and blocking its cell. The place decides what happens; the effect only draws it.</desc>
+  <desc id="desc">Isaac uses Move on the stone pillar in Vale. First the game checks Psynergy can be used here (not in the Battle Arena, not Reveal on the world map, not Retreat where it is blocked) and takes the PP. Then it runs the map's event for before the cast, if the map has one. Then the effect plays: Move's hand appears, and it pushes the thing ahead only because the map has an event for Move on that pillar; with no such event the hand pushes at nothing. Last it runs the map's event for after the cast: in Vale, noting where the pillar now stands and making its new cell solid. The map decides what happens; the effect only draws it.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
@@ -50,7 +50,7 @@
   <!-- Before -->
   <rect class="card" x="20" y="158" width="360" height="80" rx="12"/>
   <rect class="chip-scene" x="36" y="172" width="98" height="22" rx="11"/>
-  <text class="ks" x="85" y="187" text-anchor="middle">the place</text>
+  <text class="ks" x="85" y="187" text-anchor="middle">the map</text>
   <text class="h" x="144" y="188">runs its "before" event</text>
   <text class="p" x="36" y="216">if it has one. Vale has none for Move.</text>
   <path class="wire" d="M 200 238 V 252"/>
@@ -62,7 +62,7 @@
   <text class="k" x="85" y="289" text-anchor="middle">the effect</text>
   <text class="h" x="144" y="290">plays: a hand appears</text>
   <text class="p" x="36" y="318">It pushes the pillar only because Vale has</text>
-  <text class="p" x="36" y="336">an event for Move on it. With no event</text>
+  <text class="p" x="36" y="336">a map event for Move on it. With no event</text>
   <text class="p" x="36" y="354">there, the hand pushes at nothing.</text>
   <text class="code" x="364" y="378" text-anchor="end">FieldEffect_DispatchRequestKind</text>
   <path class="wire" d="M 200 388 V 402"/>
@@ -71,11 +71,11 @@
   <!-- After -->
   <rect class="card" x="20" y="410" width="360" height="98" rx="12"/>
   <rect class="chip-scene" x="36" y="424" width="98" height="22" rx="11"/>
-  <text class="ks" x="85" y="439" text-anchor="middle">the place</text>
+  <text class="ks" x="85" y="439" text-anchor="middle">the map</text>
   <text class="h" x="144" y="440">runs its "after" event</text>
   <text class="p" x="36" y="468">Vale notes where the pillar now stands,</text>
   <text class="p" x="36" y="486">and makes its new cell solid.</text>
-  <text class="code" x="364" y="500" text-anchor="end">Event_SettleMovedPillar</text>
+  <text class="code" x="364" y="500" text-anchor="end">EventScript_SettleMovedPillar</text>
 
-  <text class="p" x="20" y="536">The place decides; the effect only draws.</text>
+  <text class="p" x="20" y="536">The map decides; the effect only draws.</text>
 </svg>

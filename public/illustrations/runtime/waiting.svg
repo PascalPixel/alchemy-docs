@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 484" role="img" aria-labelledby="title desc">
   <title id="title">Code waits, tasks keep going</title>
-  <desc id="desc">Five frames of a field scene. An event's code does some work in the first frame, then calls WaitFrames to wait three frames, and carries on in the fifth. Meanwhile two tasks run once in every one of the five frames, waiting or not: the windows' task opens, closes and types the text windows, and the map's task scrolls the map's layers with the camera. WaitFrames is what runs them.</desc>
+  <desc id="desc">Five frames of a field map. A script's code does some work in the first frame, then calls WaitFrames to wait three frames, and carries on in the fifth. Meanwhile two tasks run once in every one of the five frames, waiting or not: the windows' task opens, closes and types the text windows, and the map's task scrolls the map's layers with the camera. WaitFrames is what runs them.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .col { fill: #f0f0f0; }
@@ -33,7 +33,7 @@
   </style>
 
   <rect class="panel" x="0.5" y="0.5" width="399" height="483" rx="16"/>
-  <text class="eyebrow" x="20" y="34">FIVE FRAMES OF A FIELD SCENE</text>
+  <text class="eyebrow" x="20" y="34">FIVE FRAMES OF A FIELD MAP</text>
 
   <!-- Five frame columns, one for each frame; three rows inside them -->
   <rect class="col" x="120" y="48" width="48" height="226" rx="6"/>
@@ -49,7 +49,7 @@
   <text class="small" x="352" y="70" text-anchor="middle">5</text>
 
   <!-- The event -->
-  <text class="h" x="20" y="104">An event</text>
+  <text class="h" x="20" y="104">A script</text>
   <text class="sub" x="20" y="122">its own code</text>
   <rect class="work" x="124" y="88" width="40" height="34" rx="6"/>
   <text class="in" x="144" y="110" text-anchor="middle">work</text>
@@ -84,8 +84,8 @@
   <text class="p" x="20" y="374"><tspan font-weight="600">The map</tspan> scrolls its layers with the camera.</text>
 
   <!-- The rule -->
-  <text class="p" x="20" y="408">The event stops inside WaitFrames(3), and every</text>
+  <text class="p" x="20" y="408">The script stops inside WaitFrames(3), and every</text>
   <text class="p" x="20" y="427">frame WaitFrames runs each task once, so the</text>
-  <text class="p" x="20" y="446">screen keeps moving while the event waits.</text>
+  <text class="p" x="20" y="446">screen keeps moving while the script waits.</text>
   <text class="code" x="380" y="472" text-anchor="end">Scheduler_RunPass</text>
 </svg>

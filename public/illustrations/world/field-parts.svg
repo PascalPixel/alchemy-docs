@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 486" role="img" aria-labelledby="title desc">
   <title id="title">Four parts of the field</title>
-  <desc id="desc">While the party walks around a place, four parts of the program work together. The loop lets the party walk, and stops to deal with whatever comes up. The engine moves everything that moves and draws the map, every frame. The map says where the ground is, how high it is and which spots do something. The place's own code, loaded for each place, says who stands where and what happens there. The loop asks the place's code what to do; the engine reads the map.</desc>
+  <desc id="desc">While the party walks around a map, four parts of the program work together. The loop lets the party walk, and stops to deal with whatever comes up. The engine moves everything that moves and draws the map, every frame. The layout says where the ground is, how high it is and which spots do something. The map's own code, loaded for each map, says who stands where and what happens there. The loop asks the map's code what to do; the engine reads the layout. The loop and the engine know nothing of any one map.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
@@ -61,14 +61,14 @@
   <text class="p" x="36" y="252">draws the map.</text>
   <text class="code" x="36" y="286">field</text>
 
-  <!-- The place -->
+  <!-- The map -->
   <rect class="card-place" x="206" y="160" width="174" height="140" rx="12"/>
   <circle class="dotg" cx="226" cy="182" r="5"/>
-  <text class="h" x="238" y="188">The place</text>
+  <text class="h" x="238" y="188">The map</text>
   <text class="p" x="222" y="214">Who stands where,</text>
   <text class="p" x="222" y="233">and what happens.</text>
-  <text class="p" x="222" y="252">Loaded for each place.</text>
-  <text class="code" x="222" y="286">scene</text>
+  <text class="p" x="222" y="252">Loaded for each map.</text>
+  <text class="code" x="222" y="286">map</text>
 
   <!-- engine to map -->
   <path class="wire" d="M 107 300 V 322"/>
@@ -78,10 +78,10 @@
   <!-- The map -->
   <rect class="card" x="20" y="330" width="360" height="104" rx="12"/>
   <circle class="dotn" cx="40" cy="352" r="5"/>
-  <text class="h" x="52" y="358">The map</text>
+  <text class="h" x="52" y="358">The layout</text>
   <text class="p" x="36" y="384">Where the ground is, how high it is,</text>
   <text class="p" x="36" y="403">and which spots do something.</text>
-  <text class="code" x="364" y="358" text-anchor="end">map</text>
+  <text class="code" x="364" y="358" text-anchor="end">layout</text>
 
-  <text class="p" x="20" y="464">The loop and the engine know nothing of any one place.</text>
+  <text class="p" x="20" y="464">The loop and the engine know nothing of any one map.</text>
 </svg>

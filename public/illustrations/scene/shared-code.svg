@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 470" role="img" aria-labelledby="title desc">
-  <title id="title">Code two places share is copied into both</title>
-  <desc id="desc">Two overlays side by side: Vault's town and Vault's houses. Each holds its own code, and each also holds a copy of the same two pieces: showing a villager's thought read with Mind Read, and Ivan handing back Isaac's Djinni before he leaves the party. Below them is the main program, which is always loaded and which both call. Only one overlay is loaded at a time, and an overlay can call only the main program, never another overlay, so code that two places need is written once and compiled into each of them.</desc>
+  <title id="title">Code two maps share is copied into both</title>
+  <desc id="desc">Two overlays side by side: Vault's town and Vault's houses. Each holds its own code, and each also holds a copy of the same two pieces: showing a villager's thought read with Mind Read, and Ivan handing back Isaac's Djinni before he leaves the party. Below them is the main program, which is always loaded and which both call. Only one overlay is loaded at a time, and an overlay can call only the main program, never another overlay, so code that two maps need is written once and compiled into each of them.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
@@ -36,7 +36,7 @@
   </style>
 
   <rect class="panel" x="0.5" y="0.5" width="399" height="469" rx="16"/>
-  <text class="eyebrow" x="20" y="32">TWO PLACES' CODE, NEVER LOADED TOGETHER</text>
+  <text class="eyebrow" x="20" y="32">TWO MAPS' CODE, NEVER LOADED TOGETHER</text>
 
   <!-- Vault -->
   <rect class="card" x="20" y="44" width="174" height="226" rx="12"/>
@@ -77,7 +77,7 @@
   <text class="h" x="36" y="334">The main program</text>
   <text class="p" x="36" y="354">always loaded; both call it</text>
 
-  <text class="p" x="20" y="398">Only one place's code is loaded at a time,</text>
+  <text class="p" x="20" y="398">Only one map's code is loaded at a time,</text>
   <text class="p" x="20" y="417">and it can call only the main program. So</text>
   <text class="p" x="20" y="436">shared code is written once and copied in.</text>
   <text class="code" x="380" y="458" text-anchor="end">common/vault_talk.h · common/vault_djinn.h</text>

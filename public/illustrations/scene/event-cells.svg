@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 572" role="img" aria-labelledby="title desc">
-  <title id="title">Which cells start events in Vale</title>
-  <desc id="desc">A screen of Vale on the day the story begins, drawn from its map, with each cell that carries one of the scene's own collision codes tinted and numbered. In pink, cells that a touch row answers, where stepping on or walking into the cell runs an event: 1, a door into a house, walking north into it; 2, the door into Isaac's house, walking north; 3, the ladder up onto the roof of Isaac's house, walking north; 4, the ladder down from the roof, walking south; 5, the cell where stepping off the upper path changes its cells back. In grey, 6: three cells of the path at the top with a code of the scene's own that no row answers, so nothing happens there. The same code can mean something else in another place, because each scene's event table says what its codes do.</desc>
+  <title id="title">Which cells start map events in Vale</title>
+  <desc id="desc">A screen of Vale on the day the story begins, drawn from its layout, with each cell that carries one of the map's own metatile behaviors tinted and numbered. In pink, cells a coord event answers, where stepping on or walking into the cell runs a script: 1, a door into a house, walking north into it; 2, the door into Isaac's house, walking north; 3, the ladder up onto the roof of Isaac's house, walking north; 4, the ladder down from the roof, walking south; 5, the cell where stepping off the upper path changes its cells back. In grey, 6: three cells of the path at the top with a behavior of the map's own that no row answers, so nothing happens there. The same behavior can mean something else in another map, because each map's event table says what its behaviors do.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .c-touch { fill: #db2777; fill-opacity: 0.35; stroke: #db2777; stroke-width: 2; }
@@ -58,9 +58,9 @@
   <text class="name" x="46" y="424">Off the upper path:</text>
   <text class="small" x="46" y="441">its cells change back</text>
   <circle class="b-none" cx="214" cy="419" r="10"/><text class="bn" x="214" y="423.5" text-anchor="middle">6</text>
-  <text class="name" x="230" y="424">A code of the scene's</text>
+  <text class="name" x="230" y="424">A behavior of the map's</text>
   <text class="small" x="230" y="441">own that no row answers</text>
-  <text class="p" x="20" y="490">Pink: a touch row runs an event there.</text>
-  <text class="p" x="20" y="510">Grey: the scene's own code, but no row.</text>
+  <text class="p" x="20" y="490">Pink: a coord event runs a script there.</text>
+  <text class="p" x="20" y="510">Grey: the map's own behavior, but no row.</text>
   <text class="code" x="380" y="560" text-anchor="end">Vale_GetEvents</text>
 </svg>

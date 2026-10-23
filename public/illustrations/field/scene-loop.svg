@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 620" role="img" aria-labelledby="title desc">
   <title id="title">The field's loop</title>
-  <desc id="desc">The party walks, and every frame the game checks the ground under the leader and the buttons. When something comes up (a doorway, a random battle, the A button, the menu, Psynergy or an item), walking stops, the game handles one thing at a time until nothing is left, and walking resumes. Leaving the scene, through a doorway or into a battle, is always handled first and ends the loop.</desc>
+  <desc id="desc">The party walks, and every frame the game checks the ground under the leader and the buttons. When something comes up (a doorway, a random battle, the A button, the menu, Psynergy or an item), walking stops, the game handles one thing at a time until nothing is left, and walking resumes. Leaving the map, through a doorway or into a battle, is always handled first and ends the loop.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
@@ -43,7 +43,7 @@
   </style>
 
   <rect class="panel" x="0.5" y="0.5" width="399" height="619" rx="16"/>
-  <text class="eyebrow" x="60" y="34">ONE FIELD SCENE</text>
+  <text class="eyebrow" x="60" y="34">ONE FIELD MAP</text>
 
   <!-- Walk -->
   <rect class="card-accent" x="60" y="48" width="320" height="108" rx="12"/>
@@ -87,7 +87,7 @@
   <text class="h" x="80" y="438">Handle one, then look again</text>
   <text class="p" x="80" y="462">An event plays to its end while the</text>
   <text class="p" x="80" y="481">party waits. Leaving always goes first.</text>
-  <text class="code" x="80" y="504">Field_RunScene</text>
+  <text class="code" x="80" y="504">Field_RunMap</text>
 
   <!-- Back to walking -->
   <path class="wire-accent" d="M 60 462 H 30 V 102 H 54"/>
@@ -100,6 +100,6 @@
   <text class="label" x="232" y="532">a doorway or a battle</text>
   <rect class="card-exit" x="60" y="546" width="320" height="58" rx="12"/>
   <text class="h" x="80" y="572">Leave</text>
-  <text class="p" x="80" y="593">The next scene loads.</text>
-  <text class="code" x="360" y="572" text-anchor="end">Scene_TakeExit</text>
+  <text class="p" x="80" y="593">The next map loads.</text>
+  <text class="code" x="360" y="572" text-anchor="end">Map_TakeWarp</text>
 </svg>

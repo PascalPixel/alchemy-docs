@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 452" role="img" aria-labelledby="title desc">
-  <title id="title">One way out, three destinations</title>
-  <desc id="desc">The way down from Sol Sanctum's entrance has three rows in the exit table, read from the top. The first leads to Vale, and is taken until the sanctum erupts. The second leads to Vale during the eruption, and is taken until the party leaves Vale. The third leads to Vale, with no condition. The first row whose condition still holds is taken, so the same path leads to Vale before the eruption, to Vale erupting while the story is there, and to Vale again for the rest of the game.</desc>
+  <title id="title">One warp, three destinations</title>
+  <desc id="desc">The way down from Sol Sanctum's entrance has three rows in the warp table, read from the top. The first leads to Vale, and is taken until the sanctum erupts. The second leads to Vale during the eruption, and is taken until the party leaves Vale. The third leads to Vale, with no condition. The first row whose condition still holds is taken, so the same path leads to Vale before the eruption, to Vale erupting while the story is there, and to Vale again for the rest of the game.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .row { fill: #ffffff; stroke: #e5e5e5; }
@@ -68,5 +68,5 @@
   <text class="p" x="20" y="361">whose condition still holds is taken. The same</text>
   <text class="p" x="20" y="380">path leads to Vale, then to Vale erupting, then</text>
   <text class="p" x="20" y="399">to Vale again for the rest of the game.</text>
-  <text class="code" x="380" y="434" text-anchor="end">Scene_TakeExit · SCENE_EXIT_IF</text>
+  <text class="code" x="380" y="434" text-anchor="end">Map_TakeWarp · MAP_WARP_IF</text>
 </svg>

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 470" role="img" aria-labelledby="title desc">
-  <title id="title">One place's code in memory at a time</title>
-  <desc id="desc">On the cartridge, each place's code is stored packed, 96 pieces in all, such as Vale's, Vault's, Bilibin's and Goma Cave's. In memory there is one area of 32 KB for a place's code. When the party enters Vault, Vault's code is unpacked into that area, over whatever place's code was there before. Beside it the main program is always loaded, and the place's code calls into it.</desc>
+  <title id="title">One map's code in memory at a time</title>
+  <desc id="desc">On the cartridge, each map's code is stored packed, 96 pieces in all, such as Vale's, Vault's, Bilibin's and Goma Cave's. In memory there is one area of 32 KB for a map's code. When the party enters Vault, Vault's code is unpacked into that area, over whatever map's code was there before. Beside it the main program is always loaded; the map's code calls it, and the main program asks it about the map.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
@@ -41,7 +41,7 @@
   <rect class="panel" x="0.5" y="0.5" width="399" height="469" rx="16"/>
 
   <!-- Cartridge -->
-  <text class="eyebrow" x="20" y="32">ON THE CARTRIDGE: EACH PLACE'S CODE, PACKED</text>
+  <text class="eyebrow" x="20" y="32">ON THE CARTRIDGE: EACH MAP'S CODE, PACKED</text>
   <rect class="card" x="20" y="44" width="360" height="96" rx="12"/>
   <rect class="pack" x="34" y="58" width="60" height="28" rx="6"/>
   <text class="s" x="64" y="77" text-anchor="middle">Vale</text>
@@ -52,7 +52,7 @@
   <rect class="pack" x="240" y="58" width="88" height="28" rx="6"/>
   <text class="s" x="284" y="77" text-anchor="middle">Goma Cave</text>
   <text class="s" x="346" y="77" text-anchor="middle">...</text>
-  <text class="p" x="148" y="120">96 pieces for 201 scenes</text>
+  <text class="p" x="148" y="120">96 pieces for 201 maps</text>
 
   <!-- Unpack -->
   <text class="k" x="142" y="166">entering Vault unpacks it</text>
@@ -63,15 +63,15 @@
   <rect class="area" x="34" y="226" width="160" height="158" rx="8"/>
   <text class="k" x="114" y="290" text-anchor="middle">Vault's code</text>
   <text class="s" x="114" y="310" text-anchor="middle">over the last</text>
-  <text class="s" x="114" y="326" text-anchor="middle">place's code</text>
+  <text class="s" x="114" y="326" text-anchor="middle">map's code</text>
   <text class="code" x="114" y="372" text-anchor="middle">32 KB</text>
   <rect class="main" x="206" y="226" width="160" height="158" rx="8"/>
   <text class="h" x="286" y="290" text-anchor="middle">The main</text>
   <text class="h" x="286" y="308" text-anchor="middle">program</text>
   <text class="s" x="286" y="330" text-anchor="middle">always there</text>
 
-  <text class="p" x="20" y="426">The place's code calls the main program;</text>
-  <text class="p" x="20" y="445">the main program asks it about the place.</text>
+  <text class="p" x="20" y="426">The map's code calls the main program;</text>
+  <text class="p" x="20" y="445">the main program asks it about the map.</text>
   <text class="code" x="380" y="200" text-anchor="end">gOverlayArea</text>
   <path class="wire" d="M 130 86 V 222"/>
   <path class="head" d="M 124 218 h 12 l -6 9 z"/>

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 596" role="img" aria-labelledby="title desc">
   <title id="title">One block holds every window</title>
-  <desc id="desc">Everything the window system keeps is in one block of memory, set up with each scene. In it: the windows' tilemap, a picture of the screen 32 tiles wide and 20 tall that every window is drawn into; 8 window slots, 12 in the Japanese edition; 3 typists, each typing one message into one window; 64 sprites that windows carry, such as letters, icons, portraits and the page arrow; the ring of unpacked messages, 512 codes, 256 in Japanese; 8 blanks for names and numbers a message will fill in; and 2 portrait slots.</desc>
+  <desc id="desc">Everything the window system keeps is in one block of memory, set up with each map. In it: the windows' tilemap, a picture of the screen 32 tiles wide and 20 tall that every window is drawn into; 8 window slots, 12 in the Japanese edition; 3 typists, each typing one message into one window; 64 sprites that windows carry, such as letters, icons, portraits and the page arrow; the ring of unpacked messages, 512 codes, 256 in Japanese; 8 blanks for names and numbers a message will fill in; and 2 portrait slots.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card-accent { fill: #ffffff; stroke: #0a72ef; stroke-width: 1.5; }
@@ -103,6 +103,6 @@
   <text class="h2" x="148" y="496">2 portraits</text>
   <text class="small" x="148" y="514">the faces beside a message</text>
 
-  <text class="small" x="20" y="576">Set up with each scene, gone at the next.</text>
+  <text class="small" x="20" y="576">Set up with each map, gone at the next.</text>
   <text class="code" x="380" y="32" text-anchor="end">UiRenderWork</text>
 </svg>

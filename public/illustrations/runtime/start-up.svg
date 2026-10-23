@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 616" role="img" aria-labelledby="title desc">
   <title id="title">From power-on to the title</title>
-  <desc id="desc">Start-up, in order. The cartridge's first instruction jumps to System_Entry, which sets up the stacks. System_Initialize then prepares memory: it clears IWRAM, empties the heap and copies the fast routines into IWRAM. It starts the services: the VBlank handler, the sound driver and an empty task table. It waits ten frames, then Game_Run runs one scene after another, starting with the title. Before each scene it drops the last scene's tasks and empties the heap. None of these steps returns.</desc>
+  <desc id="desc">Start-up, in order. The cartridge's first instruction jumps to System_Entry, which sets up the stacks. System_Initialize then prepares memory: it clears IWRAM, empties the heap and copies the fast routines into IWRAM. It starts the services: the VBlank handler, the sound driver and an empty task table. It waits ten frames, then Game_Run runs one map after another, starting with the title. Before each map it drops the last map's tasks and empties the heap. None of these steps returns.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
@@ -85,8 +85,8 @@
   <!-- Game_Run -->
   <rect class="card-accent" x="60" y="478" width="320" height="114" rx="12"/>
   <circle class="dot" cx="83" cy="504" r="5"/>
-  <text class="h" x="96" y="509">One scene after another</text>
-  <text class="p" x="80" y="534">From the title on. Before each scene the</text>
+  <text class="h" x="96" y="509">One map after another</text>
+  <text class="p" x="80" y="534">From the title on. Before each map the</text>
   <text class="p" x="80" y="553">last one's tasks and heap are dropped.</text>
   <text class="code" x="80" y="578">Game_Run</text>
   <path class="wire-accent" d="M 350 500 a 12 12 0 1 1 -10 -5"/>

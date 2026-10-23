@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 560" role="img" aria-labelledby="title desc">
   <title id="title">The main program, bank by bank</title>
-  <desc id="desc">The code of the main program as it lies on the English cartridge, about 1 MB, drawn to scale from start to end and cut into fourteen banks, each starting at a fixed address. Each large bank has a folder of the source: runtime (start-up, frames and memory), field (moving and drawing the map), window (windows, fonts and all the game's text, the largest), game (the rules: stats, items, Djinn), object (running a place, and random battles), menu, shop, battle, and effect (battle animations). Five small banks follow, the last of them the sound bank. Each bank opens with a table of jumps, one for each of its functions that another bank calls. A call from another bank, a far call, goes to that jump, and the jump goes on to the function: the object bank starts a battle by calling a jump in the battle bank's table, which leads to the battle code further down. The sound code, the music and the game's packed data come after these banks on the cartridge.</desc>
+  <desc id="desc">The code of the main program as it lies on the English cartridge, about 1 MB, drawn to scale from start to end and cut into fourteen banks, each starting at a fixed address. Each large bank has a folder of the source: runtime (start-up, frames and memory), field (moving and drawing the map), window (windows, fonts and all the game's text, the largest), game (the rules: stats, items, Djinn), object (running a map, and random battles), menu, shop, battle, and effect (battle animations). Five small banks follow, the last of them the sound bank. Each bank opens with a table of jumps, one for each of its functions that another bank calls. A call from another bank, a far call, goes to that jump, and the jump goes on to the function: the object bank starts a battle by calling a jump in the battle bank's table, which leads to the battle code further down. The sound code, the music and the game's packed data come after these banks on the cartridge.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .b { fill: #f0f6ff; stroke: #bcd7fb; }
@@ -65,7 +65,7 @@
   <text class="n" x="166" y="162">window</text><text class="d" x="226" y="162">windows, fonts and</text>
   <text class="d" x="226" y="178">all the game's text</text>
   <text class="n" x="166" y="249">game</text><text class="d" x="210" y="249">rules: stats, items</text>
-  <text class="n" x="166" y="278">object</text><text class="d" x="226" y="278">running a place</text>
+  <text class="n" x="166" y="278">object</text><text class="d" x="226" y="278">running a map</text>
   <text class="n" x="166" y="298">menu</text>
   <text class="n" x="166" y="316">shop</text>
   <text class="n" x="166" y="334">battle</text>

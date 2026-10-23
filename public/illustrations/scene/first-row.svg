@@ -81,5 +81,5 @@
   <text class="p" x="20" y="437">from the latest point in the story down to the</text>
   <text class="p" x="20" y="456">default, and a row behind one that always fits</text>
   <text class="p" x="20" y="475">is never reached.</text>
-  <text class="code" x="380" y="490" text-anchor="end">Scene_FindEvent</text>
+  <text class="code" x="380" y="490" text-anchor="end">Map_FindEvent</text>
 </svg>

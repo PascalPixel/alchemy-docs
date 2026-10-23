@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 520" role="img" aria-labelledby="title desc">
-  <title id="title">Every placement row owns an actor slot</title>
-  <desc id="desc">The placement table of Mercury Lighthouse's upper floor, row by row, and the actor slot each row fills before and after the blue statue falls from its ledge. The party's eight slots come first. The first row, the statue fallen to the floor below, appears only once it has fallen; the second, the statue on its ledge, only until then. The rows after them, two pipe sections, three pipe ends and six stone statues, always appear. A row whose condition fails leaves its slot empty rather than handing it to the next row, so every actor keeps the same slot whatever the story has done.</desc>
+  <title id="title">Every object event template owns a slot</title>
+  <desc id="desc">The object event templates of Mercury Lighthouse's upper floor, row by row, and the object event slot each row fills before and after the blue statue falls from its ledge. The party's eight slots come first. The first row, the statue fallen to the floor below, appears only once it has fallen; the second, the statue on its ledge, only until then. The rows after them, two pipe sections, three pipe ends and six stone statues, always appear. A row whose condition fails leaves its slot empty rather than handing it to the next row, so every object event keeps the same slot whatever the story has done, and the pipes are always the third and fourth placed object events.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .row { fill: #ffffff; stroke: #e5e5e5; }
@@ -74,8 +74,8 @@
 
   <text class="p" x="20" y="378">A row whose condition fails leaves its</text>
   <text class="p" x="20" y="397">slot empty. Nothing moves up to fill it, so</text>
-  <text class="p" x="20" y="416">every actor keeps one slot all game, and</text>
-  <text class="p" x="20" y="435">the scene's code can name it once: the pipes</text>
-  <text class="p" x="20" y="454">are always the third and fourth placed actors.</text>
-  <text class="code" x="380" y="496" text-anchor="end">Event_SpawnObjectTable</text>
+  <text class="p" x="20" y="416">every object event keeps one slot all game,</text>
+  <text class="p" x="20" y="435">and the map's code can name it once: the pipes</text>
+  <text class="p" x="20" y="454">are always the third and fourth object events.</text>
+  <text class="code" x="380" y="496" text-anchor="end">FieldScript_SpawnObjectTable</text>
 </svg>

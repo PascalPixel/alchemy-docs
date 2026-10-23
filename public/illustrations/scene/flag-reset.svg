@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 416" role="img" aria-labelledby="title desc">
-  <title id="title">What a place forgets, and when</title>
-  <desc id="desc">Two sets of flags let a scene remember things for a while without ever undoing them. Scene flags are forgotten every time the party enters a scene, even the one it just left: the plant Growth raised on Crossbone Isle is a sprout again. Place flags are kept while the party moves between the scenes of one place and forgotten when it enters another place: Vault's mayor remembers having welcomed Isaac back while the party stays in Vault, and welcomes him again on the next visit. Coming back from a battle forgets neither, so the room is as the party left it.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 438" role="img" aria-labelledby="title desc">
+  <title id="title">What a map forgets, and when</title>
+  <desc id="desc">Two sets of flags let a map remember things for a while without ever undoing them. Map flags are forgotten every time the party enters a map, even the one it just left: the plant Growth raised on Crossbone Isle is a sprout again. Map section flags are kept while the party moves between the maps of one map section and forgotten when it enters another map section: Vault's mayor remembers having welcomed Isaac back while the party stays in Vault, and welcomes him again on the next visit. Coming back from a battle forgets neither, so the room is as the party left it.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
@@ -27,14 +27,17 @@
     }
   </style>
 
-  <rect class="panel" x="0.5" y="0.5" width="399" height="415" rx="16"/>
-  <text class="eyebrow" x="20" y="32">WHEN THE PARTY...</text>
-  <text class="col" x="260" y="32" text-anchor="middle">scene flags</text>
-  <text class="col" x="336" y="32" text-anchor="middle">place flags</text>
+  <rect class="panel" x="0.5" y="0.5" width="399" height="437" rx="16"/>
+  <text class="eyebrow" x="20" y="40">WHEN THE PARTY...</text>
+  <text class="col" x="260" y="26" text-anchor="middle">map</text>
+  <text class="col" x="260" y="40" text-anchor="middle">flags</text>
+  <text class="col" x="336" y="26" text-anchor="middle">map section</text>
+  <text class="col" x="336" y="40" text-anchor="middle">flags</text>
+  <g transform="translate(0 8)">
 
-  <!-- Any entrance -->
+  <!-- Any arrival -->
   <rect class="card" x="20" y="46" width="360" height="112" rx="12"/>
-  <text class="h" x="36" y="72">enters a scene,</text>
+  <text class="h" x="36" y="72">enters a map,</text>
   <text class="h" x="36" y="90">even the same one</text>
   <rect class="chip-gone" x="224" y="60" width="72" height="22" rx="11"/>
   <text class="gone" x="260" y="75" text-anchor="middle">forgotten</text>
@@ -43,26 +46,28 @@
   <text class="p" x="36" y="120">The plant Growth raised on Crossbone</text>
   <text class="p" x="36" y="139">Isle is a sprout again.</text>
 
-  <!-- Another place -->
-  <rect class="card" x="20" y="168" width="360" height="94" rx="12"/>
-  <text class="h" x="36" y="194">enters another place</text>
+  <!-- Another map section -->
+  <rect class="card" x="20" y="168" width="360" height="108" rx="12"/>
+  <text class="h" x="36" y="194">enters another</text>
+  <text class="h" x="36" y="212">map section</text>
   <rect class="chip-gone" x="224" y="182" width="72" height="22" rx="11"/>
   <text class="gone" x="260" y="197" text-anchor="middle">forgotten</text>
   <rect class="chip-gone" x="300" y="182" width="72" height="22" rx="11"/>
   <text class="gone" x="336" y="197" text-anchor="middle">forgotten</text>
-  <text class="p" x="36" y="226">Vault's mayor, who remembered welcoming</text>
-  <text class="p" x="36" y="245">Isaac back, welcomes him back again.</text>
+  <text class="p" x="36" y="240">Vault's mayor, who remembered welcoming</text>
+  <text class="p" x="36" y="259">Isaac back, welcomes him back again.</text>
 
   <!-- Battle -->
-  <rect class="card" x="20" y="272" width="360" height="76" rx="12"/>
-  <text class="h" x="36" y="298">comes back from a battle</text>
-  <rect class="chip-kept" x="224" y="286" width="72" height="22" rx="11"/>
-  <text class="kept" x="260" y="301" text-anchor="middle">kept</text>
-  <rect class="chip-kept" x="300" y="286" width="72" height="22" rx="11"/>
-  <text class="kept" x="336" y="301" text-anchor="middle">kept</text>
-  <text class="p" x="36" y="334">The room is as the party left it.</text>
+  <rect class="card" x="20" y="286" width="360" height="76" rx="12"/>
+  <text class="h" x="36" y="312">comes back from a battle</text>
+  <rect class="chip-kept" x="224" y="300" width="72" height="22" rx="11"/>
+  <text class="kept" x="260" y="315" text-anchor="middle">kept</text>
+  <rect class="chip-kept" x="300" y="300" width="72" height="22" rx="11"/>
+  <text class="kept" x="336" y="315" text-anchor="middle">kept</text>
+  <text class="p" x="36" y="348">The room is as the party left it.</text>
 
   <!-- foot -->
-  <text class="p" x="20" y="378">A scene never undoes what it changed.</text>
-  <text class="code" x="380" y="402" text-anchor="end">Scene_ResetFlagsOnEnter</text>
+  <text class="p" x="20" y="392">A map never undoes what it changed.</text>
+  <text class="code" x="380" y="416" text-anchor="end">Map_ResetFlagsOnEnter</text>
+  </g>
 </svg>

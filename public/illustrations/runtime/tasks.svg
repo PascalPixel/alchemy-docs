@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 520" role="img" aria-labelledby="title desc">
   <title id="title">What runs each frame, and when</title>
-  <desc id="desc">The tasks of a field scene, as the task table holds them. Each task's order says which pass runs it and where in that pass. Every frame, WaitFrames runs the map's task, which scrolls the map's layers, and then the windows' task, which opens, closes and types the windows; the map's has the higher order, so it runs first. In every vertical blank, the VBlank handler runs the task that copies changed window tiles to the screen. While a menu is open, the scene's own tasks, whose code is in its overlay, are suspended: both passes skip them, and they keep their place for when the menu closes. The table has 20 slots, and each scene starts with it empty.</desc>
+  <desc id="desc">The tasks of a field map, as the task table holds them. Each task's order says which pass runs it and where in that pass. Every frame, WaitFrames runs the map's task, which scrolls the map's layers, and then the windows' task, which opens, closes and types the windows; the map's has the higher order, so it runs first. In every vertical blank, the VBlank handler runs the task that copies changed window tiles to the screen. While a menu is open, the map's own tasks, whose code is in its overlay, are suspended: both passes skip them, and they keep their place for when the menu closes. The table has 20 slots, and each map starts with it empty.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
@@ -39,7 +39,7 @@
   </style>
 
   <rect class="panel" x="0.5" y="0.5" width="399" height="519" rx="16"/>
-  <text class="eyebrow" x="20" y="34">A FIELD SCENE'S TASKS</text>
+  <text class="eyebrow" x="20" y="34">A FIELD MAP'S TASKS</text>
   <text class="code" x="380" y="34" text-anchor="end">gSchedulerTaskTable</text>
 
   <!-- Every frame -->
@@ -72,7 +72,7 @@
   <text class="h" x="36" y="350">Suspended</text>
   <text class="sub" x="122" y="350">skipped by both, keeping their place</text>
   <rect class="chip-grey" x="36" y="364" width="328" height="34" rx="8"/>
-  <text class="kw" x="52" y="386">The scene's own tasks, while a menu is open</text>
+  <text class="kw" x="52" y="386">The map's own tasks, while a menu is open</text>
   <text class="code" x="364" y="422" text-anchor="end">Scheduler_SuspendOverlayTasks</text>
 
   <text class="p" x="20" y="470">Each task carries an order, which says which</text>

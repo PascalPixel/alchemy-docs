@@ -61,5 +61,5 @@
 
   <text class="p" x="20" y="402">Every way to the third spot crosses the first</text>
   <text class="p" x="20" y="421">two, so their events have always run first.</text>
-  <text class="code" x="380" y="452" text-anchor="end">Event_UnusedGaretJoinsIsaac</text>
+  <text class="code" x="380" y="452" text-anchor="end">EventScript_UnusedGaretJoinsIsaac</text>
 </svg>

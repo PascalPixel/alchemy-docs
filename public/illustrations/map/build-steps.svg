@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 576" role="img" aria-labelledby="title desc">
   <title id="title">From a table to the game's bytes</title>
-  <desc id="desc">How the build turns one of a map's tables into what the game reads, using Suhalla Desert's shapes as the example. The file shapes.tsv is a table anyone can edit, one shape a row: its kind and three heights. The build tool writes the bytes the game reads, shapes.table, one record a row. Then it packs them, shapes.table.lz, exactly as Camelot's packer did, so the packed bytes are the same as on the cartridge. Last, the map's map.s places them behind the map's header. The name of each file says what to make: the table's name, then its form, then the packing.</desc>
+  <desc id="desc">How the build turns one of a layout's tables into what the game reads, using Suhalla Desert's shapes as the example. The file shapes.tsv is a table anyone can edit, one shape a row: its kind and three heights. The build tool writes the bytes the game reads, shapes.table, one record a row. Then it packs them, shapes.table.lz, exactly as Camelot's packer did, so the packed bytes are the same as on the cartridge. Last, the layout's layout.s places them behind its header. The name of each file says what to make: the table's name, then its form, then the packing.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
@@ -33,7 +33,7 @@
   </style>
 
   <rect class="panel" x="0.5" y="0.5" width="399" height="575" rx="16"/>
-  <text class="eyebrow" x="20" y="32">HOW A MAP'S SHAPES ARE BUILT</text>
+  <text class="eyebrow" x="20" y="32">HOW A LAYOUT'S SHAPES ARE BUILT</text>
 
   <!-- The file name, coloured by part -->
   <text x="200" y="66" text-anchor="middle"><tspan class="n0">shapes</tspan><tspan class="n1">.table</tspan><tspan class="n2">.lz</tspan></text>
@@ -69,11 +69,11 @@
   <text class="small" x="36" y="402">must come out the same, byte for byte</text>
 
   <path class="wire" d="M 200 424 V 442"/><path class="head" d="M 194 440 L 200 450 L 206 440 Z"/>
-  <text class="small" x="212" y="442">placed by the map's map.s</text>
+  <text class="small" x="212" y="442">placed by its layout.s</text>
 
   <!-- 4: in the map -->
   <rect class="card" x="20" y="456" width="360" height="48" rx="12"/>
-  <text class="h2" x="36" y="486">In the game, behind the map's header</text>
+  <text class="h2" x="36" y="486">In the game, behind the layout's header</text>
 
   <text class="small" x="20" y="528">The other parts are built alike, but the</text>
   <text class="small" x="20" y="544">markers are left unpacked.</text>

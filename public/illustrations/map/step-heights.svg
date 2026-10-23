@@ -89,5 +89,5 @@
   <text class="p" x="38" y="385">Within 8 px up or 12 px down: a step.</text>
   <circle class="dot-no" cx="26" cy="404" r="5"/>
   <text class="p" x="38" y="409">Further: blocked, as surely as a wall.</text>
-  <text class="code" x="380" y="34" text-anchor="end">Map_CheckObjectStep</text>
+  <text class="code" x="380" y="34" text-anchor="end">MapGrid_CheckObjectStep</text>
 </svg>

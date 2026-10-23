@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 430" role="img" aria-labelledby="title desc">
   <title id="title">Tiles that move by themselves</title>
-  <desc id="desc">One channel of a map's tile animation. Several pictures of the same patch of the map are stored apart from the tiles on screen. The channel copies the first over the patch's tiles, waits a few frames, copies the second, waits, and so on, then goes back to the first. Nothing else changes: every cell that uses those tiles shows the new picture at once. A map can run up to 16 channels, each on its own timer.</desc>
+  <desc id="desc">One channel of a layout's tile animation. Several pictures of the same patch of the map are stored apart from the tiles on screen. The channel copies the first over the patch's tiles, waits a few frames, copies the second, waits, and so on, then goes back to the first. Nothing else changes: every cell that uses those tiles shows the new picture at once. A layout can run up to 16 channels, each on its own timer.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
@@ -73,5 +73,5 @@
 
   <text class="p" x="20" y="386">Up to 16 channels run at once, each on its</text>
   <text class="p" x="20" y="405">own timer.</text>
-  <text class="code" x="380" y="420" text-anchor="end">MapAnimation_Update</text>
+  <text class="code" x="380" y="420" text-anchor="end">TileAnimation_Update</text>
 </svg>

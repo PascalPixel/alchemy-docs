@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 520" role="img" aria-labelledby="title desc">
-  <title id="title">What one cell of a map says</title>
-  <desc id="desc">A map is a grid of square cells, 16 pixels on a side. Each cell says three things. What is drawn there: one block, a picture 16 pixels square made of 2 by 2 tiles, each tile an 8-pixel square picture, the smallest piece the console builds a background from. How high its ground is: flat, a slope or a step, which decides whether the leader can step onto it. And what standing there does: nothing on open ground, or a wall, a spot this place names such as a door, a chest or a ladder, ground where battles start, or a ledge to jump down.</desc>
+  <title id="title">What one cell of a layout says</title>
+  <desc id="desc">A layout is a grid of square cells, 16 pixels on a side. Each cell says three things. What is drawn there: one metatile, a picture 16 pixels square made of 2 by 2 tiles, each tile an 8-pixel square picture, the smallest piece the console builds a background from. How high its ground is: flat, a slope or a step, which decides whether the leader can step onto it. And what standing there does: nothing on open ground, or a wall, a spot this map's events name such as a door, a chest or a ladder, ground where battles start, or a ledge to jump down.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .cell { fill: #ffffff; stroke: #d4d4d4; }
@@ -33,7 +33,7 @@
   </style>
 
   <rect class="panel" x="0.5" y="0.5" width="399" height="519" rx="16"/>
-  <text class="eyebrow" x="20" y="32">ONE CELL OF A MAP</text>
+  <text class="eyebrow" x="20" y="32">ONE CELL OF A LAYOUT</text>
 
   <!-- the grid -->
   <rect class="cell" x="20" y="48" width="40" height="40"/><rect class="cell" x="60" y="48" width="40" height="40"/><rect class="cell" x="100" y="48" width="40" height="40"/>
@@ -49,9 +49,9 @@
   <rect class="card" x="160" y="44" width="220" height="104" rx="10"/>
   <circle class="num" cx="178" cy="66" r="5"/>
   <text class="h" x="194" y="71">What is drawn</text>
-  <text class="p" x="176" y="96">one block: a 16-pixel picture</text>
-  <text class="p" x="176" y="115">of 2 by 2 tiles, each tile an</text>
-  <text class="p" x="176" y="134">8-pixel square (dotted)</text>
+  <text class="p" x="176" y="96">one metatile: a 16-pixel</text>
+  <text class="p" x="176" y="115">picture of 2 by 2 tiles, each</text>
+  <text class="p" x="176" y="134">an 8-pixel square (dotted)</text>
 
   <rect class="card" x="160" y="158" width="220" height="74" rx="10"/>
   <circle class="num" cx="178" cy="180" r="5"/>
@@ -66,10 +66,10 @@
   <rect class="chip" x="196" y="286" width="168" height="28" rx="14"/><text class="c" x="280" y="305" text-anchor="middle">a door, a chest, a ladder</text>
   <rect class="chip" x="36" y="320" width="176" height="28" rx="14"/><text class="c" x="124" y="339" text-anchor="middle">ground where battles start</text>
   <rect class="chip" x="218" y="320" width="146" height="28" rx="14"/><text class="c" x="291" y="339" text-anchor="middle">a ledge to jump down</text>
-  <text class="tag" x="36" y="374">A door or a chest means what this place's events say.</text>
+  <text class="tag" x="36" y="374">A door or a chest means what this map's events say.</text>
 
   <text class="p" x="20" y="426">The engine reads the ground to decide where</text>
-  <text class="p" x="20" y="445">the leader can step; the place's events read</text>
+  <text class="p" x="20" y="445">the leader can step; the map's events read</text>
   <text class="p" x="20" y="464">what standing there does to decide what happens.</text>
-  <text class="code" x="380" y="500" text-anchor="end">struct MapCell</text>
+  <text class="code" x="380" y="500" text-anchor="end">struct MapGridCell</text>
 </svg>

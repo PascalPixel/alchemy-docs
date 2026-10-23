@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 480" role="img" aria-labelledby="title desc">
   <title id="title">Three planes woven into cells</title>
-  <desc id="desc">A map's grid is stored as three whole planes, one after another: what stepping on each cell does (a byte a cell, 16 KB), the shape of each cell's ground (a byte a cell, 16 KB) and the picture drawn in each cell, with the layer an object standing there takes (two bytes a cell, 32 KB). As the map loads, a routine copied into RAM takes one value from each plane for every cell and puts them together into one four-byte word: the shape at the top, then what stepping does, then the picture. The 128 by 128 words take 64 KB.</desc>
+  <desc id="desc">A layout's grid is stored as three whole planes, one after another: what stepping on each cell does (a byte a cell, 16 KB), the shape of each cell's ground (a byte a cell, 16 KB) and the picture drawn in each cell, with the layer an object standing there takes (two bytes a cell, 32 KB). As the layout loads, a routine copied into RAM takes one value from each plane for every cell and puts them together into one four-byte word: the shape at the top, then what stepping does, then the picture. The 128 by 128 words take 64 KB.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .c0 { fill: #fde68a; stroke: #d97706; } .t0 { fill: #b45309; }
@@ -75,5 +75,5 @@
   <text class="p" x="20" y="410">The same routine numbers the pictures as</text>
   <text class="p" x="20" y="429">it goes. After this, all a cell says is read</text>
   <text class="p" x="20" y="448">from its one word.</text>
-  <text class="code" x="380" y="470" text-anchor="end">Tile_ConvertMap</text>
+  <text class="code" x="380" y="470" text-anchor="end">Tile_ConvertMapGrid</text>
 </svg>

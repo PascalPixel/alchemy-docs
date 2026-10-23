@@ -72,5 +72,5 @@
   <text class="p" x="20" y="390">between two layers of the same map.</text>
   <text class="p" x="20" y="418">Most maps stack them this way; a map can</text>
   <text class="p" x="20" y="437">give its layers another order.</text>
-  <text class="code" x="380" y="458" text-anchor="end">Map_LoadLayeredScene</text>
+  <text class="code" x="380" y="458" text-anchor="end">MapGrid_LoadLayout</text>
 </svg>

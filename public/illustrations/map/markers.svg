@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 560" role="img" aria-labelledby="title desc">
   <title id="title">Where chests can stand</title>
-  <desc id="desc">Two scenes on Crossbone Isle, CrossboneIsleKeys and CrossboneIsleBane, use the same map, and the map lists eight spots where a chest can stand, each with the event that would place one there. CrossboneIsleKeys has events for four of them, in a row along the room's north side: 333 coins, a Fairy Ring, a Cookie and a Smoke Bomb. CrossboneIsleBane has events for the other four: 666 coins and an Elixir on its raised floor, a Water of Life below them, and the Demon Axe, whose chest is carried on a stone pillar. A spot a scene has no event for stays empty.</desc>
+  <desc id="desc">Two maps on Crossbone Isle, CrossboneIsleKeys and CrossboneIsleBane, use the same layout, and the layout lists eight spots where a chest can stand, each with the event that would place one there. CrossboneIsleKeys has events for four of them, in a row along the room's north side: 333 coins, a Fairy Ring, a Cookie and a Smoke Bomb. CrossboneIsleBane has events for the other four: 666 coins and an Elixir on its raised floor, a Water of Life below them, and the Demon Axe, whose chest is carried on a stone pillar. A spot a map has no event for stays empty.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
@@ -34,7 +34,7 @@
   </defs>
 
   <rect class="panel" x="0.5" y="0.5" width="399" height="559" rx="16"/>
-  <text class="eyebrow" x="20" y="32">CROSSBONE ISLE: ONE MAP, TWO SCENES</text>
+  <text class="eyebrow" x="20" y="32">CROSSBONE ISLE: ONE LAYOUT, TWO MAPS</text>
 
   <!-- Spots: cell (x, z) at 20 + (x - 10.5) * 7.5, top + (z - 32.5) * 7.5 -->
   <!-- Panel 1, top 48: CrossboneIsleKeys uses 100 to 103 -->
@@ -73,7 +73,7 @@
   <text class="small" x="364" y="352" text-anchor="end">carried on a stone pillar</text>
   <text class="small" x="36" y="466">four spots left empty</text>
 
-  <text class="p" x="20" y="512">The map lists the spots, each with an event;</text>
-  <text class="p" x="20" y="531">a scene puts a chest only where it has one.</text>
+  <text class="p" x="20" y="512">The layout lists the spots, each with an event;</text>
+  <text class="p" x="20" y="531">a map puts a chest only where it has one.</text>
   <text class="code" x="380" y="550" text-anchor="end">Field_PlaceMapMarkers</text>
 </svg>

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 800" role="img" aria-labelledby="title desc">
   <title id="title">What lives where in memory</title>
-  <desc id="desc">The console's two kinds of working memory, drawn to scale. EWRAM, 256 KB and slower, holds from the bottom up: the game's variables, flags and save buffer; the overlay, the code of the current place; the map's cells; battle sprite pictures; space to unpack into; the map's blocks, layers and collision; the EWRAM heap; and background tiles at the top. IWRAM, 32 KB and fast, holds the fast routines copied from the cartridge, the variables the engine uses most, the IWRAM heap, the sound mixer's code and the stacks at the top. The program itself, the pictures, maps and music stay on the cartridge, which can only be read.</desc>
+  <desc id="desc">The console's two kinds of working memory, drawn to scale. EWRAM, 256 KB and slower, holds from the bottom up: the game's variables, flags and save buffer; the overlay, the code of the current map; the map grid's cells; battle sprite pictures; space to unpack into; the layout's metatiles, layers and shapes; the EWRAM heap; and background tiles at the top. IWRAM, 32 KB and fast, holds the fast routines copied from the cartridge, the variables the engine uses most, the IWRAM heap, the sound mixer's code and the stacks at the top. The program itself, the pictures, maps and music stay on the cartridge, which can only be read.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
@@ -50,19 +50,19 @@
   <rect class="heap" x="36" y="144" width="56" height="36"/>
   <text class="lb" x="104" y="167">the EWRAM heap</text>
   <rect class="map" x="36" y="180" width="56" height="18"/>
-  <text class="l" x="104" y="194">the map's collision</text>
+  <text class="l" x="104" y="194">the layout's shapes</text>
   <rect class="map" x="36" y="198" width="56" height="18"/>
-  <text class="l" x="104" y="212">the map's layers</text>
+  <text class="l" x="104" y="212">the layout's layers</text>
   <rect class="map" x="36" y="216" width="56" height="36"/>
-  <text class="l" x="104" y="239">the map's blocks</text>
+  <text class="l" x="104" y="239">the layout's metatiles</text>
   <rect class="seg" x="36" y="252" width="56" height="18"/>
   <text class="l" x="104" y="266">space to unpack pictures into</text>
   <rect class="seg" x="36" y="270" width="56" height="18"/>
   <text class="l" x="104" y="284">battle sprite pictures</text>
   <rect class="map" x="36" y="288" width="56" height="36"/>
-  <text class="l" x="104" y="311">the map's cells</text>
+  <text class="l" x="104" y="311">the map grid's cells</text>
   <rect class="ovl" x="36" y="324" width="56" height="36"/>
-  <text class="lb" x="104" y="347">the current place's code: the overlay</text>
+  <text class="lb" x="104" y="347">the current map's code: the overlay</text>
   <rect class="seg" x="36" y="360" width="56" height="36"/>
   <text class="l" x="104" y="376">the game's variables and flags,</text>
   <text class="l" x="104" y="392">the save buffer, the sound's work</text>

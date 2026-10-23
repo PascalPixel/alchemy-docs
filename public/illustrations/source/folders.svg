@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 680" role="img" aria-labelledby="title desc">
   <title id="title">The folders follow the cartridge</title>
-  <desc id="desc">The source is divided the way the cartridge divides the program. The main image is fourteen banks in a fixed order. The nine large banks each have a folder of their own: runtime, field, window, game, object, menu, shop, battle and effect. The five small banks after them each hold one thing, whose code sits in the folder it belongs with: the credits and the title intro in graphics, Lucky Dice in field, the slot machine in object, and the sound in sound. Separately, the code of each place is an overlay, loaded one at a time; the 96 overlays are in scene, menu and debug. Four more folders gather one kind of thing wherever it ends up: graphics, map, sound and system.</desc>
+  <desc id="desc">The source is divided the way the cartridge divides the program. The main image is fourteen banks in a fixed order. The nine large banks each have a folder of their own: runtime, field, window, game, object, menu, shop, battle and effect. The five small banks after them each hold one thing, whose code sits in the folder it belongs with: the credits and the title intro in graphics, Lucky Dice in field, the slot machine in object, and the sound in sound. Separately, the code of each map is an overlay, loaded one at a time; the 96 overlays are in map, menu and debug. Four more folders gather one kind of thing wherever it ends up: graphics, layout, sound and system.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
@@ -53,14 +53,14 @@
 
   <!-- Overlays -->
   <text class="eyebrow" x="20" y="436">IN RAM, ONE AT A TIME: 96 OVERLAYS</text>
-  <rect class="ovl" x="20" y="448" width="130" height="22" rx="4"/><text class="in" x="32" y="463">the places</text><path class="lead" d="M 154 459 H 166"/><text class="f" x="172" y="463">scene/</text><text class="l" x="252" y="463">90 overlays</text>
+  <rect class="ovl" x="20" y="448" width="130" height="22" rx="4"/><text class="in" x="32" y="463">the maps</text><path class="lead" d="M 154 459 H 166"/><text class="f" x="172" y="463">map/</text><text class="l" x="252" y="463">90 overlays</text>
   <rect class="ovl" x="20" y="472" width="130" height="22" rx="4"/><text class="in" x="32" y="487">menu screens</text><path class="lead" d="M 154 483 H 166"/><text class="f" x="172" y="487">menu/</text><text class="l" x="252" y="487">3 overlays</text>
   <rect class="ovl" x="20" y="496" width="130" height="22" rx="4"/><text class="in" x="32" y="511">test rooms</text><path class="lead" d="M 154 507 H 166"/><text class="f" x="172" y="511">debug/</text><text class="l" x="252" y="511">3 overlays</text>
 
   <!-- Kinds of thing -->
   <text class="eyebrow" x="20" y="552">ONE KIND OF THING, WHEREVER IT GOES</text>
   <rect class="card" x="20" y="564" width="360" height="40" rx="10"/>
-  <text class="f" x="36" y="589">graphics/  map/  sound/  system/</text>
+  <text class="f" x="36" y="589">graphics/  layout/  sound/  system/</text>
 
   <text class="p" x="20" y="640">The cartridge keeps no file names, so every</text>
   <text class="p" x="20" y="659">name here is ours, chosen for what it holds.</text>

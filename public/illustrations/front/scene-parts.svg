@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 400" role="img" aria-labelledby="title desc">
-  <title id="title">Each scene's code and place</title>
-  <desc id="desc">Four scenes and what the scene table gives each. Bilibin's town, its treasury and the Bilibin Barricade all run on Bilibin's code; Bilibin's houses have code of their own. Bilibin's town, houses and treasury are one place, Bilibin, which chooses their music, the area name shown on arrival and the flags kept while the party is inside. The Bilibin Barricade shares Bilibin's code but is a place of its own. Which code a scene runs and which place it belongs to are chosen separately.</desc>
+  <title id="title">Each map's code and map section</title>
+  <desc id="desc">Four maps and what the map table gives each. Bilibin's town, its treasury and the Bilibin Barricade all run on Bilibin's code; Bilibin's houses have code of their own. Bilibin's town, houses and treasury are one map section, Bilibin, which chooses their music, the area name shown on arrival and the flags kept while the party is inside. The Bilibin Barricade shares Bilibin's code but is a map section of its own. Which code a map runs and which map section it belongs to are chosen separately.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .row { fill: #ffffff; stroke: #e5e5e5; }
@@ -34,9 +34,9 @@
   </style>
 
   <rect class="panel" x="0.5" y="0.5" width="399" height="399" rx="16"/>
-  <text class="col" x="20" y="32">SCENE</text>
-  <text class="col" x="206" y="32">ITS CODE</text>
-  <text class="col" x="306" y="32">ITS PLACE</text>
+  <text class="col" x="20" y="32">MAP</text>
+  <text class="col" x="247" y="32" text-anchor="middle">CODE</text>
+  <text class="col" x="336" y="32" text-anchor="middle">MAP SECTION</text>
 
   <rect class="row" x="20" y="44" width="360" height="44" rx="8"/>
   <text class="h" x="32" y="71">Bilibin</text>
@@ -67,9 +67,9 @@
   <text class="g2" x="336" y="225" text-anchor="middle">Bilibin</text>
   <text class="g2" x="336" y="239" text-anchor="middle">Barricade</text>
 
-  <text class="p" x="20" y="290">The code says what happens there. The place</text>
-  <text class="p" x="20" y="309">chooses the music, the name shown on arrival</text>
-  <text class="p" x="20" y="328">and the flags kept while the party is inside.</text>
-  <text class="p" x="20" y="347">The two are chosen separately.</text>
-  <text class="code" x="380" y="384" text-anchor="end">gField_SceneTable · field/scenes.s</text>
+  <text class="p" x="20" y="290">The code says what happens there. The map</text>
+  <text class="p" x="20" y="309">section chooses the music, the name shown on</text>
+  <text class="p" x="20" y="328">arrival and the flags kept while the party is</text>
+  <text class="p" x="20" y="347">inside. The two are chosen separately.</text>
+  <text class="code" x="380" y="384" text-anchor="end">gField_MapTable · field/maps.s</text>
 </svg>

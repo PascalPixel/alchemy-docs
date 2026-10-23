@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 470" role="img" aria-labelledby="title desc">
-  <title id="title">One scene, five moments in the story</title>
-  <desc id="desc">Vale's town gate is one scene for the whole game, and each time the party arrives it asks the story which set of events to use, testing in order. Has the party reached Kalay? Then the events after Kalay. Has the party left Vale? Then the events after leaving. Has the party come from the Sanctum? Then the farewell. Is it the stormy night? Then the storm. Otherwise, the events of the day the story begins.</desc>
+  <title id="title">One map, five moments in the story</title>
+  <desc id="desc">Vale's town gate is one map for the whole game, and each time the party arrives it asks the story which set of map events to use, testing in order. Has the party reached Kalay? Then the map events after Kalay. Has the party left Vale? Then the map events after leaving. Has the party come from the Sanctum? Then the farewell. Is it the stormy night? Then the storm. Otherwise, the map events of the day the story begins.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .q { fill: #ffffff; stroke: #e5e5e5; }
@@ -34,7 +34,7 @@
   </style>
 
   <rect class="panel" x="0.5" y="0.5" width="399" height="469" rx="16"/>
-  <text class="eyebrow" x="20" y="32">VALE'S TOWN GATE: WHICH EVENTS?</text>
+  <text class="eyebrow" x="20" y="32">VALE'S TOWN GATE: WHICH MAP EVENTS?</text>
   <text class="s" x="282" y="56" text-anchor="middle">if yes</text>
 
   <!-- q1 -->
@@ -82,7 +82,7 @@
   <text class="h" x="34" y="345">Otherwise: the day the story begins</text>
 
   <text class="p" x="20" y="396">The newest moment is tested first, so one</text>
-  <text class="p" x="20" y="415">scene can serve the whole game. Its exits and</text>
+  <text class="p" x="20" y="415">map can serve the whole game. Its warps and</text>
   <text class="p" x="20" y="434">people are chosen the same way.</text>
   <text class="code" x="380" y="456" text-anchor="end">ValeGate_GetEvents</text>
 </svg>

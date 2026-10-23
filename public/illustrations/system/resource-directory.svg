@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 600" role="img" aria-labelledby="title desc">
   <title id="title">How a number finds its data</title>
-  <desc id="desc">How the game finds Bilibin's code by number. The scene table's row for Bilibin names its overlay by a resource number. That number is a row of the resource directory, a list with one row for every picture, map, table and overlay, in a fixed order. Bilibin's row holds where its packed data starts in the cartridge. The game reads the row, finds the packed data and unpacks it into the overlay area. Because a resource's number is its place in the list, a row added in the middle gives every later resource a new number.</desc>
+  <desc id="desc">How the game finds Bilibin's code by number. The map table's row for Bilibin names its overlay by a resource number. That number is a row of the resource directory, a list with one row for every picture, layout, table and overlay, in a fixed order. Bilibin's row holds where its packed data starts in the cartridge. The game reads the row, finds the packed data and unpacks it into the overlay area. Because a resource's number is its place in the list, a row added in the middle gives every later resource a new number.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
@@ -41,15 +41,15 @@
   <rect class="panel" x="0.5" y="0.5" width="399" height="599" rx="16"/>
   <text class="eyebrow" x="20" y="34">FINDING BILIBIN'S CODE</text>
 
-  <!-- 1. The scene table -->
+  <!-- 1. The map table -->
   <circle class="badge" cx="30" cy="62" r="10"/>
   <text class="num" x="30" y="66" text-anchor="middle">1</text>
-  <text class="h" x="48" y="67">The scene table names a number</text>
+  <text class="h" x="48" y="67">The map table names a number</text>
   <rect class="card" x="20" y="80" width="360" height="44" rx="10"/>
   <text class="p" x="36" y="107">Bilibin: its code is resource</text>
   <rect class="datafill" x="232" y="91" width="58" height="22" rx="11"/>
   <text class="in" x="261" y="107" text-anchor="middle">no. N</text>
-  <text class="code" x="364" y="107" text-anchor="end">scenes.s</text>
+  <text class="code" x="364" y="107" text-anchor="end">maps.s</text>
 
   <!-- 2. The directory -->
   <circle class="badge" cx="30" cy="160" r="10"/>
@@ -59,7 +59,7 @@
   <rect class="row" x="30" y="188" width="180" height="24" rx="4"/>
   <text class="r" x="40" y="204">a picture</text>
   <rect class="row" x="30" y="216" width="180" height="24" rx="4"/>
-  <text class="r" x="40" y="232">a map</text>
+  <text class="r" x="40" y="232">a layout</text>
   <rect class="row" x="30" y="244" width="180" height="24" rx="4"/>
   <text class="r" x="40" y="260">a table</text>
   <text class="r" x="120" y="284" text-anchor="middle">…</text>

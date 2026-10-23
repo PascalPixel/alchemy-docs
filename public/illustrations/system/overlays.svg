@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 540" role="img" aria-labelledby="title desc">
-  <title id="title">One place's code at a time</title>
-  <desc id="desc">The cartridge holds each place's code packed, as one of 96 overlays: Vale, Vault, Bilibin, Bilibin's houses, Kolima, Imil and the rest. In RAM there is room for one, the 32 KB overlay area. While the party is in Bilibin, Bilibin's overlay is unpacked there. When the party walks into one of Bilibin's houses, the new scene's overlay, the houses', is unpacked into the same area over Bilibin's, which is gone until the party walks back out.</desc>
+  <title id="title">One map's code at a time</title>
+  <desc id="desc">The cartridge holds each map's code packed, as one of 96 overlays: Vale, Vault, Bilibin, Bilibin's houses, Kolima, Imil and the rest. In RAM there is room for one, the 32 KB overlay area. While the party is in Bilibin, Bilibin's overlay is unpacked there. When the party walks into one of Bilibin's houses, the new map's overlay, the houses', is unpacked into the same area over Bilibin's, which is gone until the party walks back out.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
@@ -86,5 +86,5 @@
   <text class="code" x="380" y="466" text-anchor="end">gOverlayArea · 32 KB of EWRAM</text>
 
   <text class="p" x="20" y="500">Every overlay is built to run at the same</text>
-  <text class="p" x="20" y="519">place, so only one place's code is ever loaded.</text>
+  <text class="p" x="20" y="519">address, so only one map's code is ever loaded.</text>
 </svg>

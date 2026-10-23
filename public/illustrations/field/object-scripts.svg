@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 452" role="img" aria-labelledby="title desc">
   <title id="title">Everything that moves runs a script</title>
-  <desc id="desc">Three field objects and their scripts. The leader moves by the direction pad, waits one frame and repeats, for good. The camera follows the leader, waits one frame and repeats. A footprint waits 120 frames and then disappears. Each frame every object runs its steps in order until one says to wait, which ends its turn until the next frame.</desc>
+  <desc id="desc">Three object events and their scripts. The leader moves by the direction pad, waits one frame and repeats, for good. The camera follows the leader, waits one frame and repeats. A footprint waits 120 frames and then disappears. Each frame every object runs its steps in order until one says to wait, which ends its turn until the next frame.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
@@ -35,7 +35,7 @@
   </style>
 
   <rect class="panel" x="0.5" y="0.5" width="399" height="451" rx="16"/>
-  <text class="eyebrow" x="20" y="30">THREE OF THE 64 FIELD OBJECTS</text>
+  <text class="eyebrow" x="20" y="30">THREE OF THE 64 OBJECT EVENTS</text>
 
   <!-- The leader -->
   <rect class="card" x="20" y="44" width="360" height="100" rx="12"/>

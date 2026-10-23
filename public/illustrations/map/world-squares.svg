@@ -62,5 +62,5 @@
   <text class="p" x="20" y="428">around the party are unpacked; the squares it</text>
   <text class="p" x="20" y="447">walks towards come in one a frame.</text>
   <text class="small" x="20" y="482">The rest of the world stays packed.</text>
-  <text class="code" x="380" y="508" text-anchor="end">Map_UpdateCurrentTileBlock</text>
+  <text class="code" x="380" y="508" text-anchor="end">WorldMap_UpdateCurrentTileBlock</text>
 </svg>

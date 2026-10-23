@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 520" role="img" aria-labelledby="title desc">
-  <title id="title">The game runs one scene at a time</title>
-  <desc id="desc">The whole game is a loop of scenes, which goes round once for each scene, not once a frame. At power-on the first scene is the title. Each time round, the game first drops everything the last scene left behind. Then it runs the next scene. A place, such as a town, a dungeon or the world map, has its code loaded and runs until the party takes an exit, and the exit names the next scene and where the party arrives. A battle or a minigame runs and then sends the party back, usually to the place it came from, exactly where it stood. Then the loop goes round again, for as long as the game runs.</desc>
+  <title id="title">The game runs one map at a time</title>
+  <desc id="desc">The whole game is a loop of maps, which goes round once for each map, not once a frame. At power-on the first map is the title. Each time round, the game first drops everything the last map left behind. Then it runs the next map. A field map, such as a town, a dungeon or the world map, has its code loaded and runs until the party takes a warp, and the warp names the next map and the warp destination where the party arrives. A battle or a minigame runs and then sends the party back, usually to the field map it came from, exactly where it stood. Then the loop goes round again, for as long as the game runs.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
@@ -42,32 +42,32 @@
 
   <!-- Power on -->
   <rect class="start" x="50" y="44" width="330" height="40" rx="10"/>
-  <text class="p" x="66" y="69">Power on: the first scene is the title.</text>
+  <text class="p" x="66" y="69">Power on: the first map is the title.</text>
   <path class="wire" d="M 215 84 V 98"/>
   <path class="head" d="M 209 94 h 12 l -6 9 z"/>
 
   <!-- Start clean -->
   <rect class="card" x="50" y="106" width="330" height="86" rx="12"/>
   <text class="h" x="66" y="132">Start clean</text>
-  <text class="p" x="66" y="156">Everything the last scene left running</text>
+  <text class="p" x="66" y="156">Everything the last map left running</text>
   <text class="p" x="66" y="175">or holding in memory is dropped.</text>
   <path class="wire" d="M 132 192 V 214"/>
   <path class="head" d="M 126 210 h 12 l -6 9 z"/>
   <path class="wire" d="M 298 192 V 214"/>
   <path class="head" d="M 292 210 h 12 l -6 9 z"/>
 
-  <!-- A place -->
+  <!-- A field map -->
   <rect class="card-accent" x="50" y="222" width="160" height="196" rx="12"/>
   <circle class="dot" cx="68" cy="243" r="5"/>
-  <text class="h" x="80" y="249">A place</text>
+  <text class="h" x="80" y="249">A field map</text>
   <text class="p" x="64" y="274">A town, a dungeon</text>
   <text class="p" x="64" y="292">or the world map.</text>
   <text class="p" x="64" y="316">Its code is loaded,</text>
   <text class="p" x="64" y="334">and it runs until the</text>
-  <text class="p" x="64" y="352">party takes an exit.</text>
-  <text class="k" x="64" y="374">The exit names the</text>
-  <text class="k" x="64" y="392">next scene.</text>
-  <text class="code" x="64" y="410">Field_RunScene</text>
+  <text class="p" x="64" y="352">party takes a warp.</text>
+  <text class="k" x="64" y="374">The warp names the</text>
+  <text class="k" x="64" y="392">next map.</text>
+  <text class="code" x="64" y="410">Field_RunMap</text>
 
   <!-- A battle -->
   <rect class="card-battle" x="220" y="222" width="160" height="196" rx="12"/>
@@ -83,9 +83,9 @@
   <path class="wire-accent" d="M 130 418 V 446 H 30 V 149 H 44"/>
   <path class="wire-accent" d="M 300 418 V 446 H 130"/>
   <path class="head-accent" d="M 41 143 v 12 l 9 -6 z"/>
-  <text class="k" transform="translate(22 300) rotate(-90)" text-anchor="middle">then the next scene, again and again</text>
+  <text class="k" transform="translate(22 300) rotate(-90)" text-anchor="middle">then the next map, again and again</text>
 
-  <text class="p" x="50" y="478">A random battle is a scene like any other:</text>
-  <text class="p" x="50" y="497">the place ends, and is loaded again after.</text>
+  <text class="p" x="50" y="478">A random battle is a map like any other:</text>
+  <text class="p" x="50" y="497">the field map ends, and is loaded again after.</text>
   <text class="code" x="380" y="32" text-anchor="end">Game_Run</text>
 </svg>
