@@ -598,14 +598,14 @@ const includedBy = new Map<SourceFile, SourceFile[]>();
 // every ability that reaches it in its reach line (`Abilities: Gaia, Mother
 // Gaia (BATTLE_ANIM_GAIA); none (BATTLE_ANIM_X).`, the form battle_anim/README.md
 // sets), and the store's abilities/index.tsv holds the casts recorded from the
-// game by ability id. A name is matched against abilities.tsv's ability column
-// and, where several rows share it, to the rows whose effect word in
-// ability_anims.tsv dispatches to the group's effect: kind in bits 0 to 11, bit 15
-// for a summon's scene, bit 14 for the effects dispatched by id range, the
-// casting impacts among them at kind 100 and up. A field Psynergy group is
-// matched by abilities.tsv's type column. A recording made in a field scene (its
-// index row names the scene) shows beside the field handler, and one made in
-// battle beside the battle effect's handler.
+// game by ability id. A name is matched against the abilities' names
+// (abilityTables) and, where several share it, to the abilities whose
+// gAbilityAnimations word dispatches to the group's effect: kind in bits 0
+// to 11, bit 15 for a summon's scene, bit 14 for the effects dispatched by
+// id range, the casting impacts among them at kind 100 and up. A field
+// Psynergy group is matched by the abilities' fieldPsynergy. A recording
+// made in a field scene (its index row names the scene) shows beside the
+// field handler, and one made in battle beside the battle effect's handler.
 
 const recordings = (() => {
   let rows: Row[] = [];
@@ -624,14 +624,14 @@ const reachProblems: string[] = [];
 
 // The enum each reach-line prefix names, and whether an ability row reaches
 // one of its values.
-const REACH: [string, string, (value: number, act: Row, word: number) => boolean][] = [
+const REACH: [string, string, (value: number, act: Ability, word: number) => boolean][] = [
   ['BATTLE_ANIM_', 'BattleAnimId', (v, _, w) => !(w & 0xc000) && (w & 0xfff) === v],
   ['SUMMON_ANIM_', 'SummonAnimId', (v, _, w) => !!(w & 0x8000) && (w & 0xfff) === v],
   ['CASTING_IMPACT_', 'CastingImpact', (v, _, w) => (w & 0xc000) === 0x4000 && (w & 0xfff) === v + 100],
-  ['FIELD_PSYNERGY_', 'FieldPsynergy', (v, act) => int(act.type) === v],
+  ['FIELD_PSYNERGY_', 'FieldPsynergy', (v, act) => act.fieldPsynergy === v],
 ];
 
-let abilityRows: { acts: Row[]; words: number[] } | undefined;
+let abilityRows: { acts: Ability[]; words: number[] } | undefined;
 function reachedIds(d: Decl, at: string): { ids: number[]; field: number[] } {
   // The comment as md() left it: the effect names shown as code, the
   // characters Markdown reads escaped. The line is read as written.
@@ -640,7 +640,7 @@ function reachedIds(d: Decl, at: string): { ids: number[]; field: number[] } {
     .map((p) => p.replace(/`/g, '').replace(/\\([\\<>{}[\]*_#|~])/g, '$1').replace(/\s*\n\s*/g, ' '))
     .find((p) => p.startsWith('Abilities: '));
   if (!para) return { ids: [], field: [] };
-  abilityRows ??= { acts: tsv('games/tbs/src/game/abilities.tsv'), words: tsv('games/tbs/src/battle/ability_anims.tsv').map((r) => int(r.effect)) };
+  abilityRows ??= abilityTables();
   const { acts, words } = abilityRows;
   const ids: number[] = [];
   const field: number[] = [];
@@ -661,9 +661,9 @@ function reachedIds(d: Decl, at: string): { ids: number[]; field: number[] } {
     }
     if (names === 'none') continue;
     for (const name of names.split(', ')) {
-      const rows = acts.flatMap((a, id) => (a.ability === name ? [id] : []));
+      const rows = acts.flatMap((a, id) => (a.name === name ? [id] : []));
       const hit = rows.filter((id) => kind[2](value, acts[id], words[id] ?? 0));
-      if (!rows.length) reachProblems.push(`${at}: “${name}” is no ability in abilities.tsv (${effect})`);
+      if (!rows.length) reachProblems.push(`${at}: “${name}” is no ability in gAbilityDefinitions (${effect})`);
       else if (!hit.length) reachProblems.push(`${at}: no row of “${name}” (${rows.join(', ')}) reaches ${effect}`);
       (kind[0] === 'FIELD_PSYNERGY_' ? field : ids).push(...hit);
     }
@@ -1319,7 +1319,7 @@ function prose(source: string, target: string, extra = '') {
 }
 
 // A link whose text is the relative path it links (`../window`,
-// `../game/enemies.tsv`) reads on the site as the page it goes to: a guide's
+// `../game/enemies.c`) reads on the site as the page it goes to: a guide's
 // title, a file's name, or a folder's path inside the game without its ../.
 function pathLabel(label: string, resolved: string): string {
   const m = label.match(/^(`?)((?:\.\.\/)+)([^`]*)\1$/);
@@ -2075,16 +2075,112 @@ function moment(variant: string, scene: string): { caption: string; order: numbe
 
 type Row = Record<string, string>;
 
-function tsv(path: string): Row[] {
-  const file = join(repo, path);
-  if (!existsSync(file)) return [];
-  const [head, ...lines] = readFileSync(file, 'utf8').replace(/\n+$/, '').split('\n');
-  const keys = head.split('\t').map((k) => k.split(':')[0]);
-  return lines.map((l) => Object.fromEntries(l.split('\t').map((v, i) => [keys[i], v])));
-}
-
 const int = (v: string | undefined) => Number(v ?? 0) || 0;
 const text = (path: string) => (existsSync(join(repo, path)) ? readFileSync(join(repo, path), 'utf8') : '');
+
+// The abilities as the source's tables give them: each one's name (message
+// MsgAbilityName plus its id), its field Psynergy (gAbilityDefinitions'
+// fieldPsynergy) and the effect its gAbilityAnimations word dispatches to (the
+// word's low half).
+type Ability = { name: string; fieldPsynergy: number };
+function abilityTables(): { acts: Ability[]; words: number[] } {
+  const rows = initializers('games/tbs/src/game/abilities.c', 'gAbilityDefinitions');
+  const names = messagesFrom('MsgAbilityName', rows.length);
+  const acts = rows.map((row, id) => ({ name: names[id], fieldPsynergy: constant(row.match(/\.fieldPsynergy\s*=\s*([^,}]+)/)?.[1] ?? '0') }));
+  const words = initializers('games/tbs/src/battle/ability_staging.c', 'gAbilityAnimations').map((e) => constant(e) & 0xffff);
+  return { acts, words };
+}
+
+// The elements of the initializer of array `symbol` in C file `path`, as
+// written, comments left out.
+function initializers(path: string, symbol: string): string[] {
+  const source = text(path).replace(/\/\*[\s\S]*?\*\/|\/\/[^\n]*/g, '');
+  const start = source.match(new RegExp(`\\b${symbol}\\s*\\[[^\\]]*\\]\\s*=\\s*\\{`));
+  if (start?.index === undefined) throw new Error(`${path} defines no ${symbol}`);
+  const out: string[] = [];
+  let depth = 0;
+  let item = '';
+  for (const c of source.slice(start.index + start[0].length)) {
+    if (c === '}' && depth === 0) break;
+    if (c === ',' && depth === 0) {
+      out.push(item.trim());
+      item = '';
+      continue;
+    }
+    if (c === '{') depth++;
+    if (c === '}') depth--;
+    item += c;
+  }
+  if (item.trim()) out.push(item.trim());
+  return out;
+}
+
+// The `count` English messages from the one named `first` on, their codes
+// left out.
+function messagesFrom(first: string, count: number): string[] {
+  const byId = new Map<number, string>();
+  let base = -1;
+  for (const m of text('games/tbs/text/en.po').matchAll(/msgctxt "(\w+)"\nmsgid "(\d+)"\nmsgstr ((?:"(?:[^"\\]|\\.)*"\n?)+)/g)) {
+    const raw = [...m[3].matchAll(/"((?:[^"\\]|\\.)*)"/g)].map((x) => x[1]).join('').replace(/\\(.)/g, '$1');
+    byId.set(Number(m[2]), raw.replace(/\{[^}]*\}/g, ''));
+    if (m[1] === first) base = Number(m[2]);
+  }
+  if (base < 0) throw new Error(`en.po has no ${first}`);
+  return Array.from({ length: count }, (_, n) => byId.get(base + n) ?? '');
+}
+
+// The value of a C constant expression over the headers' numbers, object-like
+// #defines and enumerators (an enumerator with no value counts on from the one
+// before), in | & << >> + - * ~ and parentheses.
+let defines: Map<string, string> | undefined;
+function constant(expr: string, depth = 0): number {
+  if (!defines) {
+    defines = new Map();
+    for (const h of walk('games/tbs/include').filter((f) => f.endsWith('.h'))) {
+      const source = text(h).replace(/\/\*[\s\S]*?\*\/|\/\/[^\n]*/g, '');
+      for (const m of source.matchAll(/^[ \t]*#[ \t]*define[ \t]+(\w+)[ \t]+(.+?)[ \t]*$/gm)) if (!defines.has(m[1])) defines.set(m[1], m[2]);
+      for (const m of source.matchAll(/\benum\s*\w*\s*\{([^}]*)\}/g)) {
+        let previous = '';
+        for (const item of m[1].split(',').map((i) => i.trim()).filter(Boolean)) {
+          const [name, value] = item.includes('=') ? item.split('=').map((s) => s.trim()) : [item, previous ? `${previous} + 1` : '0'];
+          if (!defines.has(name)) defines.set(name, value);
+          previous = name;
+        }
+      }
+    }
+  }
+  if (depth > 64) throw new Error(`cannot evaluate ${expr}`);
+  const tokens = expr.match(/0[xX][0-9a-fA-F]+|\d+|\w+|<<|>>|[-+*|&~()]/g) ?? [];
+  let at = 0;
+  const levels = [['|'], ['&'], ['<<', '>>'], ['+', '-'], ['*']];
+  const binary = (level: number): number => {
+    if (level === levels.length) return unary();
+    let value = binary(level + 1);
+    while (levels[level].includes(tokens[at])) {
+      const op = tokens[at++];
+      const right = binary(level + 1);
+      value = op === '|' ? value | right : op === '&' ? value & right : op === '<<' ? value << right : op === '>>' ? value >> right : op === '+' ? value + right : op === '-' ? value - right : value * right;
+    }
+    return value;
+  };
+  const unary = (): number => {
+    const token = tokens[at++];
+    if (token === '-') return -unary();
+    if (token === '~') return ~unary();
+    if (token === '(') {
+      const value = binary(0);
+      if (tokens[at++] !== ')') throw new Error(`cannot evaluate ${expr}`);
+      return value;
+    }
+    if (token !== undefined && /^\d|^0[xX]/.test(token)) return Number(token);
+    const named = token === undefined ? undefined : defines!.get(token);
+    if (named === undefined) throw new Error(`cannot evaluate ${expr}: no value for ${token}`);
+    return constant(named, depth + 1);
+  };
+  const value = binary(0);
+  if (at !== tokens.length) throw new Error(`cannot evaluate ${expr}`);
+  return value;
+}
 
 // An enum's members and their values, from the parsed C.
 function enumOf(name: string) {
