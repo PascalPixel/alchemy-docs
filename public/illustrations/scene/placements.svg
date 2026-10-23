@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 520" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 714" role="img" aria-labelledby="title desc">
   <title id="title">Every object event template owns a slot</title>
-  <desc id="desc">The object event templates of Mercury Lighthouse's upper floor, row by row, and the object event slot each row fills before and after the blue statue falls from its ledge. The party's eight slots come first. The first row, the statue fallen to the floor below, appears only once it has fallen; the second, the statue on its ledge, only until then. The rows after them, two pipe sections, three pipe ends and six stone statues, always appear. A row whose condition fails leaves its slot empty rather than handing it to the next row, so every object event keeps the same slot whatever the story has done, and the pipes are always the third and fourth placed object events.</desc>
+  <desc id="desc">The blue statue as the game shows it, on its ledge under a jet of water and fallen to the floor below, then the object event templates of Mercury Lighthouse's upper floor, row by row, and the object event slot each row fills before and after the blue statue falls from its ledge. The party's eight slots come first. The first row, the statue fallen to the floor below, appears only once it has fallen; the second, the statue on its ledge, only until then. The rows after them, two pipe sections, three pipe ends and six stone statues, always appear. A row whose condition fails leaves its slot empty rather than handing it to the next row, so every object event keeps the same slot whatever the story has done, and the pipes are always the third and fourth placed object events.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .row { fill: #ffffff; stroke: #e5e5e5; }
@@ -11,6 +11,8 @@
     .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
     .when { fill: #0a72ef; font: 500 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
     .col { fill: #737373; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .px { image-rendering: pixelated; }
+    .edge { fill: none; stroke: #e5e5e5; }
     .code { fill: #8f8f8f; font: 400 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
     .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
     @media (prefers-color-scheme: dark) {
@@ -23,13 +25,27 @@
       .p { fill: #a1a1a1; }
       .when { fill: #66a6ff; }
       .col { fill: #8f8f8f; }
+      .edge { stroke: #2e2e2e; }
       .code, .eyebrow { fill: #7c7c7c; }
     }
   </style>
 
-  <rect class="panel" x="0.5" y="0.5" width="399" height="519" rx="16"/>
+  <rect class="panel" x="0.5" y="0.5" width="399" height="713" rx="16"/>
   <text class="eyebrow" x="20" y="32">MERCURY LIGHTHOUSE, UPPER FLOOR</text>
 
+  <!-- The blue statue in the game: render place MercuryLighthouseUpper, map-14.png cropped 48x64+96+276
+       (on its ledge at (808, 712)), and render guide moment at its entrance 7 with
+       FLAG_MERCURY_LIGHTHOUSE_STATUE_FELL, the last frame cropped 48x64+128+36 (fallen, at (200, 360)) -->
+  <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAABACAMAAABr/gR0AAAAgVBMVEVSa3OElJyltaXGxrX///+1//dC3pw5760x/8be1r3358ZKzoRSvXNjrWNz5/9ztf/n//+15/+1//+15+c5c/85tf/n5/+1tec5c7Vztee1tf9zc+c5c+c5ObVz7/+l9//W//8Ac7U5tecAc+c55/9alFpz5+c5tbUAc/8AOf85Of+IZgDWAAAEsElEQVRIx31VjXraOgwNYGyYncjOkjCHMGjXde19/we8R5ITwsaW8FVJ0UFHx/qpqs12u9nwnx0/VMbsrTsc3P4gl3POyjs/47ZVtQFktzse8QeISr/fWwXsC3BvxR/oqqq24v9le9xxhEO59o/WqT8DhBL/vPCq9ge5bbFuftcIC6Xt8cgQvFjm5KxbWW/xwR08PkrpuP0iiG3FlOx+L0QWq8k7XyiByW6RqmIl9sp6scoeAGs1h92KEpiK48p6kcfZUACbR0pOKayt+jvkYv2i0raoxF/Omhfrxd/awMkXlY4cQSmxY9F8tuqvUolKcnLMCJScUFHNiy0R3BxBK0Oz5gh/ao+7nm1lRSYBcApPtWf+s62c6qqUEGB/r5ymaVR7hAqzLREWgKVoTCQk3KQY25ScZhtmy4DNDEAK8I/NV2obl/AEhNFkQlEJgMKpMEqxadqmo5haDoUQBn7IWPy9XwAlZ5ca6gSRgGB/SuwHgFdb2cM6woG61Cca0pCAgD8Q7GlLBKbkNQlNwVMPwGCMObEzx6BQB3xwi0V1lhAS4JD6tmnhP3zL4xiHkdpRE8ZVS/HhQO4A5xKZZIaTOZ3ORC1Nl0QACHsAYH4H4PcbeCPE5UzDdLmMWR25LARgGbBhlTYKQAzkMIzfpgsNI/xtUH9fi0qOEbvv1+v3HRdehK7xNAzjOcd8maacvNfCC1qAPCUQ4oaLh5gzOIM2n0/nF4rQqKFUylQAoUTw1fV2u1Zc9yamrumb9vUHi0pTxjGUCBqpClL2HEEejGmp61PK7E5v9XIGdf2T75/8s2gqBkj9R5OopyGi9Fp6K9p7rwnjYgAPhasxV+leAPLU4eeNofdZe1FIsmAAZ+04gjRnG1N+eZkoMWDWXlpU/GuNYN3ter3JQxub+Pqe8reJcp61Z6v+EgHzwJrbzcgsSZHgnd/za8551l6cNXUFQH4ApGublhLlX79ec8rNrH1YScWU8NM3Y24yexocA3dPitwKwS9noBGYkkweFLSRJ4L7xIeMK01F+3plufgwSziCzKC++einEbURzUBd0d6vbMUZLABrO/rsu0RTmjoiKtr7lRVAsHxwMqw++s9+GignIgWw9n5lRSXvuPhk/r8pgHhcjFS0Dytb8dgNlk9aJ8PH50f3VQGpKdqHla2kRhUgj/7zM4uqDYQt2oeV1QhKaZ49GUMJfWFSKtqHla1q6SeOoPMf/yyAyJT+7IcgpSHVanWPWT5oAeRn/cBD06qsMv/xdTfy5GjQoM/6QVpUk5b5zwDUH1o7TdOzfgiqEvpB5z++n0bq4siAZ/3AHuh9lLfOf3ymhP1A/6Xp/KwfGOC1gZRtIHgLJaL8pB+YNMYMik/nv/c8MzCQ+wFqPekHDcb9EHQnD5AU6yqiKVKb5rO57wcv4kvH6S5uhoFOGMeYTDiK+Wzu+8HLPioA3cUYS+k0MKBdzua+HxhQez64ZRfzHCNPrSF9f9wPMvwtF999F3Nxr3fzw35g5Wsdxssu/s0+7gep0RngH3fybB/2g0RYKD3u5GIf90MtEks/1KJ4/W9b1VIaQsnzmej7323FxLzIqlWl73+32qIlafki/Nv+D521iqkdX+bGAAAAAElFTkSuQmCC" class="px" data-crop="crops/scene/mercury-statue-ledge.png" x="52" y="48" width="96" height="128" preserveAspectRatio="none"/>
+  <rect class="edge" x="52" y="48" width="96" height="128"/>
+  <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAABACAMAAABr/gR0AAAAjVBMVEUAe4QIxq0h570p98YAtcYQzudS7//G//////9j/+8x3v8AtZwY1rVz//8AnKVC3pw5761KzoRSvXMx/8Zz5/9ztf/n//+15/+1//+15+c5c/85tf/n5/+1tec5c7Vztee1tf9zc+c5c+c5ObUAc7U5tecAc+c55/+1//dz5+c5tbUAc/8AOf85Of9jrWPBQoklAAAEoklEQVRIx31Wi3ajOAx1El5hQoFiYYaQmpB2mk67+/+ft1eyzSMzWwPnEqGHJfnaUWq3P+yjOIqTNEvTJD4eDvv94XDM4zyP8jz2kAe5Uj9O+9OPXQSLokji6IgvkB8T/IwhCRDkSu12J9xRBGdwB4gw4DfB5Ye8erlS+xMGJpVAmCSIw9MockwvTdMCI5XX3MkT9ZQeecRxlha44jxhpSKR201p+VUkuXpCMriiGN/wlb3AMIkLuC384FeExu88VpHo85RktvHuhInlp51M3E1TXoNcRfs9yrSPIIN3fNijFIf9zjueIchV5D0nrkrJ7nRM0+Npx/PL3TQFglzFzkuecl7J4omzzV3SAn+J4Eq+Ox2O6eG0i3O5OKpckKdHyNVTaJjDVQ65VFXqmq9yKKuyLnHjeq5xhwjcwxCVX+cITdOUeCqMGk8ZPGGW7J/V0Z2leqqpYMDqJQzKsuQI7Anz01rHscsijoNcVU1VN6JfPrMBtVnWUpHn2rRtZwz7LzhSwUuiyCWC069qp9/qn9TpyOANFpms4IUvys29ZOfPSN60Wne6p9Z0HAohMjGIA1+U9w59KZXR1IuFgQXrk0EK6GrgCwwaH6HiCNSbs6HBDAYW0IdFwUXKA19U6IFHOsNgyLLswsocg/JEuur5okIPPJpzpzvoDy92HNthpG50WQe+qNADj4Yykw2X7HK5EnU03Qw5oge+KN+D0Av419BGiNuVhul2Gy3vQdHMl1Cl2mOnEQM5DOPLdKNhHK3fPQJflO9B6EWLuraXYRivtrW3abKGqVwIoYUvKvTAY4YedPZ6ub5SixppMnMEt3J9hNDtKmtNr8+6e/vFRaXJEhdH1B1fFGof+MCYZR31Z2Msq9M7+8DtFoPoqVUPGNvM0JmGFkuvo/dGRnm/35vAG7XqASMM7NTDfZbRB4jS8GoWdc8bteoBY9ca+/o6kREDkAW3GATeqFUPGLtWt28fxr5MZG2I4PQdb9SqB4ymJWjbD/tmYVDJKEXf80atesCoOzJkf/9+s8bq2aDyWZYSYe4Bo0YbmD2mZSqIXuMjNCHClg9Qn7jJGGZa5DM+8uGsP8/TiLXRZgP12x4JPvKhp69zb2gyU09E2x4JPvLh8/x1ngayhnhseyT4yId3Z0C8XYy07ZHgIx/qz6/P/qczMHrbI8FHPtTV15eVqmoUdtuj0hls+cBosSmBFxkMNnJBJQt++3gDBFnLJQB3+p5VDw83WgzsSl5l95JR1c29fHj6kXcODYKu5FjjNaMSYjI/F8Rawu7dm2layUt/K7cGq+cVTiP17cgGK3lgNS9vt9UvOBmcD/SPma5buUxNuUWIw2RGgrZMicgu8ppLJEnLbxYE5D0DG/J5QLUWuYuBsobzGZfDASXFcdWCFKYzi5xVJGl/PvMZJ6iHgS7YjrEzoRWLXNb4vVThfOZ5esS2ZC4DG3QbuWtcOJ95ah55H6Oauow2crc+lD+fXYU88uJe//You6/y5zO39HssfQ5l2Lr5wze45ODOZw73PYYc1v+VcP37fzj3Yf1faa75X3Duw/q/0qrmf+CcQ9hvHnrxB4Yc/gMxaLlxTGhxYwAAAABJRU5ErkJggg==" class="px" data-crop="crops/scene/mercury-statue-fallen.png" x="252" y="48" width="96" height="128" preserveAspectRatio="none"/>
+  <rect class="edge" x="252" y="48" width="96" height="128"/>
+  <text class="h" x="100" y="200" text-anchor="middle">On its ledge</text>
+  <text class="p" x="100" y="219" text-anchor="middle">until it falls</text>
+  <text class="h" x="300" y="200" text-anchor="middle">Fallen</text>
+  <text class="p" x="300" y="219" text-anchor="middle">to the floor below</text>
+
+  <g transform="translate(0 194)">
   <!-- Column heads -->
   <text class="col" x="304" y="60" text-anchor="middle">statue</text>
   <text class="col" x="304" y="75" text-anchor="middle">up</text>
@@ -78,4 +94,5 @@
   <text class="p" x="20" y="435">and the map's code can name it once: the pipes</text>
   <text class="p" x="20" y="454">are always the third and fourth object events.</text>
   <text class="code" x="380" y="496" text-anchor="end">FieldScript_SpawnObjectTable</text>
+  </g>
 </svg>
