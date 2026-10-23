@@ -36,9 +36,9 @@ const github = 'https://github.com/PascalPixel/alchemy/blob/main';
 // The renders the store holds (render/manifest.tsv): the pictures are not in
 // public/, so a picture an index lists is shown only when the store has it.
 const stored = readManifest(docs);
-// The Broken Seal's maps by symbol, numbered as field/maps.s lists them.
+// The Broken Seal's maps by symbol, numbered as field/map_headers.s lists them.
 const sceneIds = new Map(
-  [...readFileSync(join(repo, 'games/tbs/src/field/maps.s'), 'utf8').matchAll(/^\tmap_header (\w*),/gm)].map((m, i) => [m[1], i] as const),
+  [...readFileSync(join(repo, 'games/tbs/src/field/map_headers.s'), 'utf8').matchAll(/^\tmap_header (\w*),/gm)].map((m, i) => [m[1], i] as const),
 );
 
 type Game = 'tbs' | 'tla';
@@ -503,9 +503,9 @@ const lookup = (game: Game, name: string) => where.get(game)!.get(name) ?? enume
 
 // The names a game declares that md() could not know while the files were
 // read, written bare in a comment, shown as code once the index has them: a
-// CamelCase name with no underscore (B5Context, a function or a type), an
+// CamelCase name with no underscore (ObjectVectorView, a function or a type), an
 // upper-case macro with none (UNUSED), and a map by the name
-// field/maps.s gives it (KalayTunnelTreasureRoom).
+// field/map_headers.s gives it (KalayTunnelTreasureRoom).
 function codeDeclared(text: string, game: Game): string {
   const index = where.get(game)!;
   const known = (name: string) => name.length > 3 && (index.has(name) || (sceneIds.has(name) && index.has(`MapId_${name}`))) && ((/[a-z0-9][A-Z]/.test(name) && /[a-z]/.test(name)) || /^[A-Z][A-Z0-9]+$/.test(name));
@@ -595,14 +595,14 @@ const includedBy = new Map<SourceFile, SourceFile[]>();
 // ---------------------------------------------------------------------------
 // The recordings beside the code that plays them. A handler's comment names
 // every ability that reaches it in its reach line (`Abilities: Gaia, Mother
-// Gaia (BATTLE_ANIM_GAIA); none (BATTLE_ANIM_X).`, the form effect/README.md
+// Gaia (BATTLE_ANIM_GAIA); none (BATTLE_ANIM_X).`, the form battle_anim/README.md
 // sets), and public/abilities/index.tsv holds the casts recorded from the
-// game by ability id. A name is matched against actions.tsv's ability column
+// game by ability id. A name is matched against abilities.tsv's ability column
 // and, where several rows share it, to the rows whose effect word in
-// actflags.tsv dispatches to the group's effect: kind in bits 0 to 11, bit 15
+// ability_anims.tsv dispatches to the group's effect: kind in bits 0 to 11, bit 15
 // for a summon's scene, bit 14 for the effects dispatched by id range, the
 // casting impacts among them at kind 100 and up. A field Psynergy group is
-// matched by actions.tsv's type column. A recording made in a field scene (its
+// matched by abilities.tsv's type column. A recording made in a field scene (its
 // index row names the scene) shows beside the field handler, and one made in
 // battle beside the battle effect's handler.
 
@@ -641,7 +641,7 @@ function reachedIds(d: Decl, at: string): { ids: number[]; field: number[] } {
     .map((p) => p.replace(/`/g, '').replace(/\\([\\<>{}[\]*_#|~])/g, '$1').replace(/\s*\n\s*/g, ' '))
     .find((p) => p.startsWith('Abilities: '));
   if (!para) return { ids: [], field: [] };
-  abilityRows ??= { acts: tsv('games/tbs/src/game/actions.tsv'), words: tsv('games/tbs/src/battle/actflags.tsv').map((r) => int(r.effect)) };
+  abilityRows ??= { acts: tsv('games/tbs/src/game/abilities.tsv'), words: tsv('games/tbs/src/battle/ability_anims.tsv').map((r) => int(r.effect)) };
   const { acts, words } = abilityRows;
   const ids: number[] = [];
   const field: number[] = [];
@@ -664,7 +664,7 @@ function reachedIds(d: Decl, at: string): { ids: number[]; field: number[] } {
     for (const name of names.split(', ')) {
       const rows = acts.flatMap((a, id) => (a.ability === name ? [id] : []));
       const hit = rows.filter((id) => kind[2](value, acts[id], words[id] ?? 0));
-      if (!rows.length) reachProblems.push(`${at}: “${name}” is no ability in actions.tsv (${effect})`);
+      if (!rows.length) reachProblems.push(`${at}: “${name}” is no ability in abilities.tsv (${effect})`);
       else if (!hit.length) reachProblems.push(`${at}: no row of “${name}” (${rows.join(', ')}) reaches ${effect}`);
       (kind[0] === 'FIELD_PSYNERGY_' ? field : ids).push(...hit);
     }
@@ -1123,7 +1123,7 @@ function guideFiles(key: string, files: SourceFile[]): string {
 // (prose()).
 //
 // A page's URL is its parent's and then the section page's name or the
-// folder's (/tbs/battle/effect), except for the few that have fixed URLs.
+// folder's (/tbs/battle/battle_anim), except for the few that have fixed URLs.
 const SITE = 'https://alchemy.pascalpixel.com';
 // Site settings: the pages with fixed URLs, by what links to them. A game's
 // places are its map list, and the guide to its source is its src
@@ -1136,7 +1136,7 @@ const FIXED: [string, string][] = [
   ['INSTALL.md', '/start'],
   ['games/tbs/src/MATCHING.md', '/tbs/matching'],
   ['games/tbs/glossary.md', '/tbs/glossary'],
-  ['games/tbs/src/field/maps.s', '/tbs/places'],
+  ['games/tbs/src/field/map_headers.s', '/tbs/places'],
   ['games/tbs/src', '/tbs/code'],
 ];
 // Site settings: links to a guide page's anchors that it no longer has, and
@@ -1173,11 +1173,11 @@ const MOVED_ANCHORS: Record<string, Record<string, string>> = {
     'planning-an-action': '/tbs/battle/battle#building-a-turn',
     'rules-and-pictures-meet-at-the-event-queue': '/tbs/battle/battle#rules-and-pictures-meet-at-the-playback-queue',
   },
-  '/tbs/battle/effect': {
-    'how-a-move-picks-its-effect': '/tbs/battle/effect#how-a-move-picks-its-animation',
-    'the-presentation-word': '/tbs/battle/effect#the-animation-word',
-    'effect-families': '/tbs/battle/effect#animation-families',
-    'how-effects-fit-with-the-rest-of-the-game': '/tbs/battle/effect#how-animations-fit-with-the-rest-of-the-game',
+  '/tbs/battle/battle_anim': {
+    'how-a-move-picks-its-effect': '/tbs/battle/battle_anim#how-a-move-picks-its-animation',
+    'the-presentation-word': '/tbs/battle/battle_anim#the-animation-word',
+    'effect-families': '/tbs/battle/battle_anim#animation-families',
+    'how-effects-fit-with-the-rest-of-the-game': '/tbs/battle/battle_anim#how-animations-fit-with-the-rest-of-the-game',
   },
   '/tbs/menus/window': { 'the-decoded-text-ring': '/tbs/menus/window#the-text-buffer', 'render-outputs': '/tbs/menus/window#window-sprites' },
   '/tbs/menus/menu': { 'the-status-screen': '/tbs/menus/menu#the-summary-screen' },
@@ -1254,7 +1254,7 @@ function arrange(): Placed {
   // What each front page places: its section pages, places and source.
   for (const game of root.children.filter((n) => n.kind === 'game')) {
     const g = game.key.split('/')[1] as Game;
-    const wants = [...sectionPages(g), `games/${g}/src/field/maps.s`, `games/${g}/src`];
+    const wants = [...sectionPages(g), `games/${g}/src/field/map_headers.s`, `games/${g}/src`];
     const links = linksOf(game.key, 'last').filter((k) => wants.includes(k));
     for (const k of wants) if (!links.includes(k) && (fixedUrl(k) || existsSync(join(repo, k)))) notes.push(`${game.key} doesn't link ${k}: placed after its links`);
     for (const k of [...links, ...wants.filter((k) => !links.includes(k) && (fixedUrl(k) || existsSync(join(repo, k))))]) {
@@ -1272,7 +1272,7 @@ function arrange(): Placed {
 
 // The derived tree, as the build prints it.
 function printTree(node: Placed, depth = 0): string[] {
-  const title = node.kind === 'root' ? ROOT_LABEL : (headingOf(node.key) ?? headingOf(`${node.key}/README.md`) ?? (node.key.endsWith('maps.s') ? 'Places' : node.key));
+  const title = node.kind === 'root' ? ROOT_LABEL : (headingOf(node.key) ?? headingOf(`${node.key}/README.md`) ?? (node.key.endsWith('map_headers.s') ? 'Places' : node.key));
   return [`${'  '.repeat(depth)}${title}  ${node.url}`, ...node.children.flatMap((c) => printTree(c, depth + 1))];
 }
 function headingOf(key: string): string | undefined {
@@ -1348,7 +1348,7 @@ function prose(source: string, target: string, extra = '') {
     return `[${pathLabel(label, resolved)}](${siteLink(resolved)}${hash})`;
   });
   // MDX would read a bare < or { as markup. A bare relative path in code
-  // (`../window/battle_command/targets.c`) loses its ../, which means
+  // (`../window/screens/targets.c`) loses its ../, which means
   // nothing on the site.
   text = text
     .split(/(```[\s\S]*?```|`[^`]*`)/)

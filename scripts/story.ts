@@ -561,7 +561,7 @@ function walkFiles(rel: string, test: (name: string) => boolean, into: string[] 
 type SceneRow = { id: number; name: string; overlay: number; group: number; kind: number; map: number; file: string };
 
 const scenes: SceneRow[] = [];
-for (const line of readFileSync(gamePath('src/field/maps.s'), 'utf8').split('\n')) {
+for (const line of readFileSync(gamePath('src/field/map_headers.s'), 'utf8').split('\n')) {
   const m = line.match(/^\s*map_header\s+(\w*)\s*,\s*(\w+)\s*,\s*(\w+)\s*,\s*(\w+)\s*,\s*(\w+)/);
   if (m) scenes.push({ id: scenes.length, name: m[1], overlay: Number(m[2]), group: Number(m[3]), kind: Number(m[4]), map: Number(m[5]), file: '' });
 }
@@ -611,7 +611,7 @@ function deriveAreas(): Map<number, AreaNames> {
   const rules: Rule[] = [];
   let inTable = false;
   const stack: boolean[] = [];
-  for (const line of readFileSync(gamePath('src/object/map_rules.s'), 'utf8').split('\n')) {
+  for (const line of readFileSync(gamePath('src/overworld/map_rules.s'), 'utf8').split('\n')) {
     if (/^gMapSec_NameRules:/.test(line)) inTable = true;
     else if (inTable && /^\w+:|^\s*\.global/.test(line)) inTable = false;
     if (!inTable) continue;
