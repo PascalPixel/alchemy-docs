@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 560" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 576" role="img" aria-labelledby="title desc">
   <title id="title">Why changes wait for the blank</title>
   <desc id="desc">Three timelines of a figure walking right. On time: the frame's work ends before the vertical blank, and at the blank the figure appears in its new place, whole. Late: the work is still running when the blank comes, so nothing is sent and the screen keeps the old picture, whole; the new one appears at the next blank. Had the work written to the hardware directly, the screen could be drawn while the figure was half moved, its head in the new place and its body in the old.</desc>
   <style>
@@ -21,7 +21,7 @@
     .no { fill: #b91c1c; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
     .in { fill: #ffffff; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
     .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
-    .code { fill: #8f8f8f; font: 400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .code { fill: #8f8f8f; font: 400 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
     @media (prefers-color-scheme: dark) {
       .panel { fill: #0a0a0a; stroke: #262626; }
       .axis { stroke: #333333; }
@@ -45,9 +45,9 @@
     }
   </style>
 
-  <rect class="panel" x="0.5" y="0.5" width="399" height="559" rx="16"/>
+  <rect class="panel" x="0.5" y="0.5" width="399" height="575" rx="16"/>
   <text class="eyebrow" x="20" y="34">A FIGURE TAKES A STEP RIGHT</text>
-  <text class="code" x="380" y="34" text-anchor="end">gFrameRenderPending</text>
+  <text class="code" x="380" y="562" text-anchor="end">gFrameRenderPending</text>
 
   <!-- Blanks at x 200 and 340, 14 wide, through all rows -->
   <rect class="blank" x="196" y="50" width="16" height="296"/>

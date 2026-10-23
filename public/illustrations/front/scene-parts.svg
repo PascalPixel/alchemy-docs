@@ -15,7 +15,7 @@
     .g2 { fill: #7e22ce; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
     .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
     .col { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
-    .code { fill: #8f8f8f; font: 400 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .code { fill: #8f8f8f; font: 400 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
     @media (prefers-color-scheme: dark) {
       .panel { fill: #0a0a0a; stroke: #262626; }
       .row { fill: #111111; stroke: #2e2e2e; }

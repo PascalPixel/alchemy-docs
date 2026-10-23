@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 520" role="img" aria-labelledby="title desc">
   <title id="title">The game runs one scene at a time</title>
-  <desc id="desc">The whole game is one loop. At power-on the first scene is the title. Each time round, the game first drops everything the last scene left behind. Then it runs the next scene. A place, such as a town, a dungeon or the world map, has its code loaded and runs until the party takes an exit, and the exit names the next scene and where the party arrives. A battle or a minigame runs and then sends the party back, usually to the place it came from, exactly where it stood. Then the loop goes round again, for as long as the game runs.</desc>
+  <desc id="desc">The whole game is a loop of scenes, which goes round once for each scene, not once a frame. At power-on the first scene is the title. Each time round, the game first drops everything the last scene left behind. Then it runs the next scene. A place, such as a town, a dungeon or the world map, has its code loaded and runs until the party takes an exit, and the exit names the next scene and where the party arrives. A battle or a minigame runs and then sends the party back, usually to the place it came from, exactly where it stood. Then the loop goes round again, for as long as the game runs.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
@@ -10,7 +10,7 @@
     .h { fill: #0a0a0a; font: 600 16px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
     .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
     .k { fill: #0a72ef; font: 500 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-    .code { fill: #8f8f8f; font: 400 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .code { fill: #8f8f8f; font: 400 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
     .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
     .wire { fill: none; stroke: #a3a3a3; stroke-width: 1.5; }
     .head { fill: #a3a3a3; }

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 520" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 536" role="img" aria-labelledby="title desc">
   <title id="title">What a cue number plays</title>
   <desc id="desc">Every sound starts as one call with a cue number, and the number's range decides what it is. Cues below 80 are music, played on the music player; asking for the music already chosen does nothing. Cues from 80 to 99 are fanfares, played on the fanfare player while the music is silenced. Cues from 100 up are rows of the song table, mostly sound effects, each played on the player its row names. Three cues are controls instead of sounds: cue 17 fades the music out, cue 18 keeps the music that is playing, and cue 289 fades out player 3.</desc>
   <style>
@@ -15,7 +15,7 @@
     .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
     .in { fill: #ffffff; font: 600 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
     .n { fill: #737373; font: 500 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-    .code { fill: #8f8f8f; font: 400 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .code { fill: #8f8f8f; font: 400 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
     .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
     @media (prefers-color-scheme: dark) {
       .panel { fill: #0a0a0a; stroke: #262626; }
@@ -33,9 +33,9 @@
     }
   </style>
 
-  <rect class="panel" x="0.5" y="0.5" width="399" height="519" rx="16"/>
+  <rect class="panel" x="0.5" y="0.5" width="399" height="535" rx="16"/>
   <text class="eyebrow" x="20" y="34">ONE CALL, ONE NUMBER: THE CUE</text>
-  <text class="code" x="380" y="34" text-anchor="end">AudioCommand_Play</text>
+
 
   <!-- The ruler: music 0..79 at 20..180, fanfare 80..99 at 180..240, song rows 100.. at 240..380 -->
   <rect class="mus" x="20" y="64" width="160" height="40" rx="6"/>
@@ -79,4 +79,5 @@
   <text class="n" x="40" y="477" text-anchor="middle">289</text>
   <text class="l" x="70" y="477">fade out player 3</text>
   <text class="code" x="380" y="504" text-anchor="end">AUDIO_JINGLE_FIRST · AUDIO_SONG_FIRST</text>
+  <text class="code" x="380" y="522" text-anchor="end">AudioCommand_Play</text>
 </svg>

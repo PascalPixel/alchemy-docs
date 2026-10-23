@@ -14,7 +14,7 @@
     .chip-no { fill: #fff3f0; stroke: #f6c3b7; }
     .ok { fill: #15803d; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
     .no { fill: #c2410c; font: 600 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-    .code { fill: #8f8f8f; font: 400 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .code { fill: #8f8f8f; font: 400 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
     .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
     .wire { fill: none; stroke: #0a72ef; stroke-width: 1.5; }
     .head { fill: #0a72ef; }
