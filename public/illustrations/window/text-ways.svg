@@ -1,8 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 540" role="img" aria-labelledby="title desc">
   <title id="title">Three ways to put letters in a window</title>
-  <desc id="desc">A window's frame and filling are always tiles of the window layer. Its letters go on in one of three ways. A message typed on the field puts each letter cell on as a sprite riding on the window, so the letters can bob and move. A battle message is drawn into one shared picture across the bottom of the screen, which only one window can use at a time. Text drawn all at once, such as menu labels and the area's name, becomes tiles of the window layer itself, taken from a set of 128.</desc>
+  <desc id="desc">A window's frame and filling are always tiles of the window layer. Its letters go on in one of three ways. A message typed on the field puts each letter cell on as a sprite riding on the window, so the letters can bob and move. A battle message is drawn into one shared picture across the bottom of the screen, which only one window can use at a time. Text drawn all at once, such as menu labels and the area's name, becomes tiles of the window layer itself, taken from a set of 128. Each way is shown as the game draws it: the start of Garet's sister's line in Vale, "Ghost appeared!" at the start of a battle in Goma Cave, and the area name Bilibin.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
+    .px { image-rendering: pixelated; }
+    .edge { fill: none; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
     .chip { fill: #f0f6ff; stroke: #bcd7fb; }
     .frame { fill: none; stroke: #d4d4d4; }
@@ -18,6 +20,7 @@
     .t2 { fill: #7c3aed; fill-opacity: 0.10; }
     @media (prefers-color-scheme: dark) {
       .panel { fill: #0a0a0a; stroke: #262626; }
+      .edge { stroke: #262626; }
       .card { fill: #111111; stroke: #2e2e2e; }
       .chip { fill: #0d1a2e; stroke: #1e3a66; }
       .frame { stroke: #333333; }
@@ -35,40 +38,28 @@
 
   <!-- sprites -->
   <rect class="card" x="20" y="46" width="360" height="148" rx="12"/>
-  <rect class="chip" x="36" y="62" width="128" height="52" rx="6"/>
-  <g class="f4" fill-opacity="0.85">
-    <rect x="46" y="74" width="16" height="16" rx="2"/><rect x="64" y="74" width="16" height="16" rx="2"/><rect x="82" y="74" width="16" height="16" rx="2"/><rect x="100" y="70" width="16" height="16" rx="2"/>
-  </g>
-  <text class="pill-on" x="54" y="86" text-anchor="middle">Yo</text>
-  <text class="pill-on" x="72" y="86" text-anchor="middle">u</text>
-  <text class="pill-on" x="90" y="86" text-anchor="middle">gu</text>
-  <text class="pill-on" x="108" y="82" text-anchor="middle">ys</text>
-  <text class="h2" x="180" y="78">…as sprites</text>
-  <text class="small" x="180" y="96">one sprite a cell, riding on</text>
-  <text class="small" x="180" y="111">the window; they can move</text>
-  <text class="p" x="36" y="146">Messages typed out on the field.</text>
-  <text class="code" x="36" y="176">a render output a cell</text>
+  <!-- From render guide: talk.gif frame 8 cut 88x26+82+10, at twice its size. -->
+  <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAaBAMAAADBK4ZgAAAAGFBMVEWlpaVSUlIAAAAASlIAUmMAWnMAY4z////9jjxPAAAAoUlEQVQ4y+2RMQ4CMQwEwz3FSL4HwBP4AqFPse5d2N/HCQ1CSjAF3W3naGSPNqX8khPlU7bzJZ2yXW/pBHxPJ+CKbAJ2wNPwg6GchatJS2+ubiweKtIf3MVgc1gIRiYsISNtZ4UuYA4PNbaA48jeZlpDgzv+2qewfZyYteGGod0LFNfQXjgToRFA1BeSxkBz+H12X9T4CTfiPPz1Uw74//ATlNKEyZ7c5xgAAAAASUVORK5CYII=" class="px" data-crop="crops/window/talk-cells.png" x="36" y="62" width="176" height="52"/>
+  <text class="h2" x="228" y="94">…as sprites</text>
+  <text class="small" x="36" y="138">one sprite a cell, riding on the window; they can move</text>
+  <text class="p" x="36" y="158">Messages typed out on the field.</text>
+  <text class="code" x="36" y="186">a render output a cell</text>
 
   <!-- canvas -->
   <rect class="card" x="20" y="206" width="360" height="148" rx="12"/>
-  <rect class="chip" x="36" y="222" width="128" height="52" rx="6"/>
-  <rect class="t2" x="40" y="226" width="120" height="44" rx="3"/>
-  <rect class="w2" x="40" y="226" width="120" height="44" rx="3" stroke-width="1.5"/>
-  <text class="kw" x="48" y="252">Mia attacks!</text>
-  <text class="h2" x="180" y="238">…into one picture</text>
-  <text class="small" x="180" y="256">painted letter by letter; one</text>
-  <text class="small" x="180" y="271">window at a time can use it</text>
-  <text class="p" x="36" y="306">Battle messages, across the bottom rows.</text>
-  <text class="code" x="36" y="336">the text canvas: 120 tiles</text>
+  <!-- From render guide: random-battle.gif frame 180 cut 88x26+0+134, at twice its size. -->
+  <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAaBAMAAADBK4ZgAAAAKlBMVEVClJQphJQpa4QYWoxKtbVa1qVz56Vr3qWM961776VRu51CpZwAAAD///+b7uKWAAAA10lEQVQ4y+1RuxGDMAwVNRUcCxg2iFeAJrQB7tiDI5cJyAKZAJrUqcIK1gb2LpEtyO9IQZEOnc5Ieu+eHjaAF8usbI9d150vhyAUkJVVVZ16H7xE7oSQMro3fZpTB21T268MwAfw/HGEUMo4iYaiuKY2cupFNPS3fQ1qRawlG43PVv8kImFAJ64hE1uTvjIG6bSbXLqRnrGZbJBGrK8Vb3rLCTMvGzatwAeZNjkJLr7IbuA2sROuFSM43YZhWWsTrWdkAgFcu4JtLP65wqX5X19wI2/kxXgAh7dlmfR8skgAAAAASUVORK5CYII=" class="px" data-crop="crops/window/battle-message.png" x="36" y="222" width="176" height="52"/>
+  <text class="h2" x="228" y="254">…into one picture</text>
+  <text class="small" x="36" y="298">painted letter by letter; one window at a time can use it</text>
+  <text class="p" x="36" y="318">Battle messages, across the bottom rows.</text>
+  <text class="code" x="36" y="346">the text canvas: 120 tiles</text>
 
   <!-- tiles -->
   <rect class="card" x="20" y="366" width="360" height="148" rx="12"/>
-  <rect class="chip" x="36" y="382" width="128" height="52" rx="6"/>
-  <path class="frame" d="M 44 394 h 112 M 44 422 h 112 M 44 394 v 28 M 60 394 v 28 M 76 394 v 28 M 92 394 v 28 M 108 394 v 28 M 124 394 v 28 M 140 394 v 28 M 156 394 v 28"/>
-  <text class="kw" x="50" y="413">Bilibin</text>
-  <text class="h2" x="180" y="398">…as window tiles</text>
-  <text class="small" x="180" y="416">drawn all at once into</text>
-  <text class="small" x="180" y="431">the window layer itself</text>
-  <text class="p" x="36" y="466">Labels and names, such as the area's name.</text>
-  <text class="code" x="36" y="496">128 tiles set aside for text</text>
+  <!-- From render guide: area-name-frame.png (the frame in area-name.svg) cut 88x26+76+23, at twice its size. -->
+  <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAaCAMAAAAE22thAAAAY1BMVEXWtWPGpVK1jDnnxnuUaxD/2ECleyH33pRSUlL///9jQgilpaVCKQAAAAAASlIAUmMIhL1SOQBzUggAWnMIc62EWggAY4wIa5xKrYRSxlpr3qV757Vz1lq9tWvWxmPn1mOM78Yp6IAqAAAB8klEQVRIx5WVC3urIAyGI+INy07xzG4727r9/1958oWLyLTT76kmgeaFxkiJqKrkQ6RURXUea60eiGeL7+cxYYSo5gGeYAdxc1JlvsR1GK1JtW3n46YfTqhvynzEMEFkTIeV6roZxuMaxqbMl0juHTy6GOokZHBvD6oHuMivZYGO73x1Sl2M4hn2GWzt0yEF8DofF3VBZNqLwQwL4Kc/h3QFuMyXuGKXOlKVMxcztQaxB/89oGcBl/mIaZpbNbfGtc7xitOEOIBvv+rFg8t8xKRnDgzLOccTM+IAlmZCfrDDzYfwVuAIiPkIib0ZngtgxHHHAz91IbKxMPgI2P4EZ/mIE9hsggOD8ZmBty5FABRgeGHHEyb0AkYJLH4/NjvEmgzDLVQpB2f58wJOE1MGZqiUIpRAzDIAL4HTxqbII9jsp0x6KYVUQSBSgmSWlX7WeIo80nmNw4JrMKoBzGJ8sfnKwC7LlxprrefULjIRS+HPLsGlMg9CTKWJYJNvTG+A133sTxlpgWSs9T3hzWPwbru9/K6HpVg9vAz8fET7D69ot9TH9npI/W67FS9I7OP+sPZfkFWNfR+PJ/7yxt1XOjuEYh/3J/7zxn77EFodm7GPT2rz2NwCx4HX17e3f++sj8/7/Ut0v39+YOT9m6/y+zn4P6svbbUG2XWJAAAAAElFTkSuQmCC" class="px" data-crop="crops/window/area-name-bilibin.png" x="36" y="382" width="176" height="52"/>
+  <text class="h2" x="228" y="414">…as window tiles</text>
+  <text class="small" x="36" y="458">drawn all at once into the window layer itself</text>
+  <text class="p" x="36" y="478">Labels and names, such as the area's name.</text>
+  <text class="code" x="36" y="506">128 tiles set aside for text</text>
 </svg>
