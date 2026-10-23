@@ -34,11 +34,3 @@ bun scripts/renders.ts publish ../renders/places places --prune
 ```
 
 It uploads only the pictures whose hash the manifest doesn't already have, deletes with `--prune` the ones under that prefix the folder no longer has, copies the folder's TSV records into `public/places`, and writes the manifest to `render/manifest.tsv` and to the store. `--dry-run` shows what it would do. Commit `render/manifest.tsv` and the records: the build shows a render only when the manifest lists it. After `bun run build`, `bun scripts/renders.ts check` asks the store for every render the built pages show.
-
-The illustrations in `public/illustrations/` are hand-written SVG, and a take-apart picture among them (a screen pulled into its layers, a sprite, part of a frame) is built around crops of the game rather than a recording. `alchemy-devtools render guide` writes the crops: every mode that pulls a moment apart (`layers-3d`, `battle-layers-3d`, `title-intro-layers-3d` and the others) also writes `planes/<name>/`, each plane alone as a PNG at the screen's size with its empty pixels transparent, the frame as the player sees it, and `planes.tsv`, the order the hardware stacks them in. A browser shows an SVG used as a picture without fetching anything it links, so each crop lives inside the file: the SVG names it in an `<image>`'s `data-crop` attribute, relative to the render folder, and
-
-```bash
-bun scripts/crops.ts ../renders/guide public/illustrations/field/layer-stack.svg
-```
-
-writes each named PNG into its `href` as a data URL; `--check` reports a crop that differs from its render. Run it again after a re-render. The SVG draws the crops with `image-rendering: pixelated` at whole-number scale, labels them in real text and animates them with CSS inside the file, as `field/layer-stack.svg` does: the planes in the order `planes.tsv` gives, pulled apart and closed again, with `frame.png` over them while they are together, since a plane is captured without the blending the screen gives it.
