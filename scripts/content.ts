@@ -1278,7 +1278,15 @@ function printTree(node: Placed, depth = 0): string[] {
 function headingOf(key: string): string | undefined {
   const file = join(repo, key);
   if (!existsSync(file) || !statSync(file).isFile() || !key.endsWith('.md')) return undefined;
-  return readFileSync(file, 'utf8').match(/^# (.+?)(?: \{#[\w-]+\})?\n/)?.[1];
+  const h = readFileSync(file, 'utf8').match(/^# (.+?)(?: \{#[\w-]+\})?\n/)?.[1];
+  return h === undefined ? undefined : siteTitle(key, h);
+}
+
+// A page's title on the site: the front page is the guide's Introduction,
+// and a game's page is titled by its name alone, without the source's emoji.
+function siteTitle(key: string, heading: string): string {
+  if (key === 'README.md') return ROOT_LABEL;
+  return heading.replace(/^(?:☀️|⚓️|☀|⚓|🌋)\s*/u, '');
 }
 
 // The page a link in a README goes to: the arranged page, the reference's
@@ -1320,7 +1328,7 @@ function firstSentence(text: string): string {
 function prose(source: string, target: string, extra = '') {
   let text = readFileSync(join(repo, source), 'utf8');
   const heading = text.match(/^# (.+?)(?: \{#[\w-]+\})?\n+/);
-  const title = heading ? heading[1] : basename(source);
+  const title = heading ? siteTitle(source, heading[1]) : basename(source);
   if (heading) text = text.slice(heading[0].length);
   // The pages are Markdown, which drops raw HTML: an <img> becomes an image,
   // and the site's own files are served from its root.
