@@ -11,14 +11,6 @@ html > body[data-scroll-locked] {
   --removed-body-scroll-bar-size: 0px !important;
 }
 
-/* The ability casts are recorded at the GBA's 240x160 and shown at twice that,
-   pixel for pixel. */
-img[src$='.gif'] {
-  image-rendering: pixelated;
-  width: min(100%, 480px);
-  height: auto;
-}
-
 /* The renders of the game, shown as the GBA's screen showed them (the
    #gba-colour filter in app/layout.tsx), unless the reader picked the raw
    colours. The games' picture files keep the colours their palettes store. */
@@ -38,6 +30,69 @@ img[src*='/pictures/'] {
   image-rendering: pixelated;
   zoom: 2;
   border-radius: 0;
+}
+
+/* Figures (lib/remark-figures.ts): a paragraph of pictures, each centred with
+   its short caption under it. Several pictures in one paragraph (the casts a
+   handler plays, a place's moments) sit side by side where they fit. */
+.figures {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem 1.5rem;
+  margin: 1.5rem 0;
+}
+.figures figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 0 1 auto;
+  max-width: 100%;
+  margin: 0;
+}
+/* The figure takes its picture's shown width (remark-figures sets it); the
+   picture fills it, keeping its proportions from its width and height. */
+.figures figure > span,
+.figures figure img {
+  width: 100%;
+}
+.figures figure img {
+  height: auto;
+  margin: 0;
+}
+.figures figure:not([style]) > span,
+.figures figure:not([style]) img {
+  width: auto;
+}
+.figures figcaption {
+  margin-top: 0.5rem;
+  max-width: 40rem;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  text-align: center;
+  color: var(--color-fd-muted-foreground);
+}
+/* A render keeps the room its size reserves while it loads, shown as a
+   muted box rather than a blank gap. The renders are opaque, so the box is
+   hidden once the picture is drawn. */
+img.render {
+  background: var(--color-fd-muted);
+  image-rendering: pixelated;
+}
+/* The take-apart pictures with white canvases glare on the dark theme: there
+   they are framed and dimmed a little. */
+.dark img.render[src*='/guides/'][src*='.png'] {
+  border: 1px solid var(--color-fd-border);
+}
+.dark:not([data-colours='raw']) img.render[src*='/guides/'][src*='.png'] {
+  filter: url(#gba-colour) brightness(0.88);
+}
+.dark[data-colours='raw'] img.render[src*='/guides/'][src*='.png'] {
+  filter: brightness(0.88);
+}
+/* The enlarged picture (fumadocs' Lightbox) keeps hard pixels too. */
+dialog img.render {
+  image-rendering: pixelated;
 }
 
 /* The code's names run long (Event_LeaveToValeInteriorsShopsWestBySecondDoor).

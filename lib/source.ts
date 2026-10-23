@@ -6,6 +6,7 @@ import { metaSchema, pageSchema } from 'fumadocs-core/source/schema';
 import { z } from 'zod';
 import { remarkMdxMermaid } from 'fumadocs-core/mdx-plugins';
 import { onImageError, remarkRenders } from './remark-renders';
+import { remarkFigures } from './remark-figures';
 import { remarkCodeBreaks } from './remark-code-breaks';
 
 const docs = defineDocs({
@@ -16,9 +17,10 @@ const docs = defineDocs({
     schema: pageSchema.extend({ source: z.string().optional() }),
     // Pictures keep their paths rather than being bundled, so the site's CSS
     // can tell a recording from an asset sheet by where it lives. The renders
-    // are in the Blob store: their sizes come from its manifest. Then inline
-    // code gets its break points (remark-code-breaks).
-    mdxOptions: applyMdxPreset({ remarkImageOptions: { useImport: false, onError: onImageError }, remarkPlugins: (v) => [remarkRenders, remarkMdxMermaid, ...v, remarkCodeBreaks] }),
+    // are in the Blob store: their sizes come from its manifest. Then a
+    // paragraph of pictures becomes captioned figures (remark-figures) and
+    // inline code gets its break points (remark-code-breaks).
+    mdxOptions: applyMdxPreset({ remarkImageOptions: { useImport: false, onError: onImageError }, remarkPlugins: (v) => [remarkRenders, remarkMdxMermaid, ...v, remarkFigures, remarkCodeBreaks] }),
   },
   meta: {
     schema: metaSchema,

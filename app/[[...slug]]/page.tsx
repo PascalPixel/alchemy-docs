@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { getMDXComponents } from '@/components/mdx';
 import type { Metadata } from 'next';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
+import { Lightbox } from 'fumadocs-ui/components/image-zoom';
 import { gitConfig, isList } from '@/lib/shared';
 
 export default async function Page(props: PageProps<'/[[...slug]]'>) {
@@ -25,12 +26,15 @@ export default async function Page(props: PageProps<'/[[...slug]]'>) {
         </p>
       )}
       <DocsBody>
-        <MDX
-          components={getMDXComponents({
-            // this allows you to link to other pages with relative file paths
-            a: createRelativeLink(source, page),
-          })}
-        />
+        {/* Every picture on the page can be enlarged, and swiped through in one viewer. */}
+        <Lightbox>
+          <MDX
+            components={getMDXComponents({
+              // this allows you to link to other pages with relative file paths
+              a: createRelativeLink(source, page),
+            })}
+          />
+        </Lightbox>
       </DocsBody>
     </DocsPage>
   );
