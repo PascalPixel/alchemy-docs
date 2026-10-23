@@ -1,76 +1,92 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 400 470" role="img" aria-labelledby="title desc">
-  <title id="title">A town is drawn in four sheets</title>
-  <desc id="desc">A town or dungeon drawn as four sheets stacked from back to front: the ground at the back, then the middle layer of walls and edges, then the characters, then the overhead layer of roofs and treetops in front. The console stacks them in this order on most maps, and a map can give its layers another order. No code works out whether Isaac is hidden behind a roof: he is simply drawn between two layers of the same map.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="480" viewBox="0 0 480 900" role="img" aria-labelledby="title desc">
+  <title id="title">Isaac behind a roof</title>
+  <desc id="desc">In Vale, Isaac walks behind a house and its roof covers all but his head. Below, the same place a few steps earlier is taken apart into the four sheets the console stacks, front on top: the overhead layer on BG1 with the roof and chimney; the characters, Isaac and a villager, as sprites; the middle layer on BG2, here the tree at the side; and the ground on BG3, with the grass, path and cliff. No code works out whether Isaac is hidden: the console draws the overhead layer over the characters. Most maps stack their layers in this order; a map can give them another.</desc>
   <style>
     .panel { fill: #fafafa; stroke: #e5e5e5; }
-    .ground { fill: #dcfce7; stroke: #86efac; }
-    .middle { fill: #e5e5e5; stroke: #a3a3a3; }
-    .chars { fill: none; stroke: #0a72ef; stroke-dasharray: 4 4; }
-    .over { fill: #fee2e2; stroke: #fca5a5; fill-opacity: 0.9; }
-    .fig { fill: #0a72ef; }
-    .roof { fill: #f87171; }
-    .wallb { fill: #a3a3a3; }
-    .grass { fill: #4ade80; }
-    .h { fill: #0a0a0a; font: 600 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-    .s { fill: #737373; font: 400 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-    .p { fill: #525252; font: 400 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-    .code { fill: #8f8f8f; font: 400 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
     .eyebrow { fill: #8f8f8f; font: 600 11px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; letter-spacing: 0.08em; }
-    .lead { stroke: #d4d4d4; stroke-width: 1; }
+    .h { fill: #0a0a0a; font: 600 14px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .p { fill: #525252; font: 400 13px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .code { fill: #8f8f8f; font: 400 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .rule { fill: none; stroke: #d4d4d4; stroke-width: 1.5; }
+    .head { fill: #d4d4d4; }
+    .px { image-rendering: pixelated; }
+    .sheet { stroke-width: 2; fill-opacity: 0.08; }
+    .c-ground { stroke: #0d9488; fill: #0d9488; }
+    .c-middle { stroke: #7c3aed; fill: #7c3aed; }
+    .c-sprites { stroke: #d97706; fill: #d97706; }
+    .c-overhead { stroke: #0a72ef; fill: #0a72ef; }
+    .screen { fill: none; stroke: #a3a3a3; stroke-width: 2; }
     @media (prefers-color-scheme: dark) {
       .panel { fill: #0a0a0a; stroke: #262626; }
-      .ground { fill: #0b2015; stroke: #1d4d2e; }
-      .middle { fill: #1f1f1f; stroke: #525252; }
-      .chars { stroke: #3b8eff; }
-      .over { fill: #2a1010; stroke: #7f2a2a; }
-      .fig { fill: #3b8eff; }
-      .roof { fill: #dc2626; }
-      .wallb { fill: #5c5c5c; }
-      .grass { fill: #16a34a; }
+      .eyebrow, .code { fill: #7c7c7c; }
       .h { fill: #ededed; }
-      .s { fill: #8f8f8f; }
       .p { fill: #a1a1a1; }
-      .code, .eyebrow { fill: #7c7c7c; }
-      .lead { stroke: #333333; }
+      .rule { stroke: #404040; }
+      .head { fill: #404040; }
+      .sheet { fill-opacity: 0.14; }
+      .c-ground { stroke: #2dd4bf; fill: #2dd4bf; }
+      .c-middle { stroke: #a78bfa; fill: #a78bfa; }
+      .c-sprites { stroke: #fbbf24; fill: #fbbf24; }
+      .c-overhead { stroke: #3b8eff; fill: #3b8eff; }
+      .screen { stroke: #525252; }
     }
   </style>
 
-  <rect class="panel" x="0.5" y="0.5" width="399" height="469" rx="16"/>
-  <text class="eyebrow" x="20" y="32">BACK</text>
+  <rect class="panel" x="0.5" y="0.5" width="479" height="899" rx="16"/>
 
-  <!-- Ground -->
-  <path class="ground" d="M 30 50 H 180 L 210 94 H 60 Z"/>
-  <circle class="grass" cx="80" cy="70" r="4"/><circle class="grass" cx="130" cy="64" r="4"/><circle class="grass" cx="160" cy="80" r="4"/>
-  <path class="lead" d="M 210 72 H 236"/>
-  <text class="h" x="240" y="70">Ground</text>
-  <text class="s" x="240" y="87">grass, paths, floors</text>
+  <!-- On screen: the leader walked down from the grass behind the house
+       (`render guide moment`, MOMENT_PLACE 4,1, MOMENT_STAND 370,627,
+       MOMENT_HOLD 128,30) until the game stopped him; crop 128 by 64 at
+       (100, 40) of the frame, drawn at twice its size. -->
+  <text class="eyebrow" x="24" y="36">VALE, AS THE PLAYER SEES IT</text>
+  <image href="data:image/png;base64,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" class="px" data-crop="crops/world/vale-roof-behind.png" x="24" y="50" width="256" height="128"/>
+  <rect class="screen" x="24" y="50" width="256" height="128"/>
+  <text class="h" x="298" y="72">Isaac behind a roof</text>
+  <text class="p" x="298" y="94">He has walked behind</text>
+  <text class="p" x="298" y="112">a house; the roof is</text>
+  <text class="p" x="298" y="130">drawn over all but</text>
+  <text class="p" x="298" y="148">his head.</text>
 
-  <!-- Middle -->
-  <path class="middle" d="M 52 114 H 202 L 232 158 H 82 Z"/>
-  <rect class="wallb" x="96" y="124" width="40" height="10"/><rect class="wallb" x="150" y="140" width="46" height="8"/>
-  <path class="lead" d="M 232 136 H 236"/>
-  <text class="h" x="240" y="134">Middle</text>
-  <text class="s" x="240" y="151">walls and edges</text>
+  <!-- A few steps earlier (MOMENT_HOLD 128,12), the same place on the map,
+       crop 128 by 64 at (100, 56) of each plane. planes.tsv lists them back
+       to front: BG3 at priority 3, BG2 at 2, the sprites at 2 (a sprite
+       wins a tie), BG1 at 1. Here front is drawn first, at the top. -->
+  <text class="eyebrow" x="24" y="216">A FEW STEPS EARLIER, AS FOUR SHEETS</text>
 
-  <!-- Characters -->
-  <path class="chars" d="M 74 178 H 224 L 254 222 H 104 Z"/>
-  <circle class="fig" cx="150" cy="192" r="5"/><rect class="fig" x="145" y="197" width="10" height="12" rx="3"/>
-  <circle class="fig" cx="190" cy="196" r="4"/><rect class="fig" x="186" y="200" width="8" height="10" rx="3"/>
-  <text class="h" x="262" y="198">Characters</text>
-  <text class="s" x="262" y="215">Isaac, townspeople</text>
+  <path class="rule" d="M 30 252 V 790"/>
+  <path class="head" d="M 24 260 l 6 -10 l 6 10 z"/>
+  <text class="code" x="44" y="242">front: drawn over every sheet below</text>
 
-  <!-- Overhead -->
-  <path class="over" d="M 96 242 H 246 L 276 286 H 126 Z"/>
-  <path class="roof" d="M 136 270 L 156 252 L 176 270 Z"/><path class="roof" d="M 196 276 L 214 260 L 232 276 Z"/>
-  <text class="h" x="284" y="262">Overhead</text>
-  <text class="s" x="284" y="279">roofs, treetops</text>
+  <rect class="sheet c-overhead" x="44" y="252" width="256" height="128"/>
+  <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAABABAMAAAAg+GJMAAAAJFBMVEUAAADnzr3/987GrZy9cwDWlBCcWgjvvSH/3in//2v/7zmEShgknQ+QAAAAAXRSTlMAQObYZgAAArJJREFUWMPtlL1u2zAUhV2gQYtOlQx0l/ICUVT0BUrRTr0EKCknnQKYogx7lULbUwf/ajbqkHMSSZwDL325XjrIVDkFNHTSAa4gELqfziGv1Go1atSoUaNGjRr9X71x3Y+marfbluWYatcDnLu27zmmnLNaAM+1XNdzoNzaAAteD+XWy+DZ0Gy5lm+7pzUB7ovqOfAtINiuBefg1+lHX63n1zuOUydCgL970AwA27ZrRDgh0a1nvahGhH54lQx8v932jc5qGAhWJDqcA5RVA4CvUky490/Au3X1OooEiXYIP29D+zigqyuXKUkCfJ1ekcEhxCsfU2f3t43JzxOKuvMooZ05Nh/E+SsAzOHyvjj0mYtotd5mS5qSbNkXBAdkAAE8/+YVwI2xYR7Qy1brQw6A6WNHkOkjTfH4iWIzTaf8OKDbF5fIUFoXtwD4BQDGg5RgThD/vQcLDnjgRy3w9bpYJDyglPJA0JBTSqAVYY7grvfEiDmINj9qgSmt1wkTWZHzTraa80LM+URQxKlYp2hvdsH3v/CjFiIpdZlE2UbnuFuqOdPZgmdaP/CZzreoxxgZeBYAjlmIpSxlEpelKnBXynumygXTUj3wjZrCHOwx4p71iXPMjwKkTEZSKo2/SbmNlFpEZVne81InhC7Awnjgf0aMseoQQwMgACh1aADgZR5LBVZkLgL8RPbhmMEWkwDjSoBpleGFVKo4AIYKAsHSfaTEgsAcjAPMqEgpIdUZoBUA0KoLfCHl40jLZAgOlvFukmKYg5AR1l8LQSmqzPBD3m3u8DVgCrMHy1GpIJCSt7GA/wHMAd2PeTApAEEqARN1N9vhqVSb3ADC0cYAtAxjMEDNHPT2DMGYrFJxWQXo53nnAc/KYgYApcLhTJGhLEocr0i8JWPGehyjfqYLQdOK/j9Qzyi/1f+HxwAAAABJRU5ErkJggg==" class="px" data-crop="crops/world/vale-roof-bg1.png" x="44" y="252" width="256" height="128"/>
+  <text class="h" x="316" y="276">The overhead layer</text>
+  <text class="p" x="316" y="296">the roof, the chimney</text>
+  <text class="code" x="316" y="316">BG1</text>
+  <text class="code" x="316" y="332">MAPGRID_LAYER_OVERHEAD</text>
 
-  <text class="eyebrow" x="20" y="316">FRONT</text>
+  <rect class="sheet c-sprites" x="44" y="392" width="256" height="128"/>
+  <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAABACAMAAADlCI9NAAAA3lBMVEUAAABzOQC1OQBzAAApKSm1OTlzOTm1cznncznnc3P/tXPntXP/57W1c3M5AAA5OTm1tbW1cwAAOQDnOQA5czkAcznntbVzczkAtTk5tTnn57VztTkAcwDnOTmEhIS1tTnOzs45tQA55wBzcwC1tXNz/wBSUlJztQBz5wA5cwDntTnntQD/5wC1tQAAAAD//7X/53Pn53M5OQD//+fncwDn5+e1tecAADm15+c5c3M5OXM5c7Vzc3Nztf9ztbX/tbWcnJxjY2Nzc7UAOXO1tf//cznnc7Vzc+dztecAOTn3zd5LAAAAAXRSTlMAQObYZgAAAmpJREFUaN7tlm1X2jAYhpu0zVNIX8jUZHYO0GaZA40w55wpnTJ16P//QwtuZ18Az1EXsw+9aA/nkLb31Ye8BcFzQBg9EEbPuv3FxDHBGMfYehAvAjiGJMZJ0gGMfOQTgKSbdJIuUIy9CCCAtJPGXciQlwog+/d3oYMTHPsRIAjZcEC2FyI/wwCFKLYf7E8gX04EIca5r4kgD212jlCe+8kPojwM7YHDwk9+j70hcZhs4e0dPwKcip23lu3d2I8ALd/tLQX23m/1XWcN2Lpfh/sHD1RJKd1lEykCAevbdg8+WA4GaZo5fHvBWKU2tH08PDzc/xRwhwUIBKlGVVWJtY3jo+PxmD3xiU+iD4wxqCpbhXXN1ZgdHW2szz9gQOloZMOtBVutgdaEoKpCkXYmEInyhNIJZbScrnREbQUEAvRZaWcGhNEUJqeTwSmdrnQDrR8UyPLLlUDB2CgdnEwopV/Yyoyv/+IoXp7IypagHE2mdMQqvnqF0/ggmMqMAD/rlQBnwEjpLGgzhQT+9TxNz8+4kD0PAkGh+LelwJALL/nBhZGcpynnsr7wIjBrvmf88pJnV43zJXctTPbnsyU/hsc+8q+NUDfcckOEufYgYIxRDb+9/dmowhgPAkoVhVlk2cIQMne46G0EQNSElCUidQzi5c97KoLSrG7uer27ps4ofX0DRTNh6kVzt6iNyOj89UtQqNm9MVFkzL0iPvqA5T4yNj/yMQR+o+xIUEZ5ev0lBBTxMQL+oJUAouzhbtvxeL4mAMSewuHG53EBQUHPQYIngUBLOtO6T6Wn/MD5xrOlpaWlpaWlpeU/4ReEfj3ytXzOrgAAAABJRU5ErkJggg==" class="px" data-crop="crops/world/vale-roof-sprites-p2.png" x="44" y="392" width="256" height="128"/>
+  <text class="h" x="316" y="416">The characters</text>
+  <text class="p" x="316" y="436">Isaac, a villager</text>
+  <text class="code" x="316" y="456">sprites, level with BG2</text>
+  <text class="code" x="316" y="472">and drawn over it</text>
 
-  <text class="p" x="20" y="352">The console stacks the sheets; no code works</text>
-  <text class="p" x="20" y="371">out whether Isaac is behind a roof. He is drawn</text>
-  <text class="p" x="20" y="390">between two layers of the same map.</text>
-  <text class="p" x="20" y="418">Most maps stack them this way; a map can</text>
-  <text class="p" x="20" y="437">give its layers another order.</text>
-  <text class="code" x="380" y="458" text-anchor="end">MapGrid_LoadLayout</text>
+  <rect class="sheet c-middle" x="44" y="532" width="256" height="128"/>
+  <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAABACAMAAADlCI9NAAAAQlBMVEUAAAC1nFIpYzkplEqtjFpjhCHGtVq1ximMpSlCYyFavUrO/1qM50re5zGcc0qUYzlKpYRSxmNKnHtz7zFKrZR79zFTGMgDAAAAAXRSTlMAQObYZgAAAfBJREFUaN7tmNtygzAMRIlcYcs1iUPo//9qV4Jc2vLWjtSZRDMQkofsQZLXgmHwi8POb+SovwdAyRPgzVNsLwE7AMyOAOPPEnAukQBEuUgYQK0pEbk24SNAXgkQUQBZKwD99yCAot2n+p4A12WoNz6Uwsm7BDcfIII842g1efqAAbQG1ZwL52z6nj6wWnFVAmLOwiypeGZg2wsgT3BAFpGUWvUGwP0j8VmLoPruAKYPA2R0Ia5QDU8A8wEtQEEPsPZCSq4ZGO2MBshYgu/Q1xx4A+D+pwlLUN2oNl8rBkCzLRD9TxqtUXUFOKz6GsbQSAJmQs09yQoiwp4DyXAczAgT2Sig8tl1JlSAdtWvSbigGV33gqOdLfW1kuhq0MHEL07bp46Cps95cs3AFWCwVYCAJUQA0KaPx4Jpcm3Cuz6sWPRq8l2GW9g0pCkgdcUIfea1BXQ7iHk8hwHCBSRRqa7b8Q3AhmJAYF8OeT+gLWBlGGKeC1R/WNdhrXFPxyL3cwjAA0UggG/sAgSX4MkADv/xPeFzAdxf1fbzfMbR4wAu89J7IMB86cuMLMRlAAXoH90d4OYDHQXoyII3wHi/7Mt56XMgwLJoEgIBDMG9BA97wRIC8NUJAwCO376/ANzj9Pu/eAH8OYBrH47RGRh3V8EnUWURlxGKBEAAAAAASUVORK5CYII=" class="px" data-crop="crops/world/vale-roof-bg2.png" x="44" y="532" width="256" height="128"/>
+  <text class="h" x="316" y="556">The middle layer</text>
+  <text class="p" x="316" y="576">here, the tree at the side</text>
+  <text class="code" x="316" y="596">BG2</text>
+  <text class="code" x="316" y="612">MAPGRID_LAYER_MIDDLE</text>
+
+  <rect class="sheet c-ground" x="44" y="672" width="256" height="128"/>
+  <image href="data:image/png;base64,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" class="px" data-crop="crops/world/vale-roof-bg3.png" x="44" y="672" width="256" height="128"/>
+  <text class="h" x="316" y="696">The ground</text>
+  <text class="p" x="316" y="716">grass, the path, the cliff</text>
+  <text class="code" x="316" y="736">BG3</text>
+  <text class="code" x="316" y="752">MAPGRID_LAYER_GROUND</text>
+  <text class="code" x="44" y="820">back</text>
+
+  <text class="p" x="24" y="848">No code works out whether Isaac is hidden: the console</text>
+  <text class="p" x="24" y="866">draws the overhead layer over the characters. Most</text>
+  <text class="p" x="24" y="884">maps stack their layers this way; a map can change it.</text>
 </svg>
