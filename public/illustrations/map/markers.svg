@@ -5,8 +5,7 @@
     .panel { fill: #fafafa; stroke: #e5e5e5; }
     .card { fill: #ffffff; stroke: #e5e5e5; }
     .spot { fill: none; stroke: #c4c4c4; stroke-width: 1.5; stroke-dasharray: 3 3; }
-    .chest { fill: #b7791f; stroke: #7c4a03; stroke-width: 1.2; }
-    .lid { stroke: #7c4a03; stroke-width: 1.2; }
+    .px { image-rendering: pixelated; }
     .lead { stroke: #a3a3a3; stroke-width: 1; fill: none; }
     .item { fill: #0a0a0a; font: 500 12px ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
     .scene { fill: #0a72ef; font: 600 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
@@ -19,8 +18,6 @@
       .panel { fill: #0a0a0a; stroke: #262626; }
       .card { fill: #111111; stroke: #2e2e2e; }
       .spot { stroke: #4a4a4a; }
-      .chest { fill: #a16207; stroke: #fbbf24; }
-      .lid { stroke: #fbbf24; }
       .lead { stroke: #5c5c5c; }
       .item, .h2 { fill: #ededed; }
       .scene { fill: #66a6ff; }
@@ -29,7 +26,10 @@
     }
   </style>
   <defs>
-    <g id="chest"><rect class="chest" x="-7" y="-6" width="14" height="11" rx="2"/><path class="lid" d="M -7 -1.5 H 7"/></g>
+    <!-- The chests as each room shows them, from render place's map
+         pictures of CrossboneIsleKeys and CrossboneIsleBane, at their own size. -->
+    <g id="chest"><image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAgVBMVEV7Y2OMe4SUlKWtxt6lrb1SUlI5OTm1AAC1OTlzAACEhITnAADnc3O1tbXnOQD/c3PntbXnOXMAOf/Wrb29nK215+fnOTn/OTnn5+c5c///5+e1c3Pevcbnztb///+cnJzOzs7n5/9zc3NjY2NzOQC1OQD/OQBzOTkYGBj/AACljJwrZTUpAAAAtklEQVQY002M4VLEIAyEI9dUpAV6gkeV9NDQonfv/4AGxx/37WQ3k9kJAMCT6CGU6J++wmnA8VnQMi8jnkApoydh7qaNgkFZ7fxyfj0vs9N2gBDf9CX59f0jpUteA9B2zbP3fpGZ85WAaC1W+LRW8qsfGCsis0HEygSBDO6Hy2Nxx8FGfoSSp9a+f2prUym9wXxrLaXU2o25NypK44+pVoJ7RNzd4To74h0i4SNRDoGEbeseKP4COfgRhuBNVJ4AAAAASUVORK5CYII=" class="px" data-crop="crops/map/crossbone-keys-chest.png" x="-8" y="-8" width="16" height="16"/></g>
+    <g id="chest-bane"><image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAb1BMVEXOvXu9rWutnFrezoxSUlI5OTm1AAC1OTlzAACEhITnAADnc3O1tbXnOQD/c3PntbXnOXMAOf+15+fnOTn/OTnn5+c5c///5+e1c3P///+cnJzOzs7n5/9zc3NjY2NzOQC1OQD/OQBzOTkYGBj/AADfLVCnAAAAsUlEQVQY002P4XbDIAiFQcmciZq2Mau1w8Q27/+MhezPviN4vKByARAMACBKMnKQhcbCiTV4KjR8CU7ieyAteDcKkybn5R4GF9N8uV7mKbogz+DNLTmtP/ecl7IiWPsoU0pplpjKw4KFtQbhGYLsvyowNSJmT0SNdQJP2x7LUOO+s9dvaxl7f71b72OtOjTz0XvOufeDWTsaScfJ2Jq6ItriHpWNCE/hHyqggT/bYgPxA0LFC2OP+biBAAAAAElFTkSuQmCC" class="px" data-crop="crops/map/crossbone-bane-chest.png" x="-8" y="-8" width="16" height="16"/></g>
     <circle id="spot" class="spot" r="6"/>
   </defs>
 
@@ -62,15 +62,16 @@
   <use href="#spot" x="68.8" y="323.3"/>
   <use href="#spot" x="98.8" y="323.3"/>
   <use href="#spot" x="128.8" y="323.3"/>
-  <use href="#chest" x="241.3" y="390.8"/>
-  <use href="#chest" x="308.8" y="390.8"/>
-  <use href="#chest" x="278.8" y="435.8"/>
-  <use href="#chest" x="356" y="308.3"/>
+  <use href="#chest-bane" x="241.3" y="390.8"/>
+  <use href="#chest-bane" x="308.8" y="390.8"/>
+  <use href="#chest-bane" x="278.8" y="435.8"/>
+  <!-- The Demon Axe's chest on its stone pillar, as CrossboneIsleBane shows it. -->
+  <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAwCAMAAAAmaqofAAAAn1BMVEWta1LGnHuljEq1nFrGrWu1hGtSUlI5OTm1AAC1OTlzAACUWnOEhITnAADnc3O1tbXnOQD/c3PntbXnOXMAOf/33qW15+fnOTn/OTnn5+c5c///5+e1c3PWvXv///+cnJzOzs7n5/9zc3NjY2NzOQC1OQD/OQBzOTkYGBj/AABzczm1tXPn57X//+f/57W1czkpKSnntXOUezkAOTnnzoyv6YaiAAACQUlEQVQoz02Si3IbIQxFN0BQ3a6fqRunBTvZtVcEHANO/v/besVOZ6oZFnOsx5Wg6x6U1tpoA8OmtXrouu5RaUvfYAus72TVY9f96JTpF0vYSj6LXgEh1KwXm+3u6efTbrVZrJGiU9rsfy2eD9uX338Oh2f3YrSCpz8e3Wq73e6wVu7o4Ylw/3Jaw17Xa+xvEi5aBjtaOwy9tXYcoEzgvrfny8bRaXO5DL1AY/zx5JbTxGGcpuXp5I3plDJ+GN6n6XA4TNP7MBilms7RwrPZchzNXH1v7Xlz2YidrZ2hP9r/zc+SfEy768fHxy1FDr5VB3UZx6FnjiXIAJvOXF2qjmOqMez/6QSqqeZa642K6NTKWIdjzPinXlMxSjzvlHe3GjmlnGP4vMNzbxTldKscuRUKyuy7L60KxZjhhU2g/oL4BmEciFkgcnrAzGBcAomnNyikiFAjRoIFySniFcV0u6aMJDOUNpWNIt5xniHaVAKleHbIXAhQdejKpST9IG0kxkQ8Chk0HTk2yDEDAGpXEw6paeWoBWqTcs2cqzCiPM9TI1/KBeFUSsmpSUKd2qrH0mDzlEGCoRoYxUGejZZzzVQrg1EcMRDv22UwYYFRtB46/ehklpzkA0gyJU8CcZU5Nxja6PADjKGLxULriDAOdIRqcksNamMlGh1Js+gptMcwp3S4Yvhl+oTnXQ1Zcsr0EE3hru5os5eyjOCMuytBS5taupTHhQD0+anbo31NUI3gVEgc5d7xGclGzMgytOOo9F+961+VqhxWIwAAAABJRU5ErkJggg==" class="px" data-crop="crops/map/crossbone-bane-pillar-chest.png" x="346" y="300" width="20" height="48"/>
   <text class="item" x="241.3" y="374" text-anchor="middle">666 coins</text>
   <text class="item" x="320" y="374" text-anchor="middle">Elixir</text>
   <text class="item" x="278.8" y="466" text-anchor="middle">Water of Life</text>
-  <text class="item" x="364" y="336" text-anchor="end">Demon Axe</text>
-  <text class="small" x="364" y="352" text-anchor="end">carried on a stone pillar</text>
+  <text class="item" x="338" y="318" text-anchor="end">Demon Axe</text>
+  <text class="small" x="338" y="334" text-anchor="end">carried on a stone pillar</text>
   <text class="small" x="36" y="466">four spots left empty</text>
 
   <text class="p" x="20" y="512">The layout lists the spots, each with an event;</text>
