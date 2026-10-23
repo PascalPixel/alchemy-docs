@@ -2,9 +2,8 @@
 
 import { useEffect } from 'react';
 
-// The abilities were once one page with an anchor for each (#flare), then a
-// page each; a link to one of those anchors goes on to the code that plays
-// that ability, and any other visit to the chapter on how abilities resolve.
+// Sends a link to an anchor a page no longer has (a folder page that once
+// showed its files' members) on to where that anchor is now.
 export function AnchorRedirect({ map, fallback }: { map: Record<string, string>; fallback?: string }) {
   useEffect(() => {
     const to = map[decodeURIComponent(window.location.hash.slice(1))] ?? fallback;

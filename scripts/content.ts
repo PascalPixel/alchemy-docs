@@ -15,7 +15,7 @@
 // list every name by kind. Names in comments, and code names in the guide,
 // link to their entries within the same game, so the two games never cross.
 // A handler whose comment names the abilities that reach it shows their
-// recordings (public/abilities/index.tsv) in its entry.
+// recordings (abilities/index.tsv in the render store) in its entry.
 //
 // Every title is Alchemy's: a Markdown page's # heading, a reference page's
 // path in its game or a type's name. Every description is a first sentence
@@ -26,15 +26,16 @@ import { basename, dirname, join, normalize, relative } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { Language, type Node, Parser } from 'web-tree-sitter';
-import { readManifest, renderPath } from '../lib/renders';
+import { readFetched, readManifest, renderPath } from '../lib/renders';
 
 const docs = fileURLToPath(new URL('..', import.meta.url));
 // The Alchemy checkout it reads: ALCHEMY, or the one beside this repository.
 const repo = process.env.ALCHEMY ?? join(docs, '../alchemy');
 const content = join(docs, 'content/docs');
 const github = 'https://github.com/PascalPixel/alchemy/blob/main';
-// The renders the store holds (render/manifest.tsv): the pictures are not in
-// public/, so a picture an index lists is shown only when the store has it.
+// The renders the store holds (its manifest, which `bun scripts/renders.ts
+// fetch` copies into build/renders): the pictures are not in public/, so a
+// picture an index lists is shown only when the store has it.
 const stored = readManifest(docs);
 // The Broken Seal's maps by symbol, numbered as field/map_headers.s lists them.
 const sceneIds = new Map(
@@ -596,7 +597,7 @@ const includedBy = new Map<SourceFile, SourceFile[]>();
 // The recordings beside the code that plays them. A handler's comment names
 // every ability that reaches it in its reach line (`Abilities: Gaia, Mother
 // Gaia (BATTLE_ANIM_GAIA); none (BATTLE_ANIM_X).`, the form battle_anim/README.md
-// sets), and public/abilities/index.tsv holds the casts recorded from the
+// sets), and the store's abilities/index.tsv holds the casts recorded from the
 // game by ability id. A name is matched against abilities.tsv's ability column
 // and, where several rows share it, to the rows whose effect word in
 // ability_anims.tsv dispatches to the group's effect: kind in bits 0 to 11, bit 15
@@ -611,9 +612,7 @@ const recordings = (() => {
   return {
     get: () => rows,
     load: () => {
-      const index = join(docs, 'public/abilities/index.tsv');
-      if (!existsSync(index)) return;
-      const [head, ...lines] = readFileSync(index, 'utf8').trim().split('\n');
+      const [head, ...lines] = readFetched(docs, 'abilities/index.tsv').trim().split('\n');
       const keys = head.split('\t');
       rows = lines.map((l) => Object.fromEntries(l.split('\t').map((v, i) => [keys[i], v]))).filter((r) => r.file && stored.has(`abilities/${r.file}`));
     },
@@ -1137,61 +1136,11 @@ const FIXED: [string, string][] = [
   ['games/tbs/src/MATCHING.md', '/tbs/matching'],
   ['games/tbs/glossary.md', '/tbs/glossary'],
   ['games/tbs/src/field/map_headers.s', '/tbs/places'],
+  // The Unused page, which unusedPage() writes from the source's comments; a
+  // README links it by its address on the site.
+  ['games/tbs/unused', '/tbs/unused'],
   ['games/tbs/src', '/tbs/code'],
 ];
-// Site settings: links to a guide page's anchors that it no longer has, and
-// where each went. The guide to the layouts (src/layout) was at
-// /tbs/world/map until it was named a layout and the guide to the maps took
-// that URL; /tbs/world/scene, the maps' guide's old URL, redirects here
-// with its anchor, some of which the maps' guide words differently now.
-const MOVED_ANCHORS: Record<string, Record<string, string>> = {
-  '/tbs/world/map': {
-    'which-events-a-cell-starts': '/tbs/world/map#which-map-events-a-cell-starts',
-    'what-an-event-row-says': '/tbs/world/map#what-a-map-event-row-says',
-    'how-an-event-is-chosen': '/tbs/world/map#how-a-map-event-is-chosen',
-    cells: '/tbs/world/layout#cells',
-    'a-maps-tables': '/tbs/world/layout#a-layouts-tables',
-    'the-header': '/tbs/world/layout#the-header',
-    'how-the-build-makes-a-map': '/tbs/world/layout#how-the-build-makes-a-layout',
-    'loading-a-map': '/tbs/world/layout#loading-a-layout',
-    'one-grid-three-layers': '/tbs/world/layout#one-grid-three-layers',
-    'placeholder-blocks': '/tbs/world/layout#placeholder-metatiles',
-    'chests-and-psynergy-stones': '/tbs/world/layout#chests-and-psynergy-stones',
-    'tile-animation-and-blend-scripts': '/tbs/world/layout#tileset-animation-and-blend-scripts',
-    'the-world-maps-data': '/tbs/world/layout#the-world-maps-data',
-    'the-colosso-paths': '/tbs/world/layout#the-colosso-paths',
-    design: '/tbs/world/layout#design',
-  },
-  // The concept names of October 2026 renamed these headings: effects are
-  // battle animations, cues songs, the scheduler the task runner, render
-  // outputs window sprites, field objects objects.
-  '/tbs/world': { 'field-objects-and-their-scripts': '/tbs/world#objects-and-their-scripts' },
-  // The folds of October 2026 gave the engine's views of an object one
-  // struct, and a battle sprite one struct.
-  '/tbs/world/field': { 'one-object-many-views': '/tbs/world/field#one-object-a-few-views' },
-  '/tbs/world/layout': { 'tile-animation-and-blend-scripts': '/tbs/world/layout#tileset-animation-and-blend-scripts' },
-  '/tbs/battle': { effects: '/tbs/battle#animations', 'rules-and-effects-run-together': '/tbs/battle#rules-and-animations-run-together' },
-  '/tbs/battle/battle': {
-    'first-strikes-and-escape': '/tbs/battle/battle#first-strikes-and-fleeing',
-    'planning-an-action': '/tbs/battle/battle#building-a-turn',
-    'rules-and-pictures-meet-at-the-event-queue': '/tbs/battle/battle#rules-and-pictures-meet-at-the-playback-queue',
-    'one-sprite-several-structs': '/tbs/battle/battle#one-sprite-one-struct',
-  },
-  '/tbs/battle/battle_anim': {
-    'how-a-move-picks-its-effect': '/tbs/battle/battle_anim#how-a-move-picks-its-animation',
-    'the-presentation-word': '/tbs/battle/battle_anim#the-animation-word',
-    'effect-families': '/tbs/battle/battle_anim#animation-families',
-    'how-effects-fit-with-the-rest-of-the-game': '/tbs/battle/battle_anim#how-animations-fit-with-the-rest-of-the-game',
-  },
-  '/tbs/menus/window': { 'the-decoded-text-ring': '/tbs/menus/window#the-text-buffer', 'render-outputs': '/tbs/menus/window#window-sprites' },
-  '/tbs/menus/menu': { 'the-status-screen': '/tbs/menus/menu#the-summary-screen' },
-  '/tbs/engine': { 'sound-cues': '/tbs/engine#songs' },
-  '/tbs/engine/graphics': { 'two-backdrops-in-one-background-memory': '/tbs/engine/graphics#two-battle-backgrounds-in-one-background-memory' },
-  '/tbs/engine/runtime': { 'the-task-scheduler': '/tbs/engine/runtime#the-task-runner' },
-  '/tbs/engine/sound': { 'what-a-cue-number-means': '/tbs/engine/sound#what-a-song-number-means' },
-  '/tbs/glossary': { 'field-object': '/tbs/glossary#object' },
-  '/tbs/matching': { 'battle-effects': '/tbs/matching#battle-animations' },
-};
 // The root's sidebar label: the README's own heading is the site's name.
 const ROOT_LABEL = 'Introduction';
 
@@ -1258,7 +1207,7 @@ function arrange(): Placed {
   // What each front page places: its section pages, places and source.
   for (const game of root.children.filter((n) => n.kind === 'game')) {
     const g = game.key.split('/')[1] as Game;
-    const wants = [...sectionPages(g), `games/${g}/src/field/map_headers.s`, `games/${g}/src`];
+    const wants = [...sectionPages(g), `games/${g}/src/field/map_headers.s`, `games/${g}/unused`, `games/${g}/src`];
     const links = linksOf(game.key, 'last').filter((k) => wants.includes(k));
     for (const k of wants) if (!links.includes(k) && (fixedUrl(k) || existsSync(join(repo, k)))) notes.push(`${game.key} doesn't link ${k}: placed after its links`);
     for (const k of [...links, ...wants.filter((k) => !links.includes(k) && (fixedUrl(k) || existsSync(join(repo, k))))]) {
@@ -1276,7 +1225,7 @@ function arrange(): Placed {
 
 // The derived tree, as the build prints it.
 function printTree(node: Placed, depth = 0): string[] {
-  const title = node.kind === 'root' ? ROOT_LABEL : (headingOf(node.key) ?? headingOf(`${node.key}/README.md`) ?? (node.key.endsWith('map_headers.s') ? 'Places' : node.key));
+  const title = node.kind === 'root' ? ROOT_LABEL : (headingOf(node.key) ?? headingOf(`${node.key}/README.md`) ?? (node.key.endsWith('map_headers.s') ? 'Places' : node.key.endsWith('/unused') ? 'Unused' : node.key));
   return [`${'  '.repeat(depth)}${title}  ${node.url}`, ...node.children.flatMap((c) => printTree(c, depth + 1))];
 }
 function headingOf(key: string): string | undefined {
@@ -1491,10 +1440,7 @@ function arrangedPages(root: Placed, files: Map<Game, SourceFile[]>) {
     const source = /^games\/\w+\/src$/.test(node.key) ? `${node.key}/README.md` : node.key;
     if (!source.endsWith('.md') || !existsSync(join(repo, source))) continue;
     const extra = node.kind === 'guide' ? guideFiles(node.key, files.get(node.key.split('/')[1] as Game) ?? []) : '';
-    // A page that sends old anchors on is MDX, for its AnchorRedirect.
-    const moved = MOVED_ANCHORS[node.url];
-    if (moved) prose(source, fileOf(node).replace(/\.md$/, '.mdx'), [extra, `<AnchorRedirect map={${JSON.stringify(moved)}} />`].filter(Boolean).join('\n\n'));
-    else prose(source, fileOf(node), extra);
+    prose(source, fileOf(node), extra);
   }
 }
 
@@ -1518,10 +1464,6 @@ function arrangedSidebar(root: Placed) {
 // page the build writes, which no redirect leaves from.
 function checkArrangement() {
   const failures: string[] = [];
-  for (const [page, moved] of Object.entries(MOVED_ANCHORS)) {
-    if (!pagesWritten.has(page)) failures.push(`MOVED_ANCHORS names ${page}, which the build doesn't write`);
-    for (const to of Object.values(moved)) if (!pagesWritten.has(to.replace(/#.*$/, ''))) failures.push(`MOVED_ANCHORS sends an anchor of ${page} to ${to}, which the build doesn't write`);
-  }
   for (const game of GAMES)
     for (const k of guideReadmes(game)) {
       const node = placed.get(k);
@@ -1554,6 +1496,21 @@ function checkArrangement() {
 
 // ---------------------------------------------------------------------------
 // Finding code by what the player sees: the places, by each map overlay's summary.
+
+// The renders, by scene number: the store's places/index.tsv lists every map,
+// entrance shot and recording with the scene it was made in and the way the
+// place was drawn (cursed, cured, or a story moment and the flags it set), so
+// a scene renamed since keeps its renders.
+type Render = { number: number; scene: string; area: string; variant: string; kind: string; event: string; messages: string; file: string };
+let placeRows: Render[] | undefined;
+function placeRenders(): Render[] {
+  if (!placeRows) {
+    const [head, ...lines] = readFetched(docs, 'places/index.tsv').trim().split('\n').map((l) => l.split('\t'));
+    const col = (name: string) => head.indexOf(name);
+    placeRows = lines.map((r) => ({ number: +r[col('number')], scene: r[col('scene')], area: r[col('area')] ?? '', variant: r[col('variant')] ?? '', kind: r[col('kind')], event: r[col('event')], messages: r[col('messages')] ?? '', file: r[col('file')] }) as Render);
+  }
+  return placeRows;
+}
 
 function places(files: SourceFile[]) {
   const scenes = files.filter((f) => /^games\/tbs\/src\/map\/[^/]+\.c$/.test(f.path));
@@ -1817,19 +1774,7 @@ function placePages(scenes: SourceFile[]): Place[] {
     }
   }
   out.sort((a, b) => a.id - b.id);
-  // The renders, by scene number: public/places/index.tsv lists every map,
-  // entrance shot and recording with the scene it was made in and the way the
-  // place was drawn (cursed, cured, or a story moment and the flags it set), so
-  // a scene renamed since keeps its renders.
-  type Render = { number: number; scene: string; area: string; variant: string; kind: string; event: string; messages: string; file: string };
-  const index = join(docs, 'public/places/index.tsv');
-  const renders = existsSync(index)
-    ? (() => {
-        const [head, ...lines] = readFileSync(index, 'utf8').trim().split('\n').map((l) => l.split('\t'));
-        const col = (name: string) => head.indexOf(name);
-        return lines.map((r) => ({ number: +r[col('number')], scene: r[col('scene')], area: r[col('area')] ?? '', variant: r[col('variant')] ?? '', kind: r[col('kind')], event: r[col('event')], messages: r[col('messages')] ?? '', file: r[col('file')] }) as Render);
-      })()
-    : [];
+  const renders = placeRenders();
   const words2 = catalog();
   const story = storyEvents();
   const actor = actorIndex(scenes);
@@ -2157,16 +2102,99 @@ function enumOf(name: string) {
 }
 
 // ---------------------------------------------------------------------------
-// The abilities' old pages: each one redirects to the handler that plays it
-// (vercel.json), and the page that once held them all keeps its anchors
-// (#flare) working from a frozen list, sending any other visit to the battle
-// README's chapter on how an ability resolves.
+// The Unused page: what the game keeps but never reaches, each thing in a
+// section of its own made from its own comment. The source marks it in four
+// ways: a comment that says `Unused:` above a declaration, inside a table (a
+// row no lookup reaches) or in a file's summary (a map nothing leads to); a
+// function declared UNUSED; and a name that carries Unused after its prefix.
+// The sections are grouped by the folder guide that explains their code, in
+// the guide's order, and each follows the source's order. The page opens
+// with the glossary's entry for the word, and the first recording of an
+// unused event.
 
-function abilityAnchors() {
-  const [, ...rows] = readFileSync(join(docs, 'redirects/ability-anchors.tsv'), 'utf8').trim().split('\n');
-  const map = Object.fromEntries(rows.map((r) => r.split('\t')));
-  const chapter = `${siteLink('games/tbs/src/battle/README.md')}#how-an-ability-resolves`;
-  page(`${GUIDE}/tbs/abilities/index.mdx`, { title: 'Abilities' }, `<AnchorRedirect map={${JSON.stringify(map)}} fallback={${JSON.stringify(chapter)}} />\n\n[How an ability resolves](${chapter})`);
+function unusedPage(files: SourceFile[], root: Placed) {
+  const node = placed.get('games/tbs/unused');
+  if (!node) return;
+  const index = where.get('tbs')!;
+  type Item = { name: string; folder: string; text: string; link: string; gif?: string };
+  const items: Item[] = [];
+  const seen = new Set<string>();
+  const folderOf2 = (path: string) => path.match(/^games\/tbs\/(?:src|include(?:\/unit)?)\/([^/.]+)\//)?.[1] ?? '';
+  const lineLink = (f: SourceFile, line: number) => `<small>In [\`${basename(f.path)}\`, line ${line}](${github}/${f.path}#L${line})</small>`;
+  const add = (f: SourceFile, name: string, text: string, link: string) => {
+    if (seen.has(name)) return;
+    seen.add(name);
+    items.push({ name, folder: folderOf2(f.path), text: linkNames(text, 'tbs', name.replace(/,.*$/, '')), link });
+  };
+  const declItem = (f: SourceFile, d: Decl) => {
+    const at = index.get(d.name);
+    add(at?.file ?? f, d.name, d.doc, `<small>In [\`${basename((at?.file ?? f).path)}\`, line ${(at?.decl ?? d).line}](${at?.url ?? urlOf(f, d)})</small>`);
+  };
+  for (const f of files) {
+    const lines = readFileSync(join(repo, f.path), 'utf8').split('\n');
+    for (let i = 0; i < lines.length; i++) {
+      if (!/^\s*\/\//.test(lines[i])) continue;
+      let j = i;
+      while (j + 1 < lines.length && /^\s*\/\//.test(lines[j + 1])) j++;
+      const block = lines.slice(i, j + 1);
+      const start = i + 1;
+      i = j;
+      if (!block.some((l) => /\bUnused:/.test(l))) continue;
+      if (block.some((l) => /^\s*\/\/\/\s*@file/.test(l))) {
+        const para = f.doc.split(/\n\n/).find((x) => /\bUnused:/.test(x));
+        if (para) add(f, basename(f.path), para, `<small>In [\`${basename(f.path)}\`](${pageOf(f.path)})</small>`);
+        continue;
+      }
+      const owner = f.decls.find((d) => !d.anon && d.line === j + 2 && d.doc);
+      if (owner) {
+        declItem(f, owner);
+        continue;
+      }
+      const around = f.decls.filter((d) => !d.anon && d.line <= start && start < d.line + d.lines).pop();
+      const text = codeDeclared(md(block.map((l) => l.replace(/^\s*\/\/\/?<?\s?/, '')).join('\n')), 'tbs');
+      add(f, around ? `${around.name}, line ${start}` : `${basename(f.path)}, line ${start}`, text, lineLink(f, start));
+    }
+  }
+  for (const f of files)
+    for (const d of f.decls) {
+      if (d.anon || index.get(d.name)?.decl !== d) continue;
+      if ((d.kind === 'function' && /\bUNUSED\b/.test(d.signature)) || /(?:^|_)Unused[A-Z]/.test(d.name)) declItem(f, d);
+    }
+
+  // An unused event's recording, made in its map: an event that is unused
+  // as a whole, not one that plays but for a branch.
+  const renders = placeRenders();
+  for (const it of items) if (/^Unused:/.test(it.text) || /(?:^|_)Unused[A-Z]/.test(it.name)) it.gif = renders.find((r) => r.kind === 'event-gif' && r.event === it.name && stored.has(`places/${r.file}`))?.file;
+
+  // The folders in the guide's order.
+  const walkTree = (n: Placed): Placed[] => [n, ...n.children.flatMap(walkTree)];
+  const order = walkTree(root).map((n) => n.key);
+  const guide = (folder: string) => `games/tbs/src/${folder}/README.md`;
+  const rank = (folder: string) => (order.includes(guide(folder)) ? order.indexOf(guide(folder)) : order.length);
+  const folders = [...new Set(items.map((it) => it.folder))].sort((a, b) => rank(a) - rank(b));
+
+  // The opening: the glossary's entry, but for its pointer here.
+  const glossary = readFileSync(join(repo, 'games/tbs/glossary.md'), 'utf8');
+  const entry = (glossary.match(/\n### Unused\n\n([\s\S]*?)(?=\n### |\n## |(?![\s\S]))/)?.[1] ?? '')
+    .replace(/\s*\[[^\]]*\]\([^)]*unused[^)]*\) collects them\./i, '')
+    .trim();
+  const opening = items.find((it) => it.gif);
+  const body: string[] = [];
+  if (opening) body.push(`![\`${opening.name}\`, which the game never plays, as it would play](/places/${opening.gif})`);
+  if (entry) body.push(`${linkProse(codeProse(entry, 'tbs'), 'tbs')} ([Glossary](${siteLink('games/tbs/glossary.md')}#unused))`);
+  for (const folder of folders) {
+    const title = headingOf(guide(folder));
+    body.push(`## ${title ? `[${title}](${siteLink(guide(folder))})` : `\`${folder}\``}`);
+    for (const it of items.filter((x) => x.folder === folder)) {
+      const name = it.name.includes(', line ') ? `\`${it.name.replace(/, line .*$/, '')}\`, line ${it.name.replace(/^.*, line /, '')}` : `\`${it.name}\``;
+      const parts = [`### ${name}`];
+      if (it.gif && it !== opening) parts.push(`![\`${it.name}\`, as it would play](/places/${it.gif})`);
+      if (it.text) parts.push(it.text);
+      parts.push(it.link);
+      body.push(parts.join('\n\n'));
+    }
+  }
+  page(fileOf(node), { title: 'Unused', description: firstSentence(entry) }, body.join('\n\n'));
 }
 
 // ---------------------------------------------------------------------------
@@ -2273,7 +2301,7 @@ for (const r of orphans) console.log(`  no reach line names ${r.name} (${r.abili
 for (const [id, at] of placedRecordings) if (at.length > 1) console.log(`  ability ${id} is shown ${at.length} times: ${at.join(', ')}`);
 for (const p of reachProblems) console.log(`  ${p}`);
 places(all.get('tbs')!);
-abilityAnchors();
+unusedPage(all.get('tbs')!, site);
 arrangedSidebar(site);
 const failures = checkArrangement();
 for (const f of failures) console.error(`content: ${f}`);

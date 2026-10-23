@@ -11,8 +11,8 @@ alchemy-devtools render psynergy --all --backdrop ../alchemy-docs/render/backdro
 
 Run it from an Alchemy checkout with a built `out/tbs-en`, with devtools built
 `--features render` (it needs libmgba). The ROM never leaves that checkout.
-Then publish the folder to the Blob store, which also copies its `index.tsv`
-into `public/abilities` (see the README):
+Then publish the folder to the Blob store, which uploads its `index.tsv`
+beside the pictures (see the README):
 
 ```sh
 bun scripts/renders.ts publish ../renders/abilities abilities --prune

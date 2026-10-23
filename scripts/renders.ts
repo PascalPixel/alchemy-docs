@@ -2,6 +2,7 @@
 // pictures against it.
 //
 //   bun scripts/renders.ts publish FOLDER PREFIX [--prune] [--dry-run]
+//   bun scripts/renders.ts fetch
 //   bun scripts/renders.ts check [OUT]
 //
 // publish uploads every picture under FOLDER to PREFIX/ in the store (places,
@@ -10,10 +11,14 @@
 // hash as a query (lib/renders.ts), so a re-render is a new URL. A picture
 // whose hash and size the manifest already lists is skipped. --prune deletes
 // the store's pictures under PREFIX/ that FOLDER no longer has. The TSV files
-// in FOLDER (index.tsv and the renderer's other records) are copied to
-// public/PREFIX/, which git keeps. The manifest is written to
-// render/manifest.tsv and to the store as renders-manifest.tsv; commit the
-// manifest and the TSV files after publishing.
+// in FOLDER (index.tsv and the renderer's other records) are uploaded beside
+// the pictures, to PREFIX/ in the store, and the manifest to the store as
+// renders-manifest.tsv; git keeps neither. A copy of each goes to
+// build/renders, as fetch would leave it.
+//
+// fetch copies the manifest and the records the build reads from the store
+// into build/renders; `bun run build` runs it first. The store is public, so
+// it needs no token.
 //
 // check reads every page under OUT (default out/), and asks the store (HEAD)
 // for every render a page shows or links; any other site path must be a file
@@ -23,10 +28,10 @@
 // (`vercel env pull .env.local`).
 import { del, list, put } from '@vercel/blob';
 import { createHash } from 'node:crypto';
-import { copyFileSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
-import { extname, join, relative } from 'node:path';
+import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
+import { dirname, extname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { formatManifest, MANIFEST, MANIFEST_BLOB, parseManifest, PREFIXES, readManifest, renderPath, storeUrl, type Entry } from '../lib/renders';
+import { FETCHED, fetchRecords, fetchStored, formatManifest, MANIFEST_BLOB, parseManifest, PREFIXES, renderPath, storeUrl, type Entry } from '../lib/renders';
 
 const docs = fileURLToPath(new URL('..', import.meta.url));
 const YEAR = 365 * 24 * 60 * 60;
@@ -79,16 +84,24 @@ function dimensions(file: string, data: Buffer): { width: number; height: number
 const walk = (dir: string): string[] =>
   readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(join(dir, e.name)) : e.isFile() ? [join(dir, e.name)] : []));
 
-// The repository's manifest and the store's together. The store's copy can
-// be a minute old after an overwrite (its cache), so neither alone is the
-// whole list when publishes follow each other; the store's row wins where
-// both have one. A row for a picture another machine published stays.
+// The manifest this machine last fetched or wrote and the store's together.
+// The store's copy can be a minute old after an overwrite (its cache), so
+// neither alone is the whole list when publishes follow each other; the
+// store's row wins where both have one. A row for a picture another machine
+// published stays.
 async function storeManifest(): Promise<Map<string, Entry>> {
-  const out = readManifest(docs);
-  const res = await fetch(`${storeUrl(docs)}/${MANIFEST_BLOB}?t=${Date.now()}`, { cache: 'no-store' });
-  if (res.ok) for (const [p, e] of parseManifest(await res.text())) out.set(p, e);
-  else if (res.status !== 404) throw new Error(`${MANIFEST_BLOB}: ${res.status}`);
+  const local = join(docs, FETCHED, MANIFEST_BLOB);
+  const out = existsSync(local) ? parseManifest(readFileSync(local, 'utf8')) : new Map<string, Entry>();
+  const text = await fetchStored(docs, MANIFEST_BLOB);
+  if (text !== undefined) for (const [p, e] of parseManifest(text)) out.set(p, e);
   return out;
+}
+
+// A copy in build/renders of what was just written to the store.
+function keep(pathname: string, data: string | Buffer) {
+  const file = join(docs, FETCHED, pathname);
+  mkdirSync(dirname(file), { recursive: true });
+  writeFileSync(file, data);
 }
 
 async function publish(folder: string, prefix: string, prune: boolean, dry: boolean) {
@@ -98,6 +111,7 @@ async function publish(folder: string, prefix: string, prune: boolean, dry: bool
   const files = walk(folder).sort();
   const pictures = files.filter((f) => TYPES[extname(f).toLowerCase()]);
   const records = files.filter((f) => extname(f) === '.tsv');
+  const recordPaths = new Set(records.map((f) => `${prefix}/${relative(folder, f).split('\\').join('/')}`));
   const local = new Map<string, { file: string; entry: Entry }>();
   for (const file of pictures) {
     const data = readFileSync(file);
@@ -125,12 +139,13 @@ async function publish(folder: string, prefix: string, prune: boolean, dry: bool
         cursor = page.hasMore ? page.cursor : undefined;
       } while (cursor);
     }
-    gone = [...stored].filter((p) => !local.has(p)).sort();
+    gone = [...stored].filter((p) => !local.has(p) && !recordPaths.has(p)).sort();
     console.log(`${prefix}: ${gone.length} to delete`);
   }
   if (dry) {
     for (const c of changed.slice(0, 20)) console.log(`  put ${c.entry.pathname}`);
     for (const p of gone.slice(0, 20)) console.log(`  delete ${p}`);
+    for (const f of records) console.log(`  put ${prefix}/${relative(folder, f)}`);
     return;
   }
 
@@ -159,16 +174,21 @@ async function publish(folder: string, prefix: string, prune: boolean, dry: bool
   // Entries the store had for files that still exist keep their row; a row
   // for a picture this folder dropped stays until it is pruned.
   for (const { entry } of local.values()) manifest.set(entry.pathname, entry);
-  const text = formatManifest(manifest.values());
-  writeFileSync(join(docs, MANIFEST), text);
-  await take();
-  await retry(MANIFEST_BLOB, () => put(MANIFEST_BLOB, text, { access: 'public', addRandomSuffix: false, allowOverwrite: true, contentType: 'text/tab-separated-values; charset=utf-8', cacheControlMaxAge: 60 }));
-  const into = join(docs, 'public', prefix);
-  if (relative(into, folder)) {
-    mkdirSync(into, { recursive: true });
-    for (const f of records) copyFileSync(f, join(into, relative(folder, f)));
+  // The records, then the manifest: a build that fetches between the two
+  // finds every picture the records name already listed or still absent.
+  const tsv = { access: 'public', addRandomSuffix: false, allowOverwrite: true, contentType: 'text/tab-separated-values; charset=utf-8', cacheControlMaxAge: 60 } as const;
+  for (const f of records) {
+    const pathname = `${prefix}/${relative(folder, f).split('\\').join('/')}`;
+    const data = readFileSync(f);
+    await take();
+    await retry(pathname, () => put(pathname, data, tsv));
+    keep(pathname, data);
   }
-  console.log(`${prefix}: ${done} uploaded (${(bytes / 1e6).toFixed(1)} MB), ${gone.length} deleted, ${records.length} records in public/${prefix}, in ${((Date.now() - started) / 1000).toFixed(0)} s`);
+  const text = formatManifest(manifest.values());
+  await take();
+  await retry(MANIFEST_BLOB, () => put(MANIFEST_BLOB, text, tsv));
+  keep(MANIFEST_BLOB, text);
+  console.log(`${prefix}: ${done} uploaded (${(bytes / 1e6).toFixed(1)} MB), ${gone.length} deleted, ${records.length} records, in ${((Date.now() - started) / 1000).toFixed(0)} s`);
 }
 
 async function check(out: string) {
@@ -209,8 +229,9 @@ const [command, ...args] = process.argv.slice(2);
 const flags = new Set(args.filter((a) => a.startsWith('--')));
 const plain = args.filter((a) => !a.startsWith('--'));
 if (command === 'publish' && plain.length === 2) await publish(plain[0], plain[1], flags.has('--prune'), flags.has('--dry-run'));
+else if (command === 'fetch' && plain.length === 0) await fetchRecords(docs);
 else if (command === 'check') await check(plain[0] ?? join(docs, 'out'));
 else {
-  console.error('usage: bun scripts/renders.ts publish FOLDER PREFIX [--prune] [--dry-run]\n       bun scripts/renders.ts check [OUT]');
+  console.error('usage: bun scripts/renders.ts publish FOLDER PREFIX [--prune] [--dry-run]\n       bun scripts/renders.ts fetch\n       bun scripts/renders.ts check [OUT]');
   process.exit(2);
 }

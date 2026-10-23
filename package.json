@@ -3,7 +3,7 @@
   "version": "0.0.47",
   "private": true,
   "scripts": {
-    "content": "bun scripts/story.ts > /dev/null && bun scripts/content.ts",
+    "content": "bun scripts/renders.ts fetch && bun scripts/story.ts > /dev/null && bun scripts/content.ts",
     "build": "bun run content && bun scripts/figures.ts && next build",
     "dev": "bun run content && next dev",
     "start": "serve out",

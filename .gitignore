@@ -39,11 +39,9 @@ next-env.d.ts
 /CLAUDE.md
 .env*
 
-# the renders: in the Vercel Blob store (scripts/renders.ts), never in git;
-# only their records are kept
-/public/places/*
-!/public/places/*.tsv
-/public/abilities/*
-!/public/abilities/*.tsv
+# the renders and their records: in the Vercel Blob store (scripts/renders.ts),
+# never in git
+/public/places/
+/public/abilities/
 /public/guides/
 /public/story/
