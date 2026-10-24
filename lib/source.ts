@@ -17,8 +17,9 @@ const docs = defineDocs({
   docs: {
     // source: the repository file or folder a generated page is made from,
     // for the page's GitHub link; image: a guide page's still of its first
-    // recording (lib/stills.ts), for its card and its preview image.
-    schema: pageSchema.extend({ source: z.string().optional(), image: z.string().optional() }),
+    // recording (lib/stills.ts), for its card and its preview image;
+    // lastModified: the day its source last changed in Alchemy's history.
+    schema: pageSchema.extend({ source: z.string().optional(), image: z.string().optional(), lastModified: z.string().optional() }),
     // Pictures keep their paths rather than being bundled, so the site's CSS
     // can tell a recording from an asset sheet by where it lives. The renders
     // are in the Blob store: their sizes come from its manifest. Then a

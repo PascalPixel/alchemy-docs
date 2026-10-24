@@ -62,6 +62,20 @@ function write(path: string, text: string) {
   writeFileSync(path, text);
 }
 
+// When each file and folder of the checkout last changed, from one pass over
+// its history (newest first, so a path's first commit is its last change); a
+// folder changed when anything in it did. A shallow clone has no history to
+// tell, and its pages say nothing.
+const changed = (() => {
+  const out = new Map<string, string>();
+  const git = (...args: string[]) => execFileSync('git', ['-C', repo, ...args], { encoding: 'utf8', maxBuffer: 1 << 30 });
+  if (git('rev-parse', '--is-shallow-repository').trim() === 'true') return out;
+  for (const commit of git('log', '--format=%x00%cs', '--name-only', '--no-renames', '--', 'games', 'README.md', 'INSTALL.md').split('\0')) {
+    const [date, ...paths] = commit.trim().split('\n');
+    for (const path of paths) for (let p = path; p !== '.' && !out.has(p); p = dirname(p)) out.set(p, date);
+  }
+  return out;
+})();
 // The URL of every page written, for the redirects' check.
 const pagesWritten = new Set<string>();
 // The sidebar's icons (lucide's names) for the top pages and the tabs; a
@@ -104,6 +118,7 @@ function page(path: string, front: Record<string, string>, body: string) {
   const url = `/${path.replace(/^\([^/)]*\)\//, '').replace(/\.mdx?$/, '').replace(/(^|\/)index$/, '')}`.replace(/(.)\/$/, '$1');
   pagesWritten.add(url);
   if (ICONS[url]) front = { ...front, icon: ICONS[url] };
+  if (front.source && changed.has(front.source)) front = { ...front, lastModified: changed.get(front.source)! };
   const head = Object.entries(front)
     .filter(([, v]) => v)
     .map(([k, v]) => `${k}: ${yaml(v)}`)

@@ -1,4 +1,4 @@
-import { DocsBody, DocsPage, DocsTitle, MarkdownCopyButton, ViewOptionsPopover } from 'fumadocs-ui/layouts/docs/page';
+import { DocsBody, DocsPage, DocsTitle, MarkdownCopyButton, PageLastUpdate, ViewOptionsPopover } from 'fumadocs-ui/layouts/docs/page';
 import { notFound } from 'next/navigation';
 import { getMDXComponents } from '@/components/mdx';
 import type { Metadata } from 'next';
@@ -43,6 +43,7 @@ export default async function Page(props: PageProps<'/[[...slug]]'>) {
         </Lightbox>
         {!isList(page.url) && <PageCards url={page.url} />}
       </DocsBody>
+      {page.data.lastModified && <PageLastUpdate date={new Date(page.data.lastModified)} />}
     </DocsPage>
   );
 }
