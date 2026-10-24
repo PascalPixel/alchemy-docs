@@ -64,6 +64,24 @@ function write(path: string, text: string) {
 
 // The URL of every page written, for the redirects' check.
 const pagesWritten = new Set<string>();
+// The sidebar's icons (lucide's names) for the top pages and the tabs; a
+// folder takes its index page's.
+const ICONS: Record<string, string> = {
+  '/tbs': 'Sun',
+  '/tbs/world': 'Map',
+  '/tbs/battle': 'Swords',
+  '/tbs/menus': 'AppWindow',
+  '/tbs/engine': 'Cpu',
+  '/tbs/places': 'MapPin',
+  '/tbs/unused': 'Archive',
+  '/tbs/code': 'FileCode',
+  '/tbs/glossary': 'BookA',
+  '/start': 'Hammer',
+  '/tbs/matching': 'GitCompare',
+  '/tbs/source': 'Braces',
+};
+const INTRODUCTION_ICON = 'House';
+const GUIDE_ICON = 'BookOpen';
 // The recordings whose stills the guide's pages show (lib/stills.ts).
 const stills = new Map<string, Entry>();
 // A guide page's still: the first frame of its first recording of the
@@ -83,7 +101,9 @@ function page(path: string, front: Record<string, string>, body: string) {
   if (front.description) front = { ...front, description: gameNames(front.description) };
   if (path.startsWith(`${GUIDE}/`)) front = { ...front, image: still(body) ?? '' };
   body = gameNames(openQuestions(body));
-  pagesWritten.add(`/${path.replace(/^\([^/)]*\)\//, '').replace(/\.mdx?$/, '').replace(/(^|\/)index$/, '')}`.replace(/(.)\/$/, '$1'));
+  const url = `/${path.replace(/^\([^/)]*\)\//, '').replace(/\.mdx?$/, '').replace(/(^|\/)index$/, '')}`.replace(/(.)\/$/, '$1');
+  pagesWritten.add(url);
+  if (ICONS[url]) front = { ...front, icon: ICONS[url] };
   const head = Object.entries(front)
     .filter(([, v]) => v)
     .map(([k, v]) => `${k}: ${yaml(v)}`)
@@ -1465,7 +1485,7 @@ function arrangedSidebar(root: Placed) {
   const meta = (folder: string, data: object) => write(join(content, folder, 'meta.json'), JSON.stringify(data, null, 2) + '\n');
   const pagesOf = (node: Placed) => node.children.map((c) => relativeTo(folderOf(node), fileOf(c).replace(/(\/index)?\.md$/, '')));
   meta('.', { pages: [GUIDE, ...GAMES.map((g) => reference(g).slice(1))] });
-  meta(GUIDE, { title: 'Guide', description: 'How the games work, system by system and place by place', root: true, pagesIndex: 'index', pages: [`[${ROOT_LABEL}](/)`, ...pagesOf(root)] });
+  meta(GUIDE, { title: 'Guide', icon: GUIDE_ICON, description: 'How the games work, system by system and place by place', root: true, pagesIndex: 'index', pages: [`[${INTRODUCTION_ICON}][${ROOT_LABEL}](/)`, ...pagesOf(root)] });
   const walkTree = (n: Placed): Placed[] => [n, ...n.children.flatMap(walkTree)];
   for (const node of walkTree(root)) {
     if (node.kind === 'game') meta(folderOf(node), { defaultOpen: true, pages: pagesOf(node) });

@@ -2,6 +2,7 @@ import { docsRoute } from './shared';
 import { defineDocs } from 'fumadocs-mdx/macro';
 import { applyMdxPreset } from 'fumadocs-mdx/config';
 import { loader } from 'fumadocs-core/source';
+import { lucideIconsPlugin } from 'fumadocs-core/source/lucide-icons';
 import { metaSchema, pageSchema } from 'fumadocs-core/source/schema';
 import { z } from 'zod';
 import { remarkMdxMermaid } from 'fumadocs-core/mdx-plugins';
@@ -35,5 +36,6 @@ const docs = defineDocs({
 export const source = loader({
   baseUrl: docsRoute,
   source: docs.toFumadocsSource(),
-  plugins: [],
+  // The icons scripts/content.ts names for the top pages are lucide's.
+  plugins: [lucideIconsPlugin()],
 });

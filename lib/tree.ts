@@ -29,7 +29,7 @@ function urlsOf(folder: Folder): Set<string> {
 }
 
 // Only what the sidebar draws.
-const item = (page: Item, name = page.name): Item => ({ type: 'page', $id: page.$id, name, url: page.url });
+const item = (page: Item, name = page.name): Item => ({ type: 'page', $id: page.$id, name, url: page.url, icon: page.icon });
 
 function prune(nodes: Node[], url: string): Node[] {
   const onPath = nodes.find((n) => n.type === 'folder' && urlsOf(n).has(url));
