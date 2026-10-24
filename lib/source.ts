@@ -9,20 +9,23 @@ import { onImageError, remarkRenders } from './remark-renders';
 import { remarkFigures } from './remark-figures';
 import { remarkCodeBreaks } from './remark-code-breaks';
 import { remarkOpenQuestions } from './remark-open-questions';
+import { remarkComponents } from './remark-components';
 
 const docs = defineDocs({
   dir: 'content/docs',
   docs: {
     // source: the repository file or folder a generated page is made from,
-    // for the page's GitHub link.
-    schema: pageSchema.extend({ source: z.string().optional() }),
+    // for the page's GitHub link; image: a guide page's still of its first
+    // recording (lib/stills.ts), for its card and its preview image.
+    schema: pageSchema.extend({ source: z.string().optional(), image: z.string().optional() }),
     // Pictures keep their paths rather than being bundled, so the site's CSS
     // can tell a recording from an asset sheet by where it lives. The renders
     // are in the Blob store: their sizes come from its manifest. Then a
     // paragraph of pictures becomes captioned figures (remark-figures),
-    // inline code gets its break points (remark-code-breaks) and an open
-    // question its note (remark-open-questions).
-    mdxOptions: applyMdxPreset({ remarkImageOptions: { useImport: false, onError: onImageError }, remarkPlugins: (v) => [remarkRenders, remarkMdxMermaid, ...v, remarkFigures, remarkCodeBreaks, remarkOpenQuestions] }),
+    // inline code gets its break points (remark-code-breaks), an open question
+    // its note (remark-open-questions) and Markdown structure fumadocs'
+    // components (remark-components).
+    mdxOptions: applyMdxPreset({ remarkImageOptions: { useImport: false, onError: onImageError }, remarkPlugins: (v) => [remarkRenders, remarkMdxMermaid, ...v, remarkFigures, remarkCodeBreaks, remarkOpenQuestions, remarkComponents] }),
   },
   meta: {
     schema: metaSchema,

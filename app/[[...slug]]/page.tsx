@@ -6,6 +6,7 @@ import type { Metadata } from 'next';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
 import { Lightbox } from 'fumadocs-ui/components/image-zoom';
 import { TOCPopover } from '@/components/toc-popover';
+import { PageCards } from '@/components/page-cards';
 import { gitConfig, isList } from '@/lib/shared';
 
 export default async function Page(props: PageProps<'/[[...slug]]'>) {
@@ -36,6 +37,7 @@ export default async function Page(props: PageProps<'/[[...slug]]'>) {
             })}
           />
         </Lightbox>
+        {!isList(page.url) && <PageCards url={page.url} />}
       </DocsBody>
     </DocsPage>
   );

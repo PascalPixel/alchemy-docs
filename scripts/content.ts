@@ -26,7 +26,8 @@ import { basename, dirname, join, normalize, relative } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { Language, type Node, Parser } from 'web-tree-sitter';
-import { readFetched, readManifest, renderPath } from '../lib/renders';
+import { readFetched, readManifest, renderPath, type Entry } from '../lib/renders';
+import { makeStills, stillPath } from '../lib/stills';
 
 const docs = fileURLToPath(new URL('..', import.meta.url));
 // The Alchemy checkout it reads: ALCHEMY, or the one beside this repository.
@@ -63,11 +64,24 @@ function write(path: string, text: string) {
 
 // The URL of every page written, for the redirects' check.
 const pagesWritten = new Set<string>();
+// The recordings whose stills the guide's pages show (lib/stills.ts).
+const stills = new Map<string, Entry>();
+// A guide page's still: the first frame of its first recording of the
+// game's screen, or of its first recording when none is the screen's size.
+function still(body: string): string | undefined {
+  const gifs = [...body.matchAll(/!\[[^\]]*\]\((\/[^)\s]+\.gif)\)/g)].map((m) => stored.get(renderPath(m[1]) ?? '')).filter((e) => e !== undefined);
+  const e = gifs.find((g) => g.width === 240 && g.height === 160) ?? gifs[0];
+  if (!e) return undefined;
+  stills.set(e.pathname, e);
+  return stillPath(e);
+}
 // Every page's text, whether from a Markdown file or the C's comments, says
 // its open questions in words (openQuestions) and its games by name
-// (gameNames); its title keeps what the source wrote.
+// (gameNames); its title keeps what the source wrote. A guide page names its
+// still as its image.
 function page(path: string, front: Record<string, string>, body: string) {
   if (front.description) front = { ...front, description: gameNames(front.description) };
+  if (path.startsWith(`${GUIDE}/`)) front = { ...front, image: still(body) ?? '' };
   body = gameNames(openQuestions(body));
   pagesWritten.add(`/${path.replace(/^\([^/)]*\)\//, '').replace(/\.mdx?$/, '').replace(/(^|\/)index$/, '')}`.replace(/(.)\/$/, '$1'));
   const head = Object.entries(front)
@@ -2463,4 +2477,6 @@ arrangedSidebar(site);
 const failures = checkArrangement();
 for (const f of failures) console.error(`content: ${f}`);
 if (failures.length) process.exit(1);
+const fetched = await makeStills(docs, [...stills.values()]);
+console.log(`stills: ${stills.size} recordings, ${fetched} fetched`);
 console.log(`content: ${all.get('tbs')!.length} files read, ${pagesWritten.size} pages written, in ${((Date.now() - started) / 1000).toFixed(1)} s`);

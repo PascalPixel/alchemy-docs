@@ -4,6 +4,7 @@ import type { MDXComponents } from 'mdx/types';
 import type { ComponentProps } from 'react';
 import { AnchorRedirect } from './anchor-redirect';
 import { Mermaid } from './mermaid';
+import { PageCard, PageCardList } from './page-cards';
 
 const DefaultImage = defaultMdxComponents.img;
 
@@ -46,6 +47,8 @@ export function getMDXComponents(components?: MDXComponents) {
     img: Image,
     AnchorRedirect,
     Mermaid,
+    PageCard,
+    PageCardList,
     ...components,
   } satisfies MDXComponents;
 }
