@@ -131,7 +131,7 @@ function typeTable(tree: Root) {
     const [type, name, about] = row.children as TableCell[];
     const [link, ...after] = name.children;
     const href = link?.type === 'link' ? link.url : '';
-    return jsx('Field', { name: toString(link), type: `${toString(type)}${after.map(toString).join('').trim()}`, ...(href && { href }) }, about.children as never);
+    return jsx('Field', { name: toString(link), type: `${toString(type)}${after.map((n) => toString(n)).join('').trim()}`, ...(href && { href }) }, about.children as never);
   });
   tree.children[at + 1] = jsx('FieldTable', {}, fields);
 }
