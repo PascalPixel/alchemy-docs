@@ -13,6 +13,10 @@
   ],
   "rewrites": [
     {
+      "source": "/:path(.*)\\.md",
+      "destination": "/llms.mdx/:path/content.md"
+    },
+    {
       "source": "/places/:path*",
       "destination": "https://n2k4znkfbewwaw0l.public.blob.vercel-storage.com/places/:path*"
     },

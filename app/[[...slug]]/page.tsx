@@ -1,4 +1,4 @@
-import { DocsBody, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
+import { DocsBody, DocsPage, DocsTitle, MarkdownCopyButton, ViewOptionsPopover } from 'fumadocs-ui/layouts/docs/page';
 import { notFound } from 'next/navigation';
 import { getMDXComponents } from '@/components/mdx';
 import type { Metadata } from 'next';
@@ -7,7 +7,7 @@ import { Lightbox } from 'fumadocs-ui/components/image-zoom';
 import { TOCPopover } from '@/components/toc-popover';
 import { PageCards } from '@/components/page-cards';
 import { gitConfig, isList } from '@/lib/shared';
-import { ogImage, source } from '@/lib/source';
+import { markdownUrl, ogImage, source } from '@/lib/source';
 
 export default async function Page(props: PageProps<'/[[...slug]]'>) {
   const params = await props.params;
@@ -17,16 +17,20 @@ export default async function Page(props: PageProps<'/[[...slug]]'>) {
   const MDX = page.data.body;
   // A reference page lists its sections, not its hundreds of members.
   const toc = isList(page.url) ? page.data.toc.filter((t) => t.depth <= 2) : page.data.toc;
+  const github = page.data.source && `https://github.com/${gitConfig.user}/${gitConfig.repo}/blob/${gitConfig.branch}/${page.data.source}`;
   return (
     <DocsPage toc={toc} full={page.data.full} tableOfContentPopover={{ component: <TOCPopover /> }}>
       <DocsTitle>{page.data.title}</DocsTitle>
-      {page.data.source && (
-        <p className="text-sm text-fd-muted-foreground border-b pb-6">
-          <a href={`https://github.com/${gitConfig.user}/${gitConfig.repo}/blob/${gitConfig.branch}/${page.data.source}`}>
+      {/* Where the page comes from, and its Markdown to copy or open elsewhere. */}
+      <div className="flex flex-row flex-wrap items-center gap-2 border-b pb-6 text-sm text-fd-muted-foreground">
+        {github && (
+          <a href={github} className="me-auto">
             {page.data.source} on GitHub
           </a>
-        </p>
-      )}
+        )}
+        <MarkdownCopyButton markdownUrl={markdownUrl(page)} />
+        <ViewOptionsPopover markdownUrl={markdownUrl(page)} githubUrl={github} />
+      </div>
       <DocsBody>
         {/* Every picture on the page can be enlarged, and swiped through in one viewer. */}
         <Lightbox>
