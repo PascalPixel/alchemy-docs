@@ -837,14 +837,14 @@ type Frame = {
 };
 
 const UNKNOWN: Val = { t: 'unknown' };
-const SET_MESSAGE = new Set(['Engine_ScriptSetMessage', 'MESSAGE_SET', 'Script_SetMessage', 'FieldScript_SetMessageId']);
-const SHOW_MESSAGE = new Set(['Engine_ScriptShowMessage', 'Script_ShowMessage', 'MESSAGE_PUT', 'Engine_ScriptOpenMessage', 'Script_OpenMessage', 'MESSAGE_OPEN', 'Engine_ScriptShowMessageAndWait', 'Script_ShowMessageAndWait', 'FieldScript_ShowMessageAndWait', 'FieldScript_ShowMessageThenWait', 'FieldMessage_ShowAtObject', 'FieldScript_ShowSpeakerMessage']);
-const ASK_MESSAGE = new Set(['Engine_ScriptAskYesNo', 'Script_AskYesNo', 'FieldScript_AskYesNoAndShowResponse']);
-const TWO_MESSAGES = new Set(['Engine_ScriptShowTwoMessagesAndWait', 'Script_ShowTwoMessagesAndWait', 'Battle_ShowPairedUnitWorkAndWait']);
-const DIRECT_MESSAGE = new Set(['Engine_MessageShowCentered', 'Message_ShowCentered', 'FieldMessage_ShowCentered', 'FieldMessage_Show', 'FieldMessage_ShowFar']);
+const SET_MESSAGE = new Set(['MESSAGE_SET', 'Script_SetMessage', 'FieldScript_SetMessageId']);
+const SHOW_MESSAGE = new Set(['Script_ShowMessage', 'MESSAGE_PUT', 'Script_OpenMessage', 'MESSAGE_OPEN', 'Script_ShowMessageAndWait', 'FieldScript_ShowMessageAndWait', 'FieldScript_ShowMessageThenWait', 'FieldMessage_ShowAtObject', 'FieldScript_ShowSpeakerMessage']);
+const ASK_MESSAGE = new Set(['Script_AskYesNo', 'FieldScript_AskYesNoAndShowResponse']);
+const TWO_MESSAGES = new Set(['Import_ScriptShowTwoMessagesAndWait', 'Script_ShowTwoMessagesAndWait', 'Battle_ShowPairedUnitWorkAndWait']);
+const DIRECT_MESSAGE = new Set(['Message_ShowCentered', 'FieldMessage_ShowCentered', 'FieldMessage_Show', 'FieldMessage_ShowFar']);
 // The game flags' verbs, their far-call stubs and the script layer's inlines;
-// Engine_GameFlagSet is the void import two maps match with.
-const FLAG_SET = new Set(['GameFlag_Set', 'GameFlag_SetFar', 'Script_SetFlag', 'Engine_GameFlagSet']);
+// Import_GameFlagSet is the void import two maps match with.
+const FLAG_SET = new Set(['GameFlag_Set', 'GameFlag_SetFar', 'Script_SetFlag', 'Import_GameFlagSet']);
 const FLAG_CLEAR = new Set(['GameFlag_Clear', 'GameFlag_ClearFar', 'Script_ClearFlag']);
 const FLAG_TEST = new Set(['GameFlag_Get', 'GameFlag_GetFar', 'Script_GetFlag']);
 const MAX_VALUES = 48;

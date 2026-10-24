@@ -1807,7 +1807,7 @@ function placePages(scenes: SourceFile[]): Place[] {
     const events = story.filter((e) => e.file === path && e.scenes.includes(p.id) && !/^entry\b/.test(e.trigger) && !(/^callback\b/.test(e.trigger) && !e.messages.length));
     // An event's recordings, by the names it was recorded under: its own
     // name, else, from renders made before the rows were named, its table and
-    // index (`gValeStorm_Events[26]`) or a function's name since renamed,
+    // index (`gValeStormyNight_Events[26]`) or a function's name since renamed,
     // matched by the first message it showed.
     const aliases = new Map<string, string[]>();
     for (const n of new Set(mine.filter((r) => r.kind === 'event-gif' || r.kind === 'event-segment').map((r) => r.event))) {
@@ -1825,7 +1825,7 @@ function placePages(scenes: SourceFile[]): Place[] {
     if (!rowsOfFile.has(p.file.path)) rowsOfFile.set(p.file.path, messageRows(p.file.path));
     const file = rowsOfFile.get(p.file.path)!;
     // A message's rows in the place's own tables: the ones its getter returns
-    // for it, else the ones named after it (gValeStorm_Events), else all.
+    // for it, else the ones named after it (gValeStormyNight_Events), else all.
     const rowsOf = (symbol: string) => {
       const all = file.rows.get(symbol) ?? [];
       const own = file.tablesOf.get(p.scene);
@@ -1895,7 +1895,7 @@ function placePages(scenes: SourceFile[]): Place[] {
       };
       cutAtCode();
       // What is left names code only through a preposition (`at the door of
-      // VALE_STORM_TO_VALE_INTERIORS_SHOPS_SOUTH`): the phrase goes.
+      // VALE_STORMY_NIGHT_TO_VALE_SHOPS_SOUTH`): the phrase goes.
       heading = heading.replace(/ (?:of|to|from|at|by|in|into|onto|with|for|on) `[^`]+`(?:'s)?/g, '');
       cutAtCode();
       heading = heading.replace(/,? ?`[^`]+`,?/g, '');
