@@ -1754,6 +1754,67 @@ function placeSentence(text: string | undefined): string {
   return `${s.replace(/\\(.)/g, '$1')}.`;
 }
 
+// A place's title: its symbol split into words, each run of them spelled as
+// the evidence for the map spells it, so that Kraden's cottage keeps its
+// apostrophe. The names the game gives the map (its area name, as its ★ line
+// and the renders give it, and its debug list entry) come first, possessive
+// included: `BabiPalace` is Babi's Palace, and `McCoyPalaceGrounds`, under the
+// area name McCoy's Palace, is McCoy's Palace Grounds. Then the map's own
+// comment and its overlay's, where a run of words is spelled with an
+// apostrophe or as one word ("Kraden's cottage"); then, for two or more
+// words, the game's text (Dragon's Eye). A run nothing spells stays as the
+// symbol splits it. Every word but a short joining one opens with a capital.
+const SMALL_WORDS = new Set(['a', 'an', 'and', 'at', 'for', 'in', 'of', 'on', 'or', 'the', 'to']);
+let mapDocs: Map<string, string> | undefined;
+let gameText: string | undefined;
+function placeTitle(scene: string, overlay = '', area = ''): string {
+  if (!mapDocs) {
+    mapDocs = new Map();
+    let doc: string[] = [];
+    for (const line of readFileSync(join(repo, 'games/tbs/include/map_ids.h'), 'utf8').split('\n')) {
+      const m = line.match(/^extern char MapId_(\w+);/);
+      if (m) mapDocs.set(m[1], doc.join(' '));
+      doc = /^\/\/\//.test(line) ? [...doc, line.replace(/^\/\/\/\s?/, '')] : [];
+    }
+    gameText = [...readFileSync(join(repo, 'games/tbs/text/en.po'), 'utf8').matchAll(/^msgstr "((?:[^"\\]|\\.)*)"/gm)].map((m) => m[1].replace(/\\n/g, ' ')).join('\n');
+  }
+  const doc = mapDocs.get(scene) ?? '';
+  // The names the game gives the map itself: its area name and its debug list
+  // entry, which may add a possessive the symbol leaves out.
+  const names = [...doc.matchAll(/★ Named from its area name: ([^★]+?)\s*$/g), ...doc.matchAll(/★ Named from the game: "([^"]+)" \(MsgDebugEntryName\)/g)].map((m) => m[1]).concat(area ? [area] : []);
+  // Prose only: code names (a map's own symbol among them) spell nothing.
+  const local = [doc, overlay]
+    .join('\n')
+    .replace(/`[^`]*`/g, ' ')
+    .replace(/\b\w+\b/g, (w) => (w.includes('_') || sceneIds.has(w) ? ' ' : w));
+  const words = scene.replace(/([a-z])([A-Z0-9])/g, '$1 $2').replace(/([0-9])([A-Z])/g, '$1 $2').split(' ');
+  const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // The text's spelling of a run of words: the same letters as whole words,
+  // apart from case, apostrophes and spaces (and, in a name of the map's own,
+  // a possessive's "'s"). Each letter keeps the symbol's case and what lies
+  // between letters is the text's, so the run is spelled by the text but
+  // capitalized as a title (Kraden's Cottage).
+  const spelled = (run: string[], text: string, possessive: boolean) => {
+    const letters = [...run.join('')];
+    const gap = possessive ? "((?:'s)?[' ]?)" : "([' ]?)";
+    const m = text.match(new RegExp(`(?<![A-Za-z'])${letters.map(esc).join(gap)}${possessive ? "((?:'s)?)" : ''}(?![A-Za-z'])`, 'i'));
+    return m ? letters.map((c, j) => c + (m[j + 1] ?? '')).join('') : undefined;
+  };
+  const out: string[] = [];
+  for (let i = 0; i < words.length; ) {
+    let found: string | undefined;
+    let k = words.length - i;
+    for (; k > 0 && !found; k--) {
+      const run = words.slice(i, i + k);
+      found = names.map((n) => spelled(run, n, true)).find(Boolean) ?? spelled(run, local, false) ?? (k > 1 ? spelled(run, gameText!, false) : undefined);
+    }
+    k++;
+    out.push(...(found ?? words.slice(i, i + k).join(' ')).split(' '));
+    i += k;
+  }
+  return out.map((w, j) => (j > 0 && SMALL_WORDS.has(w.toLowerCase()) ? w.toLowerCase() : w.charAt(0).toUpperCase() + w.slice(1))).join(' ');
+}
+
 // A page for each place, each map its overlay's warp tables are for: the
 // part of the overlay's opening comment about it, or the whole comment when
 // the overlay is one place or names none; the place's maps as the game draws
@@ -1765,16 +1826,16 @@ type Place = { file: SourceFile; scene: string; id: number; slug: string; title:
 function placePages(scenes: SourceFile[]): Place[] {
   const kebab = (s: string) => s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
   const words = (s: string) => s.replace(/([a-z])([A-Z0-9])/g, '$1 $2').replace(/([0-9])([A-Z])/g, '$1 $2');
+  const renders = placeRenders();
   const out: Place[] = [];
   for (const f of scenes) {
     const own = [...new Set([...readFileSync(join(repo, f.path), 'utf8').matchAll(/MAP_WARPS\((\w+)\)/g)].map((m) => m[1]))];
     for (const s of own) {
       const id = sceneIds.get(s);
-      if (id !== undefined) out.push({ file: f, scene: s, id, slug: kebab(s), title: words(s) });
+      if (id !== undefined) out.push({ file: f, scene: s, id, slug: kebab(s), title: placeTitle(s, f.doc, renders.find((r) => r.number === id && r.area)?.area ?? '') });
     }
   }
   out.sort((a, b) => a.id - b.id);
-  const renders = placeRenders();
   const words2 = catalog();
   const story = storyEvents();
   const actor = actorIndex(scenes);
@@ -1867,7 +1928,7 @@ function placePages(scenes: SourceFile[]): Place[] {
         .replace(/\s+/g, ' ')
         .trim()
         .replace(/[.!?]$/, '');
-      let heading = plain.replace(/`([A-Z][A-Za-z0-9]*)`/g, (m, n: string) => (sceneIds.has(n) ? words(n) : m)).replace(/\s*\([^()]*\)/g, '');
+      let heading = plain.replace(/`([A-Z][A-Za-z0-9]*)`/g, (m, n: string) => (sceneIds.has(n) ? (out.find((q) => q.scene === n)?.title ?? placeTitle(n)) : m)).replace(/\s*\([^()]*\)/g, '');
       let rest = '';
       let colon = heading.search(/[:;]\s/);
       // Before the colon may be only where and when (`In Imil, until Saturos
@@ -1955,7 +2016,7 @@ function placePages(scenes: SourceFile[]): Place[] {
     // Events the game never plays: functions whose comment opens with
     // "Unused:" and names this place (or any, when the overlay is this place
     // alone), which the story index cannot reach.
-    const named = new RegExp(`\\b${p.scene}\\b|\\b${p.title}\\b`);
+    const named = new RegExp(`\\b${p.scene}\\b|\\b${words(p.scene)}\\b|\\b${p.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`);
     for (const d of p.file.decls)
       if (d.kind === 'function' && /^Unused:/.test(d.doc) && !events.some((e) => e.event === d.name) && (alone || named.test(d.doc))) sectionFor(d, Infinity, []);
 
