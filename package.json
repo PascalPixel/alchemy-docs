@@ -31,6 +31,7 @@
     "@xmldom/xmldom": "^0.9.12",
     "postcss": "^8.5.28",
     "serve": "^14.2.6",
+    "sharp": "0.35.5",
     "tailwindcss": "^4.3.3",
     "tree-sitter-c": "0.24.1",
     "typescript": "^7.0.2",

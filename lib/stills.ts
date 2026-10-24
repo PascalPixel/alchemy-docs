@@ -4,13 +4,15 @@
 // few kilobytes rather than the whole recording's megabytes. The recordings
 // are in the Blob store, so only the start of each is fetched, enough to
 // hold its first frame; the stills go to public/stills, which git ignores,
-// named by the recording's hash so a re-render is a new still.
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+// named by the recording's hash so a re-render is a new still. The preview
+// images are drawn by next/og, which reads PNG but not GIF: each still is
+// also kept as a PNG in build/stills, for the build alone.
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { storeUrl, type Entry } from './renders';
+import sharp from 'sharp';
+import { stillPath, stillPng, storeUrl, type Entry } from './renders';
 
 export const STILLS = 'public/stills';
-export const stillPath = (e: Entry) => `/stills/${e.sha256.slice(0, 12)}.gif`;
 
 // The first frame of a GIF, with the header, the global palette and the
 // frame's graphic control, and nothing after it; undefined until `gif` holds
@@ -63,5 +65,10 @@ export async function makeStills(docs: string, entries: Entry[]) {
     }
   };
   for (let i = 0; i < todo.length; i += 16) await Promise.all(todo.slice(i, i + 16).map(one));
+  mkdirSync(join(docs, 'build/stills'), { recursive: true });
+  for (const e of entries) {
+    const png = stillPng(docs, stillPath(e));
+    if (!existsSync(png)) await sharp(readFileSync(join(docs, 'public', stillPath(e)))).png().toFile(png);
+  }
   return todo.length;
 }

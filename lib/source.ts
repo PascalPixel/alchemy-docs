@@ -1,4 +1,4 @@
-import { docsRoute } from './shared';
+import { docsRoute, isList } from './shared';
 import { defineDocs } from 'fumadocs-mdx/macro';
 import { applyMdxPreset } from 'fumadocs-mdx/config';
 import { loader } from 'fumadocs-core/source';
@@ -39,3 +39,13 @@ export const source = loader({
   // The icons scripts/content.ts names for the top pages are lucide's.
   plugins: [lucideIconsPlugin()],
 });
+
+// The pages with a preview image of their own (app/og): the guide's, and each
+// reference's front page, whose image every page of that reference shares.
+type Page = (typeof source)['$inferPage'];
+const ownImage = (page: Page) => !isList(page.url) || page.slugs.length === 2;
+export const ogPages = () => source.getPages().filter(ownImage);
+export function ogImage(page: Page): string {
+  const slugs = ownImage(page) ? page.slugs : page.slugs.slice(0, 2);
+  return `/og/${[...slugs, 'image.png'].join('/')}`;
+}

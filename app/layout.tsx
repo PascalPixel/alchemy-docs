@@ -5,6 +5,8 @@ import { COLOURS_KEY } from '@/lib/shared';
 import './global.css';
 
 export const metadata: Metadata = {
+  // Where the preview images (app/og) are found from a link elsewhere.
+  metadataBase: new URL('https://alchemy.pascalpixel.com'),
   title: { template: '%s | Alchemy', default: 'Alchemy' },
 };
 

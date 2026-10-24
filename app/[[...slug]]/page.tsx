@@ -1,4 +1,3 @@
-import { source } from '@/lib/source';
 import { DocsBody, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import { notFound } from 'next/navigation';
 import { getMDXComponents } from '@/components/mdx';
@@ -8,6 +7,7 @@ import { Lightbox } from 'fumadocs-ui/components/image-zoom';
 import { TOCPopover } from '@/components/toc-popover';
 import { PageCards } from '@/components/page-cards';
 import { gitConfig, isList } from '@/lib/shared';
+import { ogImage, source } from '@/lib/source';
 
 export default async function Page(props: PageProps<'/[[...slug]]'>) {
   const params = await props.params;
@@ -55,5 +55,7 @@ export async function generateMetadata(props: PageProps<'/[[...slug]]'>): Promis
   return {
     title: page.data.title,
     description: page.data.description,
+    openGraph: { images: ogImage(page) },
+    twitter: { card: 'summary_large_image', images: ogImage(page) },
   };
 }

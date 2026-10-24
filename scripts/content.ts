@@ -26,8 +26,8 @@ import { basename, dirname, join, normalize, relative } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { Language, type Node, Parser } from 'web-tree-sitter';
-import { readFetched, readManifest, renderPath, type Entry } from '../lib/renders';
-import { makeStills, stillPath } from '../lib/stills';
+import { readFetched, readManifest, renderPath, stillPath, type Entry } from '../lib/renders';
+import { makeStills } from '../lib/stills';
 
 const docs = fileURLToPath(new URL('..', import.meta.url));
 // The Alchemy checkout it reads: ALCHEMY, or the one beside this repository.
