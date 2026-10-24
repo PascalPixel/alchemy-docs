@@ -83,7 +83,8 @@ export async function fetchRecords(docs: string) {
 // so a re-render is a new URL and every cache can keep a picture for a year.
 export const versioned = (path: string, e: Entry) => `/${path}?v=${e.sha256.slice(0, 12)}`;
 
-// A recording's still, its first frame (lib/stills.ts), named by its hash;
-// and the PNG of a still, which only the build reads.
-export const stillPath = (e: Entry) => `/stills/${e.sha256.slice(0, 12)}.gif`;
-export const stillPng = (docs: string, still: string) => join(docs, 'build', still.replace(/\.gif$/, '.png'));
+// A render's still, named by its hash: a recording's first frame
+// (lib/stills.ts), or a picture (a place's entrance shot) whole; and the
+// preview images' copy of a still, scaled up, which only the build reads.
+export const stillPath = (e: Entry) => `/stills/${e.sha256.slice(0, 12)}.${e.pathname.endsWith('.png') ? 'png' : 'gif'}`;
+export const stillPng = (docs: string, still: string) => join(docs, 'build', still.replace(/\.(gif|png)$/, '-og.png'));

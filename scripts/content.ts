@@ -110,10 +110,11 @@ function still(body: string): string | undefined {
 // Every page's text, whether from a Markdown file or the C's comments, says
 // its open questions in words (openQuestions) and its games by name
 // (gameNames); its title keeps what the source wrote. A guide page names its
-// still as its image.
+// still as its image: the one it brings (a place's entrance shot), else its
+// first recording's.
 function page(path: string, front: Record<string, string>, body: string) {
   if (front.description) front = { ...front, description: gameNames(front.description) };
-  if (path.startsWith(`${GUIDE}/`)) front = { ...front, image: still(body) ?? '' };
+  if (path.startsWith(`${GUIDE}/`)) front = { ...front, image: front.image || still(body) || '' };
   body = gameNames(openQuestions(body));
   const url = `/${path.replace(/^\([^/)]*\)\//, '').replace(/\.mdx?$/, '').replace(/(^|\/)index$/, '')}`.replace(/(.)\/$/, '$1');
   pagesWritten.add(url);
@@ -1560,14 +1561,51 @@ function placeRenders(): Render[] {
   return placeRows;
 }
 
+// The places page: every place as a card (components/page-cards.tsx) with
+// its entrance shot, title and first sentence, in story order, which the map
+// numbers follow. A run of places whose titles open with the same name (Vale,
+// Vale Inn, Vale Plaza) or that share an area is one section, headed by the
+// area whose name most of their titles open with (Kolima, not Kolima Forest,
+// for the village, its bridge and the forest past it), so the page reads as the journey does and its
+// table of contents jumps between towns and dungeons. A town the story
+// returns to has a section each time.
 function places(files: SourceFile[]) {
   const scenes = files.filter((f) => /^games\/tbs\/src\/map\/[^/]+\.c$/.test(f.path));
   const pages = placePages(scenes);
-  const rows = scenes.map((f) => {
-    const here = pages.filter((p) => p.file === f).map((p) => `[${p.title}](/tbs/places/${p.slug})`);
-    return `| [\`${basename(f.path)}\`](${pageOf(f.path)}) | ${here.join(', ')} | ${f.summary} |`;
+  const lead = (title: string) => title.split(' ')[0].replace(/'s$/, '');
+  const runs: Place[][] = [];
+  for (const p of pages) {
+    const run = runs[runs.length - 1];
+    if (run && run.some((q) => lead(q.title) === lead(p.title) || (p.area && q.area === p.area))) run.push(p);
+    else runs.push([p]);
+  }
+  const headingOfRun = (run: Place[]) => {
+    const opens = (title: string, name: string) => title === name || title.startsWith(`${name} `);
+    const score = (name: string) => [run.filter((p) => opens(p.title, name)).length, run.filter((p) => p.area === name).length];
+    const areas = [...new Set(run.map((p) => p.area).filter(Boolean))].map((name) => ({ name, score: score(name) }));
+    areas.sort((a, b) => b.score[0] - a.score[0] || b.score[1] - a.score[1]);
+    return areas[0]?.name ?? run[0].title;
+  };
+  // A card's line is its page's subtitle without the area its section's
+  // heading already names ("Vale." says nothing under Vale; "Sol Sanctum, the
+  // room that holds the second Small Jewel." is "The room that ..."), where
+  // what follows the name reads alone, and without a line the card before it
+  // has just shown; a card with no line of its own ends in a bare colon, so
+  // it doesn't show its page's subtitle instead (lib/remark-components.ts).
+  const esc = (t: string) => t.replace(/[.*+?^${}()|[\]\\]/g, (c) => `\\${c}`);
+  const lineOf = (p: Place, heading: string) => {
+    const names = [...new Set([p.area, heading].filter(Boolean))].map(esc).join('|');
+    const m = p.description.match(new RegExp(`^(?:${names})(?:\\.$|, (?=(?:the|a|an) ))`, 'i'));
+    const rest = m ? p.description.slice(m[0].length) : p.description;
+    return rest.charAt(0).toUpperCase() + rest.slice(1);
+  };
+  const sections = runs.map((run) => {
+    const heading = headingOfRun(run);
+    const lines = run.map((p) => lineOf(p, heading));
+    const cards = run.map((p, i) => `- [${md(p.title)}](/tbs/places/${p.slug})${lines[i] && lines[i] !== lines[i - 1] ? `: ${md(lines[i])}` : ':'}`);
+    return `## ${md(heading)}\n\n${cards.join('\n')}`;
   });
-  page(`${GUIDE}/tbs/places/index.md`, { title: 'Places', description: 'Every place the party can walk around in, and what happens there.' }, `Each map overlay holds one place, or a few that share it, and each place has a page of its own with its map and its events. The [Maps](${siteLink('games/tbs/src/map/README.md')}) guide explains how a map runs and how to find an event in it.\n\n| Overlay | Places | What happens there |\n| --- | --- | --- |\n${rows.join('\n')}`);
+  page(`${GUIDE}/tbs/places/index.md`, { title: 'Places', description: 'Every place the party can walk around in, and what happens there.' }, `Every place the party can walk around in, in the order the story reaches it, each with a page of its own holding its map and its events. A map overlay holds one place or a few that share it; the [Maps](${siteLink('games/tbs/src/map/README.md')}) guide explains how a map runs and how to find an event in it.\n\n${sections.join('\n\n')}`);
   write(join(content, GUIDE, 'tbs/places/meta.json'), JSON.stringify({ title: 'Places', pages: pages.map((p) => p.slug) }, null, 2) + '\n');
 }
 
@@ -1870,7 +1908,7 @@ function placeTitle(scene: string, overlay = '', area = ''): string {
 // at; and its events in story order, each headed by what happens, with its
 // recording, the first lines the player reads and the code that plays it.
 // The pages follow the map numbers, which run in story order.
-type Place = { file: SourceFile; scene: string; id: number; slug: string; title: string };
+type Place = { file: SourceFile; scene: string; id: number; slug: string; title: string; area: string; description: string; image: string };
 function placePages(scenes: SourceFile[]): Place[] {
   const kebab = (s: string) => s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
   const words = (s: string) => s.replace(/([a-z])([A-Z0-9])/g, '$1 $2').replace(/([0-9])([A-Z])/g, '$1 $2');
@@ -1880,7 +1918,7 @@ function placePages(scenes: SourceFile[]): Place[] {
     const own = [...new Set([...readFileSync(join(repo, f.path), 'utf8').matchAll(/MAP_WARPS\((\w+)\)/g)].map((m) => m[1]))];
     for (const s of own) {
       const id = sceneIds.get(s);
-      if (id !== undefined) out.push({ file: f, scene: s, id, slug: kebab(s), title: placeTitle(s, f.doc, renders.find((r) => r.number === id && r.area)?.area ?? '') });
+      if (id !== undefined) out.push({ file: f, scene: s, id, slug: kebab(s), title: placeTitle(s, f.doc, renders.find((r) => r.number === id && r.area)?.area ?? ''), area: '', description: '', image: '' });
     }
   }
   out.sort((a, b) => a.id - b.id);
@@ -2100,7 +2138,16 @@ function placePages(scenes: SourceFile[]): Place[] {
     }
     body.push(`Its code is in [\`${basename(p.file.path)}\`](${pageOf(p.file.path)}).`);
     const description = placeSentence(block ?? (alone ? p.file.doc : undefined)) || (area && area !== p.title ? placeSentence(placeBlock(p.file.doc, '\0', [area])) : '');
-    page(`${GUIDE}/tbs/places/${p.slug}.md`, { title: p.title, description, source: p.file.path }, body.join('\n\n'));
+    // Its card's picture: the shot of the party arriving, as the place
+    // first looks, else the still of its first recording.
+    const entrances = mine.filter((r) => r.kind === 'entrance').sort((a, b) => Number(!!a.variant) - Number(!!b.variant) || a.file.localeCompare(b.file, 'en', { numeric: true }));
+    const entrance = entrances.length ? stored.get(`places/${entrances[0].file}`) : undefined;
+    if (entrance) stills.set(entrance.pathname, entrance);
+    // Its area, for the gallery's sections: the name the game shows on
+    // arrival, the default of a rule that names some entrances apart
+    // ("2=Lunpa; *=Vault" is Vault).
+    Object.assign(p, { area: area.match(/(?:^|; )\*=([^;]+)/)?.[1] ?? (area.includes('=') ? '' : area), description, image: entrance ? stillPath(entrance) : '' });
+    page(`${GUIDE}/tbs/places/${p.slug}.md`, { title: p.title, description, source: p.file.path, image: p.image }, body.join('\n\n'));
   }
   return out;
 }

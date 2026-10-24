@@ -26,19 +26,22 @@ const jsx = (name: string, attributes: Record<string, string>, children: MdxJsxF
 
 const isGuide = (file: VFile) => /[\\/]\(guide\)[\\/]/.test(file.path);
 
-// An item that is a link to a guide page, then a colon and what it holds.
-function pageItem(item: ListItem): { href: string; title: string; about: PhrasingContent[] } | undefined {
+// An item that is a link to a guide page, then a colon and what it holds; a
+// colon with nothing after it says the card has no line, not even the page's
+// subtitle (a place whose subtitle only repeats its section's heading).
+function pageItem(item: ListItem): { href: string; title: string; about: PhrasingContent[]; bare: boolean } | undefined {
   const para = item.children[0];
   if (item.children.length !== 1 || para?.type !== 'paragraph') return undefined;
   const [link, ...rest] = (para as Paragraph).children;
   if (link?.type !== 'link' || !link.url.startsWith('/') || /[#?]/.test(link.url) || link.url.startsWith('/tbs/source')) return undefined;
   const first = rest[0];
+  if (rest.length === 1 && first.type === 'text' && first.value.trim() === ':') return { href: link.url, title: toString(link), about: [], bare: true };
   if (rest.length && (first.type !== 'text' || !/^:\s/.test(first.value))) return undefined;
   if (first?.type === 'text') {
     const value = first.value.replace(/^:\s+/, '');
     rest[0] = { ...first, value: value.charAt(0).toUpperCase() + value.slice(1) };
   }
-  return { href: link.url, title: toString(link), about: rest };
+  return { href: link.url, title: toString(link), about: rest, bare: false };
 }
 
 // A list numbered from 1, not inside anything else.
@@ -50,14 +53,16 @@ function steps(tree: Root) {
 }
 
 function cards(tree: Root) {
-  tree.children = tree.children.map((node) => {
-    if (node.type !== 'list' || node.ordered || node.children.length < 2) return node;
+  // A list of one page becomes a card only right under a heading, as a
+  // section's whole list (a place alone in its area).
+  tree.children = tree.children.map((node, i) => {
+    if (node.type !== 'list' || node.ordered || node.children.length < (tree.children[i - 1]?.type === 'heading' ? 1 : 2)) return node;
     const items = (node as List).children.map(pageItem);
     if (items.some((i) => !i)) return node;
     return jsx(
       'PageCardList',
       {},
-      items.map((i) => jsx('PageCard', { href: i!.href, title: i!.title }, i!.about as never)),
+      items.map((i) => jsx('PageCard', { href: i!.href, title: i!.title, ...(i!.bare && { bare: 'true' }) }, i!.about as never)),
     );
   });
 }

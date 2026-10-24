@@ -4,9 +4,12 @@
 // few kilobytes rather than the whole recording's megabytes. The recordings
 // are in the Blob store, so only the start of each is fetched, enough to
 // hold its first frame; the stills go to public/stills, which git ignores,
-// named by the recording's hash so a re-render is a new still. The preview
-// images are drawn by next/og, which reads PNG but not GIF: each still is
-// also kept as a PNG in build/stills, for the build alone.
+// named by the recording's hash so a re-render is a new still. A place's
+// card shows its entrance shot instead, a small PNG kept whole. The preview
+// images are drawn by next/og, which reads PNG but not GIF and smooths a
+// picture it scales: each still is also kept in build/stills, for the build
+// alone, as a PNG already scaled to the preview's size by a whole number,
+// each pixel a square block (ogScale).
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import sharp from 'sharp';
@@ -56,6 +59,11 @@ export async function makeStills(docs: string, entries: Entry[]) {
   const store = storeUrl(docs);
   const todo = entries.filter((e) => !existsSync(join(docs, 'public', stillPath(e))));
   const one = async (e: Entry) => {
+    if (e.pathname.endsWith('.png')) {
+      const res = await fetch(`${store}/${e.pathname}`);
+      if (!res.ok) throw new Error(`${e.pathname}: ${res.status}`);
+      return writeFileSync(join(docs, 'public', stillPath(e)), new Uint8Array(await res.arrayBuffer()));
+    }
     for (let bytes = 1 << 16; ; bytes *= 4) {
       const res = await fetch(`${store}/${e.pathname}`, { headers: { Range: `bytes=0-${Math.min(bytes, e.bytes) - 1}` } });
       if (!res.ok) throw new Error(`${e.pathname}: ${res.status}`);
@@ -68,7 +76,14 @@ export async function makeStills(docs: string, entries: Entry[]) {
   mkdirSync(join(docs, 'build/stills'), { recursive: true });
   for (const e of entries) {
     const png = stillPng(docs, stillPath(e));
-    if (!existsSync(png)) await sharp(readFileSync(join(docs, 'public', stillPath(e)))).png().toFile(png);
+    const k = ogScale(e.width, e.height);
+    if (!existsSync(png)) await sharp(readFileSync(join(docs, 'public', stillPath(e)))).resize(e.width * k, e.height * k, { kernel: 'nearest' }).png().toFile(png);
   }
   return todo.length;
 }
+
+// The room a preview image gives its still (app/og/[...slug]/route.tsx), and
+// the whole number a still of a size is scaled by to fill as much of it as
+// fits: 2 for the game's screen.
+export const OG_STILL = { width: 480, height: 320 };
+export const ogScale = (width: number, height: number) => Math.max(1, Math.floor(Math.min(OG_STILL.width / width, OG_STILL.height / height)));
