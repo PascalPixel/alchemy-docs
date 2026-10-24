@@ -14,7 +14,7 @@ export function PageCard({ href, title, bare, children }: { href: string; title?
   const base = process.env.NEXT_PUBLIC_DOCS_BASE_PATH ?? '';
   return (
     <Card href={href} title={title ?? page?.data.title} description={bare ? undefined : (children ?? page?.data.description)} className="flex flex-col overflow-hidden [&>div:last-child]:order-first @max-lg:has-[img]:grid @max-lg:has-[img]:grid-cols-[6rem_1fr] @max-lg:has-[img]:content-start @max-lg:has-[img]:gap-x-3 @max-lg:[&>div:last-child]:row-span-2 @max-lg:[&>p]:line-clamp-4">
-      {image && <img src={`${base}${image}`} alt="" width={240} height={160} loading="lazy" decoding="async" className="still -mx-4 -mt-4 mb-3 block aspect-[3/2] w-[calc(100%+2rem)] max-w-none object-cover @max-lg:m-0 @max-lg:w-full @max-lg:rounded-md" />}
+      {image && <img src={`${base}${image}`} alt="" width={240} height={160} loading="lazy" decoding="async" className="still -mx-4! -mt-4! mb-3! block aspect-[3/2] w-[calc(100%+2rem)] max-w-none object-cover @max-lg:m-0! @max-lg:w-full @max-lg:rounded-md" />}
     </Card>
   );
 }
