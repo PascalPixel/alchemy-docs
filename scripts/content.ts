@@ -1181,7 +1181,7 @@ const SITE = 'https://alchemy.pascalpixel.com';
 // but fixed so that the folder guides it links stay under the section pages
 // that explain them.
 const FIXED: [string, string][] = [
-  ['README.md', '/'],
+  ['games/README.md', '/'],
   ['INSTALL.md', '/start'],
   ['games/tbs/src/MATCHING.md', '/tbs/matching'],
   ['games/tbs/glossary.md', '/tbs/glossary'],
@@ -1239,7 +1239,7 @@ const fixedUrl = (k: string) => FIXED.find(([key]) => key === k)?.[1];
 const notes: string[] = [];
 
 function arrange(): Placed {
-  const root: Placed = { key: 'README.md', url: '/', children: [], kind: 'root' };
+  const root: Placed = { key: 'games/README.md', url: '/', children: [], kind: 'root' };
   placed.set(root.key, root);
   const add = (parent: Placed, key: string, kind: Placed['kind'], url: string) => {
     const node: Placed = { key, url, children: [], parent, kind };
@@ -1249,8 +1249,8 @@ function arrange(): Placed {
   };
   // What the root places: the front pages, INSTALL.md and MATCHING.md.
   const rootWants = [...GAMES.map((g) => `games/${g}/README.md`), 'INSTALL.md', ...GAMES.map((g) => `games/${g}/src/MATCHING.md`)];
-  const rootLinks = linksOf('README.md', 'last').filter((k) => rootWants.includes(k));
-  for (const k of rootWants) if (!rootLinks.includes(k) && existsSync(join(repo, k))) notes.push(`README.md doesn't link ${k}: placed after its links`);
+  const rootLinks = linksOf('games/README.md', 'last').filter((k) => rootWants.includes(k));
+  for (const k of rootWants) if (!rootLinks.includes(k) && existsSync(join(repo, k))) notes.push(`games/README.md doesn't link ${k}: placed after its links`);
   for (const k of [...rootLinks, ...rootWants.filter((k) => !rootLinks.includes(k) && existsSync(join(repo, k)))]) {
     add(root, k, isFrontPage(k) ? 'game' : 'fixed', fixedUrl(k) ?? `/${k.split('/')[1]}`);
   }
@@ -1288,7 +1288,7 @@ function headingOf(key: string): string | undefined {
 // A page's title on the site: the front page is the guide's Introduction,
 // and a game's page is titled by its name alone, without the source's emoji.
 function siteTitle(key: string, heading: string): string {
-  if (key === 'README.md') return ROOT_LABEL;
+  if (key === 'games/README.md') return ROOT_LABEL;
   return heading.replace(/^(?:☀️|⚓️|☀|⚓|🌋)\s*/u, '');
 }
 
