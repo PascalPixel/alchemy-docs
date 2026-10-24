@@ -5,8 +5,9 @@
 //   holds ("- [World](/tbs/world): the field engine, ..."), becomes cards
 //   (components/page-cards.tsx);
 // - a guide page's numbered list at the top level, things done in order
-//   ("Then, for a field map: 1. ... 2. ..."), becomes Steps.
-import type { List, ListItem, Paragraph, PhrasingContent, Root } from 'mdast';
+//   ("Then, for a field map: 1. ... 2. ..."), becomes Steps;
+// - a structure's Data Fields table becomes a TypeTable.
+import type { List, ListItem, Paragraph, PhrasingContent, Root, Table, TableCell } from 'mdast';
 import type { MdxJsxAttribute, MdxJsxFlowElement } from 'mdast-util-mdx-jsx';
 import { toString } from 'mdast-util-to-string';
 import type { VFile } from 'vfile';
@@ -56,11 +57,28 @@ function cards(tree: Root) {
   });
 }
 
+// The Data Fields table of a structure's page (scripts/content.ts): a column
+// of types, one of names linking to their entries, and one of descriptions.
+// Each row becomes a Field of a FieldTable (components/field-table.tsx); an
+// array's size, written after the name, joins its type.
+function typeTable(tree: Root) {
+  const at = tree.children.findIndex((n) => n.type === 'heading' && n.data?.hProperties?.id === 'data-fields');
+  const table = tree.children[at + 1];
+  if (at < 0 || table?.type !== 'table') return;
+  const fields = (table as Table).children.slice(1).map((row) => {
+    const [type, name, about] = row.children as TableCell[];
+    const [link, ...after] = name.children;
+    const href = link?.type === 'link' ? link.url : '';
+    return jsx('Field', { name: toString(link), type: `${toString(type)}${after.map(toString).join('').trim()}`, ...(href && { href }) }, about.children as never);
+  });
+  tree.children[at + 1] = jsx('FieldTable', {}, fields);
+}
+
 export function remarkComponents() {
   return (tree: Root, file: VFile) => {
     if (isGuide(file)) {
       cards(tree);
       steps(tree);
-    }
+    } else typeTable(tree);
   };
 }

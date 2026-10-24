@@ -6,6 +6,7 @@ import { AnchorRedirect } from './anchor-redirect';
 import { Mermaid } from './mermaid';
 import { PageCard, PageCardList } from './page-cards';
 import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { Field, FieldTable } from './field-table';
 
 const DefaultImage = defaultMdxComponents.img;
 
@@ -52,6 +53,8 @@ export function getMDXComponents(components?: MDXComponents) {
     PageCardList,
     Step,
     Steps,
+    Field,
+    FieldTable,
     ...components,
   } satisfies MDXComponents;
 }
