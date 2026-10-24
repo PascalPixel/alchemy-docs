@@ -9,7 +9,6 @@ import { remarkMdxMermaid } from 'fumadocs-core/mdx-plugins';
 import { onImageError, remarkRenders } from './remark-renders';
 import { remarkFigures } from './remark-figures';
 import { remarkCodeBreaks } from './remark-code-breaks';
-import { remarkOpenQuestions } from './remark-open-questions';
 import { remarkComponents } from './remark-components';
 
 const docs = defineDocs({
@@ -24,10 +23,9 @@ const docs = defineDocs({
     // can tell a recording from an asset sheet by where it lives. The renders
     // are in the Blob store: their sizes come from its manifest. Then a
     // paragraph of pictures becomes captioned figures (remark-figures),
-    // inline code gets its break points (remark-code-breaks), an open question
-    // its note (remark-open-questions) and Markdown structure fumadocs'
-    // components (remark-components).
-    mdxOptions: applyMdxPreset({ remarkImageOptions: { useImport: false, onError: onImageError }, remarkPlugins: (v) => [remarkRenders, remarkMdxMermaid, ...v, remarkFigures, remarkCodeBreaks, remarkOpenQuestions, remarkComponents] }),
+    // inline code gets its break points (remark-code-breaks) and Markdown
+    // structure fumadocs' components (remark-components).
+    mdxOptions: applyMdxPreset({ remarkImageOptions: { useImport: false, onError: onImageError }, remarkPlugins: (v) => [remarkRenders, remarkMdxMermaid, ...v, remarkFigures, remarkCodeBreaks, remarkComponents] }),
     // Each page's Markdown after those plugins, for readers that want text
     // (app/llms.txt, app/llms-full.txt, app/llms.mdx).
     postprocess: { includeProcessedMarkdown: true },

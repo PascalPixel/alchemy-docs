@@ -1382,9 +1382,8 @@ function pathLabel(label: string, resolved: string): string {
 // and `XXX (picture):`). A reader would take the mark for an unfinished
 // editor's note, so a page says it in words, as a bold label: a paragraph's
 // question, from its mark to the paragraph's end, becomes a paragraph of its
-// own after the sentences before it, which lib/remark-open-questions.ts shows
-// as a note; a mark in a list item or a table, or a second one in the same
-// question, becomes the label alone. A `- XXX (picture):` item is the
+// own after the sentences before it; a mark in a list item or a table, or a
+// second one in the same question, becomes the label alone. A `- XXX (picture):` item is the
 // worklist's picture still to make, not a question for a reader: the page
 // leaves it out, with its continuation lines, and a list or an `Open
 // questions:` line it leaves empty. Code is left as written.
