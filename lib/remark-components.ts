@@ -7,6 +7,9 @@
 // - a guide page's numbered list at the top level, things done in order
 //   ("Then, for a field map: 1. ... 2. ..."), becomes Steps;
 // - a GitHub alert (`> [!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`,
+// - a folder guide's closing reference sections (Words used here,
+//   Evidence, Source files) become Accordions, closed, so the page reads as
+//   prose and recordings;
 //   `[!CAUTION]`) becomes a Callout, on any page;
 // - a structure's Data Fields table becomes a TypeTable.
 import type { List, ListItem, Paragraph, PhrasingContent, Root, RootContent, Table, TableCell } from 'mdast';
@@ -59,6 +62,36 @@ function cards(tree: Root) {
   });
 }
 
+// A folder guide's closing reference sections. Evidence is also matched by
+// its older heading, Evidence and open questions.
+const REFERENCE = /^(Words used here|Evidence( and open questions)?|Source files)$/;
+
+// Each reference section, from its ## heading to the next, becomes an
+// Accordion titled and anchored as the heading was, closed until opened or
+// linked to; neighbouring ones share one Accordions.
+function accordions(tree: Root) {
+  const out: RootContent[] = [];
+  let group: MdxJsxFlowElement | undefined;
+  let open: MdxJsxFlowElement | undefined;
+  for (const node of tree.children) {
+    if (node.type === 'heading' && node.depth <= 2) {
+      open = undefined;
+      const title = toString(node);
+      if (node.depth === 2 && REFERENCE.test(title)) {
+        const id = String(node.data?.hProperties?.id ?? '');
+        open = jsx('Accordion', { title, ...(id && { id }) }, []);
+        if (!group) out.push((group = jsx('Accordions', {}, [])));
+        group.children.push(open);
+        continue;
+      }
+      group = undefined;
+    }
+    if (open) open.children.push(node as never);
+    else out.push(node);
+  }
+  tree.children = out;
+}
+
 // GitHub's alert types, as fumadocs' Callout types and titles.
 const ALERTS: Record<string, [type: string, title: string]> = {
   NOTE: ['info', 'Note'],
@@ -109,6 +142,7 @@ export function remarkComponents() {
     if (isGuide(file)) {
       cards(tree);
       steps(tree);
+      accordions(tree);
     } else typeTable(tree);
   };
 }
