@@ -18,6 +18,8 @@ export function FieldTable({ children }: { children: ReactNode }) {
     const { name, type: t, href, children: about } = child.props;
     type[name] = {
       type: <code>{t}</code>,
+      // A narrow table hides the type column; an opened row shows it.
+      typeDescription: <code>{t}</code>,
       required: true,
       description: (
         <>
