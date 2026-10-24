@@ -3,7 +3,9 @@
 //
 // - a guide page's list of pages, each item a link to a page and what it
 //   holds ("- [World](/tbs/world): the field engine, ..."), becomes cards
-//   (components/page-cards.tsx).
+//   (components/page-cards.tsx);
+// - a guide page's numbered list at the top level, things done in order
+//   ("Then, for a field map: 1. ... 2. ..."), becomes Steps.
 import type { List, ListItem, Paragraph, PhrasingContent, Root } from 'mdast';
 import type { MdxJsxAttribute, MdxJsxFlowElement } from 'mdast-util-mdx-jsx';
 import { toString } from 'mdast-util-to-string';
@@ -33,6 +35,14 @@ function pageItem(item: ListItem): { href: string; title: string; about: Phrasin
   return { href: link.url, title: toString(link), about: rest };
 }
 
+// A list numbered from 1, not inside anything else.
+function steps(tree: Root) {
+  tree.children = tree.children.map((node) => {
+    if (node.type !== 'list' || !node.ordered || (node.start ?? 1) !== 1 || node.children.length < 2) return node;
+    return jsx('Steps', {}, (node as List).children.map((item) => jsx('Step', {}, item.children)));
+  });
+}
+
 function cards(tree: Root) {
   tree.children = tree.children.map((node) => {
     if (node.type !== 'list' || node.ordered || node.children.length < 2) return node;
@@ -48,6 +58,9 @@ function cards(tree: Root) {
 
 export function remarkComponents() {
   return (tree: Root, file: VFile) => {
-    if (isGuide(file)) cards(tree);
+    if (isGuide(file)) {
+      cards(tree);
+      steps(tree);
+    }
   };
 }
