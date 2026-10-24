@@ -6,8 +6,10 @@
 //   (components/page-cards.tsx);
 // - a guide page's numbered list at the top level, things done in order
 //   ("Then, for a field map: 1. ... 2. ..."), becomes Steps;
+// - a GitHub alert (`> [!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`,
+//   `[!CAUTION]`) becomes a Callout, on any page;
 // - a structure's Data Fields table becomes a TypeTable.
-import type { List, ListItem, Paragraph, PhrasingContent, Root, Table, TableCell } from 'mdast';
+import type { List, ListItem, Paragraph, PhrasingContent, Root, RootContent, Table, TableCell } from 'mdast';
 import type { MdxJsxAttribute, MdxJsxFlowElement } from 'mdast-util-mdx-jsx';
 import { toString } from 'mdast-util-to-string';
 import type { VFile } from 'vfile';
@@ -57,6 +59,33 @@ function cards(tree: Root) {
   });
 }
 
+// GitHub's alert types, as fumadocs' Callout types and titles.
+const ALERTS: Record<string, [type: string, title: string]> = {
+  NOTE: ['info', 'Note'],
+  TIP: ['idea', 'Tip'],
+  IMPORTANT: ['info', 'Important'],
+  WARNING: ['warn', 'Warning'],
+  CAUTION: ['error', 'Caution'],
+};
+const ALERT = /^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\][ \t]*(?:\n|$)/i;
+
+// A quote whose first line is an alert's mark, anywhere on a page.
+function callouts(node: Root | RootContent) {
+  if (!('children' in node)) return;
+  node.children = node.children.map((child: RootContent) => {
+    callouts(child);
+    if (child.type !== 'blockquote') return child;
+    const first = child.children[0];
+    const text = first?.type === 'paragraph' && first.children[0]?.type === 'text' ? first.children[0] : undefined;
+    const m = text?.value.match(ALERT);
+    if (!text || !m) return child;
+    text.value = text.value.slice(m[0].length);
+    if (!text.value) (first as Paragraph).children.shift();
+    const [type, title] = ALERTS[m[1].toUpperCase()];
+    return jsx('Callout', { type, title }, (first as Paragraph).children.length ? child.children : child.children.slice(1));
+  }) as never;
+}
+
 // The Data Fields table of a structure's page (scripts/content.ts): a column
 // of types, one of names linking to their entries, and one of descriptions.
 // Each row becomes a Field of a FieldTable (components/field-table.tsx); an
@@ -76,6 +105,7 @@ function typeTable(tree: Root) {
 
 export function remarkComponents() {
   return (tree: Root, file: VFile) => {
+    callouts(tree);
     if (isGuide(file)) {
       cards(tree);
       steps(tree);
