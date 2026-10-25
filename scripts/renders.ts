@@ -2,6 +2,7 @@
 // pictures against it.
 //
 //   bun scripts/renders.ts publish FOLDER PREFIX [--prune] [--dry-run]
+//   bun scripts/renders.ts delete LISTFILE [--dry-run]
 //   bun scripts/renders.ts fetch
 //   bun scripts/renders.ts check [OUT]
 //
@@ -15,6 +16,12 @@
 // the pictures, to PREFIX/ in the store, and the manifest to the store as
 // renders-manifest.tsv; git keeps neither. A copy of each goes to
 // build/renders, as fetch would leave it.
+//
+// delete removes the pictures LISTFILE names, one store path a line
+// (places/vale-storm/map-0.png), from the store and from the manifest, and
+// writes the manifest to the store as publish does, with its copy in
+// build/renders. A path the manifest doesn't list stops it before anything is
+// deleted.
 //
 // fetch copies the manifest and the records the build reads from the store
 // into build/renders; `bun run build` runs it first. The store is public, so
@@ -35,6 +42,8 @@ import { FETCHED, fetchRecords, fetchStored, formatManifest, MANIFEST_BLOB, pars
 
 const docs = fileURLToPath(new URL('..', import.meta.url));
 const YEAR = 365 * 24 * 60 * 60;
+// The records and the manifest: a minute's cache, so a publish shows soon.
+const TSV = { access: 'public', addRandomSuffix: false, allowOverwrite: true, contentType: 'text/tab-separated-values; charset=utf-8', cacheControlMaxAge: 60 } as const;
 const TYPES: Record<string, string> = { '.png': 'image/png', '.gif': 'image/gif', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.svg': 'image/svg+xml' };
 
 // Pro allows 75 advanced operations a second; uploads stay under 60.
@@ -176,19 +185,46 @@ async function publish(folder: string, prefix: string, prune: boolean, dry: bool
   for (const { entry } of local.values()) manifest.set(entry.pathname, entry);
   // The records, then the manifest: a build that fetches between the two
   // finds every picture the records name already listed or still absent.
-  const tsv = { access: 'public', addRandomSuffix: false, allowOverwrite: true, contentType: 'text/tab-separated-values; charset=utf-8', cacheControlMaxAge: 60 } as const;
   for (const f of records) {
     const pathname = `${prefix}/${relative(folder, f).split('\\').join('/')}`;
     const data = readFileSync(f);
     await take();
-    await retry(pathname, () => put(pathname, data, tsv));
+    await retry(pathname, () => put(pathname, data, TSV));
     keep(pathname, data);
   }
   const text = formatManifest(manifest.values());
   await take();
-  await retry(MANIFEST_BLOB, () => put(MANIFEST_BLOB, text, tsv));
+  await retry(MANIFEST_BLOB, () => put(MANIFEST_BLOB, text, TSV));
   keep(MANIFEST_BLOB, text);
   console.log(`${prefix}: ${done} uploaded (${(bytes / 1e6).toFixed(1)} MB), ${gone.length} deleted, ${records.length} records, in ${((Date.now() - started) / 1000).toFixed(0)} s`);
+}
+
+async function remove(listFile: string, dry: boolean) {
+  if (!dry && !process.env.BLOB_READ_WRITE_TOKEN) throw new Error('BLOB_READ_WRITE_TOKEN is not set (vercel env pull .env.local)');
+  const paths = [...new Set(readFileSync(listFile, 'utf8').split('\n').map((l) => l.trim()).filter(Boolean))];
+  const manifest = await storeManifest();
+  const unknown = paths.filter((p) => !manifest.has(p));
+  if (unknown.length) throw new Error(`not in ${MANIFEST_BLOB}: ${unknown.join(', ')}`);
+  console.log(`delete: ${paths.length} of ${manifest.size} pictures`);
+  if (dry) {
+    for (const p of paths) console.log(`  delete ${p}`);
+    return;
+  }
+
+  for (let i = 0; i < paths.length; i += 50) {
+    const batch = paths.slice(i, i + 50);
+    await take(batch.length);
+    await retry('delete', () => del(batch.map((p) => `${storeUrl(docs)}/${p}`)));
+    for (const p of batch) {
+      manifest.delete(p);
+      console.log(`  deleted ${p}`);
+    }
+  }
+  const text = formatManifest(manifest.values());
+  await take();
+  await retry(MANIFEST_BLOB, () => put(MANIFEST_BLOB, text, TSV));
+  keep(MANIFEST_BLOB, text);
+  console.log(`delete: ${paths.length} deleted, ${manifest.size} left in ${MANIFEST_BLOB}`);
 }
 
 async function check(out: string) {
@@ -229,9 +265,10 @@ const [command, ...args] = process.argv.slice(2);
 const flags = new Set(args.filter((a) => a.startsWith('--')));
 const plain = args.filter((a) => !a.startsWith('--'));
 if (command === 'publish' && plain.length === 2) await publish(plain[0], plain[1], flags.has('--prune'), flags.has('--dry-run'));
+else if (command === 'delete' && plain.length === 1) await remove(plain[0], flags.has('--dry-run'));
 else if (command === 'fetch' && plain.length === 0) await fetchRecords(docs);
 else if (command === 'check') await check(plain[0] ?? join(docs, 'out'));
 else {
-  console.error('usage: bun scripts/renders.ts publish FOLDER PREFIX [--prune] [--dry-run]\n       bun scripts/renders.ts fetch\n       bun scripts/renders.ts check [OUT]');
+  console.error('usage: bun scripts/renders.ts publish FOLDER PREFIX [--prune] [--dry-run]\n       bun scripts/renders.ts delete LISTFILE [--dry-run]\n       bun scripts/renders.ts fetch\n       bun scripts/renders.ts check [OUT]');
   process.exit(2);
 }

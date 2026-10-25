@@ -35,4 +35,6 @@ bun scripts/renders.ts publish ../renders/places places --prune
 
 It uploads only the pictures whose hash the manifest doesn't already have, deletes with `--prune` the ones under that prefix the folder no longer has, uploads the folder's TSV records beside its pictures, and writes the manifest to the store, keeping a copy of each in `build/renders`. `--dry-run` shows what it would do. Nothing is committed: the next build fetches the records and the manifest, and shows a render only when the manifest lists it. After `bun run build`, `bun scripts/renders.ts check` asks the store for every render the built pages show.
 
+To take particular pictures down, list their store paths one a line (`places/vale-storm/map-0.png`) and run `bun scripts/renders.ts delete LISTFILE`: it deletes each from the store and from the manifest and writes the manifest back as publish does, refusing the whole list if any path is not in the manifest; `--dry-run` shows what it would delete.
+
 A guide page's card and preview image show a still of its first recording: `bun run content` fetches only the start of each such recording from the store and keeps its first frame in `public/stills` (`lib/stills.ts`), a few kilobytes where the recording is megabytes.
