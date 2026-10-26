@@ -477,7 +477,7 @@ function constEval(text: string, scope: Scope): number | undefined {
   return v;
 }
 
-// An initializer element can stand for several words (MAP_WARP_IF writes
+// An initializer element can stand for several words (SCENE_EXIT_UNLESS writes
 // two): expanded, split at its top-level commas, each word evaluated.
 function evalWords(text: string, scope: Scope): (number | undefined)[] {
   return splitTop(expand(tokenize(text), scope)).map((p) => {
@@ -588,9 +588,11 @@ for (const s of scenes) if (s.file) scenesOfFile.set(s.file, [...(scenesOfFile.g
 const sceneLabel = (id: number) => `${id}${scenes[id]?.name ? ` ${scenes[id].name}` : ''}`;
 const shortFile = (f: string) => f.replace(/^games\/tbs\/src\//, '');
 
-// Area names, as MapSec_GetNameIndex resolves them: the first rule of
-// gMapSec_NameRules for the map (or its map section) and the warp
-// destination (-1 for any), added to MsgDebugEntryName.
+// Area names, as Area_GetNameIndex resolves them: the first rule of
+// gArea_NameRules for the scene (scene_name) or its area (area_name) and the
+// entrance (-1 for any), added to MsgDebugEntryName. Sources from before the
+// areas were named spell them MapSec_GetNameIndex, gMapSec_NameRules,
+// map_name and group_name.
 type AreaNames = { byEntrance: [number, string][]; fallback: string; messages: number[] };
 
 function deriveAreas(): Map<number, AreaNames> {
@@ -617,7 +619,7 @@ function deriveAreas(): Map<number, AreaNames> {
   let inTable = false;
   const stack: boolean[] = [];
   for (const line of readFileSync(gamePath('src/overworld/map_rules.s'), 'utf8').split('\n')) {
-    if (/^gMapSec_NameRules:/.test(line)) inTable = true;
+    if (/^g(?:Area|MapSec)_NameRules:/.test(line)) inTable = true;
     else if (inTable && /^\w+:|^\s*\.global/.test(line)) inTable = false;
     if (!inTable) continue;
     const cond = line.match(/^\s*\.if\s+(\w+)/);
@@ -625,10 +627,11 @@ function deriveAreas(): Map<number, AreaNames> {
     else if (/^\s*\.else/.test(line)) stack.push(!stack.pop());
     else if (/^\s*\.endif/.test(line)) stack.pop();
     if (!stack.every(Boolean)) continue;
-    const m = line.match(/^\s*(map|group)_name\s+(\w+)\s*,\s*(-?\w+)\s*,\s*(\w+)/);
+    const m = line.match(/^\s*(scene|area|map|group)_name\s+(\w+)\s*,\s*(-?\w+)\s*,\s*(\w+)/);
     if (!m) continue;
-    const id = m[1] === 'map' ? sceneIdByName.get(m[2]) : Number(m[2]);
-    if (id !== undefined) rules.push({ scene: m[1] === 'map', id, entrance: Number(m[3]), index: Number(m[4]) });
+    const scene = m[1] === 'scene' || m[1] === 'map';
+    const id = scene ? sceneIdByName.get(m[2]) : Number(m[2]);
+    if (id !== undefined) rules.push({ scene, id, entrance: Number(m[3]), index: Number(m[4]) });
   }
   const base = messageBySymbol.get('MsgDebugEntryName') ?? 0;
   const nameOf = (scene: SceneRow, entrance: number) => {
@@ -758,7 +761,7 @@ type TU = { file: string; scope: Scope; fns: Map<string, Fn>; tables: Map<string
 
 const localFlagNames = new Map<string, Map<number, string>>();
 let globalFlagNamesCache: Map<number, string> | undefined;
-const ENTRY_SLOTS = ['initialize', 'entrances', 'exits', 'placements', 'events', 'regions'];
+const ENTRY_SLOTS = ['initialize', 'entrances', 'exits', 'actors', 'triggers', 'regions'];
 
 function functionsOf(root: Node, file: string, into: Map<string, Fn>) {
   for (const n of root.namedChildren) {
@@ -1318,6 +1321,9 @@ type Row = {
 };
 
 const KIND_NAMES = ['talk', 'exit', 'touch', 'search', 'item', 'psynergy', 'raised'];
+// A trigger table's type: struct Trigger, or struct MapEvent in sources from
+// before the triggers were named.
+const TRIGGER_TABLE = /\b(?:Trigger|MapEvent)\b/;
 const ability = (text: string) => text.match(/ABILITY_(\w+)/)?.[1]?.toLowerCase().replace(/_/g, ' ') ?? '';
 
 function conditionLit(v: number | undefined): Lit[] {
@@ -1409,8 +1415,8 @@ function tableRowTexts(init: Node, scope: Scope): string[][] {
 function eventRows(tu: TU, uses: Map<string, TableUse>): Row[] {
   const rows: Row[] = [];
   for (const t of tu.tables.values()) {
-    if (!/\bMapEvent\b/.test(t.type)) continue;
-    const use = uses.get(t.name) ?? [{ slot: 'events', scenes: tu.scenes, lits: [] }];
+    if (!TRIGGER_TABLE.test(t.type)) continue;
+    const use = uses.get(t.name) ?? [{ slot: 'triggers', scenes: tu.scenes, lits: [] }];
     const tableScenes = uniq(use.flatMap((u) => u.scenes));
     const tableLits = use[0].lits.filter((l) => use.every((u) => u.lits.some((m) => litKey(m) === litKey(l))));
     const earlier: { key: string; lits: Lit[] }[] = [];
@@ -1423,7 +1429,7 @@ function eventRows(tu: TU, uses: Map<string, TableUse>): Row[] {
       const own = conditionLit(constEval(e[2], tu.scope));
       const key = `${control >>> 0}:${trigger}`;
       // A row is reached only when the earlier rows for the same trigger did
-      // not hold (Scene_FindEvent takes the first); a search ignores them.
+      // not hold (Scene_FindTrigger takes the first); a search ignores them.
       const failed = kind === 3 ? [] : earlier.filter((x) => x.key === key).flatMap((x) => (x.lits.length === 1 ? [{ k: x.lits[0].k, pos: !x.lits[0].pos }] : []));
       earlier.push({ key, lits: own });
       const handler = (e[3].match(/\b[A-Za-z_]\w*\b/g) ?? []).find((n) => tu.fns.has(n));
@@ -1513,7 +1519,7 @@ for (const tu of tus) {
     }
   }
   for (const t of tu.tables.values()) {
-    if (/\bMapEvent\b/.test(t.type)) continue;
+    if (TRIGGER_TABLE.test(t.type)) continue;
     for (const id of t.init.descendantsOfType('identifier')) if (id && tu.fns.has(id.text)) add(id.text, `listed in ${t.name}`);
   }
   for (const fn of tu.fns.values()) if (!kinds.has(fn.name) && !called.has(fn.name)) add(fn.name, 'not called');
@@ -1543,7 +1549,7 @@ for (const tu of tus) {
   for (const t of tu.tables.values()) {
     const use = uses.get(t.name);
     const tScenes = use ? uniq(use.flatMap((u) => u.scenes)) : tu.scenes;
-    if (/\bObjectEventTemplate\b/.test(t.type)) {
+    if (/\b(?:ActorTemplate|ObjectEventTemplate)\b/.test(t.type)) {
       tableRowTexts(t.init, tu.scope).forEach((e, i) => {
         if (e.length < 2) return;
         for (const l of conditionLit(constEval(e[1], tu.scope))) {
@@ -1552,7 +1558,7 @@ for (const tu of tus) {
           flagSites.push({ n, scenes: tScenes, global: false, op: 'test', site: `${file}:${t.name}[actor ${8 + i}]`, sense: l.pos ? 'set' : 'clear', written: '' });
         }
       });
-    } else if (/\bMapWarpDest\b/.test(t.type)) {
+    } else if (/\b(?:SceneEntrance|MapWarpDest)\b/.test(t.type)) {
       tableRowTexts(t.init, tu.scope).forEach((e) => {
         const flag = e.length > 1 ? constEval(e[1], tu.scope) : undefined;
         if (flag !== undefined && flag !== -1 && (flag & 0xffff) !== 0xffff) flagSites.push({ n: flag & 0xffff, scenes: tScenes, global: false, op: 'test', site: `${file}:${t.name}[entrance ${e[0]}]`, sense: 'set', written: '' });
@@ -1648,7 +1654,7 @@ function flagLabel(n: number, tu?: TU): string {
   return global ?? (n < 0x200 || n >= 0x400 ? globalFlagNames().get(n) : undefined) ?? hex(n);
 }
 
-// FLAG_ names the shared headers declare outside flags.h, as map_tables.h
+// FLAG_ names the shared headers declare outside flags.h, as scene_tables.h
 // does FLAG_VALE_PARTY_LEFT.
 function globalFlagNames(): Map<number, string> {
   if (globalFlagNamesCache) return globalFlagNamesCache;
@@ -1818,7 +1824,7 @@ type EventRow = {
   line: number;
 };
 const events: EventRow[] = [];
-const isGetter = (r: Root) => r.kinds.every((k) => /^entry (entrances|exits|placements|events|regions)$/.test(k));
+const isGetter = (r: Root) => r.kinds.every((k) => /^entry (entrances|exits|actors|triggers|regions)$/.test(k));
 const common = (lists: Lit[][]) => (lists.length ? lists[0].filter((l) => lists.every((x) => x.some((y) => litKey(y) === litKey(l)))) : []);
 for (const r of roots) {
   if (isGetter(r)) continue;
@@ -2006,10 +2012,10 @@ for (const m of messages) {
 }
 
 // People the scenes name: the actor constants the code makes speak or be
-// talked to (JILL, LOCALID_LORD_MCCOY), read as words ("Jill", "Lord McCoy").
+// talked to (JILL, ACTOR_LORD_MCCOY), read as words ("Jill", "Lord McCoy").
 const actorNames = new Map<string, Set<string>>(); // lower-case phrase → file:CONSTANT
 const addActor = (file: string, ident: string) => {
-  const phrase = ident.replace(/^(?:LOCALID|OBJ_EVENT)_/, '').replace(/_\d+$/, '').replace(/_/g, ' ').toLowerCase();
+  const phrase = ident.replace(/^(?:ACTOR|LOCALID|OBJ_EVENT)_/, '').replace(/_\d+$/, '').replace(/_/g, ' ').toLowerCase();
   if (phrase.length < 3) return;
   actorNames.set(phrase, new Set([...(actorNames.get(phrase) ?? []), `${file}:${ident}`]));
 };

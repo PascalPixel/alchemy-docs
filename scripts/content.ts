@@ -136,7 +136,7 @@ function page(path: string, front: Record<string, string>, body: string) {
 // Text from the source, safe in Markdown outside code: the characters MDX
 // and Markdown would read as syntax are escaped, code spans kept as written.
 // A name the code uses, written bare in a comment: anything with an
-// underscore (KALAY_TO_WORLD_MAP, SceneId_Kalay, Scene_TakeWarp), a global
+// underscore (KALAY_TO_WORLD_MAP, SceneId_Kalay, Scene_TakeExit), a global
 // and the fields it is read through (gSaveBlock.mapId), a message
 // (MsgKalayWelcomeInPeace) or a file name (kalay_interiors.c). Prose shows it
 // as code, which linkNames links; codeDeclared catches the other names the
@@ -1662,11 +1662,13 @@ function passage(symbols: string[], pages: Map<string, string[]>): string {
   return out.join('\n>\n');
 }
 
-// The rows of a map overlay's event tables that show a message, by the
-// message's symbol: each row's table, line, kind and trigger as written,
+// The rows of a map overlay's trigger tables that show a message, by the
+// message's symbol: each row's table, line, kind and subject as written,
 // with the rows a macro of the file writes (lunpa.c's TALK and MIND_READ);
-// and the tables its event getter returns for a map it names
-// (`if (sceneId == (s32)&SceneId_BilibinBarricade) { return gBilibinEvents3; }`).
+// and the tables its trigger getter returns for a map it names
+// (`if (sceneId == (s32)&SceneId_BilibinBarricade) { return gBilibinBarricadeTriggers; }`).
+// A table is a struct Trigger array, or struct MapEvent in sources from
+// before the triggers were named.
 type MessageRow = { table: string; line: number; control: string; trigger: string };
 function messageRows(path: string): { rows: Map<string, MessageRow[]>; tablesOf: Map<string, Set<string>> } {
   const source = readFileSync(join(repo, path), 'utf8').replace(/\/\*[\s\S]*?\*\/|\/\/[^\n]*/g, (c) => c.replace(/[^\n]/g, ' '));
@@ -1681,10 +1683,10 @@ function messageRows(path: string): { rows: Map<string, MessageRow[]>; tablesOf:
     }
     return parts.map((p) => oneLine(p).replace(/^\(\s*([\s\S]*?)\s*\)$/, '$1')).filter(Boolean);
   };
-  const tables = [...source.matchAll(/struct MapEvent\s+(\w+)\s*\[\s*\]\s*=\s*\{/g)].map((m) => ({ name: m[1], start: m.index!, end: source.indexOf('\n};', m.index!) }));
+  const tables = [...source.matchAll(/struct (?:Trigger|MapEvent)\s+(\w+)\s*\[\s*\]\s*=\s*\{/g)].map((m) => ({ name: m[1], start: m.index!, end: source.indexOf('\n};', m.index!) }));
   const rows = new Map<string, MessageRow[]>();
   const add = (parts: string[], at: number) => {
-    const msg = parts.length === 4 && /^(MAP_EVENT_|COORD_EVENT_|BG_EVENT\(|PSYNERGY|USE_ITEM|0x[0-9a-f]+$|\d+$)/i.test(parts[0]) ? parts[3].match(/\b(Msg\w+)\b/) : null;
+    const msg = parts.length === 4 && /^(TRIGGER_|STEP_TRIGGER_|EXAMINE_TRIGGER\(|MAP_EVENT_|COORD_EVENT_|BG_EVENT\(|PSYNERGY|USE_ITEM|0x[0-9a-f]+$|\d+$)/i.test(parts[0]) ? parts[3].match(/\b(Msg\w+)\b/) : null;
     if (!msg) return;
     const table = tables.find((t) => t.start < at && at < t.end)?.name ?? '';
     rows.set(msg[1], [...(rows.get(msg[1]) ?? []), { table, line: source.slice(0, at).split('\n').length, control: parts[0], trigger: parts[1] }]);
@@ -1707,7 +1709,7 @@ function messageRows(path: string): { rows: Map<string, MessageRow[]>; tablesOf:
     }
   }
   const tablesOf = new Map<string, Set<string>>();
-  for (const getter of source.matchAll(/struct MapEvent\s*\*\s*\w+\s*\(\s*void\s*\)\s*\{/g)) {
+  for (const getter of source.matchAll(/struct (?:Trigger|MapEvent)\s*\*\s*\w+\s*\(\s*void\s*\)\s*\{/g)) {
     const start = getter.index! + getter[0].length;
     const body = source.slice(start, source.indexOf('\n}', start));
     for (const m of body.matchAll(/\bif\s*\(/g)) {
@@ -1723,17 +1725,18 @@ function messageRows(path: string): { rows: Map<string, MessageRow[]>; tablesOf:
   return { rows, tablesOf };
 }
 
-// What a search row searches, by its BgEventTarget (control bits 8..4):
-// "a bookcase", "a spot".
+// What a search row searches, by its ExamineTarget (control bits 8..4;
+// BgEventTarget in older sources): "a bookcase", "a spot".
 function searched(row: MessageRow | undefined): string {
   const value = row && /^(0x[0-9a-f]+|\d+)$/i.test(row.control) ? Number(row.control) : undefined;
-  const target = row?.control.match(/^BG_EVENT\(\s*(\w+)\s*\)$/)?.[1] ?? (value !== undefined && (value & 0xf) === 3 ? enumOf('BgEventTarget').find((e) => e.value === ((value >> 4) & 0x1f))?.name : undefined);
-  const thing = !target || target === 'BG_EVENT_SILENT' ? 'spot' : target.replace(/^BG_EVENT_/, '').toLowerCase().replace(/_/g, ' ');
+  const targets = enumOf('ExamineTarget').length ? enumOf('ExamineTarget') : enumOf('BgEventTarget');
+  const target = row?.control.match(/^(?:EXAMINE_TRIGGER|BG_EVENT)\(\s*(\w+)\s*\)$/)?.[1] ?? (value !== undefined && (value & 0xf) === 3 ? targets.find((e) => e.value === ((value >> 4) & 0x1f))?.name : undefined);
+  const thing = !target || /^(?:EXAMINE|BG_EVENT)_SILENT$/.test(target) ? 'spot' : target.replace(/^(?:EXAMINE|BG_EVENT)_/, '').toLowerCase().replace(/_/g, ' ');
   return `${/^[aeiou]/.test(thing) ? 'an' : 'a'} ${thing}`;
 }
 
 // The story index scripts/story.ts writes to build/story, which `bun run
-// content` makes first: every map event with the maps it plays in, its
+// content` makes first: every scene event with the maps it plays in, its
 // trigger and the messages it shows (events.tsv), and a first story order of
 // them by the flags they need and set (beats.tsv). An event takes the order of
 // its earliest beat; one with no beat follows the event before it in its file.
@@ -1776,7 +1779,7 @@ function plainSentence(text: string): string {
 // Who speaks, for a heading: the actor's comment's first words when they
 // describe someone ("A young man with brown hair", "The tourist the guides
 // are missing"), else the actor's name as words, its enum's shared prefix
-// left out (LOCALID_SECOND_GUIDE is the second guide).
+// left out (ACTOR_SECOND_GUIDE, LOCALID_ in older sources, is the second guide).
 type ActorInfo = { doc: string; prefix: string };
 function actorHeading(name: string, info: ActorInfo | undefined): string {
   let s = plainSentence((info?.doc ?? '').split(/\s*★/)[0]);
@@ -1787,7 +1790,7 @@ function actorHeading(name: string, info: ActorInfo | undefined): string {
     if (at !== undefined) s = s.slice(0, at);
   }
   if (!s || /[`_]/.test(s)) {
-    const words = name.slice(info?.prefix.length ?? 0).replace(/^(?:LOCALID|OBJ_EVENT)_/, '').toLowerCase().split('_').filter(Boolean);
+    const words = name.slice(info?.prefix.length ?? 0).replace(/^(?:ACTOR|LOCALID|OBJ_EVENT)_/, '').toLowerCase().split('_').filter(Boolean);
     const phrase = words.map((w) => (properNoun(w) ? w.charAt(0).toUpperCase() + w.slice(1) : w)).join(' ');
     s = properNoun(words[0] ?? '') ? phrase : `the ${phrase}`;
   }
@@ -1907,7 +1910,8 @@ function placeTitle(scene: string, overlay = '', area = ''): string {
   return out.map((w, j) => (j > 0 && SMALL_WORDS.has(w.toLowerCase()) ? w.toLowerCase() : w.charAt(0).toUpperCase() + w.slice(1))).join(' ');
 }
 
-// A page for each place, each map its overlay's warp tables are for: the
+// A page for each place, each map its overlay's exit tables are for (its
+// SCENE_EXITS rows, MAP_WARPS in sources from before the exits were named): the
 // part of the overlay's opening comment about it, or the whole comment when
 // the overlay is one place or names none; the place's maps as the game draws
 // them, where the renders have them, at each story moment they were drawn
@@ -1921,7 +1925,7 @@ function placePages(scenes: SourceFile[]): Place[] {
   const renders = placeRenders();
   const out: Place[] = [];
   for (const f of scenes) {
-    const own = [...new Set([...readFileSync(join(repo, f.path), 'utf8').matchAll(/MAP_WARPS\((\w+)\)/g)].map((m) => m[1]))];
+    const own = [...new Set([...readFileSync(join(repo, f.path), 'utf8').matchAll(/\b(?:SCENE_EXITS|MAP_WARPS)\((\w+)\)/g)].map((m) => m[1]))];
     for (const s of own) {
       const id = sceneIds.get(s);
       if (id !== undefined) out.push({ file: f, scene: s, id, slug: kebab(s), title: placeTitle(s, f.doc, renders.find((r) => r.number === id && r.area)?.area ?? ''), area: '', description: '', image: '' });
@@ -1960,11 +1964,18 @@ function placePages(scenes: SourceFile[]): Place[] {
     const events = story.filter((e) => e.file === path && e.scenes.includes(p.id) && !/^entry\b/.test(e.trigger) && !(/^callback\b/.test(e.trigger) && !e.messages.length));
     // An event's recordings, by the names it was recorded under: its own
     // name, else, from renders made before the rows were named, its table and
-    // index (`gValeStormyNight_Events[26]`) or a function's name since renamed,
+    // index (`gValeStormyNight_Events[26]`, now `_Triggers`) or a function's name since renamed,
     // matched by the first message it showed.
     const aliases = new Map<string, string[]>();
     for (const n of new Set(mine.filter((r) => r.kind === 'event-gif' || r.kind === 'event-segment').map((r) => r.event))) {
       if (events.some((e) => e.event === n)) continue;
+      // A name recorded in the words The Broken Seal took from pret before it
+      // named its own (EventScript_WarpToVale, now EventScript_ExitToVale).
+      const reworded = n.replace(/WarpDest/g, 'Entrance').replace(/Warp/g, 'Exit').replace(/ObjectEvent/g, 'Actor').replace(/LocalId/g, 'ActorId').replace(/MapSec/g, 'Area').replace(/MapEvent/g, 'Trigger');
+      if (reworded !== n && events.some((e) => e.event === reworded)) {
+        aliases.set(reworded, [...(aliases.get(reworded) ?? []), n]);
+        continue;
+      }
       const first = Number(mine.find((r) => r.event === n && r.messages)?.messages.split(',')[0]);
       const owner = events.find((e) => (words2.symbol.get(first) && e.event === words2.symbol.get(first)) || e.messages[0] === first);
       if (owner) aliases.set(owner.event, [...(aliases.get(owner.event) ?? []), n]);
@@ -1978,7 +1989,7 @@ function placePages(scenes: SourceFile[]): Place[] {
     if (!rowsOfFile.has(p.file.path)) rowsOfFile.set(p.file.path, messageRows(p.file.path));
     const file = rowsOfFile.get(p.file.path)!;
     // A message's rows in the place's own tables: the ones its getter returns
-    // for it, else the ones named after it (gValeStormyNight_Events), else all.
+    // for it, else the ones named after it (gValeStormyNight_Triggers), else all.
     const rowsOf = (symbol: string) => {
       const all = file.rows.get(symbol) ?? [];
       const own = file.tablesOf.get(p.scene);
