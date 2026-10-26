@@ -11,12 +11,12 @@ html > body[data-scroll-locked] {
   --removed-body-scroll-bar-size: 0px !important;
 }
 
-/* The renders of the game, shown as the GBA's screen showed them (the
-   #gba-colour filter in app/layout.tsx), unless the reader picked the raw
-   colours. The games' picture files keep the colours their palettes store.
+/* The renders of the game, shown in alchemy-lit (the #alchemy-lit filter in
+   app/layout.tsx), unless the reader picked the raw colours. The games'
+   picture files keep the colours their palettes store.
    A still (lib/stills.ts) is the first frame of a render. */
 :root:not([data-colours='raw']) img:is([src*='/places/'], [src*='/abilities/'], [src*='/story/'], [src*='/guides/'], [src*='/stills/']):not([src*='/pictures/']) {
-  filter: url(#gba-colour);
+  filter: url(#alchemy-lit);
 }
 img:is([src*='/places/'], [src*='/abilities/'], [src*='/story/'], [src*='/guides/'], [src*='/stills/']):not([src*='/pictures/']) {
   image-rendering: pixelated;
@@ -86,7 +86,7 @@ img.render {
   border: 1px solid var(--color-fd-border);
 }
 .dark:not([data-colours='raw']) img.render[src*='/guides/'][src*='.png'] {
-  filter: url(#gba-colour) brightness(0.88);
+  filter: url(#alchemy-lit) brightness(0.88);
 }
 .dark[data-colours='raw'] img.render[src*='/guides/'][src*='.png'] {
   filter: brightness(0.88);

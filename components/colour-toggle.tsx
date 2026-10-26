@@ -4,10 +4,10 @@ import { ThemeSwitch, type ThemeSwitchProps } from 'fumadocs-ui/layouts/shared/s
 import { useEffect, useState } from 'react';
 import { COLOURS_KEY } from '@/lib/shared';
 
-// The renders are the GBA's own colours, which its screen showed darker and
-// less saturated. By default the site shows them as that screen did, through
-// the #gba-colour filter (app/layout.tsx); this switches between that and
-// the colours as stored, and remembers the choice in the browser.
+// The renders are the game's own colours. By default the site shows them in
+// alchemy-lit, its palette for them, through the #alchemy-lit filter
+// (app/layout.tsx); this switches between that and the colours as stored, and
+// remembers the choice in the browser.
 
 export function ColourToggle() {
   const [raw, setRaw] = useState(false);
@@ -29,10 +29,10 @@ export function ColourToggle() {
       type="button"
       onClick={toggle}
       aria-pressed={!raw}
-      title={raw ? 'Showing the colours as stored; show them as a GBA screen did' : 'Showing the colours as a GBA screen did; show them as stored'}
+      title={raw ? 'Showing the colours as stored; show them in alchemy-lit' : 'Showing the colours in alchemy-lit; show them as stored'}
       className="inline-flex items-center rounded-md px-2 py-1 text-xs whitespace-nowrap transition-colors hover:text-fd-accent-foreground hover:bg-fd-accent"
     >
-      {raw ? 'Raw colours' : 'GBA colours'}
+      {raw ? 'Raw colours' : 'Lit colours'}
     </button>
   );
 }
