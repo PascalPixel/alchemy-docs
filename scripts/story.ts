@@ -48,6 +48,10 @@ const out = process.argv[2] ?? process.env.STORY_OUT ?? join(docs, 'build/story'
 const placesTable = process.env.PLACES ?? join(out, '../places/places.tsv');
 const GAME = 'games/tbs';
 const gamePath = (...p: string[]) => join(repo, GAME, ...p);
+// The overlays' folder and the scene table: src/scene and scene_headers.s,
+// or src/map and map_headers.s in sources from before the scenes were named.
+const SCENES = existsSync(gamePath('src/field/scene_headers.s')) ? 'scene' : 'map';
+const SCENE_TABLE = SCENES === 'scene' ? 'src/field/scene_headers.s' : 'src/field/map_headers.s';
 const started = Date.now();
 
 const parser = await (async () => {
@@ -275,7 +279,8 @@ function builtinValue(name: string): number | undefined {
   const msg = messageBySymbol.get(name) ?? messageBySymbol.get(name.replace(/^TEXT_MESSAGE_NUMBER_/, ''));
   if (msg !== undefined) return msg;
   if (name === 'MsgEnd' || name === 'TEXT_MESSAGE_NUMBER_MsgEnd') return messages.length;
-  const scene = name.startsWith('MapId_') ? sceneIdByName.get(name.slice(6)) : undefined;
+  const id = name.match(/^(?:Scene|Map)Id_(\w+)$/);
+  const scene = id ? sceneIdByName.get(id[1]) : undefined;
   return scene;
 }
 
@@ -561,8 +566,8 @@ function walkFiles(rel: string, test: (name: string) => boolean, into: string[] 
 type SceneRow = { id: number; name: string; overlay: number; group: number; kind: number; map: number; file: string };
 
 const scenes: SceneRow[] = [];
-for (const line of readFileSync(gamePath('src/field/map_headers.s'), 'utf8').split('\n')) {
-  const m = line.match(/^\s*map_header\s+(\w*)\s*,\s*(\w+)\s*,\s*(\w+)\s*,\s*(\w+)\s*,\s*(\w+)/);
+for (const line of readFileSync(gamePath(SCENE_TABLE), 'utf8').split('\n')) {
+  const m = line.match(/^\s*(?:scene|map)_header\s+(\w*)\s*,\s*(\w+)\s*,\s*(\w+)\s*,\s*(\w+)\s*,\s*(\w+)/);
   if (m) scenes.push({ id: scenes.length, name: m[1], overlay: Number(m[2]), group: Number(m[3]), kind: Number(m[4]), map: Number(m[5]), file: '' });
 }
 sceneIdByName = new Map(scenes.filter((s) => s.name).map((s) => [s.name, s.id]));
@@ -689,7 +694,7 @@ if (tableAreas) {
 
 const globalScope = new Scope();
 for (const h of walkFiles(`${GAME}/include`, (n) => n.endsWith('.h'))) {
-  if (h.includes('/include/unit/map/')) continue;
+  if (h.includes(`/include/unit/${SCENES}/`)) continue;
   collectConstants(parseC(h), globalScope);
 }
 resolveEnums();
@@ -797,18 +802,18 @@ function buildTU(file: string): TU {
       const p = inc?.childForFieldName('path');
       if (!p || p.type !== 'string_literal') continue;
       const target = join(dirname(rel), p.text.slice(1, -1));
-      if (target.startsWith(`${GAME}/src/map/`) && existsSync(join(repo, target))) visit(target);
+      if (target.startsWith(`${GAME}/src/${SCENES}/`) && existsSync(join(repo, target))) visit(target);
     }
   };
   visit(file);
-  const unit = `${GAME}/include/unit/map/${basename(file, '.c')}.h`;
+  const unit = `${GAME}/include/unit/${SCENES}/${basename(file, '.c')}.h`;
   if (existsSync(join(repo, unit))) collectConstants(parseC(unit), scope);
-  const entryPath = gamePath('src/map/entry', `${basename(file, '.c')}.s`);
+  const entryPath = gamePath(`src/${SCENES}/entry`, `${basename(file, '.c')}.s`);
   const entry = existsSync(entryPath) ? [...readFileSync(entryPath, 'utf8').matchAll(/^\s*overlay_veneer\s+(\w+)/gm)].map((m) => m[1]) : [];
   return { file, scope, fns, tables, scenes: scenesOfFile.get(file) ?? [], entry };
 }
 
-const sceneFiles = walkFiles(`${GAME}/src/map`, (n) => n.endsWith('.c')).filter((f) => dirname(f) === `${GAME}/src/map`);
+const sceneFiles = walkFiles(`${GAME}/src/${SCENES}`, (n) => n.endsWith('.c')).filter((f) => dirname(f) === `${GAME}/src/${SCENES}`);
 const tus = sceneFiles.map(buildTU);
 resolveEnums();
 
@@ -1023,10 +1028,10 @@ function conditionLits(node: Node | null, st: State, fr: Frame): { t: Lit[]; f: 
     return { t: inner.f, f: inner.t };
   }
   // A scene test. The parser knows no typedefs, so it reads
-  // `mapId == (s32)&MapId_X` as `(mapId == (s32)) & MapId_X`: the
+  // `sceneId == (s32)&SceneId_X` as `(sceneId == (s32)) & SceneId_X`: the
   // comparison is matched in the text.
   const text = node.text.replace(/\s+/g, ' ');
-  const scene = text.match(/^(?:[\w.>-]*\bmapId\b)\s*(==|!=)\s*((?:\(\s*\w+\s*\)\s*)?&?\s*MapId_\w+)$/) ?? text.match(/^((?:\(\s*\w+\s*\)\s*)?&?\s*MapId_\w+)\s*(==|!=)\s*(?:[\w.>-]*\bmapId\b)$/);
+  const scene = text.match(/^(?:[\w.>-]*\b(?:sceneId|mapId)\b)\s*(==|!=)\s*((?:\(\s*\w+\s*\)\s*)?&?\s*(?:Scene|Map)Id_\w+)$/) ?? text.match(/^((?:\(\s*\w+\s*\)\s*)?&?\s*(?:Scene|Map)Id_\w+)\s*(==|!=)\s*(?:[\w.>-]*\b(?:sceneId|mapId)\b)$/);
   if (scene) {
     const [op, side] = scene[1].startsWith('=') || scene[1].startsWith('!') ? [scene[1], scene[2]] : [scene[2], scene[1]];
     const id = constEval(side, fr.tu.scope);
@@ -1054,7 +1059,7 @@ function conditionLits(node: Node | null, st: State, fr: Frame): { t: Lit[]; f: 
       const flip = (x: { t: Lit[]; f: Lit[] }) => (op === '==' ? { t: x.f, f: x.t } : x);
       for (const [a, b] of [[left, right], [right, left]] as [Node | null, Node | null][]) {
         if (!a || !b) continue;
-        if (/MapId_\w+/.test(a.text) && /map/i.test(b.text)) {
+        if (/(?:Scene|Map)Id_\w+/.test(a.text) && /scene|map/i.test(b.text)) {
           const id = constEval(a.text, fr.tu.scope);
           if (id !== undefined) {
             const t = [{ k: `s${id}`, pos: true }];
@@ -1418,7 +1423,7 @@ function eventRows(tu: TU, uses: Map<string, TableUse>): Row[] {
       const own = conditionLit(constEval(e[2], tu.scope));
       const key = `${control >>> 0}:${trigger}`;
       // A row is reached only when the earlier rows for the same trigger did
-      // not hold (Map_FindEvent takes the first); a search ignores them.
+      // not hold (Scene_FindEvent takes the first); a search ignores them.
       const failed = kind === 3 ? [] : earlier.filter((x) => x.key === key).flatMap((x) => (x.lits.length === 1 ? [{ k: x.lits[0].k, pos: !x.lits[0].pos }] : []));
       earlier.push({ key, lits: own });
       const handler = (e[3].match(/\b[A-Za-z_]\w*\b/g) ?? []).find((n) => tu.fns.has(n));
@@ -1581,7 +1586,7 @@ for (const tu of tus) {
 
 // The rest of the game's C: messages its functions and tables name, and the
 // flags they set, clear and test by number.
-const otherFiles = walkFiles(`${GAME}/src`, (n) => /\.[ch]$/.test(n)).filter((f) => !f.startsWith(`${GAME}/src/map/`));
+const otherFiles = walkFiles(`${GAME}/src`, (n) => /\.[ch]$/.test(n)).filter((f) => !f.startsWith(`${GAME}/src/${SCENES}/`));
 for (const f of otherFiles) {
   const root = parseC(f);
   const scope = new Scope(globalScope);
@@ -1625,7 +1630,7 @@ function flagKeys(n: number, sceneIds: number[], global = false): string[] {
 
 function flagLabel(n: number, tu?: TU): string {
   const global = flagDocs.get(n)?.names[0];
-  if (global && (n < 0x200 || n >= 0x400 || /^FLAG_MAP_TEMP_[0-9A-F]{2}$/.test(global))) return global;
+  if (global && (n < 0x200 || n >= 0x400 || /^FLAG_(?:SCENE|MAP)_TEMP_[0-9A-F]{2}$/.test(global))) return global;
   if (tu) {
     let local = localFlagNames.get(tu.file);
     if (!local) {
@@ -1791,7 +1796,7 @@ tsv(
   flagList.map((r) => {
     const doc = flagDocs.get(r.n);
     const global = r.n < 0x200 || r.n >= 0x400;
-    const names = uniq([...(global || /^FLAG_MAP_TEMP_[0-9A-F]{2}$/.test(doc?.names[0] ?? '') ? (doc?.names ?? []) : []), ...r.names]);
+    const names = uniq([...(global || /^FLAG_(?:SCENE|MAP)_TEMP_[0-9A-F]{2}$/.test(doc?.names[0] ?? '') ? (doc?.names ?? []) : []), ...r.names]);
     return [r.key, hex(r.n), names.join(', '), global && doc ? [doc.section, doc.doc].filter(Boolean).join(': ') : '', [...r.set].sort().join('; '), [...r.clear].sort().join('; '), [...r.test].sort().join('; ')];
   }),
 );

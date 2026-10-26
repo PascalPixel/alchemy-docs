@@ -38,10 +38,16 @@ const github = 'https://github.com/PascalPixel/alchemy/blob/main';
 // fetch` copies into build/renders): the pictures are not in public/, so a
 // picture an index lists is shown only when the store has it.
 const stored = readManifest(docs);
-// The Broken Seal's maps by symbol, numbered as field/map_headers.s lists them.
+// A game's scene table: field/scene_headers.s, or field/map_headers.s in
+// sources from before the scenes were named.
+const sceneTable = (game: string) =>
+  existsSync(join(repo, `games/${game}/src/field/scene_headers.s`)) ? `games/${game}/src/field/scene_headers.s` : `games/${game}/src/field/map_headers.s`;
+// The Broken Seal's scenes by symbol, numbered as its scene table lists them.
 const sceneIds = new Map(
-  [...readFileSync(join(repo, 'games/tbs/src/field/map_headers.s'), 'utf8').matchAll(/^\tmap_header (\w*),/gm)].map((m, i) => [m[1], i] as const),
+  [...readFileSync(join(repo, sceneTable('tbs')), 'utf8').matchAll(/^\t(?:scene|map)_header (\w*),/gm)].map((m, i) => [m[1], i] as const),
 );
+// A scene's symbol as the sources write it: SceneId_, or MapId_ before.
+const sceneSymbol = (name: string) => (sceneTable('tbs').endsWith('scene_headers.s') ? `SceneId_${name}` : `MapId_${name}`);
 
 type Game = 'tbs' | 'tla';
 // The games with pages. The Lost Age is still being decompiled: it has one
@@ -130,7 +136,7 @@ function page(path: string, front: Record<string, string>, body: string) {
 // Text from the source, safe in Markdown outside code: the characters MDX
 // and Markdown would read as syntax are escaped, code spans kept as written.
 // A name the code uses, written bare in a comment: anything with an
-// underscore (KALAY_TO_WORLD_MAP, MapId_Kalay, Map_TakeWarp), a global
+// underscore (KALAY_TO_WORLD_MAP, SceneId_Kalay, Scene_TakeWarp), a global
 // and the fields it is read through (gSaveBlock.mapId), a message
 // (MsgKalayWelcomeInPeace) or a file name (kalay_interiors.c). Prose shows it
 // as code, which linkNames links; codeDeclared catches the other names the
@@ -556,10 +562,10 @@ const lookup = (game: Game, name: string) => where.get(game)!.get(name) ?? enume
 // read, written bare in a comment, shown as code once the index has them: a
 // CamelCase name with no underscore (ObjectVectorView, a function or a type), an
 // upper-case macro with none (UNUSED), and a map by the name
-// field/map_headers.s gives it (KalayTunnelTreasureRoom).
+// the scene table gives it (KalayTunnelTreasureRoom).
 function codeDeclared(text: string, game: Game): string {
   const index = where.get(game)!;
-  const known = (name: string) => name.length > 3 && (index.has(name) || (sceneIds.has(name) && index.has(`MapId_${name}`))) && ((/[a-z0-9][A-Z]/.test(name) && /[a-z]/.test(name)) || /^[A-Z][A-Z0-9]+$/.test(name));
+  const known = (name: string) => name.length > 3 && (index.has(name) || (sceneIds.has(name) && index.has(sceneSymbol(name)))) && ((/[a-z0-9][A-Z]/.test(name) && /[a-z]/.test(name)) || /^[A-Z][A-Z0-9]+$/.test(name));
   return text
     .split(/(```[\s\S]*?```|`[^`]*`|\]\([^)]*\))/)
     .map((part, i) => (i % 2 ? part : part.replace(/(?<![\w`\\.])([A-Za-z][A-Za-z0-9]*)((?:(?:\.|-\\?>)[a-z][A-Za-z0-9]*)*)(\(\))?(?![\w`])/g, (all, name: string, chain: string, call = '') => (known(name) ? `\`${name}${chain.replace(/\\/g, '')}${call}\`` : all))))
@@ -597,7 +603,7 @@ function codeTarget(span: string, game: Game, self: string): { url: string } | u
   }
   const m = span.match(/^`(\w+)(?:(?:\.|->)(\w+))?(?:(?:\.|->)\w+)*(?:\(\))?`$/);
   if (!m || m[1] === self) return undefined;
-  const hit = lookup(game, m[1]) ?? (sceneIds.has(m[1]) ? where.get(game)!.get(`MapId_${m[1]}`) : undefined);
+  const hit = lookup(game, m[1]) ?? (sceneIds.has(m[1]) ? where.get(game)!.get(sceneSymbol(m[1])) : undefined);
   if (hit && m[2] && structPages.get(hit.decl) === hit.url && hit.decl.fields.some((f) => f.name.split(', ')[0] === m[2])) return { ...hit, url: `${hit.url}#${anchor(m[2])}` };
   return hit;
 }
@@ -1185,7 +1191,7 @@ const FIXED: [string, string][] = [
   ['INSTALL.md', '/start'],
   ['games/tbs/src/MATCHING.md', '/tbs/matching'],
   ['games/tbs/glossary.md', '/tbs/glossary'],
-  ['games/tbs/src/field/map_headers.s', '/tbs/places'],
+  [sceneTable('tbs'), '/tbs/places'],
   // The Unused page, which unusedPage() writes from the source's comments; a
   // README links it by its address on the site.
   ['games/tbs/unused', '/tbs/unused'],
@@ -1257,7 +1263,7 @@ function arrange(): Placed {
   // What each front page places: its section pages, places and source.
   for (const game of root.children.filter((n) => n.kind === 'game')) {
     const g = game.key.split('/')[1] as Game;
-    const wants = [...sectionPages(g), `games/${g}/src/field/map_headers.s`, `games/${g}/unused`, `games/${g}/src`];
+    const wants = [...sectionPages(g), sceneTable(g), `games/${g}/unused`, `games/${g}/src`];
     const links = linksOf(game.key, 'last').filter((k) => wants.includes(k));
     for (const k of wants) if (!links.includes(k) && (fixedUrl(k) || existsSync(join(repo, k)))) notes.push(`${game.key} doesn't link ${k}: placed after its links`);
     for (const k of [...links, ...wants.filter((k) => !links.includes(k) && (fixedUrl(k) || existsSync(join(repo, k))))]) {
@@ -1275,7 +1281,7 @@ function arrange(): Placed {
 
 // The derived tree, as the build prints it.
 function printTree(node: Placed, depth = 0): string[] {
-  const title = node.kind === 'root' ? ROOT_LABEL : (headingOf(node.key) ?? headingOf(`${node.key}/README.md`) ?? (node.key.endsWith('map_headers.s') ? 'Places' : node.key.endsWith('/unused') ? 'Unused' : node.key));
+  const title = node.kind === 'root' ? ROOT_LABEL : (headingOf(node.key) ?? headingOf(`${node.key}/README.md`) ?? (/(?:scene|map)_headers\.s$/.test(node.key) ? 'Places' : node.key.endsWith('/unused') ? 'Unused' : node.key));
   return [`${'  '.repeat(depth)}${title}  ${node.url}`, ...node.children.flatMap((c) => printTree(c, depth + 1))];
 }
 function headingOf(key: string): string | undefined {
@@ -1570,7 +1576,7 @@ function placeRenders(): Render[] {
 // table of contents jumps between towns and dungeons. A town the story
 // returns to has a section each time.
 function places(files: SourceFile[]) {
-  const scenes = files.filter((f) => /^games\/tbs\/src\/map\/[^/]+\.c$/.test(f.path));
+  const scenes = files.filter((f) => /^games\/tbs\/src\/(?:scene|map)\/[^/]+\.c$/.test(f.path));
   const pages = placePages(scenes);
   const lead = (title: string) => title.split(' ')[0].replace(/'s$/, '');
   const runs: Place[][] = [];
@@ -1605,7 +1611,7 @@ function places(files: SourceFile[]) {
     const cards = run.map((p, i) => `- [${md(p.title)}](/tbs/places/${p.slug})${lines[i] && lines[i] !== lines[i - 1] ? `: ${md(lines[i])}` : ':'}`);
     return `## ${md(heading)}\n\n${cards.join('\n')}`;
   });
-  page(`${GUIDE}/tbs/places/index.md`, { title: 'Places', description: 'Every place the party can walk around in, and what happens there.' }, `Every place the party can walk around in, in the order the story reaches it, each with a page of its own holding its map and its events. A map overlay holds one place or a few that share it; the [Maps](${siteLink('games/tbs/src/map/README.md')}) guide explains how a map runs and how to find an event in it.\n\n${sections.join('\n\n')}`);
+  page(`${GUIDE}/tbs/places/index.md`, { title: 'Places', description: 'Every place the party can walk around in, and what happens there.' }, `Every place the party can walk around in, in the order the story reaches it, each with a page of its own holding its map and its events. A scene's overlay holds one place or a few that share it; the [Scenes](${siteLink(existsSync(join(repo, 'games/tbs/src/scene/README.md')) ? 'games/tbs/src/scene/README.md' : 'games/tbs/src/map/README.md')}) guide explains how a scene runs and how to find an event in it.\n\n${sections.join('\n\n')}`);
   write(join(content, GUIDE, 'tbs/places/meta.json'), JSON.stringify({ title: 'Places', pages: pages.map((p) => p.slug) }, null, 2) + '\n');
 }
 
@@ -1660,7 +1666,7 @@ function passage(symbols: string[], pages: Map<string, string[]>): string {
 // message's symbol: each row's table, line, kind and trigger as written,
 // with the rows a macro of the file writes (lunpa.c's TALK and MIND_READ);
 // and the tables its event getter returns for a map it names
-// (`if (mapId == (s32)&MapId_BilibinBarricade) { return gBilibinEvents3; }`).
+// (`if (sceneId == (s32)&SceneId_BilibinBarricade) { return gBilibinEvents3; }`).
 type MessageRow = { table: string; line: number; control: string; trigger: string };
 function messageRows(path: string): { rows: Map<string, MessageRow[]>; tablesOf: Map<string, Set<string>> } {
   const source = readFileSync(join(repo, path), 'utf8').replace(/\/\*[\s\S]*?\*\/|\/\/[^\n]*/g, (c) => c.replace(/[^\n]/g, ' '));
@@ -1711,7 +1717,7 @@ function messageRows(path: string): { rows: Map<string, MessageRow[]>; tablesOf:
       const condition = body.slice(m.index! + m[0].length, i - 1);
       const table = body.slice(i).match(/^\s*\{?\s*return\s+(\w+)\s*;/)?.[1];
       if (!table || condition.includes('!=')) continue;
-      for (const s of condition.matchAll(/MapId_(\w+)/g)) tablesOf.set(s[1], new Set([...(tablesOf.get(s[1]) ?? []), table]));
+      for (const s of condition.matchAll(/(?:Scene|Map)Id_(\w+)/g)) tablesOf.set(s[1], new Set([...(tablesOf.get(s[1]) ?? []), table]));
     }
   }
   return { rows, tablesOf };
@@ -1807,7 +1813,7 @@ function actorIndex(files: SourceFile[]) {
 }
 
 // A place's own part of its overlay's opening comment: the list item or
-// paragraph that opens by naming it, as "- Kalay (`MapId_Kalay`), a
+// paragraph that opens by naming it, as "- Kalay (`SceneId_Kalay`), a
 // town…" or "The Bilibin Treasury (`BilibinTreasury`) is…", with the
 // indented paragraphs that continue it; else the one for its title or its
 // area name.
@@ -1821,7 +1827,7 @@ function placeBlock(doc: string, scene: string, names: string[]): string | undef
   const texts = blocks.map((b) => b.join('\n').trim());
   const head = (t: string) => t.replace(/^- /, '').replace(/^The /, '').replace(/\\/g, '');
   const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const bySymbol = new RegExp(`^[^(\\n]{1,60}\\(\`?(?:MapId_)?${scene}\`?[\\s),]`);
+  const bySymbol = new RegExp(`^[^(\\n]{1,60}\\(\`?(?:(?:Scene|Map)Id_)?${scene}\`?[\\s),]`);
   const found = texts.find((t) => bySymbol.test(head(t))) ?? names.map((n) => texts.find((t) => new RegExp(`^${esc(n)} \\(`).test(head(t)))).find(Boolean);
   return found
     ?.replace(/^- /, '')
@@ -1857,8 +1863,8 @@ function placeTitle(scene: string, overlay = '', area = ''): string {
   if (!mapDocs) {
     mapDocs = new Map();
     let doc: string[] = [];
-    for (const line of readFileSync(join(repo, 'games/tbs/include/map_ids.h'), 'utf8').split('\n')) {
-      const m = line.match(/^extern char MapId_(\w+);/);
+    for (const line of readFileSync(join(repo, existsSync(join(repo, 'games/tbs/include/scene_ids.h')) ? 'games/tbs/include/scene_ids.h' : 'games/tbs/include/map_ids.h'), 'utf8').split('\n')) {
+      const m = line.match(/^extern char (?:Scene|Map)Id_(\w+);/);
       if (m) mapDocs.set(m[1], doc.join(' '));
       doc = /^\/\/\//.test(line) ? [...doc, line.replace(/^\/\/\/\s?/, '')] : [];
     }
