@@ -30,7 +30,7 @@
 //
 // How messages are found. A scene's event sets the current message
 // (MESSAGE_SET) and each "show" command shows it and moves on to the next
-// (MESSAGE_PUT, Script_ShowMessage, Script_AskYesNo shows three); an event table
+// (MESSAGE_PUT, Event_ShowMessage, Event_AskYesNo shows three); a trigger table
 // row can show one message itself. Each event is followed through its
 // statements with the current message's possible values, each value with the
 // flags its path has tested, and through the scene's own helper functions it
@@ -48,10 +48,10 @@ const out = process.argv[2] ?? process.env.STORY_OUT ?? join(docs, 'build/story'
 const placesTable = process.env.PLACES ?? join(out, '../places/places.tsv');
 const GAME = 'games/tbs';
 const gamePath = (...p: string[]) => join(repo, GAME, ...p);
-// The overlays' folder and the scene table: src/scene and scene_headers.s,
-// or src/map and map_headers.s in sources from before the scenes were named.
-const SCENES = existsSync(gamePath('src/field/scene_headers.s')) ? 'scene' : 'map';
-const SCENE_TABLE = SCENES === 'scene' ? 'src/field/scene_headers.s' : 'src/field/map_headers.s';
+// The overlays' folder and the scene table: src/scene and scenes.s, or src/map
+// and map_headers.s in sources from before the scenes were named.
+const SCENES = existsSync(gamePath('src/field/scenes.s')) ? 'scene' : 'map';
+const SCENE_TABLE = SCENES === 'scene' ? 'src/field/scenes.s' : 'src/field/map_headers.s';
 const started = Date.now();
 
 const parser = await (async () => {
@@ -567,7 +567,7 @@ type SceneRow = { id: number; name: string; overlay: number; group: number; kind
 
 const scenes: SceneRow[] = [];
 for (const line of readFileSync(gamePath(SCENE_TABLE), 'utf8').split('\n')) {
-  const m = line.match(/^\s*(?:scene|map)_header\s+(\w*)\s*,\s*(\w+)\s*,\s*(\w+)\s*,\s*(\w+)\s*,\s*(\w+)/);
+  const m = line.match(/^\s*(?:scene|map_header)\s+(\w*)\s*,\s*(\w+)\s*,\s*(\w+)\s*,\s*(\w+)\s*,\s*(\w+)/);
   if (m) scenes.push({ id: scenes.length, name: m[1], overlay: Number(m[2]), group: Number(m[3]), kind: Number(m[4]), map: Number(m[5]), file: '' });
 }
 sceneIdByName = new Map(scenes.filter((s) => s.name).map((s) => [s.name, s.id]));
@@ -618,7 +618,7 @@ function deriveAreas(): Map<number, AreaNames> {
   const rules: Rule[] = [];
   let inTable = false;
   const stack: boolean[] = [];
-  for (const line of readFileSync(gamePath('src/overworld/map_rules.s'), 'utf8').split('\n')) {
+  for (const line of readFileSync(gamePath('src/overworld/scene_rules.s'), 'utf8').split('\n')) {
     if (/^g(?:Area|MapSec)_NameRules:/.test(line)) inTable = true;
     else if (inTable && /^\w+:|^\s*\.global/.test(line)) inTable = false;
     if (!inTable) continue;
@@ -845,16 +845,16 @@ type Frame = {
 };
 
 const UNKNOWN: Val = { t: 'unknown' };
-const SET_MESSAGE = new Set(['MESSAGE_SET', 'Script_SetMessage', 'FieldScript_SetMessageId']);
-const SHOW_MESSAGE = new Set(['Script_ShowMessage', 'MESSAGE_PUT', 'Script_OpenMessage', 'MESSAGE_OPEN', 'Script_ShowMessageAndWait', 'FieldScript_ShowMessageAndWait', 'FieldScript_ShowMessageThenWait', 'FieldMessage_ShowAtObject', 'FieldScript_ShowSpeakerMessage']);
-const ASK_MESSAGE = new Set(['Script_AskYesNo', 'FieldScript_AskYesNoAndShowResponse']);
-const TWO_MESSAGES = new Set(['Import_ScriptShowTwoMessagesAndWait', 'Script_ShowTwoMessagesAndWait', 'Battle_ShowPairedUnitWorkAndWait']);
+const SET_MESSAGE = new Set(['MESSAGE_SET', 'Event_SetMessageId']);
+const SHOW_MESSAGE = new Set(['Event_ShowMessage', 'MESSAGE_PUT', 'Event_OpenMessage', 'MESSAGE_OPEN', 'FieldEvent_ShowMessageThenWait', 'Event_ShowMessageAndWait', 'Event_ShowMessageThenWait', 'FieldMessage_ShowAtActor', 'Event_ShowSpeakerMessage']);
+const ASK_MESSAGE = new Set(['Event_AskYesNo', 'Event_AskYesNoAndShowResponse']);
+const TWO_MESSAGES = new Set(['Import_EventShowTwoMessagesAndWait', 'FieldEvent_ShowTwoMessagesAndWait', 'Battle_ShowPairedUnitWorkAndWait']);
 const DIRECT_MESSAGE = new Set(['Message_ShowCentered', 'FieldMessage_ShowCentered', 'FieldMessage_Show', 'FieldMessage_ShowFar']);
-// The game flags' verbs, their far-call stubs and the script layer's inlines;
+// The game flags' verbs, their far-call stubs and the event layer's inlines;
 // Import_GameFlagSet is the void import two maps match with.
-const FLAG_SET = new Set(['GameFlag_Set', 'GameFlag_SetFar', 'Script_SetFlag', 'Import_GameFlagSet']);
-const FLAG_CLEAR = new Set(['GameFlag_Clear', 'GameFlag_ClearFar', 'Script_ClearFlag']);
-const FLAG_TEST = new Set(['GameFlag_Get', 'GameFlag_GetFar', 'Script_GetFlag']);
+const FLAG_SET = new Set(['GameFlag_Set', 'GameFlag_SetFar', 'Event_SetFlag', 'Import_GameFlagSet']);
+const FLAG_CLEAR = new Set(['GameFlag_Clear', 'GameFlag_ClearFar', 'Event_ClearFlag']);
+const FLAG_TEST = new Set(['GameFlag_Get', 'GameFlag_GetFar', 'Event_GetFlag']);
 const MAX_VALUES = 48;
 
 const litKey = (l: Lit) => `${l.pos ? '+' : '-'}${l.k}`;
@@ -1174,7 +1174,7 @@ function evalCall(node: Node, st: State, fr: Frame) {
     st.msg = absEval(a[0], st, fr).map((v) => ({ v, cond: [...st.pc] }));
     record(st, fr, 0, 'centered', '', node);
     st.msg = saved;
-  } else if (name === 'Script_SkipMessages') {
+  } else if (name === 'Event_SkipMessages') {
     shift(st, absEval(a[0], st, fr));
   } else if (FLAG_SET.has(name)) flagOp('set', a[0], st, fr);
   else if (FLAG_CLEAR.has(name)) flagOp('clear', a[0], st, fr);

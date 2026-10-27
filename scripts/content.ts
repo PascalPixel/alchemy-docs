@@ -38,16 +38,16 @@ const github = 'https://github.com/PascalPixel/alchemy/blob/main';
 // fetch` copies into build/renders): the pictures are not in public/, so a
 // picture an index lists is shown only when the store has it.
 const stored = readManifest(docs);
-// A game's scene table: field/scene_headers.s, or field/map_headers.s in
-// sources from before the scenes were named.
+// A game's scene table: field/scenes.s, or field/map_headers.s in sources from
+// before the scenes were named.
 const sceneTable = (game: string) =>
-  existsSync(join(repo, `games/${game}/src/field/scene_headers.s`)) ? `games/${game}/src/field/scene_headers.s` : `games/${game}/src/field/map_headers.s`;
+  existsSync(join(repo, `games/${game}/src/field/scenes.s`)) ? `games/${game}/src/field/scenes.s` : `games/${game}/src/field/map_headers.s`;
 // The Broken Seal's scenes by symbol, numbered as its scene table lists them.
 const sceneIds = new Map(
-  [...readFileSync(join(repo, sceneTable('tbs')), 'utf8').matchAll(/^\t(?:scene|map)_header (\w*),/gm)].map((m, i) => [m[1], i] as const),
+  [...readFileSync(join(repo, sceneTable('tbs')), 'utf8').matchAll(/^\t(?:scene|map_header) (\w*),/gm)].map((m, i) => [m[1], i] as const),
 );
 // A scene's symbol as the sources write it: SceneId_, or MapId_ before.
-const sceneSymbol = (name: string) => (sceneTable('tbs').endsWith('scene_headers.s') ? `SceneId_${name}` : `MapId_${name}`);
+const sceneSymbol = (name: string) => (sceneTable('tbs').endsWith('scenes.s') ? `SceneId_${name}` : `MapId_${name}`);
 
 type Game = 'tbs' | 'tla';
 // The games with pages. The Lost Age is still being decompiled: it has one
@@ -509,7 +509,7 @@ function idsOf(file: SourceFile): Map<string, string> {
 const structPages = new Map<Decl, string>();
 function placeStructs(game: Game, files: SourceFile[]) {
   // Each name's first declaration takes its name; another type of the same
-  // name (a map's own struct Object) takes its file's as well.
+  // name (a scene's own struct) takes its file's as well.
   // The letters' folders (structs/a) are taken.
   const used = new Set<string>([...'abcdefghijklmnopqrstuvwxyz', 'other']);
   const slugs = new Map<Decl, string>();
@@ -1281,7 +1281,7 @@ function arrange(): Placed {
 
 // The derived tree, as the build prints it.
 function printTree(node: Placed, depth = 0): string[] {
-  const title = node.kind === 'root' ? ROOT_LABEL : (headingOf(node.key) ?? headingOf(`${node.key}/README.md`) ?? (/(?:scene|map)_headers\.s$/.test(node.key) ? 'Places' : node.key.endsWith('/unused') ? 'Unused' : node.key));
+  const title = node.kind === 'root' ? ROOT_LABEL : (headingOf(node.key) ?? headingOf(`${node.key}/README.md`) ?? (/(?:scenes|map_headers)\.s$/.test(node.key) ? 'Places' : node.key.endsWith('/unused') ? 'Unused' : node.key));
   return [`${'  '.repeat(depth)}${title}  ${node.url}`, ...node.children.flatMap((c) => printTree(c, depth + 1))];
 }
 function headingOf(key: string): string | undefined {
@@ -1970,10 +1970,18 @@ function placePages(scenes: SourceFile[]): Place[] {
     for (const n of new Set(mine.filter((r) => r.kind === 'event-gif' || r.kind === 'event-segment').map((r) => r.event))) {
       if (events.some((e) => e.event === n)) continue;
       // A name recorded in the words The Broken Seal took from pret before it
-      // named its own (EventScript_WarpToVale, now EventScript_ExitToVale).
+      // named its own (a WarpToVale event, now ExitToVale).
       const reworded = n.replace(/WarpDest/g, 'Entrance').replace(/Warp/g, 'Exit').replace(/ObjectEvent/g, 'Actor').replace(/LocalId/g, 'ActorId').replace(/MapSec/g, 'Area').replace(/MapEvent/g, 'Trigger');
       if (reworded !== n && events.some((e) => e.event === reworded)) {
         aliases.set(reworded, [...(aliases.get(reworded) ?? []), n]);
+        continue;
+      }
+      // A published recording named before events took their scene's prefix:
+      // its old prefix and the same words after it, matched within this file.
+      const words = reworded.match(/^(?:Event|EventScript)_(\w+)$/)?.[1];
+      const renamed = words ? events.filter((e) => e.event.endsWith(`_${words}`) && !e.event.startsWith('Event_')) : [];
+      if (renamed.length === 1) {
+        aliases.set(renamed[0].event, [...(aliases.get(renamed[0].event) ?? []), n]);
         continue;
       }
       const first = Number(mine.find((r) => r.event === n && r.messages)?.messages.split(',')[0]);
@@ -2003,7 +2011,7 @@ function placePages(scenes: SourceFile[]): Place[] {
     // searched.
     type Item = { label: string; gifs: string[]; quote: string; prose: string };
     // Each event is a section headed by its own name, the one thing about it
-    // that is unique and searchable: an EventScript_ function, or the message a
+    // that is unique and searchable: an event function, or the message a
     // table row shows. heading is the sentence that says what it is, shown
     // under the name.
     type Section = { name: string; heading: string; unused: boolean; order: number; items: Item[]; link: string; symbols: string[] };
@@ -2433,7 +2441,12 @@ function unusedPage(files: SourceFile[], root: Placed) {
   // An unused event's recording, made in its map: an event that is unused
   // as a whole, not one that plays but for a branch.
   const renders = placeRenders();
-  for (const it of items) if (/^Unused:/.test(it.text) || /(?:^|_)Unused[A-Z]/.test(it.name)) it.gif = renders.find((r) => r.kind === 'event-gif' && r.event === it.name && stored.has(`places/${r.file}`))?.file;
+  // A recording published before events took their scene's prefix keeps its
+  // old name (EventScript_UnusedGaretJoinsIsaac for
+  // ValeStormyNight_UnusedGaretJoinsIsaac): the words after the prefix match.
+  const after = (name: string) => name.slice(name.indexOf('_') + 1);
+  const recorded = (r: { event: string }, name: string) => r.event === name || (/^(?:Event|EventScript)_/.test(r.event) && after(r.event) === after(name));
+  for (const it of items) if (/^Unused:/.test(it.text) || /(?:^|_)Unused[A-Z]/.test(it.name)) it.gif = renders.find((r) => r.kind === 'event-gif' && recorded(r, it.name) && stored.has(`places/${r.file}`))?.file;
 
   // The folders in the guide's order.
   const walkTree = (n: Placed): Placed[] => [n, ...n.children.flatMap(walkTree)];
