@@ -681,6 +681,8 @@ const reachProblems: string[] = [];
 // The enum each reach-line prefix names, and whether an ability row reaches
 // one of its values.
 const REACH: [string, string, (value: number, act: Ability, word: number) => boolean][] = [
+  ['BATTLE_EFFECT_', 'BattleEffectId', (v, _, w) => !(w & 0xc000) && (w & 0xfff) === v],
+  ['SUMMON_EFFECT_', 'SummonEffectId', (v, _, w) => !!(w & 0x8000) && (w & 0xfff) === v],
   ['BATTLE_ANIM_', 'BattleAnimId', (v, _, w) => !(w & 0xc000) && (w & 0xfff) === v],
   ['SUMMON_ANIM_', 'SummonAnimId', (v, _, w) => !!(w & 0x8000) && (w & 0xfff) === v],
   ['CASTING_IMPACT_', 'CastingImpact', (v, _, w) => (w & 0xc000) === 0x4000 && (w & 0xfff) === v + 100],
@@ -2261,14 +2263,14 @@ const text = (path: string) => (existsSync(join(repo, path)) ? readFileSync(join
 
 // The abilities as the source's tables give them: each one's name (message
 // MsgAbilityName plus its id), its field Psynergy (gAbilityDefinitions'
-// fieldPsynergy) and the effect its gAbilityAnimations word dispatches to (the
+// fieldPsynergy) and the effect its gAbilityBattleEffects (once gAbilityAnimations) word dispatches to (the
 // word's low half).
 type Ability = { name: string; fieldPsynergy: number };
 function abilityTables(): { acts: Ability[]; words: number[] } {
-  const rows = initializers('games/tbs/src/game/abilities.c', 'gAbilityDefinitions');
+  const rows = initializers(['games/tbs/src/game/ability_table.c', 'games/tbs/src/game/abilities.c'].find((p) => existsSync(join(repo, p)))!, 'gAbilityDefinitions');
   const names = messagesFrom('MsgAbilityName', rows.length);
   const acts = rows.map((row, id) => ({ name: names[id], fieldPsynergy: constant(row.match(/\.fieldPsynergy\s*=\s*([^,}]+)/)?.[1] ?? '0') }));
-  const words = initializers('games/tbs/src/battle/ability_staging.c', 'gAbilityAnimations').map((e) => constant(e) & 0xffff);
+  const words = initializers('games/tbs/src/battle/ability_staging.c', text('games/tbs/src/battle/ability_staging.c').includes('gAbilityBattleEffects') ? 'gAbilityBattleEffects' : 'gAbilityAnimations').map((e) => constant(e) & 0xffff);
   return { acts, words };
 }
 

@@ -590,14 +590,14 @@ const shortFile = (f: string) => f.replace(/^games\/tbs\/src\//, '');
 
 // Area names, as Area_GetNameIndex resolves them: the first rule of
 // gArea_NameRules for the scene (scene_name) or its area (area_name) and the
-// entrance (-1 for any), added to MsgDebugEntryName. Sources from before the
+// entrance (-1 for any), added to MsgDebugAreaName (once MsgDebugEntryName). Sources from before the
 // areas were named spell them MapSec_GetNameIndex, gMapSec_NameRules,
 // map_name and group_name.
 type AreaNames = { byEntrance: [number, string][]; fallback: string; messages: number[] };
 
 function deriveAreas(): Map<number, AreaNames> {
   const asmDefs = new Map<string, number>();
-  const ed = gamePath('include/game/ed_asm.h');
+  const ed = [gamePath('include/ed_asm.h'), gamePath('include/game/ed_asm.h')].find(existsSync) ?? '';
   if (existsSync(ed)) {
     // The English block's .set lines win; its nested .if blocks are its own.
     let depth = 0;
@@ -618,7 +618,7 @@ function deriveAreas(): Map<number, AreaNames> {
   const rules: Rule[] = [];
   let inTable = false;
   const stack: boolean[] = [];
-  for (const line of readFileSync(gamePath('src/overworld/scene_rules.s'), 'utf8').split('\n')) {
+  for (const line of readFileSync([gamePath('src/field/scene_rules.s'), gamePath('src/overworld/scene_rules.s')].find(existsSync) ?? '', 'utf8').split('\n')) {
     if (/^g(?:Area|MapSec)_NameRules:/.test(line)) inTable = true;
     else if (inTable && /^\w+:|^\s*\.global/.test(line)) inTable = false;
     if (!inTable) continue;
@@ -633,7 +633,7 @@ function deriveAreas(): Map<number, AreaNames> {
     const id = scene ? sceneIdByName.get(m[2]) : Number(m[2]);
     if (id !== undefined) rules.push({ scene, id, entrance: Number(m[3]), index: Number(m[4]) });
   }
-  const base = messageBySymbol.get('MsgDebugEntryName') ?? 0;
+  const base = messageBySymbol.get('MsgDebugAreaName') ?? messageBySymbol.get('MsgDebugEntryName') ?? 0;
   const nameOf = (scene: SceneRow, entrance: number) => {
     const r = rules.find((r) => (r.scene ? r.id === scene.id : r.id === scene.group) && (r.entrance === -1 || r.entrance === entrance));
     return r ? base + r.index : base;
