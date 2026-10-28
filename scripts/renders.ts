@@ -93,17 +93,29 @@ function dimensions(file: string, data: Buffer): { width: number; height: number
 const walk = (dir: string): string[] =>
   readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(join(dir, e.name)) : e.isFile() ? [join(dir, e.name)] : []));
 
-// The manifest this machine last fetched or wrote and the store's together.
-// The store's copy can be a minute old after an overwrite (its cache), so
-// neither alone is the whole list when publishes follow each other; the
-// store's row wins where both have one. A row for a picture another machine
-// published stays.
+// The store's manifest. Every write waits until the store serves it
+// (writeManifest), so the store's copy is the whole list once the command
+// that wrote it has finished, and a row deleted stays deleted; a copy this
+// machine kept is read only when the store has none.
 async function storeManifest(): Promise<Map<string, Entry>> {
-  const local = join(docs, FETCHED, MANIFEST_BLOB);
-  const out = existsSync(local) ? parseManifest(readFileSync(local, 'utf8')) : new Map<string, Entry>();
   const text = await fetchStored(docs, MANIFEST_BLOB);
-  if (text !== undefined) for (const [p, e] of parseManifest(text)) out.set(p, e);
-  return out;
+  if (text !== undefined) return parseManifest(text);
+  const local = join(docs, FETCHED, MANIFEST_BLOB);
+  return existsSync(local) ? parseManifest(readFileSync(local, 'utf8')) : new Map<string, Entry>();
+}
+
+// Writes the manifest, keeps a copy, and waits until the store serves it:
+// after an overwrite the store's cache can serve the old copy for a minute,
+// whatever the query, and the next publish or delete must read this one.
+async function writeManifest(text: string) {
+  await take();
+  await retry(MANIFEST_BLOB, () => put(MANIFEST_BLOB, text, TSV));
+  keep(MANIFEST_BLOB, text);
+  const started = Date.now();
+  while ((await fetchStored(docs, MANIFEST_BLOB)) !== text) {
+    if (Date.now() - started > 180_000) throw new Error(`${MANIFEST_BLOB}: the store still serves an older copy three minutes after the write`);
+    await new Promise((resolve) => setTimeout(resolve, 5000));
+  }
 }
 
 // A copy in build/renders of what was just written to the store.
@@ -193,9 +205,7 @@ async function publish(folder: string, prefix: string, prune: boolean, dry: bool
     keep(pathname, data);
   }
   const text = formatManifest(manifest.values());
-  await take();
-  await retry(MANIFEST_BLOB, () => put(MANIFEST_BLOB, text, TSV));
-  keep(MANIFEST_BLOB, text);
+  await writeManifest(text);
   console.log(`${prefix}: ${done} uploaded (${(bytes / 1e6).toFixed(1)} MB), ${gone.length} deleted, ${records.length} records, in ${((Date.now() - started) / 1000).toFixed(0)} s`);
 }
 
@@ -221,9 +231,7 @@ async function remove(listFile: string, dry: boolean) {
     }
   }
   const text = formatManifest(manifest.values());
-  await take();
-  await retry(MANIFEST_BLOB, () => put(MANIFEST_BLOB, text, TSV));
-  keep(MANIFEST_BLOB, text);
+  await writeManifest(text);
   console.log(`delete: ${paths.length} deleted, ${manifest.size} left in ${MANIFEST_BLOB}`);
 }
 
