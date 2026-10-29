@@ -167,3 +167,11 @@ div.overflow-auto:has(> table) {
 img.still {
   background: var(--color-fd-muted);
 }
+
+/* lib/remark-code-breaks.ts marks a flag, a sound or a sequence with its
+   emoji; it is drawn here so a copied name stays only the name. */
+:not(pre) > code[data-emoji]::before {
+  content: attr(data-emoji) '\00a0';
+  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+  font-variant-emoji: emoji;
+}
