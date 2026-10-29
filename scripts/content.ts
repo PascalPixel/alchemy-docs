@@ -85,13 +85,14 @@ const changed = (() => {
 // The URL of every page written, for the redirects' check.
 const pagesWritten = new Set<string>();
 // The sidebar's icons (lucide's names) for the top pages and the tabs; a
-// folder takes its index page's.
+// folder takes its index page's. checkArrangement fails the build when a
+// page here is no longer written, so a renamed page cannot lose its icon.
 const ICONS: Record<string, string> = {
   '/tbs': 'Sun',
-  '/tbs/world': 'Map',
+  '/tbs/system': 'Cpu',
   '/tbs/battle': 'Swords',
-  '/tbs/menus': 'AppWindow',
-  '/tbs/engine': 'Cpu',
+  '/tbs/field': 'Map',
+  '/tbs/interface': 'AppWindow',
   '/tbs/places': 'MapPin',
   '/tbs/unused': 'Archive',
   '/tbs/code': 'FileCode',
@@ -1517,8 +1518,9 @@ function arrangedSidebar(root: Placed) {
 }
 
 // The checks the build fails on: every folder README of a game with pages
-// sits under one of that game's section pages, and every redirect leads to a
-// page the build writes, which no redirect leaves from.
+// sits under one of that game's section pages, every sidebar icon names a
+// page the build writes, and every redirect leads to a page the build writes,
+// which no redirect leaves from.
 function checkArrangement() {
   const failures: string[] = [];
   for (const game of GAMES)
@@ -1527,6 +1529,7 @@ function checkArrangement() {
       if (!node) failures.push(`${k} is placed nowhere: no section page of ${game} links it`);
       else if (node.parent?.kind !== 'section' || !node.parent.key.startsWith(`games/${game}/`)) failures.push(`${k} sits under ${node.parent?.key}, not a section page of ${game}`);
     }
+  for (const url of Object.keys(ICONS)) if (!pagesWritten.has(url)) failures.push(`the sidebar icon for ${url} names a page the build doesn't write`);
   for (const r of redirects) {
     const to = r.destination.replace(/#.*$/, '');
     // A redirect between renders (an old folder name) leads into the store.

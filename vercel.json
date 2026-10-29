@@ -9,6 +9,11 @@
       "source": "/tla",
       "destination": "/",
       "permanent": false
+    },
+    {
+      "source": "/tbs/user_interface",
+      "destination": "/tbs/interface",
+      "permanent": true
     }
   ],
   "rewrites": [

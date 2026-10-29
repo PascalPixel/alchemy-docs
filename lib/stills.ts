@@ -1,4 +1,5 @@
-// A still of a recording: its first frame, as a GIF of one frame. A card for
+// A still of a recording: its first frame, as a GIF of one frame, or its
+// first picture faded fully in when the first one is black (firstShown). A card for
 // a page (app/[[...slug]]/page.tsx) and the page's preview image
 // (app/og/[...slug]/route.tsx) show the page's first recording this way, a
 // few kilobytes rather than the whole recording's megabytes. The recordings
@@ -50,6 +51,29 @@ export function firstFrame(gif: Uint8Array): Uint8Array | undefined {
   return undefined;
 }
 
+// The brightest channel of any pixel of a picture, 0 to 255: a black screen,
+// as a fade or a load leaves it, is at most 16, and a picture faded fully in
+// reaches 200.
+async function brightest(picture: Uint8Array) {
+  const { channels } = await sharp(picture).stats();
+  return Math.max(...channels.slice(0, 3).map((c) => c.max));
+}
+
+// The first picture of a recording faded fully in, as a GIF of one frame: a recording that opens on a fade (the console switched on) would
+// otherwise show its card as a black box. The whole recording is fetched, and
+// sharp composes each frame as the player sees it.
+async function firstShown(url: string, name: string) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`${name}: ${res.status}`);
+  const gif = new Uint8Array(await res.arrayBuffer());
+  const { pages = 1 } = await sharp(gif).metadata();
+  for (let page = 0; page < pages; page++) {
+    const picture = await sharp(gif, { page }).gif().toBuffer();
+    if ((await brightest(picture)) >= 200) return new Uint8Array(picture);
+  }
+  throw new Error(`${name}: no picture is faded fully in`);
+}
+
 // Writes the still of every recording given that public/stills lacks,
 // fetching each recording's start from the store, more of it only when the
 // first frame runs past what came.
@@ -68,7 +92,8 @@ export async function makeStills(docs: string, entries: Entry[]) {
       const res = await fetch(`${store}/${e.pathname}`, { headers: { Range: `bytes=0-${Math.min(bytes, e.bytes) - 1}` } });
       if (!res.ok) throw new Error(`${e.pathname}: ${res.status}`);
       const frame = firstFrame(new Uint8Array(await res.arrayBuffer()));
-      if (frame) return writeFileSync(join(docs, 'public', stillPath(e)), frame);
+      if (frame && (await brightest(frame)) > 16) return writeFileSync(join(docs, 'public', stillPath(e)), frame);
+      if (frame) return writeFileSync(join(docs, 'public', stillPath(e)), await firstShown(`${store}/${e.pathname}`, e.pathname));
       if (bytes >= e.bytes) throw new Error(`${e.pathname}: no first frame`);
     }
   };
