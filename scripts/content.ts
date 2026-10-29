@@ -103,6 +103,24 @@ const ICONS: Record<string, string> = {
 };
 const INTRODUCTION_ICON = 'House';
 const GUIDE_ICON = 'BookOpen';
+// The pictures a section page's card shows where its first recording would
+// show the wrong thing (a cave before the battle, a shop before its window
+// opens): the recording and which of its pictures, counted from 0.
+const CARDS: Record<string, [string, number]> = {
+  '/tbs/system': ['guides/debug/felix-facing.gif', 0],
+  '/tbs/battle': ['guides/battle/commands.gif', 0],
+  '/tbs/interface': ['guides/shop/shop.gif', 77],
+};
+// The card's still a page names in CARDS.
+function card(url: string): string | undefined {
+  if (!CARDS[url]) return undefined;
+  const [pathname, frame] = CARDS[url];
+  const e = stored.get(pathname);
+  if (!e) throw new Error(`the card for ${url} names ${pathname}, which the store doesn't hold`);
+  const s = { ...e, frame };
+  stills.set(`${pathname}#${frame}`, s);
+  return stillPath(s);
+}
 // The recordings whose stills the guide's pages show (lib/stills.ts).
 const stills = new Map<string, Entry>();
 // A guide page's still: the first frame of its first recording of the
@@ -121,9 +139,9 @@ function still(body: string): string | undefined {
 // first recording's.
 function page(path: string, front: Record<string, string>, body: string) {
   if (front.description) front = { ...front, description: gameNames(front.description) };
-  if (path.startsWith(`${GUIDE}/`)) front = { ...front, image: front.image || still(body) || '' };
   body = gameNames(openQuestions(body));
   const url = `/${path.replace(/^\([^/)]*\)\//, '').replace(/\.mdx?$/, '').replace(/(^|\/)index$/, '')}`.replace(/(.)\/$/, '$1');
+  if (path.startsWith(`${GUIDE}/`)) front = { ...front, image: card(url) || front.image || still(body) || '' };
   pagesWritten.add(url);
   if (ICONS[url]) front = { ...front, icon: ICONS[url] };
   if (front.source && changed.has(front.source)) front = { ...front, lastModified: changed.get(front.source)! };
@@ -1529,6 +1547,7 @@ function checkArrangement() {
       if (!node) failures.push(`${k} is placed nowhere: no section page of ${game} links it`);
       else if (node.parent?.kind !== 'section' || !node.parent.key.startsWith(`games/${game}/`)) failures.push(`${k} sits under ${node.parent?.key}, not a section page of ${game}`);
     }
+  for (const url of Object.keys(CARDS)) if (!pagesWritten.has(url)) failures.push(`the card for ${url} names a page the build doesn't write`);
   for (const url of Object.keys(ICONS)) if (!pagesWritten.has(url)) failures.push(`the sidebar icon for ${url} names a page the build doesn't write`);
   for (const r of redirects) {
     const to = r.destination.replace(/#.*$/, '');

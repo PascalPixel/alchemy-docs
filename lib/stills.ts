@@ -59,6 +59,17 @@ async function brightest(picture: Uint8Array) {
   return Math.max(...channels.slice(0, 3).map((c) => c.max));
 }
 
+// One picture of a recording, as a GIF of one frame, composed as the player
+// sees it.
+async function picture(url: string, name: string, frame: number) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`${name}: ${res.status}`);
+  const gif = new Uint8Array(await res.arrayBuffer());
+  const { pages = 1 } = await sharp(gif).metadata();
+  if (frame >= pages) throw new Error(`${name} has ${pages} pictures, no picture ${frame}`);
+  return new Uint8Array(await sharp(gif, { page: frame }).gif().toBuffer());
+}
+
 // The first picture of a recording faded fully in, as a GIF of one frame: a recording that opens on a fade (the console switched on) would
 // otherwise show its card as a black box. The whole recording is fetched, and
 // sharp composes each frame as the player sees it.
@@ -88,6 +99,7 @@ export async function makeStills(docs: string, entries: Entry[]) {
       if (!res.ok) throw new Error(`${e.pathname}: ${res.status}`);
       return writeFileSync(join(docs, 'public', stillPath(e)), new Uint8Array(await res.arrayBuffer()));
     }
+    if (e.frame !== undefined) return writeFileSync(join(docs, 'public', stillPath(e)), await picture(`${store}/${e.pathname}`, e.pathname, e.frame));
     for (let bytes = 1 << 16; ; bytes *= 4) {
       const res = await fetch(`${store}/${e.pathname}`, { headers: { Range: `bytes=0-${Math.min(bytes, e.bytes) - 1}` } });
       if (!res.ok) throw new Error(`${e.pathname}: ${res.status}`);

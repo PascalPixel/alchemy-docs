@@ -13,7 +13,9 @@ import { dirname, join } from 'node:path';
 export const PREFIXES = ['places', 'abilities', 'guides', 'story'] as const;
 export type Prefix = (typeof PREFIXES)[number];
 
-export type Entry = { pathname: string; sha256: string; bytes: number; width: number; height: number };
+// frame, on a still only: the recording's picture a card shows (CARDS in
+// scripts/content.ts) in place of its first.
+export type Entry = { pathname: string; sha256: string; bytes: number; width: number; height: number; frame?: number };
 
 export const MANIFEST_BLOB = 'renders-manifest.tsv';
 export const MANIFEST_HEAD = ['pathname', 'sha256', 'bytes', 'width', 'height'];
@@ -86,5 +88,5 @@ export const versioned = (path: string, e: Entry) => `/${path}?v=${e.sha256.slic
 // A render's still, named by its hash: a recording's first frame
 // (lib/stills.ts), or a picture (a place's entrance shot) whole; and the
 // preview images' copy of a still, scaled up, which only the build reads.
-export const stillPath = (e: Entry) => `/stills/${e.sha256.slice(0, 12)}.${e.pathname.endsWith('.png') ? 'png' : 'gif'}`;
+export const stillPath = (e: Entry) => `/stills/${e.sha256.slice(0, 12)}${e.frame === undefined ? '' : `-${e.frame}`}.${e.pathname.endsWith('.png') ? 'png' : 'gif'}`;
 export const stillPng = (docs: string, still: string) => join(docs, 'build', still.replace(/\.(gif|png)$/, '-og.png'));
