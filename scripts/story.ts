@@ -709,7 +709,9 @@ const characters: string[] = [];
 {
   const ids = gamePath('include/game/character_ids.h');
   if (existsSync(ids)) {
-    for (const m of readFileSync(ids, 'utf8').matchAll(/^#define ([A-Z]+) (\d)\b/gm)) characters[Number(m[2])] = m[1][0] + m[1].slice(1).toLowerCase();
+    // The characters are the rows of enum CharacterId, in order.
+    const src = readFileSync(ids, 'utf8');
+    for (const [i, name] of [...(src.match(/enum CharacterId \{([\s\S]*?)\};/)?.[1] ?? '').matchAll(/^\s*([A-Z]+)\b/gm)].map((m) => m[1]).entries()) characters[i] = name[0] + name.slice(1).toLowerCase();
   }
 }
 

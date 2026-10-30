@@ -1644,7 +1644,9 @@ function places(files: SourceFile[]) {
 // ({actor_name:n} is character n - 1, {protagonist_name} Isaac by default)
 // and its other codes gone; and each number's symbol.
 function catalog() {
-  const characters = [...text('games/tbs/include/game/character_ids.h').matchAll(/^#define ([A-Z]+) (\d)\b/gm)].map((m) => m[1][0] + m[1].slice(1).toLowerCase());
+  // The characters are the rows of enum CharacterId, in order.
+  const src = text('games/tbs/include/game/character_ids.h');
+  const characters = [...(src.match(/enum CharacterId \{([\s\S]*?)\};/)?.[1] ?? '').matchAll(/^\s*([A-Z]+)\b/gm)].map((m) => m[1]).map((n) => n[0] + n.slice(1).toLowerCase());
   const pages = new Map<string, string[]>();
   const symbol = new Map<number, string>();
   for (const m of text('games/tbs/text/en.po').matchAll(/msgctxt "(\w+)"\nmsgid "(\d+)"\nmsgstr ((?:"(?:[^"\\]|\\.)*"\n?)+)/g)) {
@@ -2227,7 +2229,7 @@ function names() {
     const all = [...text('games/tbs/text/en.po').matchAll(/msgstr ((?:"(?:[^"\\]|\\.)*"\n?)+)/g)].map((m) => m[1].replace(/"\n?"/g, '').replace(/\{[^}]*\}/g, ' ')).join(' ');
     const lower = new Set([...all.matchAll(/\b([a-z]+)\b/g)].map((m) => m[1]));
     const words = new Set([...all.matchAll(/[a-z,] ([A-Z][a-z]+)\b/g)].map((m) => m[1].toLowerCase()).filter((w) => !lower.has(w)));
-    for (const m of text('games/tbs/include/game/character_ids.h').matchAll(/^#define ([A-Z]+) \d+\b/gm)) words.add(m[1].toLowerCase());
+    for (const m of (text('games/tbs/include/game/character_ids.h').match(/enum CharacterId \{([\s\S]*?)\};/)?.[1] ?? '').matchAll(/^\s*([A-Z]+)\b/gm)) words.add(m[1].toLowerCase());
     const pairs = new Set([...all.matchAll(/\b(?=([A-Z][a-z]+\.? [A-Z][a-z]+)\b)/g)].map((m) => m[1].replace('.', '').toLowerCase()));
     proper = { words, pairs };
   }
