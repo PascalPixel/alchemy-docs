@@ -2014,11 +2014,19 @@ function placePages(scenes: SourceFile[]): Place[] {
       const owner = events.find((e) => (words2.symbol.get(first) && e.event === words2.symbol.get(first)) || e.messages[0] === first);
       if (owner) aliases.set(owner.event, [...(aliases.get(owner.event) ?? []), n]);
     }
+    // An event its rows list in several of the overlay's scenes is recorded
+    // once, in one of them: the others show that recording.
+    const siblings = new Set(out.filter((q) => q.file === p.file && q.id !== p.id).map((q) => q.id));
+    const near = renders.filter((r) => siblings.has(r.number) && stored.has(`places/${r.file}`));
     const recording = (name: string) => {
       const names = [name, ...(aliases.get(name) ?? [])];
-      const whole = names.flatMap((n) => mine.filter((r) => r.event === n && r.kind === 'event-gif').map((r) => r.file).sort());
-      if (whole.length) return whole.slice(0, 1);
-      return names.map((n) => mine.filter((r) => r.event === n && r.kind === 'event-segment').map((r) => r.file).sort()).find((l) => l.length) ?? [];
+      for (const rows of [mine, near]) {
+        const whole = names.flatMap((n) => rows.filter((r) => r.event === n && r.kind === 'event-gif').map((r) => r.file).sort());
+        if (whole.length) return whole.slice(0, 1);
+        const parts = names.map((n) => rows.filter((r) => r.event === n && r.kind === 'event-segment').map((r) => r.file).sort()).find((l) => l.length);
+        if (parts) return parts;
+      }
+      return [];
     };
     if (!rowsOfFile.has(p.file.path)) rowsOfFile.set(p.file.path, messageRows(p.file.path));
     const file = rowsOfFile.get(p.file.path)!;
