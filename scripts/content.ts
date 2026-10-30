@@ -1970,6 +1970,12 @@ function placePages(scenes: SourceFile[]): Place[] {
     const alone = out.filter((q) => q.file === p.file).length === 1;
     const block = alone ? undefined : placeBlock(p.file.doc, p.scene, [p.title, area]);
     const body: string[] = [linkNames(block ?? p.file.doc, 'tbs', '')];
+    // Its cover: the place's story set piece in the Doll House recorder, the
+    // whole map from the story's start to its end there, when one is made
+    // (alchemy-devtools render guide), above everything else.
+    const folder = mine[0]?.file.split('/')[0].split('_')[0] ?? p.slug;
+    const cover = `places/${folder}/story-dollhouse.gif`;
+    if (stored.has(cover)) body.unshift(`![The story at ${md(p.title)}, the whole of it in every frame, from the party's arrival to the end of what happens there](/${cover})`);
     // The world map has no map render of its own: it is the whole world laid
     // flat, which the front page shows.
     if (p.scene === 'WorldMap') body.push('![The whole world map of The Broken Seal, laid out flat](/story/world.png)');
