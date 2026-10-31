@@ -98,7 +98,6 @@ const ICONS: Record<string, string> = {
   '/tbs/code': 'FileCode',
   '/tbs/glossary': 'BookA',
   '/start': 'Hammer',
-  '/tbs/matching': 'GitCompare',
   '/tbs/source': 'Braces',
 };
 const INTRODUCTION_ICON = 'House';
@@ -1186,8 +1185,8 @@ function guideFiles(key: string, files: SourceFile[]): string {
 // their repository links resolved.
 
 // The site's arrangement comes from Alchemy's own links. README.md is the
-// root; it places the games' front pages, INSTALL.md and each game's
-// MATCHING.md. A game's front page places its section pages (the other
+// root; it places the games' front pages and INSTALL.md. A
+// game's front page places its section pages (the other
 // Markdown files beside it), its places and the guide to its source. Both
 // order what they place by their last link to each: a front page tells the
 // game's story, mentioning its pages as it goes, and ends with the list of
@@ -1210,7 +1209,6 @@ const SITE = 'https://alchemy.pascalpixel.com';
 const FIXED: [string, string][] = [
   ['games/README.md', '/'],
   ['INSTALL.md', '/start'],
-  ['games/tbs/src/MATCHING.md', '/tbs/matching'],
   ['games/tbs/glossary.md', '/tbs/glossary'],
   [sceneTable('tbs'), '/tbs/places'],
   // The Unused page, which unusedPage() writes from the source's comments; a
@@ -1274,8 +1272,8 @@ function arrange(): Placed {
     placed.set(key, node);
     return node;
   };
-  // What the root places: the front pages, INSTALL.md and MATCHING.md.
-  const rootWants = [...GAMES.map((g) => `games/${g}/README.md`), 'INSTALL.md', ...GAMES.map((g) => `games/${g}/src/MATCHING.md`)];
+  // What the root places: the front pages and INSTALL.md.
+  const rootWants = [...GAMES.map((g) => `games/${g}/README.md`), 'INSTALL.md'];
   const rootLinks = linksOf('games/README.md', 'last').filter((k) => rootWants.includes(k));
   for (const k of rootWants) if (!rootLinks.includes(k) && existsSync(join(repo, k))) notes.push(`games/README.md doesn't link ${k}: placed after its links`);
   for (const k of [...rootLinks, ...rootWants.filter((k) => !rootLinks.includes(k) && existsSync(join(repo, k)))]) {
