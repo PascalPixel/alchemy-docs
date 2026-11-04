@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/next';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { Provider } from '@/components/provider';
@@ -72,6 +73,7 @@ export default function Layout({ children }: LayoutProps<'/'>) {
           </filter>
         </svg>
         <Provider>{children}</Provider>
+        <Analytics />
       </body>
     </html>
   );
