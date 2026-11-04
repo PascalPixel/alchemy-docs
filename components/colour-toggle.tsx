@@ -32,7 +32,7 @@ export function ColourToggle() {
       title={raw ? 'Showing the colours as stored; show them in alchemy-lit' : 'Showing the colours in alchemy-lit; show them as stored'}
       className="inline-flex items-center rounded-md px-2 py-1 text-xs whitespace-nowrap transition-colors hover:text-fd-accent-foreground hover:bg-fd-accent"
     >
-      {raw ? 'Raw colours' : 'Lit colours'}
+      {raw ? 'Raw colours' : 'GBA Colors'}
     </button>
   );
 }
