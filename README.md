@@ -1,6 +1,6 @@
 # 🌋 Alchemy Docs
 
-The documentation site for [Alchemy](https://github.com/PascalPixel/alchemy), the Golden Sun decompilation, built with [Fumadocs](https://fumadocs.dev).
+The documentation site for [Alchemy](https://github.com/PascalPixel/alchemy), the matching decompilation of the Golden Sun games, built with [Fumadocs](https://fumadocs.dev).
 
 The words live in Alchemy: its README, its front page and section pages, its folder guides and the `///` comments in its C. `scripts/content.ts` reads them from an Alchemy checkout, the C with [tree-sitter](https://tree-sitter.github.io), and writes every page in `content/docs`, laid out as [Doxygen](https://www.doxygen.nl) lays out its HTML, in two sidebar tabs. The guide is Doxygen's main page and related pages: the README, the games' front and section pages, the folder guides and the places, arranged by the links between Alchemy's pages. The reference is what Doxygen makes of the C: the file list, a page for every folder, file, structure and union, an entry for every declaration whether it has a `///` comment or not, and indexes of every name by kind. This repository keeps the site itself; the renders of the game and the records that say what each shows are in a Vercel Blob store (see below). It keeps no list of old addresses: pages are renamed as the source is understood, and an address the site no longer has goes to the nearest page above it that exists (`app/not-found.tsx`).
 
