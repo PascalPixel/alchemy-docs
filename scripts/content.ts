@@ -2118,7 +2118,9 @@ function placePages(scenes: SourceFile[]): Place[] {
       const h = headingOf(d.doc);
       const s: Section = { name: d.name, heading: h.heading, unused: h.unused, order, items: [], link: `[\`${basename(p.file.path)}\`, line ${d.line}](${index2.get(d.name)?.url ?? `${github}/${p.file.path}#L${d.line}`})`, symbols: messages.slice(0, 1) };
       const quote = passage(messages, words2.pages);
-      const gifs = recording(d.name);
+      // Code the game never plays has no recording here: started with nothing
+      // staged, it shows the wrong moment. The Unused page shows the staged ones.
+      const gifs = h.unused ? [] : recording(d.name);
       const prose = linkNames(h.prose, 'tbs', d.name);
       if (quote || gifs.length || prose) s.items.push({ label: '', gifs, quote, prose });
       sections.push(s);
@@ -2424,8 +2426,7 @@ function enumOf(name: string) {
 // function declared UNUSED; and a name that carries Unused after its prefix.
 // The sections are grouped by the folder guide that explains their code, in
 // the guide's order, and each follows the source's order. The page opens
-// with the glossary's entry for the word, and the first recording of an
-// unused event.
+// with the glossary's entry for the word.
 
 function unusedPage(files: SourceFile[], root: Placed) {
   const node = placed.get('games/tbs/unused');
@@ -2476,15 +2477,9 @@ function unusedPage(files: SourceFile[], root: Placed) {
       if ((d.kind === 'function' && /\bUNUSED\b/.test(d.signature)) || /(?:^|_)Unused[A-Z]/.test(d.name)) declItem(f, d);
     }
 
-  // An unused event's recording, made in its map: an event that is unused
-  // as a whole, not one that plays but for a branch.
-  const renders = placeRenders();
-  // A recording published before events took their scene's prefix keeps its
-  // old name (EventScript_UnusedGaretJoinsIsaac for
-  // ValeStormyNight_UnusedGaretJoinsIsaac): the words after the prefix match.
-  const after = (name: string) => name.slice(name.indexOf('_') + 1);
-  const recorded = (r: { event: string }, name: string) => r.event === name || (/^(?:Event|EventScript)_/.test(r.event) && after(r.event) === after(name));
-  for (const it of items) if (/^Unused:/.test(it.text) || /(?:^|_)Unused[A-Z]/.test(it.name)) it.gif = renders.find((r) => r.kind === 'event-gif' && recorded(r, it.name) && stored.has(`places/${r.file}`))?.file;
+  // A recording only where one was staged by hand and checked against what
+  // the function says (alchemy-devtools' guide_unused.rs).
+  for (const it of items) if (stored.has(`guides/unused/${it.name}.gif`)) it.gif = `guides/unused/${it.name}.gif`;
 
   // The folders in the guide's order.
   const walkTree = (n: Placed): Placed[] => [n, ...n.children.flatMap(walkTree)];
@@ -2498,9 +2493,7 @@ function unusedPage(files: SourceFile[], root: Placed) {
   const entry = (glossary.match(/\n### Unused\n\n([\s\S]*?)(?=\n### |\n## |(?![\s\S]))/)?.[1] ?? '')
     .replace(/\s*\[[^\]]*\]\([^)]*unused[^)]*\) collects them\./i, '')
     .trim();
-  const opening = items.find((it) => it.gif);
   const body: string[] = [];
-  if (opening) body.push(`![\`${opening.name}\`, which the game never plays, as it would play](/places/${opening.gif})`);
   if (entry) body.push(`${linkProse(codeProse(entry, 'tbs'), 'tbs')} ([Glossary](${siteLink('games/tbs/glossary.md')}#unused))`);
   for (const folder of folders) {
     const title = headingOf(guide(folder));
@@ -2508,7 +2501,7 @@ function unusedPage(files: SourceFile[], root: Placed) {
     for (const it of items.filter((x) => x.folder === folder)) {
       const name = it.name.includes(', line ') ? `\`${it.name.replace(/, line .*$/, '')}\`, line ${it.name.replace(/^.*, line /, '')}` : `\`${it.name}\``;
       const parts = [`### ${name}`];
-      if (it.gif && it !== opening) parts.push(`![\`${it.name}\`, as it would play](/places/${it.gif})`);
+      if (it.gif) parts.push(`![\`${it.name}\`, staged: the game never plays this, so its room, flags and leader are set by hand](/${it.gif})`);
       if (it.text) parts.push(it.text);
       parts.push(it.link);
       body.push(parts.join('\n\n'));
