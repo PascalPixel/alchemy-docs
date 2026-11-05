@@ -214,7 +214,7 @@ function preprocess(text: string, base: Defines): { text: string; defs: Defines 
 // The English edition's macros, from the headers that choose them.
 const englishDefines: Defines = (() => {
   let defs: Defines = new Map([['TBS_EDITION_EN', '1']]);
-  for (const h of ['include/game/edition.h', 'include/version.h']) {
+  for (const h of ['include/edition.h', 'include/version.h']) {
     if (existsSync(gamePath(h))) defs = preprocess(readFileSync(gamePath(h), 'utf8'), defs).defs;
   }
   return defs;
@@ -692,12 +692,11 @@ if (tableAreas) {
 }
 
 // ---------------------------------------------------------------------------
-// The game's global constants: every header under include, except the scene
-// unit headers, which each belong to their scene.
+// The game's constants: every header under include, the scenes' too, which
+// share headers across scene files.
 
 const globalScope = new Scope();
 for (const h of walkFiles(`${GAME}/include`, (n) => n.endsWith('.h'))) {
-  if (h.includes(`/include/unit/${SCENES}/`)) continue;
   collectConstants(parseC(h), globalScope);
 }
 resolveEnums();
@@ -811,8 +810,6 @@ function buildTU(file: string): TU {
     }
   };
   visit(file);
-  const unit = `${GAME}/include/unit/${SCENES}/${basename(file, '.c')}.h`;
-  if (existsSync(join(repo, unit))) collectConstants(parseC(unit), scope);
   const entryPath = gamePath(`src/${SCENES}/entry`, `${basename(file, '.c')}.s`);
   const entry = existsSync(entryPath) ? [...readFileSync(entryPath, 'utf8').matchAll(/^\s*overlay_veneer\s+(\w+)/gm)].map((m) => m[1]) : [];
   return { file, scope, fns, tables, scenes: scenesOfFile.get(file) ?? [], entry };
