@@ -25,7 +25,6 @@ yarn-error.log*
 /.doxygen/
 /content/docs/
 /public/pictures/
-/public/PROGRESS.png
 /public/PROGRESS_CHART.png
 /public/history.tsv
 /public/source.tsv

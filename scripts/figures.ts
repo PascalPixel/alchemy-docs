@@ -13,7 +13,10 @@ import { fileURLToPath } from 'node:url';
 
 const docs = fileURLToPath(new URL('..', import.meta.url));
 const repo = process.env.ALCHEMY ?? join(docs, '../alchemy');
-const FILES = ['PROGRESS.png', 'PROGRESS_CHART.png', 'history.tsv', 'source.tsv'];
+const FILES = ['PROGRESS_CHART.png', 'history.tsv', 'source.tsv'];
+// Archives accepted before the treemap was dropped also hold PROGRESS.png,
+// which nothing shows; it is left in the archive.
+const EARLIER = ['PROGRESS.png', ...FILES];
 
 type Asset = { name: string; created_at: string; browser_download_url: string };
 
@@ -55,8 +58,8 @@ const tmp = mkdtempSync(join(tmpdir(), 'figures-'));
 const archive = join(tmp, name);
 writeFileSync(archive, Buffer.from(await res.arrayBuffer()));
 const listed = execFileSync('tar', ['-tzf', archive], { encoding: 'utf8' }).trim().split('\n');
-if (listed.join() !== FILES.join()) throw new Error(`${name}: holds ${listed.join(', ')}`);
+if (listed.join() !== FILES.join() && listed.join() !== EARLIER.join()) throw new Error(`${name}: holds ${listed.join(', ')}`);
 const out = join(docs, 'public');
 mkdirSync(out, { recursive: true });
-execFileSync('tar', ['-xzf', archive, '-C', out]);
+execFileSync('tar', ['-xzf', archive, '-C', out, ...FILES]);
 console.log(`figures: ${name}`);
