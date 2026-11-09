@@ -2,6 +2,54 @@
 @import 'fumadocs-ui/css/neutral.css';
 @import 'fumadocs-ui/css/preset.css';
 
+/* The site's colours: the flame orange of its 🌋 for links, the current page
+   and focus, over surfaces warmed toward it, a pale orange in the light theme
+   and a brown in the dark. fumadocs' neutral theme names the tokens; only
+   their hues change. */
+@theme {
+  --color-fd-background: hsl(32, 55%, 96%);
+  --color-fd-foreground: hsl(20, 30%, 8%);
+  --color-fd-muted: hsl(30, 45%, 93.5%);
+  --color-fd-muted-foreground: hsl(22, 16%, 40%);
+  --color-fd-popover: hsl(32, 60%, 98%);
+  --color-fd-popover-foreground: hsl(20, 25%, 14%);
+  --color-fd-card: hsl(30, 48%, 93%);
+  --color-fd-card-foreground: hsl(20, 30%, 8%);
+  --color-fd-border: hsla(25, 40%, 68%, 45%);
+  --color-fd-primary: hsl(18, 90%, 42%);
+  --color-fd-primary-foreground: hsl(32, 100%, 98%);
+  --color-fd-secondary: hsl(30, 45%, 91.5%);
+  --color-fd-secondary-foreground: hsl(20, 30%, 12%);
+  --color-fd-accent: hsla(22, 85%, 68%, 25%);
+  --color-fd-accent-foreground: hsl(20, 40%, 12%);
+  --color-fd-ring: hsl(20, 90%, 55%);
+}
+
+.dark {
+  --color-fd-background: hsl(20, 18%, 7%);
+  --color-fd-foreground: hsl(30, 25%, 92%);
+  --color-fd-muted: hsl(20, 16%, 12.5%);
+  --color-fd-muted-foreground: hsla(28, 22%, 72%, 0.85);
+  --color-fd-popover: hsl(20, 17%, 11%);
+  --color-fd-popover-foreground: hsl(30, 20%, 88%);
+  --color-fd-card: hsl(20, 17%, 9.5%);
+  --color-fd-card-foreground: hsl(30, 30%, 96%);
+  --color-fd-border: hsla(22, 25%, 45%, 25%);
+  --color-fd-primary: hsl(22, 100%, 58%);
+  --color-fd-primary-foreground: hsl(20, 40%, 8%);
+  --color-fd-secondary: hsl(20, 16%, 13%);
+  --color-fd-secondary-foreground: hsl(30, 25%, 92%);
+  --color-fd-accent: hsla(22, 60%, 45%, 25%);
+  --color-fd-accent-foreground: hsl(30, 30%, 92%);
+  --color-fd-ring: hsl(22, 90%, 55%);
+}
+
+.dark #nd-sidebar {
+  --color-fd-muted: hsl(20, 16%, 16%);
+  --color-fd-secondary: hsl(20, 16%, 18%);
+  --color-fd-muted-foreground: hsl(28, 18%, 72%);
+}
+
 html {
   scrollbar-gutter: stable;
 }
