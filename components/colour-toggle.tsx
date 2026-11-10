@@ -6,7 +6,7 @@ import { COLOURS_KEY } from '@/lib/shared';
 
 // The renders are the game's own colours. By default the site shows them in
 // alchemy-lit, its palette for them, through the #alchemy-lit filter
-// (app/layout.tsx); this switches between that and the colours as stored, and
+// (src/pages/_root.tsx); this switches between that and the colours as stored, and
 // remembers the choice in the browser.
 
 export function ColourToggle() {

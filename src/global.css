@@ -6,7 +6,9 @@
    and focus, over surfaces warmed toward it, a pale orange in the light theme
    and a brown in the dark. fumadocs' neutral theme names the tokens; only
    their hues change. */
+/* Inter, served with the site (src/pages/_root.tsx imports it). */
 @theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
   --color-fd-background: hsl(32, 55%, 96%);
   --color-fd-foreground: hsl(20, 30%, 8%);
   --color-fd-muted: hsl(30, 45%, 93.5%);
@@ -60,7 +62,7 @@ html > body[data-scroll-locked] {
 }
 
 /* The renders of the game, shown in alchemy-lit (the #alchemy-lit filter in
-   app/layout.tsx), unless the reader picked the raw colours. The games'
+   src/pages/_root.tsx), unless the reader picked the raw colours. The games'
    picture files keep the colours their palettes store.
    A still (lib/stills.ts) is the first frame of a render. */
 :root:not([data-colours='raw']) img:is([src*='/places/'], [src*='/abilities/'], [src*='/story/'], [src*='/guides/'], [src*='/stills/']):not([src*='/pictures/']) {

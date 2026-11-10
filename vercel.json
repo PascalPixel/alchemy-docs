@@ -1,9 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "nextjs",
+  "framework": null,
   "installCommand": "bun install --frozen-lockfile",
   "buildCommand": "git clone --filter=blob:none https://github.com/PascalPixel/alchemy /tmp/alchemy && ALCHEMY=/tmp/alchemy bun run build",
-  "outputDirectory": ".next",
+  "outputDirectory": "dist/public",
+  "trailingSlash": false,
   "redirects": [
     {
       "source": "/tla",

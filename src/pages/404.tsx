@@ -1,6 +1,7 @@
 import { HomeLayout } from 'fumadocs-ui/layouts/home';
 import { baseOptions } from '@/lib/layout.shared';
 import { NearestPage } from '@/components/nearest-page';
+import { appName } from '@/lib/shared';
 
 // The page for an address the site doesn't have. Pages are renamed as the
 // source is understood, and old addresses aren't kept: a visit goes on to the
@@ -8,6 +9,7 @@ import { NearestPage } from '@/components/nearest-page';
 export default function NotFound() {
   return (
     <HomeLayout {...baseOptions()}>
+      <title>{`This page has moved | ${appName}`}</title>
       <main className="mx-auto w-full max-w-2xl px-4 py-16">
         <h1 className="mb-4 text-2xl font-semibold">This page has moved</h1>
         <p className="mb-4 text-fd-muted-foreground">
@@ -17,4 +19,8 @@ export default function NotFound() {
       </main>
     </HomeLayout>
   );
+}
+
+export async function getConfig() {
+  return { render: 'static' } as const;
 }

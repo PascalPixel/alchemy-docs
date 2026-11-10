@@ -26,3 +26,7 @@ export function isIndex(url: string) {
 // Where the browser remembers a reader's choice of raw colours over the GBA
 // screen's (components/colour-toggle.tsx).
 export const COLOURS_KEY = 'alchemy-colours';
+
+// Where the site is published, for the preview images (lib/og.tsx) a link from
+// elsewhere finds.
+export const siteUrl = 'https://alchemy.pascalpixel.com';

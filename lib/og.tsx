@@ -1,21 +1,17 @@
 import { readFileSync } from 'node:fs';
-import { ImageResponse } from 'next/og';
-import { notFound } from 'next/navigation';
-import { ogPages, source } from '@/lib/source';
-import { appName } from '@/lib/shared';
-import { stillPng } from '@/lib/renders';
-
-export const revalidate = false;
+import { ImageResponse } from '@vercel/og';
+import { source } from './source';
+import { appName } from './shared';
+import { stillPng } from './renders';
 
 // A page's preview image, as a link to it shows on social media and in
 // chats: its title and first sentence on the site's dark look, beside the
-// still (lib/stills.ts) where it has one. next/og smooths a picture it
+// still (lib/stills.ts) where it has one. @vercel/og smooths a picture it
 // scales, so the still comes already scaled by a whole number, each of the
 // game's pixels a square block, and is drawn at its own size.
-export async function GET(_req: Request, { params }: RouteContext<'/og/[...slug]'>) {
-  const { slug } = await params;
-  const page = source.getPage(slug.slice(0, -1));
-  if (!page) notFound();
+export function ogResponse(slugs: string[]) {
+  const page = source.getPage(slugs);
+  if (!page) return new Response(undefined, { status: 404 });
   const png = page.data.image ? readFileSync(stillPng(process.cwd(), page.data.image)) : undefined;
   const still = png && `data:image/png;base64,${png.toString('base64')}`;
   // The PNG's size, from its header; a still too big for the room is fitted.
@@ -34,8 +30,4 @@ export async function GET(_req: Request, { params }: RouteContext<'/og/[...slug]
     ),
     { width: 1200, height: 630 },
   );
-}
-
-export function generateStaticParams() {
-  return ogPages().map((page) => ({ slug: [...page.slugs, 'image.png'] }));
 }

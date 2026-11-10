@@ -1,19 +1,9 @@
-import { Analytics } from '@vercel/analytics/next';
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import type { ReactNode } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { Provider } from '@/components/provider';
 import { COLOURS_KEY } from '@/lib/shared';
-import './global.css';
-
-export const metadata: Metadata = {
-  // Where the preview images (app/og) are found from a link elsewhere.
-  metadataBase: new URL('https://alchemy.pascalpixel.com'),
-  title: { template: '%s | Alchemy', default: 'Alchemy' },
-};
-
-const inter = Inter({
-  subsets: ['latin'],
-});
+import '@fontsource-variable/inter';
+import '@/src/global.css';
 
 // alchemy-lit, the site's palette for the renders: the game's own colours with
 // yellows a little desaturated and turned towards red, and greens a little
@@ -53,11 +43,13 @@ const gamma = (exponent: number) => (
 // sees the filtered ones flash.
 const colours = `try{if(localStorage.getItem(${JSON.stringify(COLOURS_KEY)})==='raw')document.documentElement.dataset.colours='raw'}catch(e){}`;
 
-export default function Layout({ children }: LayoutProps<'/'>) {
+export default function RootElement({ children }: { children: ReactNode }) {
+  const base = process.env.DOCS_BASE_PATH ?? '';
   return (
-    <html lang="en" className={inter.className} suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: colours }} />
+        <link rel="icon" href={`${base}/icon.svg`} sizes="any" type="image/svg+xml" />
       </head>
       <body className="flex flex-col min-h-screen">
         <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" style={{ position: 'absolute' }}>
@@ -77,4 +69,8 @@ export default function Layout({ children }: LayoutProps<'/'>) {
       </body>
     </html>
   );
+}
+
+export async function getConfig() {
+  return { render: 'static' } as const;
 }

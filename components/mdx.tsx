@@ -18,7 +18,7 @@ const RENDER = /^\/(places|abilities|guides|story)\//;
 // with its width and height from the build so its room is kept while it
 // loads, and enlarged when tapped, with its whole alt text as the caption.
 function Image({ src, width, height, alt, style, className, ...props }: ComponentProps<typeof DefaultImage>) {
-  const base = process.env.NEXT_PUBLIC_DOCS_BASE_PATH ?? '';
+  const base = process.env.DOCS_BASE_PATH ?? '';
   const path = typeof src === 'string' ? src : undefined;
   if (!path) return <DefaultImage src={src} width={width} height={height} alt={alt} style={style} className={className} {...props} />;
   const url = path.startsWith('/') ? `${base}${path}` : path;

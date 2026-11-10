@@ -14,6 +14,9 @@ import { remarkComponents } from './remark-components';
 const docs = defineDocs({
   dir: 'content/docs',
   docs: {
+    // Each page's body is its own module, loaded when the page is written, so
+    // the build never holds every page in one chunk.
+    async: true,
     // source: the repository file or folder a generated page is made from,
     // for the page's GitHub link; image: a guide page's still of its first
     // recording (lib/stills.ts), for its card and its preview image;
@@ -27,7 +30,7 @@ const docs = defineDocs({
     // structure fumadocs' components (remark-components).
     mdxOptions: applyMdxPreset({ remarkImageOptions: { useImport: false, onError: onImageError }, remarkPlugins: (v) => [remarkRenders, remarkMdxMermaid, ...v, remarkFigures, remarkCodeBreaks, remarkComponents] }),
     // Each page's Markdown after those plugins, for readers that want text
-    // (app/llms.txt, app/llms-full.txt, app/llms.mdx).
+    // (src/pages/_api: llms.txt, llms-full.txt and llms.mdx).
     postprocess: { includeProcessedMarkdown: true },
   },
   meta: {
@@ -42,7 +45,7 @@ export const source = loader({
   plugins: [lucideIconsPlugin()],
 });
 
-// The pages with a preview image of their own (app/og): the guide's, and each
+// The pages with a preview image of their own (lib/og.tsx): the guide's, and each
 // reference's front page, whose image every page of that reference shares.
 type Page = (typeof source)['$inferPage'];
 const ownImage = (page: Page) => !isList(page.url) || page.slugs.length === 2;
@@ -59,4 +62,4 @@ export function ogImage(page: Page): string {
 export const docsLlms = llms(source, {
   renderPage: async (page) => `# ${page.data.title} (${page.url})\n\n${await page.data.getText('processed')}`,
 });
-export const markdownUrl = (page: Page) => `${process.env.NEXT_PUBLIC_DOCS_BASE_PATH ?? ''}/llms.mdx/${[...page.slugs, 'content.md'].join('/')}`;
+export const markdownUrl = (page: Page) => `${process.env.DOCS_BASE_PATH ?? ''}/llms.mdx/${[...page.slugs, 'content.md'].join('/')}`;

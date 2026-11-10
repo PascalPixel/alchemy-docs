@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 export function NearestPage() {
   const [to, setTo] = useState<string>();
   useEffect(() => {
-    const base = process.env.NEXT_PUBLIC_DOCS_BASE_PATH ?? '';
+    const base = process.env.DOCS_BASE_PATH ?? '';
     const parts = window.location.pathname.slice(base.length).split('/').filter(Boolean);
     let cancelled = false;
     (async () => {

@@ -27,7 +27,7 @@
 // into build/renders; `bun run build` runs it first. The store is public, so
 // it needs no token.
 //
-// check reads every page under OUT (default out/), and asks the store (HEAD)
+// check reads every page under OUT (default dist/public), and asks the store (HEAD)
 // for every render a page shows or links; any other site path must be a file
 // in OUT. It prints what is missing and exits 1 if anything is.
 //
@@ -246,7 +246,7 @@ async function check(out: string) {
       const path = decodeURI(m[1]);
       const render = renderPath(path);
       if (render) renders.set(render, renders.get(render) ?? relative(out, page));
-      else if (/\.[a-z0-9]+$/i.test(path) && !path.startsWith('/_next/')) local.set(path, local.get(path) ?? relative(out, page));
+      else if (/\.[a-z0-9]+$/i.test(path)) local.set(path, local.get(path) ?? relative(out, page));
     }
   }
   const missing: string[] = [];
@@ -275,7 +275,7 @@ const plain = args.filter((a) => !a.startsWith('--'));
 if (command === 'publish' && plain.length === 2) await publish(plain[0], plain[1], flags.has('--prune'), flags.has('--dry-run'));
 else if (command === 'delete' && plain.length === 1) await remove(plain[0], flags.has('--dry-run'));
 else if (command === 'fetch' && plain.length === 0) await fetchRecords(docs);
-else if (command === 'check') await check(plain[0] ?? join(docs, 'out'));
+else if (command === 'check') await check(plain[0] ?? join(docs, 'dist/public'));
 else {
   console.error('usage: bun scripts/renders.ts publish FOLDER PREFIX [--prune] [--dry-run]\n       bun scripts/renders.ts delete LISTFILE [--dry-run]\n       bun scripts/renders.ts fetch\n       bun scripts/renders.ts check [OUT]');
   process.exit(2);

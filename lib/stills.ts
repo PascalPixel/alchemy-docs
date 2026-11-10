@@ -1,13 +1,13 @@
 // A still of a recording: its first frame, as a GIF of one frame, or its
 // first picture faded fully in when the first one is black (firstShown). A card for
-// a page (app/[[...slug]]/page.tsx) and the page's preview image
-// (app/og/[...slug]/route.tsx) show the page's first recording this way, a
+// a page (components/page-cards.tsx) and the page's preview image
+// (lib/og.tsx) show the page's first recording this way, a
 // few kilobytes rather than the whole recording's megabytes. The recordings
 // are in the Blob store, so only the start of each is fetched, enough to
 // hold its first frame; the stills go to public/stills, which git ignores,
 // named by the recording's hash so a re-render is a new still. A place's
 // card shows its entrance shot instead, a small PNG kept whole. The preview
-// images are drawn by next/og, which reads PNG but not GIF and smooths a
+// images are drawn by @vercel/og, which reads PNG but not GIF and smooths a
 // picture it scales: each still is also kept in build/stills, for the build
 // alone, as a PNG already scaled to the preview's size by a whole number,
 // each pixel a square block (ogScale).
@@ -119,7 +119,7 @@ export async function makeStills(docs: string, entries: Entry[]) {
   return todo.length;
 }
 
-// The room a preview image gives its still (app/og/[...slug]/route.tsx), and
+// The room a preview image gives its still (lib/og.tsx), and
 // the whole number a still of a size is scaled by to fill as much of it as
 // fits: 2 for the game's screen.
 export const OG_STILL = { width: 480, height: 320 };
