@@ -19,7 +19,7 @@
     --color-fd-popover-foreground: hsl(20, 25%, 14%);
     /* What fumadocs paints behind the page: the 🌋's orange. The page and
        the dialogs have their own cards (below). */
-    --color-fd-card: hsl(26, 100%, 61%);
+    --color-fd-card: hsl(26, 100%, 57%);
     --color-fd-card-foreground: hsl(20, 30%, 8%);
     --color-fd-border: hsla(25, 40%, 68%, 45%);
     --color-fd-primary: hsl(18, 90%, 42%);
