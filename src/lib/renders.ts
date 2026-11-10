@@ -86,7 +86,7 @@ export async function fetchRecords(docs: string) {
 export const versioned = (path: string, e: Entry) => `/${path}?v=${e.sha256.slice(0, 12)}`;
 
 // A render's still, named by its hash: a recording's first frame
-// (lib/stills.ts), or a picture (a place's entrance shot) whole; and the
+// (src/lib/stills.ts), or a picture (a place's entrance shot) whole; and the
 // preview images' copy of a still, scaled up, which only the build reads.
 export const stillPath = (e: Entry) => `/stills/${e.sha256.slice(0, 12)}${e.frame === undefined ? '' : `-${e.frame}`}.${e.pathname.endsWith('.png') ? 'png' : 'gif'}`;
 export const stillPng = (docs: string, still: string) => join(docs, 'build', still.replace(/\.(gif|png)$/, '-og.png'));

@@ -9,7 +9,7 @@
 // publish uploads every picture under FOLDER to PREFIX/ in the store (places,
 // abilities, guides or story), at the pathname its site URL has, public, with
 // no random suffix and a year's cache: pages ask for each picture with its
-// hash as a query (lib/renders.ts), so a re-render is a new URL. A picture
+// hash as a query (src/lib/renders.ts), so a re-render is a new URL. A picture
 // whose hash and size the manifest already lists is skipped. --prune deletes
 // the store's pictures under PREFIX/ that FOLDER no longer has. The TSV files
 // in FOLDER (index.tsv and the renderer's other records) are uploaded beside
@@ -38,7 +38,7 @@ import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, extname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { FETCHED, fetchRecords, fetchStored, formatManifest, MANIFEST_BLOB, parseManifest, PREFIXES, renderPath, storeUrl, type Entry } from '../lib/renders';
+import { FETCHED, fetchRecords, fetchStored, formatManifest, MANIFEST_BLOB, parseManifest, PREFIXES, renderPath, storeUrl, type Entry } from '../src/lib/renders';
 
 const docs = fileURLToPath(new URL('..', import.meta.url));
 const YEAR = 365 * 24 * 60 * 60;

@@ -26,8 +26,8 @@ import { basename, dirname, join, normalize, relative } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { Language, type Node, Parser } from 'web-tree-sitter';
-import { readFetched, readManifest, renderPath, stillPath, type Entry } from '../lib/renders';
-import { makeStills } from '../lib/stills';
+import { readFetched, readManifest, renderPath, stillPath, type Entry } from '../src/lib/renders';
+import { makeStills } from '../src/lib/stills';
 
 const docs = fileURLToPath(new URL('..', import.meta.url));
 // The Alchemy checkout it reads: ALCHEMY, or the one beside this repository.
@@ -120,7 +120,7 @@ function card(url: string): string | undefined {
   stills.set(`${pathname}#${frame}`, s);
   return stillPath(s);
 }
-// The recordings whose stills the guide's pages show (lib/stills.ts).
+// The recordings whose stills the guide's pages show (src/lib/stills.ts).
 const stills = new Map<string, Entry>();
 // A guide page's still: the first frame of its first recording of the
 // game's screen, or of its first recording when none is the screen's size.
@@ -1589,7 +1589,7 @@ function placeRenders(): Render[] {
   return placeRows;
 }
 
-// The places page: every place as a card (components/page-cards.tsx) with
+// The places page: every place as a card (src/components/page-cards.tsx) with
 // its entrance shot, title and first sentence, in story order, which the map
 // numbers follow. A run of places whose titles open with the same name (Vale,
 // Vale Inn, Vale Plaza) or that share an area is one section, headed by the
@@ -1619,7 +1619,7 @@ function places(files: SourceFile[]) {
   // room that holds the second Small Jewel." is "The room that ..."), where
   // what follows the name reads alone, and without a line the card before it
   // has just shown; a card with no line of its own ends in a bare colon, so
-  // it doesn't show its page's subtitle instead (lib/remark-components.ts).
+  // it doesn't show its page's subtitle instead (src/lib/remark-components.ts).
   const esc = (t: string) => t.replace(/[.*+?^${}()|[\]\\]/g, (c) => `\\${c}`);
   const lineOf = (p: Place, heading: string) => {
     const names = [...new Set([p.area, heading].filter(Boolean))].map(esc).join('|');

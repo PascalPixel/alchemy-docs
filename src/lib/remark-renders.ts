@@ -1,7 +1,7 @@
 // Gives every render a page shows its size and its content-keyed address.
 // The pictures are in the Blob store, not public/, so the size fumadocs'
 // remark-image would read from the file comes from the store's manifest, and
-// the address gains the picture's hash (lib/renders.ts). A render the manifest
+// the address gains the picture's hash (src/lib/renders.ts). A render the manifest
 // doesn't list fails the build, as a missing file in public/ did.
 import type { Image, Root } from 'mdast';
 import { readManifest, renderPath, versioned } from './renders';

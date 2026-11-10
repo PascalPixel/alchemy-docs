@@ -3,7 +3,7 @@
 //
 // - a guide page's list of pages, each item a link to a page and what it
 //   holds ("- [World](/tbs/world): the field engine, ..."), becomes cards
-//   (components/page-cards.tsx);
+//   (src/components/page-cards.tsx);
 // - a guide page's numbered list at the top level, things done in order
 //   ("Then, for a field map: 1. ... 2. ..."), becomes Steps;
 // - a GitHub alert (`> [!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`,
@@ -126,7 +126,7 @@ function callouts(node: Root | RootContent) {
 
 // The Data Fields table of a structure's page (scripts/content.ts): a column
 // of types, one of names linking to their entries, and one of descriptions.
-// Each row becomes a Field of a FieldTable (components/field-table.tsx); an
+// Each row becomes a Field of a FieldTable (src/components/field-table.tsx); an
 // array's size, written after the name, joins its type.
 function typeTable(tree: Root) {
   const at = tree.children.findIndex((n) => n.type === 'heading' && n.data?.hProperties?.id === 'data-fields');

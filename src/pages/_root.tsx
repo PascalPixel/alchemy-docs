@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import { Provider } from '@/components/provider';
 import '@fontsource-variable/inter';
-import '@/src/global.css';
+import '@/styles/globals.css';
 
 // alchemy-lit, the site's palette for the renders: the game's own colours with
 // yellows a little desaturated and turned towards red, and greens a little
@@ -39,7 +39,6 @@ const gamma = (exponent: number) => (
 );
 
 export default function RootElement({ children }: { children: ReactNode }) {
-  const base = process.env.DOCS_BASE_PATH ?? '';
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -47,7 +46,7 @@ export default function RootElement({ children }: { children: ReactNode }) {
             a phone lays the page out at desktop width and shrinks it. */}
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href={`${base}/icon.svg`} sizes="any" type="image/svg+xml" />
+        <link rel="icon" href="/icon.svg" sizes="any" type="image/svg+xml" />
       </head>
       <body className="flex flex-col min-h-screen">
         <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" style={{ position: 'absolute' }}>

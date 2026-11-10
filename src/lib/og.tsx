@@ -6,7 +6,7 @@ import { stillPng } from './renders';
 
 // A page's preview image, as a link to it shows on social media and in
 // chats: its title and first sentence on the site's dark look, beside the
-// still (lib/stills.ts) where it has one. @vercel/og smooths a picture it
+// still (src/lib/stills.ts) where it has one. @vercel/og smooths a picture it
 // scales, so the still comes already scaled by a whole number, each of the
 // game's pixels a square block, and is drawn at its own size.
 export function ogResponse(slugs: string[]) {

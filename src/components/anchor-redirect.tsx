@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 export function AnchorRedirect({ map, fallback }: { map: Record<string, string>; fallback?: string }) {
   useEffect(() => {
     const to = map[decodeURIComponent(window.location.hash.slice(1))] ?? fallback;
-    if (to) window.location.replace(`${process.env.DOCS_BASE_PATH ?? ''}${to}`);
+    if (to) window.location.replace(to);
   }, [map, fallback]);
   return null;
 }

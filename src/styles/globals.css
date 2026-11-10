@@ -54,6 +54,32 @@
   --color-fd-muted-foreground: hsl(28, 18%, 72%);
 }
 
+/* In the light theme the page sits on the 🌋's hot orange, and the menu and
+   the phone's top bar are white on it; the page itself, and the menus that
+   open over it, keep the theme's colours. The orange keeps white text
+   readable at the menu's size (4.7:1). */
+:root:not(.dark) {
+  --color-alchemy-flame: hsl(17, 90%, 43%);
+}
+:root:not(.dark) #fd-spacious-layout {
+  background: var(--color-alchemy-flame);
+}
+:root:not(.dark) :is(#nd-sidebar, #nd-sidebar-mobile, #nd-subnav) {
+  --color-fd-background: var(--color-alchemy-flame);
+  --color-fd-card: var(--color-alchemy-flame);
+  --color-fd-foreground: #fff;
+  --color-fd-muted-foreground: hsla(0, 0%, 100%, 0.92);
+  --color-fd-primary: #fff;
+  --color-fd-accent: hsla(0, 0%, 100%, 0.16);
+  --color-fd-accent-foreground: #fff;
+  --color-fd-secondary: hsla(0, 0%, 100%, 0.14);
+  --color-fd-secondary-foreground: #fff;
+  --color-fd-muted: hsla(0, 0%, 100%, 0.14);
+  --color-fd-border: hsla(0, 0%, 100%, 0.35);
+  --color-fd-ring: #fff;
+  color: #fff;
+}
+
 html {
   scrollbar-gutter: stable;
 }

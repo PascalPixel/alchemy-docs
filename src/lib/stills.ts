@@ -1,7 +1,7 @@
 // A still of a recording: its first frame, as a GIF of one frame, or its
 // first picture faded fully in when the first one is black (firstShown). A card for
-// a page (components/page-cards.tsx) and the page's preview image
-// (lib/og.tsx) show the page's first recording this way, a
+// a page (src/components/page-cards.tsx) and the page's preview image
+// (src/lib/og.tsx) show the page's first recording this way, a
 // few kilobytes rather than the whole recording's megabytes. The recordings
 // are in the Blob store, so only the start of each is fetched, enough to
 // hold its first frame; the stills go to public/stills, which git ignores,
@@ -119,7 +119,7 @@ export async function makeStills(docs: string, entries: Entry[]) {
   return todo.length;
 }
 
-// The room a preview image gives its still (lib/og.tsx), and
+// The room a preview image gives its still (src/lib/og.tsx), and
 // the whole number a still of a size is scaled by to fill as much of it as
 // fits: 2 for the game's screen.
 export const OG_STILL = { width: 480, height: 320 };

@@ -6,8 +6,8 @@ import { getMDXComponents } from '@/components/mdx';
 import { PageCards } from '@/components/page-cards';
 import { TOCDropdown, TOCPopover } from '@/components/toc-popover';
 import { TOC, TOCProvider } from 'fumadocs-ui/layouts/spacious/page/slots/toc';
-import { appName, gitConfig, isList, siteUrl } from '@/lib/shared';
-import { markdownUrl, ogImage, source } from '@/lib/source';
+import { appName, getPageMarkdownUrl, gitConfig, isList, siteUrl } from '@/lib/shared';
+import { ogImage, source } from '@/lib/source';
 
 // A page of the site (src/pages/index.tsx and src/pages/[...slugs].tsx), in
 // the sidebar src/pages/_layout.tsx gives every page, with its title and
@@ -22,6 +22,7 @@ export async function DocPage({ slugs }: { slugs: string[] }) {
   const github = page.data.source && `https://github.com/${gitConfig.user}/${gitConfig.repo}/blob/${gitConfig.branch}/${page.data.source}`;
   const title = slugs.length ? `${page.data.title} | ${appName}` : appName;
   const image = `${siteUrl}${ogImage(page)}`;
+  const markdownUrl = getPageMarkdownUrl(page).url;
   return (
     <>
       <title>{title}</title>
@@ -42,8 +43,8 @@ export async function DocPage({ slugs }: { slugs: string[] }) {
               {page.data.source} on GitHub
             </a>
           )}
-          <MarkdownCopyButton markdownUrl={markdownUrl(page)} />
-          <ViewOptionsPopover markdownUrl={markdownUrl(page)} githubUrl={github} />
+          <MarkdownCopyButton markdownUrl={markdownUrl} />
+          <ViewOptionsPopover markdownUrl={markdownUrl} githubUrl={github} />
         </div>
         <DocsBody>
           {/* Every picture on the page can be enlarged, and swiped through in one viewer. */}

@@ -1,44 +1,19 @@
-# deps
-/node_modules
-
-# generated content
-.source
-# the routes' types, which `waku dev` writes
-/src/pages.gen.ts
-
-# test & build
-/coverage
-/dist/
-/build
-*.tsbuildinfo
-
-# misc
 .DS_Store
-*.pem
-/.pnp
-.pnp.js
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+/node_modules/
 
-# made by `bun run content` (scripts/content.ts) from the repository: every
-# page and every meta.json
-/.doxygen/
+dist
+.source
+src/pages.gen.ts
+
+# made by `bun run content` (scripts/content.ts) from Alchemy, and by
+# scripts/renders.ts and scripts/figures.ts from the Blob store and its release
 /content/docs/
+/build/
 /public/pictures/
+/public/stills/
 /public/PROGRESS_CHART.png
 /public/history.tsv
 /public/source.tsv
 
-# others
-.env*.local
-.vercel
 .env*
-
-# the renders and their records: in the Vercel Blob store (scripts/renders.ts),
-# never in git
-/public/places/
-/public/abilities/
-/public/guides/
-/public/story/
-/public/stills/
+.vercel

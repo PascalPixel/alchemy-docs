@@ -9,13 +9,12 @@ import { useEffect, useState } from 'react';
 export function NearestPage() {
   const [to, setTo] = useState<string>();
   useEffect(() => {
-    const base = process.env.DOCS_BASE_PATH ?? '';
-    const parts = window.location.pathname.slice(base.length).split('/').filter(Boolean);
+    const parts = window.location.pathname.split('/').filter(Boolean);
     let cancelled = false;
     (async () => {
       while (parts.length) {
         parts.pop();
-        const path = `${base}/${parts.join('/')}`;
+        const path = `/${parts.join('/')}`;
         const res = await fetch(path, { method: 'HEAD' }).catch(() => undefined);
         if (cancelled) return;
         if (res?.ok) {
@@ -24,8 +23,8 @@ export function NearestPage() {
           return;
         }
       }
-      setTo(`${base}/`);
-      window.location.replace(`${base}/`);
+      setTo('/');
+      window.location.replace('/');
     })();
     return () => {
       cancelled = true;

@@ -14,20 +14,18 @@ const DefaultImage = defaultMdxComponents.img;
 // A render of the game is pixel art (lib/remark-figures.ts sizes its figure).
 const RENDER = /^\/(places|abilities|guides|story)\//;
 
-// A picture from public/ or the renders, found under the site's base path,
-// with its width and height from the build so its room is kept while it
-// loads, and enlarged when tapped, with its whole alt text as the caption.
+// A picture from public/ or the renders, with its width and height from the
+// build so its room is kept while it loads, and enlarged when tapped, with its
+// whole alt text as the caption.
 function Image({ src, width, height, alt, style, className, ...props }: ComponentProps<typeof DefaultImage>) {
-  const base = process.env.DOCS_BASE_PATH ?? '';
   const path = typeof src === 'string' ? src : undefined;
   if (!path) return <DefaultImage src={src} width={width} height={height} alt={alt} style={style} className={className} {...props} />;
-  const url = path.startsWith('/') ? `${base}${path}` : path;
   const w = Number(width);
   const h = Number(height);
   const render = RENDER.test(path) && !/\.svg(?:$|[?#])/.test(path);
   const image = (
     <DefaultImage
-      src={url}
+      src={path}
       alt={alt}
       width={w > 0 ? w : undefined}
       height={h > 0 ? h : undefined}
@@ -38,7 +36,7 @@ function Image({ src, width, height, alt, style, className, ...props }: Componen
   );
   if (path.includes('/pictures/')) return image;
   return (
-    <ImageZoom src={url} alt={alt} caption={alt} zoomInProps={{ className: render ? 'render' : undefined }}>
+    <ImageZoom src={path} alt={alt} caption={alt} zoomInProps={{ className: render ? 'render' : undefined }}>
       {image}
     </ImageZoom>
   );

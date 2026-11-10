@@ -8,7 +8,7 @@ export function Field(_: FieldProps) {
   return null;
 }
 
-// A structure's fields (lib/remark-components.ts) as fumadocs' TypeTable:
+// A structure's fields (src/lib/remark-components.ts) as fumadocs' TypeTable:
 // each row its name and type, opening on its ///< note and a link to its
 // entry further down the page.
 export function FieldTable({ children }: { children: ReactNode }) {
