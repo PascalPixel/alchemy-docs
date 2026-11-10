@@ -21,7 +21,7 @@
 // path in its game or a type's name. Every description is a first sentence
 // Alchemy wrote: a page's opening sentence, a file's /// @file brief.
 
-import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, normalize, relative } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -1076,6 +1076,10 @@ function referencePages(game: Game, files: SourceFile[], guides: Map<string, Pla
     meta(url, { title: letterTitle(l), pages: byLetter.get(l)!.map(({ d }) => `[${d.name}](${structPages.get(d)})`) });
   }
   meta(`${root}/structs`, { title: 'Data Structures', pages: letters.map(letterSlug) });
+  // The index of them all is this folder's own page: written beside the
+  // folder it would be no part of the sidebar, and open with none.
+  const whole = join(content, `${root.slice(1)}/structs.md`);
+  if (existsSync(whole)) renameSync(whole, join(content, `${root.slice(1)}/structs/index.md`));
 
   // Data Fields: every field name, with the structures that have it.
   const fields = new Map<string, string[]>();
@@ -1244,11 +1248,13 @@ function linkTarget(from: string, href: string): string | undefined {
 }
 
 // What a file links, each once, in the order of its first link to each or
-// of its last.
-function linksOf(file: string, order: 'first' | 'last' = 'first'): string[] {
+// of its last; `whole` leaves out a link to a heading of a page, which
+// refers to one of its sections rather than to the page.
+function linksOf(file: string, order: 'first' | 'last' = 'first', whole = false): string[] {
   const text = readFileSync(join(repo, file), 'utf8').replace(/```[\s\S]*?```/g, '');
   const out: string[] = [];
   for (const m of text.matchAll(/(?<!!)\[[^\]]*\]\(([^)\s]+)[^)]*\)/g)) {
+    if (whole && m[1].includes('#')) continue;
     const t = linkTarget(file, m[1]);
     if (!t) continue;
     if (out.includes(t) && order === 'last') out.splice(out.indexOf(t), 1);
@@ -1290,10 +1296,15 @@ function arrange(): Placed {
       else add(game, k, 'section', `${game.url}/${basename(k, '.md')}`);
     }
     // What each section page places, in the front page's order: the folder
-    // READMEs it links that no section page before it placed.
+    // READMEs it links as whole pages, which is how it lists its own; then
+    // any left, under the first section page that links one of its headings.
+    // A page that only refers to a section of another division's guide
+    // (Battle, to the field's random battles) does not take the guide.
     const guides = guideReadmes(g);
-    for (const section of game.children.filter((n) => n.kind === 'section'))
-      for (const k of linksOf(section.key)) if (guides.includes(k) && !placed.has(k)) add(section, k, 'guide', `${section.url}/${basename(dirname(k))}`);
+    const sections = game.children.filter((n) => n.kind === 'section');
+    for (const whole of [true, false])
+      for (const section of sections)
+        for (const k of linksOf(section.key, 'first', whole)) if (guides.includes(k) && !placed.has(k)) add(section, k, 'guide', `${section.url}/${basename(dirname(k))}`);
   }
   return root;
 }
@@ -2488,10 +2499,12 @@ function unusedPage(files: SourceFile[], root: Placed) {
   const rank = (folder: string) => (order.includes(guide(folder)) ? order.indexOf(guide(folder)) : order.length);
   const folders = [...new Set(items.map((it) => it.folder))].sort((a, b) => rank(a) - rank(b));
 
-  // The opening: the glossary's entry, but for its pointer here.
+  // The opening: the glossary's entry, but for its pointer here, its links
+  // to other entries leading back to the glossary's page.
   const glossary = readFileSync(join(repo, 'games/tbs/glossary.md'), 'utf8');
   const entry = (glossary.match(/\n### Unused\n\n([\s\S]*?)(?=\n### |\n## |(?![\s\S]))/)?.[1] ?? '')
     .replace(/\s*\[[^\]]*\]\([^)]*unused[^)]*\) collects them\./i, '')
+    .replace(/\]\(#/g, `](${siteLink('games/tbs/glossary.md')}#`)
     .trim();
   const body: string[] = [];
   if (entry) body.push(`${linkProse(codeProse(entry, 'tbs'), 'tbs')} ([Glossary](${siteLink('games/tbs/glossary.md')}#unused))`);
