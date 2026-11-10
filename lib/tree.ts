@@ -1,62 +1,77 @@
 import type { Folder, Item, Node, Root } from 'fumadocs-core/page-tree';
 import { isList } from './shared';
 
-// The sidebar a page is sent. The site has two tabs, the guide and each
-// game's reference, which are root folders: a page is sent its own tab's
-// tree, and of every other tab only the folder and its index, which is all
-// the tab switcher needs. The reference has a node for each of the games'
-// thousands of files, structures and index pages, and every page carries its
-// sidebar, so there a page gets only the folders on its own path open, with
-// every item in them; every other folder there is closed, shown as a link to
-// its index page, and a long list of folders beside the path is left out (the
-// path's own folder pages list them). The guide stays whole.
-const LONG = 40;
+// The sidebar: one tree. scripts/content.ts writes the guide and each game's
+// reference as root folders, the shape Doxygen gives them; here each game's
+// reference goes into that game's folder of the guide, under a Source
+// heading after the game's own pages, so a reader finds a file beside the
+// systems it belongs to and every folder opens where it is. Once a second
+// game has pages, each game's folder is a tab of its own (The Broken Seal,
+// The Lost Age), and the pages about both, the introduction and building
+// Alchemy, are in every tab.
 
-const urls = new WeakMap<Folder, Set<string>>();
+// Only what the sidebar draws, as every page carries the whole tree: a page
+// needs no $id, which fumadocs reads only of folders.
+const item = (page: Item, name = page.name): Item => ({ type: 'page', name, url: page.url, icon: page.icon });
 
-function urlsOf(folder: Folder): Set<string> {
-  let set = urls.get(folder);
-  if (!set) {
-    set = new Set();
-    if (folder.index) set.add(folder.index.url);
-    for (const node of folder.children) {
-      if (node.type === 'page') set.add(node.url);
-      else if (node.type === 'folder') for (const u of urlsOf(node)) set.add(u);
-    }
-    urls.set(folder, set);
-  }
-  return set;
+function slim(nodes: Node[]): Node[] {
+  return nodes.map((node) => {
+    if (node.type === 'page') return item(node);
+    if (node.type === 'separator') return node;
+    return {
+      type: 'folder',
+      $id: node.$id,
+      name: node.name,
+      icon: node.icon,
+      // The tab switcher shows a tab's name, icon and description; a key
+      // left undefined would still be sent, so only a tab has them.
+      ...(node.root && { root: true, description: node.description }),
+      defaultOpen: node.defaultOpen,
+      index: node.index && item(node.index),
+      children: slim(node.children),
+    } satisfies Folder;
+  });
 }
 
-// Only what the sidebar draws.
-const item = (page: Item, name = page.name): Item => ({ type: 'page', $id: page.$id, name, url: page.url, icon: page.icon });
-
-function prune(nodes: Node[], url: string): Node[] {
-  const onPath = nodes.find((n) => n.type === 'folder' && urlsOf(n).has(url));
-  const folders = nodes.filter((n) => n.type === 'folder').length;
-  const out: Node[] = [];
-  for (const node of nodes) {
-    // prune only opens folders on the page's own path, so every item listed
-    // here sits beside the page or in one of its folders.
-    if (node.type === 'page') out.push(item(node));
-    else if (node.type === 'separator') out.push(node);
-    else if (node === onPath) {
-      out.push({ ...node, $ref: undefined, index: node.index && item(node.index), defaultOpen: true, children: prune(node.children, url) });
-    } else if (node.root) {
-      out.push({ ...node, $ref: undefined, index: node.index && item(node.index), children: [] });
-    } else if (node.index && isList(node.index.url)) {
-      if (!(onPath && folders > LONG && isList(url))) out.push(item(node.index, node.name));
-    } else {
-      out.push({ ...node, $ref: undefined, index: node.index && item(node.index), children: prune(node.children, url) });
-    }
-  }
-  return out;
+function merged(tree: Root): Node[] {
+  const roots = tree.children.filter((n): n is Folder => n.type === 'folder' && !!n.root);
+  const references = roots.filter((f) => f.index && isList(f.index.url));
+  const guide = roots.find((f) => !references.includes(f));
+  if (!guide) return tree.children;
+  // A game's folder is the one whose page is the game's front page (/tbs),
+  // and its reference the root folder at that page's /source.
+  const games = new Set<Node>();
+  const graft = (nodes: Node[]): Node[] =>
+    nodes.map((node) => {
+      if (node.type !== 'folder') return node;
+      const reference = node.index && references.find((r) => r.index?.url === `${node.index!.url}/source`);
+      const children = graft(node.children);
+      if (!reference) return { ...node, children };
+      const game: Folder = { ...node, children: [...children, { type: 'separator', name: 'Source' }, ...reference.children] };
+      games.add(game);
+      return game;
+    });
+  const nodes = graft(guide.children);
+  if (games.size < 2) return nodes;
+  // A tab per game: the pages before the games, the game's front page and
+  // its own pages, then the pages after the games.
+  const first = nodes.findIndex((n) => games.has(n));
+  const last = nodes.findLastIndex((n) => games.has(n));
+  const before = nodes.slice(0, first).filter((n) => !games.has(n));
+  const after = nodes.slice(last + 1).filter((n) => !games.has(n));
+  return nodes
+    .filter((n): n is Folder => games.has(n))
+    .map((game) => ({ ...game, root: true, defaultOpen: undefined, children: [...before, ...(game.index ? [game.index] : []), ...game.children, ...after] }));
 }
 
-export function treeFor(tree: Root, slug: string[] | undefined): Root {
-  const url = '/' + (slug ?? []).join('/');
+// Every page is sent the same sidebar, made once.
+const made = new WeakMap<Root, Root>();
+
+export function sidebarTree(tree: Root): Root {
+  let out = made.get(tree);
   // The reference lists its files, structures and index pages by name, as
   // links, which leaves their pages out of the tree: fumadocs keeps those in
   // a fallback tree, which no page needs sent.
-  return { ...tree, fallback: undefined, children: prune(tree.children, url) };
+  if (!out) made.set(tree, (out = { type: 'root', $id: tree.$id, name: tree.name, children: slim(merged(tree)) }));
+  return out;
 }

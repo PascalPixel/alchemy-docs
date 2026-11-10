@@ -1,5 +1,4 @@
 import { DocsBody, DocsPage, DocsTitle, MarkdownCopyButton, PageLastUpdate, ViewOptionsPopover } from 'fumadocs-ui/layouts/docs/page';
-import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
 import { Lightbox } from 'fumadocs-ui/components/image-zoom';
 import { unstable_notFound } from 'waku/router/server';
@@ -8,12 +7,10 @@ import { TOCPopover } from '@/components/toc-popover';
 import { PageCards } from '@/components/page-cards';
 import { appName, gitConfig, isList, siteUrl } from '@/lib/shared';
 import { markdownUrl, ogImage, source } from '@/lib/source';
-import { treeFor } from '@/lib/tree';
-import { baseOptions } from '@/lib/layout.shared';
 
 // A page of the site (src/pages/index.tsx and src/pages/[...slugs].tsx), in
-// its sidebar (lib/tree.ts), with its title and preview image (lib/og.tsx) for
-// links to it elsewhere.
+// the sidebar src/pages/_layout.tsx gives every page, with its title and
+// preview image (lib/og.tsx) for links to it elsewhere.
 export async function DocPage({ slugs }: { slugs: string[] }) {
   const page = source.getPage(slugs);
   if (!page) unstable_notFound();
@@ -25,7 +22,7 @@ export async function DocPage({ slugs }: { slugs: string[] }) {
   const title = slugs.length ? `${page.data.title} | ${appName}` : appName;
   const image = `${siteUrl}${ogImage(page)}`;
   return (
-    <DocsLayout tree={treeFor(source.getPageTree(), slugs)} {...baseOptions()}>
+    <>
       <title>{title}</title>
       {page.data.description && <meta name="description" content={page.data.description} />}
       <meta property="og:title" content={title} />
@@ -61,6 +58,6 @@ export async function DocPage({ slugs }: { slugs: string[] }) {
         </DocsBody>
         {page.data.lastModified && <PageLastUpdate date={new Date(page.data.lastModified)} />}
       </DocsPage>
-    </DocsLayout>
+    </>
   );
 }
