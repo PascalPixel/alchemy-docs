@@ -1,10 +1,11 @@
-import { DocsBody, DocsPage, DocsTitle, MarkdownCopyButton, PageLastUpdate, ViewOptionsPopover } from 'fumadocs-ui/layouts/docs/page';
+import { DocsBody, DocsPage, DocsTitle, MarkdownCopyButton, PageLastUpdate, ViewOptionsPopover } from 'fumadocs-ui/layouts/spacious/page';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
 import { Lightbox } from 'fumadocs-ui/components/image-zoom';
 import { unstable_notFound } from 'waku/router/server';
 import { getMDXComponents } from '@/components/mdx';
-import { TOCPopover } from '@/components/toc-popover';
 import { PageCards } from '@/components/page-cards';
+import { TOCDropdown, TOCPopover } from '@/components/toc-popover';
+import { TOC, TOCProvider } from 'fumadocs-ui/layouts/spacious/page/slots/toc';
 import { appName, gitConfig, isList, siteUrl } from '@/lib/shared';
 import { markdownUrl, ogImage, source } from '@/lib/source';
 
@@ -32,7 +33,7 @@ export async function DocPage({ slugs }: { slugs: string[] }) {
       <meta name="twitter:title" content={title} />
       {page.data.description && <meta name="twitter:description" content={page.data.description} />}
       <meta name="twitter:image" content={image} />
-      <DocsPage toc={toc} full={page.data.full} tableOfContentPopover={{ component: <TOCPopover /> }}>
+      <DocsPage toc={toc} full={page.data.full} slots={{ toc: { provider: TOCProvider, main: TOC, popover: TOCPopover, dropdown: TOCDropdown } }}>
         <DocsTitle>{page.data.title}</DocsTitle>
         {/* Where the page comes from, and its Markdown to copy or open elsewhere. */}
         <div className="flex flex-row flex-wrap items-center gap-2 border-b pb-6 text-sm text-fd-muted-foreground">

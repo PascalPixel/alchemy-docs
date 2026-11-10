@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import { Provider } from '@/components/provider';
-import { COLOURS_KEY } from '@/lib/shared';
 import '@fontsource-variable/inter';
 import '@/src/global.css';
 
@@ -39,16 +38,15 @@ const gamma = (exponent: number) => (
   </feComponentTransfer>
 );
 
-// Read before the first paint, so a reader who chose the raw colours never
-// sees the filtered ones flash.
-const colours = `try{if(localStorage.getItem(${JSON.stringify(COLOURS_KEY)})==='raw')document.documentElement.dataset.colours='raw'}catch(e){}`;
-
 export default function RootElement({ children }: { children: ReactNode }) {
   const base = process.env.DOCS_BASE_PATH ?? '';
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: colours }} />
+        {/* What Next.js wrote into every page by itself: without the viewport,
+            a phone lays the page out at desktop width and shrinks it. */}
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href={`${base}/icon.svg`} sizes="any" type="image/svg+xml" />
       </head>
       <body className="flex flex-col min-h-screen">

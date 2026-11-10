@@ -1,14 +1,13 @@
-import type { Folder, Item, Node, Root } from 'fumadocs-core/page-tree';
-import { isList } from './shared';
+import type { Folder, Item, Node, Root, Separator } from 'fumadocs-core/page-tree';
+import { isIndex, isList } from './shared';
 
-// The sidebar: one tree. scripts/content.ts writes the guide and each game's
-// reference as root folders, the shape Doxygen gives them; here each game's
-// reference goes into that game's folder of the guide, under a Source
-// heading after the game's own pages, so a reader finds a file beside the
-// systems it belongs to and every folder opens where it is. Once a second
-// game has pages, each game's folder is a tab of its own (The Broken Seal,
-// The Lost Age), and the pages about both, the introduction and building
-// Alchemy, are in every tab.
+// The sidebar, shaped as Fumadocs' own docs shape theirs. scripts/content.ts
+// writes the guide and each game's reference as root folders, the shape
+// Doxygen gives them; here each game is a tab of its own instead (The Broken
+// Seal, and The Lost Age once it has pages), and in a tab its pages are short
+// lists under headings: the pages about the whole project, the game's
+// systems and places, its source, and the indexes. Every folder opens where
+// it is, and stays closed until a reader is in it.
 
 // Only what the sidebar draws, as every page carries the whole tree: a page
 // needs no $id, which fumadocs reads only of folders.
@@ -23,45 +22,59 @@ function slim(nodes: Node[]): Node[] {
       $id: node.$id,
       name: node.name,
       icon: node.icon,
-      // The tab switcher shows a tab's name, icon and description; a key
-      // left undefined would still be sent, so only a tab has them.
+      // A key left undefined would still be sent, so only a tab has the
+      // tab switcher's name, icon and description.
       ...(node.root && { root: true, description: node.description }),
-      defaultOpen: node.defaultOpen,
       index: node.index && item(node.index),
       children: slim(node.children),
     } satisfies Folder;
   });
 }
 
-function merged(tree: Root): Node[] {
+const heading = (name: string): Separator => ({ type: 'separator', name });
+
+function tabs(tree: Root): Node[] {
   const roots = tree.children.filter((n): n is Folder => n.type === 'folder' && !!n.root);
   const references = roots.filter((f) => f.index && isList(f.index.url));
   const guide = roots.find((f) => !references.includes(f));
   if (!guide) return tree.children;
-  // A game's folder is the one whose page is the game's front page (/tbs),
-  // and its reference the root folder at that page's /source.
-  const games = new Set<Node>();
-  const graft = (nodes: Node[]): Node[] =>
-    nodes.map((node) => {
-      if (node.type !== 'folder') return node;
-      const reference = node.index && references.find((r) => r.index?.url === `${node.index!.url}/source`);
-      const children = graft(node.children);
-      if (!reference) return { ...node, children };
-      const game: Folder = { ...node, children: [...children, { type: 'separator', name: 'Source' }, ...reference.children] };
-      games.add(game);
-      return game;
-    });
-  const nodes = graft(guide.children);
-  if (games.size < 2) return nodes;
-  // A tab per game: the pages before the games, the game's front page and
-  // its own pages, then the pages after the games.
-  const first = nodes.findIndex((n) => games.has(n));
-  const last = nodes.findLastIndex((n) => games.has(n));
-  const before = nodes.slice(0, first).filter((n) => !games.has(n));
-  const after = nodes.slice(last + 1).filter((n) => !games.has(n));
-  return nodes
-    .filter((n): n is Folder => games.has(n))
-    .map((game) => ({ ...game, root: true, defaultOpen: undefined, children: [...before, ...(game.index ? [game.index] : []), ...game.children, ...after] }));
+  // A game's folder is the guide's folder whose page is the game's front
+  // page (/tbs), and its reference the root folder at that page's /source.
+  const games = guide.children.flatMap((node) => {
+    if (node.type !== 'folder' || !node.index) return [];
+    const reference = references.find((r) => r.index?.url === `${node.index!.url}/source`);
+    return reference ? [{ game: node, reference }] : [];
+  });
+  if (!games.length) return guide.children;
+  // The pages about the whole project, the introduction and building
+  // Alchemy, are in every game's tab.
+  const project = guide.children.filter((n) => !games.some((g) => g.game === n));
+  return games.map(({ game, reference }) => {
+    const front = game.index!.url;
+    // The source's own guide, its README, is at /<game>/code
+    // (scripts/content.ts), and opens the game's Source.
+    const code = game.children.filter((n) => n.type === 'page' && n.url === `${front}/code`);
+    const own = game.children.filter((n) => !code.includes(n));
+    const indexes = reference.children.filter((n) => n.type === 'folder' && n.index && isIndex(n.index.url));
+    const files = reference.children.filter((n) => !indexes.includes(n));
+    return {
+      ...game,
+      root: true,
+      children: [
+        heading('Introduction'),
+        ...project.slice(0, 1),
+        game.index!,
+        ...project.slice(1),
+        heading('The game'),
+        ...own,
+        heading('Source'),
+        ...code,
+        ...files,
+        heading('Indexes'),
+        ...indexes,
+      ],
+    } satisfies Folder;
+  });
 }
 
 // Every page is sent the same sidebar, made once.
@@ -72,6 +85,6 @@ export function sidebarTree(tree: Root): Root {
   // The reference lists its files, structures and index pages by name, as
   // links, which leaves their pages out of the tree: fumadocs keeps those in
   // a fallback tree, which no page needs sent.
-  if (!out) made.set(tree, (out = { type: 'root', $id: tree.$id, name: tree.name, children: slim(merged(tree)) }));
+  if (!out) made.set(tree, (out = { type: 'root', $id: tree.$id, name: tree.name, children: slim(tabs(tree)) }));
   return out;
 }

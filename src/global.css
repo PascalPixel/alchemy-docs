@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 @import 'fumadocs-ui/css/neutral.css';
+/* The spacious layout's classes, which preset.css leaves out. */
+@import 'fumadocs-ui/css/generated/spacious.css';
 @import 'fumadocs-ui/css/preset.css';
 
 /* The site's colours: the flame orange of its 🌋 for links, the current page
@@ -62,10 +64,10 @@ html > body[data-scroll-locked] {
 }
 
 /* The renders of the game, shown in alchemy-lit (the #alchemy-lit filter in
-   src/pages/_root.tsx), unless the reader picked the raw colours. The games'
-   picture files keep the colours their palettes store.
+   src/pages/_root.tsx). The games' picture files keep the colours their
+   palettes store.
    A still (lib/stills.ts) is the first frame of a render. */
-:root:not([data-colours='raw']) img:is([src*='/places/'], [src*='/abilities/'], [src*='/story/'], [src*='/guides/'], [src*='/stills/']):not([src*='/pictures/']) {
+img:is([src*='/places/'], [src*='/abilities/'], [src*='/story/'], [src*='/guides/'], [src*='/stills/']):not([src*='/pictures/']) {
   filter: url(#alchemy-lit);
 }
 img:is([src*='/places/'], [src*='/abilities/'], [src*='/story/'], [src*='/guides/'], [src*='/stills/']):not([src*='/pictures/']) {
@@ -134,12 +136,7 @@ img.render {
    they are framed and dimmed a little. */
 .dark img.render[src*='/guides/'][src*='.png'] {
   border: 1px solid var(--color-fd-border);
-}
-.dark:not([data-colours='raw']) img.render[src*='/guides/'][src*='.png'] {
   filter: url(#alchemy-lit) brightness(0.88);
-}
-.dark[data-colours='raw'] img.render[src*='/guides/'][src*='.png'] {
-  filter: brightness(0.88);
 }
 /* The enlarged picture (fumadocs' Lightbox) keeps hard pixels too. */
 dialog img.render {
