@@ -1,8 +1,8 @@
-@import 'tailwindcss';
-@import 'fumadocs-ui/css/neutral.css';
+@import "tailwindcss";
+@import "fumadocs-ui/css/neutral.css";
 /* The spacious layout's classes, which preset.css leaves out. */
-@import 'fumadocs-ui/css/generated/spacious.css';
-@import 'fumadocs-ui/css/preset.css';
+@import "fumadocs-ui/css/generated/spacious.css";
+@import "fumadocs-ui/css/preset.css";
 
 /* The site's colours: the flame orange of its 🌋 for links, the current page
    and focus, over surfaces warmed toward it, a pale orange in the light theme
@@ -10,163 +10,180 @@
    their hues change. */
 /* Inter, served with the site (src/pages/_root.tsx imports it). */
 @theme {
-  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
-  --color-fd-background: hsl(32, 55%, 96%);
-  --color-fd-foreground: hsl(20, 30%, 8%);
-  --color-fd-muted: hsl(30, 45%, 93.5%);
-  --color-fd-muted-foreground: hsl(22, 16%, 40%);
-  --color-fd-popover: hsl(32, 60%, 98%);
-  --color-fd-popover-foreground: hsl(20, 25%, 14%);
-  --color-fd-card: hsl(30, 48%, 93%);
-  --color-fd-card-foreground: hsl(20, 30%, 8%);
-  --color-fd-border: hsla(25, 40%, 68%, 45%);
-  --color-fd-primary: hsl(18, 90%, 42%);
-  --color-fd-primary-foreground: hsl(32, 100%, 98%);
-  --color-fd-secondary: hsl(30, 45%, 91.5%);
-  --color-fd-secondary-foreground: hsl(20, 30%, 12%);
-  --color-fd-accent: hsla(22, 85%, 68%, 25%);
-  --color-fd-accent-foreground: hsl(20, 40%, 12%);
-  --color-fd-ring: hsl(20, 90%, 55%);
+    --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+    --color-fd-background: hsl(32, 55%, 96%);
+    --color-fd-foreground: hsl(20, 30%, 8%);
+    --color-fd-muted: hsl(30, 45%, 93.5%);
+    --color-fd-muted-foreground: hsl(22, 16%, 40%);
+    --color-fd-popover: hsl(32, 60%, 98%);
+    --color-fd-popover-foreground: hsl(20, 25%, 14%);
+    /* What fumadocs paints behind the page: the 🌋's orange. The page and
+       the dialogs have their own cards (below). */
+    --color-fd-card: hsl(26, 100%, 61%);
+    --color-fd-card-foreground: hsl(20, 30%, 8%);
+    --color-fd-border: hsla(25, 40%, 68%, 45%);
+    --color-fd-primary: hsl(18, 90%, 42%);
+    --color-fd-primary-foreground: hsl(32, 100%, 98%);
+    --color-fd-secondary: hsl(30, 45%, 91.5%);
+    --color-fd-secondary-foreground: hsl(20, 30%, 12%);
+    --color-fd-accent: hsla(22, 85%, 68%, 25%);
+    --color-fd-accent-foreground: hsl(20, 40%, 12%);
+    --color-fd-ring: hsl(20, 90%, 55%);
 }
 
 .dark {
-  --color-fd-background: hsl(20, 18%, 7%);
-  --color-fd-foreground: hsl(30, 25%, 92%);
-  --color-fd-muted: hsl(20, 16%, 12.5%);
-  --color-fd-muted-foreground: hsla(28, 22%, 72%, 0.85);
-  --color-fd-popover: hsl(20, 17%, 11%);
-  --color-fd-popover-foreground: hsl(30, 20%, 88%);
-  --color-fd-card: hsl(20, 17%, 9.5%);
-  --color-fd-card-foreground: hsl(30, 30%, 96%);
-  --color-fd-border: hsla(22, 25%, 45%, 25%);
-  --color-fd-primary: hsl(22, 100%, 58%);
-  --color-fd-primary-foreground: hsl(20, 40%, 8%);
-  --color-fd-secondary: hsl(20, 16%, 13%);
-  --color-fd-secondary-foreground: hsl(30, 25%, 92%);
-  --color-fd-accent: hsla(22, 60%, 45%, 25%);
-  --color-fd-accent-foreground: hsl(30, 30%, 92%);
-  --color-fd-ring: hsl(22, 90%, 55%);
+    --color-fd-background: hsl(20, 18%, 7%);
+    --color-fd-foreground: hsl(30, 25%, 92%);
+    --color-fd-muted: hsl(20, 16%, 12.5%);
+    --color-fd-muted-foreground: hsla(28, 22%, 72%, 0.85);
+    --color-fd-popover: hsl(20, 17%, 11%);
+    --color-fd-popover-foreground: hsl(30, 20%, 88%);
+    /* The 🌋's orange, darkened; the page and the dialogs keep the dark
+       card (below). */
+    --color-fd-card: hsl(26deg 100% 11.4%);
+    --color-fd-card-foreground: hsl(30, 30%, 96%);
+    --color-fd-border: hsla(22, 25%, 45%, 25%);
+    --color-fd-primary: hsl(22, 100%, 58%);
+    --color-fd-primary-foreground: hsl(20, 40%, 8%);
+    --color-fd-secondary: hsl(20, 16%, 13%);
+    --color-fd-secondary-foreground: hsl(30, 25%, 92%);
+    --color-fd-accent: hsla(22, 60%, 45%, 25%);
+    --color-fd-accent-foreground: hsl(30, 30%, 92%);
+    --color-fd-ring: hsl(22, 90%, 55%);
 }
 
-.dark #nd-sidebar {
-  --color-fd-muted: hsl(20, 16%, 16%);
-  --color-fd-secondary: hsl(20, 16%, 18%);
-  --color-fd-muted-foreground: hsl(28, 18%, 72%);
+/* In the dark theme the page sits on the darker orange, and the menu keeps the
+   theme's light text on it; its quieter items keep the grey they had (8.1:1)
+   and the current page a lighter orange (8.4:1). On a phone the table of
+   contents' bar (#toc-bar) is on the orange too. */
+.dark :is(#nd-page-panel, [role="dialog"]) {
+    --color-fd-card: hsl(20, 17%, 9.5%);
+}
+.dark :is(#nd-sidebar, #nd-sidebar-mobile, #nd-subnav, #toc-bar) {
+    --color-fd-background: var(--color-fd-card);
+    --color-fd-muted-foreground: hsl(28, 18%, 72%);
+    --color-fd-primary: hsl(26, 100%, 70%);
+    --color-fd-accent: hsla(30, 60%, 85%, 0.12);
+    --color-fd-border: hsla(30, 60%, 85%, 0.2);
 }
 
-/* In the light theme the page sits on the 🌋's hot orange, and the menu and
-   the phone's top bar are white on it; the page itself, and the menus that
-   open over it, keep the theme's colours. The orange keeps white text
-   readable at the menu's size (4.7:1). */
-:root:not(.dark) {
-  --color-alchemy-flame: hsl(17, 90%, 43%);
+/* In the light theme the page sits on the orange card colour; the page itself
+   and the dialogs keep a pale card for what they hold. On the orange the
+   menu's text stays dark, its quieter items and the current page in a dark
+   brown that stays readable there (4.8:1), where the theme's grey and the
+   🌋's red-orange would not be. */
+:root:not(.dark) :is(#nd-page-panel, [role="dialog"]) {
+    --color-fd-card: hsl(30, 48%, 93%);
 }
-:root:not(.dark) #fd-spacious-layout {
-  background: var(--color-alchemy-flame);
-}
-:root:not(.dark) :is(#nd-sidebar, #nd-sidebar-mobile, #nd-subnav) {
-  --color-fd-background: var(--color-alchemy-flame);
-  --color-fd-card: var(--color-alchemy-flame);
-  --color-fd-foreground: #fff;
-  --color-fd-muted-foreground: hsla(0, 0%, 100%, 0.92);
-  --color-fd-primary: #fff;
-  --color-fd-accent: hsla(0, 0%, 100%, 0.16);
-  --color-fd-accent-foreground: #fff;
-  --color-fd-secondary: hsla(0, 0%, 100%, 0.14);
-  --color-fd-secondary-foreground: #fff;
-  --color-fd-muted: hsla(0, 0%, 100%, 0.14);
-  --color-fd-border: hsla(0, 0%, 100%, 0.35);
-  --color-fd-ring: #fff;
-  color: #fff;
+:root:not(.dark) :is(#nd-sidebar, #nd-sidebar-mobile, #nd-subnav, #toc-bar) {
+    --color-fd-background: var(--color-fd-card);
+    --color-fd-muted-foreground: hsl(20, 35%, 24%);
+    --color-fd-primary: hsl(20, 40%, 14%);
+    --color-fd-accent: hsla(20, 40%, 14%, 0.1);
+    --color-fd-accent-foreground: hsl(20, 30%, 8%);
+    --color-fd-border: hsla(20, 40%, 14%, 0.22);
+    color: var(--color-fd-foreground);
 }
 
 html {
-  scrollbar-gutter: stable;
+    scrollbar-gutter: stable;
 }
 
 html > body[data-scroll-locked] {
-  margin-right: 0px !important;
-  --removed-body-scroll-bar-size: 0px !important;
+    margin-right: 0px !important;
+    --removed-body-scroll-bar-size: 0px !important;
 }
 
 /* The renders of the game, shown in alchemy-lit (the #alchemy-lit filter in
    src/pages/_root.tsx). The games' picture files keep the colours their
    palettes store.
    A still (lib/stills.ts) is the first frame of a render. */
-img:is([src*='/places/'], [src*='/abilities/'], [src*='/story/'], [src*='/guides/'], [src*='/stills/']):not([src*='/pictures/']) {
-  filter: url(#alchemy-lit);
+img:is(
+        [src*="/places/"],
+        [src*="/abilities/"],
+        [src*="/story/"],
+        [src*="/guides/"],
+        [src*="/stills/"]
+    ):not([src*="/pictures/"]) {
+    filter: url(#alchemy-lit);
 }
-img:is([src*='/places/'], [src*='/abilities/'], [src*='/story/'], [src*='/guides/'], [src*='/stills/']):not([src*='/pictures/']) {
-  image-rendering: pixelated;
+img:is(
+        [src*="/places/"],
+        [src*="/abilities/"],
+        [src*="/story/"],
+        [src*="/guides/"],
+        [src*="/stills/"]
+    ):not([src*="/pictures/"]) {
+    image-rendering: pixelated;
 }
 
 /* The games' own picture files, such as an effect's sheet with its palette,
    shown side by side at twice their size, pixel for pixel. */
-img[src*='/pictures/'] {
-  display: inline-block;
-  vertical-align: top;
-  margin: 0 1rem 1rem 0;
-  image-rendering: pixelated;
-  zoom: 2;
-  border-radius: 0;
+img[src*="/pictures/"] {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 1rem 1rem 0;
+    image-rendering: pixelated;
+    zoom: 2;
+    border-radius: 0;
 }
 
 /* Figures (lib/remark-figures.ts): a paragraph of pictures, each centred with
    its short caption under it. Several pictures in one paragraph (the casts a
    handler plays, a place's moments) sit side by side where they fit. */
 .figures {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem 1.5rem;
-  margin: 1.5rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem 1.5rem;
+    margin: 1.5rem 0;
 }
 .figures figure {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 0 1 auto;
-  max-width: 100%;
-  margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 0 1 auto;
+    max-width: 100%;
+    margin: 0;
 }
 /* The figure takes its picture's shown width (remark-figures sets it); the
    picture fills it, keeping its proportions from its width and height. */
 .figures figure > span,
 .figures figure img {
-  width: 100%;
+    width: 100%;
 }
 .figures figure img {
-  height: auto;
-  margin: 0;
+    height: auto;
+    margin: 0;
 }
 .figures figure:not([style]) > span,
 .figures figure:not([style]) img {
-  width: auto;
+    width: auto;
 }
 .figures figcaption {
-  margin-top: 0.5rem;
-  max-width: 40rem;
-  font-size: 0.875rem;
-  line-height: 1.4;
-  text-align: center;
-  color: var(--color-fd-muted-foreground);
+    margin-top: 0.5rem;
+    max-width: 40rem;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    text-align: center;
+    color: var(--color-fd-muted-foreground);
 }
 /* A render keeps the room its size reserves while it loads, shown as a
    muted box rather than a blank gap. The renders are opaque, so the box is
    hidden once the picture is drawn. */
 img.render {
-  background: var(--color-fd-muted);
-  image-rendering: pixelated;
+    background: var(--color-fd-muted);
+    image-rendering: pixelated;
 }
 /* The take-apart pictures with white canvases glare on the dark theme: there
    they are framed and dimmed a little. */
-.dark img.render[src*='/guides/'][src*='.png'] {
-  border: 1px solid var(--color-fd-border);
-  filter: url(#alchemy-lit) brightness(0.88);
+.dark img.render[src*="/guides/"][src*=".png"] {
+    border: 1px solid var(--color-fd-border);
+    filter: url(#alchemy-lit) brightness(0.88);
 }
 /* The enlarged picture (fumadocs' Lightbox) keeps hard pixels too. */
 dialog img.render {
-  image-rendering: pixelated;
+    image-rendering: pixelated;
 }
 
 /* The code's names run long (Event_LeaveToValeInteriorsShopsWestBySecondDoor).
@@ -182,10 +199,10 @@ h3,
 h4,
 #nd-toc a,
 #nd-tocnav a {
-  overflow-wrap: anywhere;
+    overflow-wrap: anywhere;
 }
 main {
-  overflow-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 /* Tables on a phone: the explaining column must stay readable, so a code
@@ -194,27 +211,27 @@ main {
    screen, and a table with more columns than fit still scrolls sideways
    inside its frame (fumadocs wraps each table in a scrolling div). */
 main table {
-  width: 100%;
+    width: 100%;
 }
 main th,
 main td {
-  min-width: 7ch;
-  vertical-align: top;
+    min-width: 7ch;
+    vertical-align: top;
 }
 main td:last-child,
 main th:last-child {
-  min-width: 14ch;
+    min-width: 14ch;
 }
 @media (max-width: 640px) {
-  main td:first-child,
-  main th:first-child {
-    max-width: 40vw;
-    min-width: 12ch;
-  }
-  main th,
-  main td {
-    padding-inline: 0.5rem;
-  }
+    main td:first-child,
+    main th:first-child {
+        max-width: 40vw;
+        min-width: 12ch;
+    }
+    main th,
+    main td {
+        padding-inline: 0.5rem;
+    }
 }
 
 /* A code block wider than its frame (a bit layout), or a table wider than
@@ -223,35 +240,44 @@ main th:last-child {
    the content and cover it there). */
 figure.shiki > div:has(> pre),
 div.overflow-auto:has(> table) {
-  background:
-    linear-gradient(to right, var(--color-fd-card) 30%, transparent) left / 2rem 100% no-repeat local,
-    linear-gradient(to left, var(--color-fd-card) 30%, transparent) right / 2rem 100% no-repeat local,
-    linear-gradient(to right, var(--scroll-shadow), transparent) left / 1rem 100% no-repeat scroll,
-    linear-gradient(to left, var(--scroll-shadow), transparent) right / 1rem 100% no-repeat scroll;
-  --scroll-shadow: color-mix(in oklab, var(--color-fd-foreground) 30%, transparent);
+    background:
+        linear-gradient(to right, var(--color-fd-card) 30%, transparent) left /
+            2rem 100% no-repeat local,
+        linear-gradient(to left, var(--color-fd-card) 30%, transparent) right /
+            2rem 100% no-repeat local,
+        linear-gradient(to right, var(--scroll-shadow), transparent) left / 1rem
+            100% no-repeat scroll,
+        linear-gradient(to left, var(--scroll-shadow), transparent) right / 1rem
+            100% no-repeat scroll;
+    --scroll-shadow: color-mix(
+        in oklab,
+        var(--color-fd-foreground) 30%,
+        transparent
+    );
 }
 :not(pre) > code.nowrap {
-  white-space: nowrap;
-  overflow-wrap: normal;
+    white-space: nowrap;
+    overflow-wrap: normal;
 }
 
 /* A page card's still (components/page-cards.tsx) keeps its room as a muted
    box while it loads. */
 img.still {
-  background: var(--color-fd-muted);
+    background: var(--color-fd-muted);
 }
 
 /* lib/remark-code-breaks.ts marks a flag, a sound or a sequence with its
    emoji; it is drawn here so a copied name stays only the name. */
 :not(pre) > code[data-emoji]::before {
-  content: attr(data-emoji);
-  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
-  font-variant-emoji: emoji;
+    content: attr(data-emoji);
+    font-family:
+        "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+    font-variant-emoji: emoji;
 }
 
 /* A code name that is a link is bold, so its letters match the weight of
    the link's underline. */
 a > code,
 a > code[data-emoji]::before {
-  font-weight: 700;
+    font-weight: 700;
 }

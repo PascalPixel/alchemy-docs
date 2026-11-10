@@ -118,7 +118,7 @@ export function TOCPopover({ container, trigger, content, header, footer }: TOCP
     return () => window.removeEventListener('click', close);
   }, [open]);
   return (
-    <Collapsible open={open} onOpenChange={setOpen} {...container} className={cn('max-md:layout:[--fd-toc-popover-height:--spacing(10)]', container?.className)}>
+    <Collapsible id="toc-bar" open={open} onOpenChange={setOpen} {...container} className={cn('max-md:layout:[--fd-toc-popover-height:--spacing(10)]', container?.className)}>
       <header ref={ref} className="bg-fd-card">
         <CollapsibleTrigger {...trigger} className={cn('flex w-full h-10 items-center gap-2.5 px-4 text-start text-sm text-fd-muted-foreground focus-visible:outline-none', trigger?.className)}>
           <Progress index={reading} size={18} className={cn('shrink-0', open && 'text-fd-primary')} />
