@@ -6,6 +6,10 @@
   "outputDirectory": "dist/public",
   "trailingSlash": false,
   "redirects": [
+    { "source": "/tbs/source/fields", "destination": "/tbs/source/structs", "permanent": true },
+    { "source": "/tbs/source/fields/:path*", "destination": "/tbs/source/structs", "permanent": true },
+    { "source": "/tbs/source/globals", "destination": "/tbs/source", "permanent": true },
+    { "source": "/tbs/source/globals/:path*", "destination": "/tbs/source", "permanent": true },
     {
       "source": "/tla",
       "destination": "/",

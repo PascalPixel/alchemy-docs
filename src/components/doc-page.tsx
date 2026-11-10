@@ -35,7 +35,8 @@ export async function DocPage({ slugs }: { slugs: string[] }) {
       {page.data.description && <meta name="twitter:description" content={page.data.description} />}
       <meta name="twitter:image" content={image} />
       <DocsPage toc={toc} full={page.data.full} slots={{ toc: { provider: TOCProvider, main: TOC, popover: TOCPopover, dropdown: TOCDropdown } }}>
-        <DocsTitle>{page.data.title}</DocsTitle>
+        {/* A file or folder of the source is titled by its path, which the breadcrumb above already shows: the heading is its own name. */}
+        <DocsTitle>{isList(page.url) ? page.data.title.split('/').pop() : page.data.title}</DocsTitle>
         {/* Where the page comes from, and its Markdown to copy or open elsewhere. */}
         <div className="flex flex-row flex-wrap items-center gap-2 border-b pb-6 text-sm text-fd-muted-foreground">
           {github && (

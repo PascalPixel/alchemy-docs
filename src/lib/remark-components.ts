@@ -129,7 +129,7 @@ function callouts(node: Root | RootContent) {
 // Each row becomes a Field of a FieldTable (src/components/field-table.tsx); an
 // array's size, written after the name, joins its type.
 function typeTable(tree: Root) {
-  const at = tree.children.findIndex((n) => n.type === 'heading' && n.data?.hProperties?.id === 'data-fields');
+  const at = tree.children.findIndex((n) => n.type === 'heading' && n.data?.hProperties?.id === 'fields');
   const table = tree.children[at + 1];
   if (at < 0 || table?.type !== 'table') return;
   const fields = (table as Table).children.slice(1).map((row) => {

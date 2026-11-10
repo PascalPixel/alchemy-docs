@@ -11,8 +11,8 @@
 // enum and global it defines, with or without a comment: its declaration,
 // its /// comment, its enumerators, what it refers to and what refers to it,
 // and its line on GitHub. Every structure and union has a page with its
-// fields; every folder a page with its folders and files; and the indexes
-// list every name by kind. Names in comments, and code names in the guide,
+// fields; every folder a page with its folders and files. Search finds a
+// name; there are no pages listing names by letter and kind, as Doxygen has. Names in comments, and code names in the guide,
 // link to their entries within the same game, so the two games never cross.
 // A handler whose comment names the abilities that reach it shows their
 // recordings (abilities/index.tsv in the render store) in its entry.
@@ -489,16 +489,16 @@ const pageOf = (path: string) => `${dirPage(dirname(path))}/${fileSlug(path)}`;
 
 // The headings of a file or structure page, whose ids no member may take.
 const SECTIONS = {
-  struct: ['Data Structures', ''],
-  union: ['Data Structures', ''],
-  macro: ['Macros', 'Macro Definition Documentation'],
-  typedef: ['Typedefs', 'Typedef Documentation'],
-  enum: ['Enumerations', 'Enumeration Type Documentation'],
-  function: ['Functions', 'Function Documentation'],
-  prototype: ['Functions', 'Function Documentation'],
-  variable: ['Variables', 'Variable Documentation'],
+  struct: ['Structures', ''],
+  union: ['Structures', ''],
+  macro: ['Macros', 'Macros in detail'],
+  typedef: ['Typedefs', 'Typedefs in detail'],
+  enum: ['Enumerations', 'Enumerations in detail'],
+  function: ['Functions', 'Functions in detail'],
+  prototype: ['Functions', 'Functions in detail'],
+  variable: ['Variables', 'Variables in detail'],
 } as const satisfies Record<Decl['kind'], readonly [string, string]>;
-const RESERVED = new Set([...Object.values(SECTIONS).flat(), 'Detailed Description', 'Data Fields', 'Field Documentation', 'Includes'].filter(Boolean).map(headingSlug));
+const RESERVED = new Set([...Object.values(SECTIONS).flat(), 'Description', 'Fields', 'Fields in detail', 'Includes'].filter(Boolean).map(headingSlug));
 
 // A declaration's place within its file: one entry for every name of a kind,
 // gathering a name declared again under an edition's #if or as a prototype
@@ -904,7 +904,7 @@ function rowTarget(file: SourceFile, decls: Decl[]): { url: string; doc: string 
   return { url: there.url, doc: own || there.decl.doc };
 }
 
-const SUMMARY_ORDER = ['Data Structures', 'Macros', 'Typedefs', 'Enumerations', 'Functions', 'Variables'];
+const SUMMARY_ORDER = ['Structures', 'Macros', 'Typedefs', 'Enumerations', 'Functions', 'Variables'];
 const ENTRY_ORDER: Decl['kind'][] = ['macro', 'typedef', 'enum', 'function', 'variable'];
 
 // A file's page, laid out as Doxygen lays out a file: its brief, what it
@@ -913,7 +913,7 @@ const ENTRY_ORDER: Decl['kind'][] = ['macro', 'typedef', 'enum', 'function', 'va
 function filePage(file: SourceFile) {
   const parts: string[] = [];
   const game = file.game;
-  if (file.summary) parts.push(`${linkNames(file.summary, game, '')}${file.doc.length > file.summary.length + 2 ? ' [More…](#detailed-description)' : ''}`);
+  if (file.summary) parts.push(`${linkNames(file.summary, game, '')}${file.doc.length > file.summary.length + 2 ? ' [More…](#description)' : ''}`);
   const inc = includes.get(file) ?? [];
   if (inc.length) parts.push(inc.map((x) => `- ${x.file ? `[${code(`#include "${x.as}"`)}](${pageOf(x.file.path)})` : code(`#include "${x.as}"`)}`).join('\n'));
   const by = includedBy.get(file) ?? [];
@@ -927,7 +927,7 @@ function filePage(file: SourceFile) {
     if (!rows.length) continue;
     parts.push(heading('##', title, headingSlug(title)), `| | Name | Description |\n| --- | --- | --- |\n${rows.join('\n')}`);
   }
-  if (file.doc) parts.push(heading('##', 'Detailed Description', 'detailed-description'), linkNames(file.doc, game, ''));
+  if (file.doc) parts.push(heading('##', 'Description', 'description'), linkNames(file.doc, game, ''));
   for (const kind of ENTRY_ORDER) {
     const title = SECTIONS[kind][1];
     const entries = members.filter((m) => SECTIONS[m[0].kind][1] === title && hasEntry(file, m));
@@ -950,7 +950,7 @@ function structPage(file: SourceFile, d: Decl) {
   const game = file.game;
   const parts: string[] = [];
   const b = brief(d.doc);
-  if (b) parts.push(`${linkNames(b, game, d.name)}${d.doc.length > b.length + 2 ? ' [More…](#detailed-description)' : ''}`);
+  if (b) parts.push(`${linkNames(b, game, d.name)}${d.doc.length > b.length + 2 ? ' [More…](#description)' : ''}`);
   parts.push(`Declared in [${code(basename(file.path))}](${pageOf(file.path)}).`);
   const used = new Set(RESERVED);
   const fieldIds = d.fields.map((f) => {
@@ -965,13 +965,13 @@ function structPage(file: SourceFile, d: Decl) {
       const [before, after] = aroundName(f.type, f.name.split(', ')[0]);
       return `| ${cell(code(before))} | ${cell(`[${code(f.name)}](#${fieldIds[i]})${after.trim() ? ` ${code(after)}` : ''}`)} | ${cell(linkNames(brief(f.doc), game, d.name))} |`;
     });
-    parts.push(heading('##', 'Data Fields', 'data-fields'), `| | Name | Description |\n| --- | --- | --- |\n${rows.join('\n')}`);
+    parts.push(heading('##', 'Fields', 'fields'), `| | Name | Description |\n| --- | --- | --- |\n${rows.join('\n')}`);
   }
-  parts.push(heading('##', 'Detailed Description', 'detailed-description'));
+  parts.push(heading('##', 'Description', 'description'));
   if (d.doc) parts.push(linkNames(d.doc, game, d.name));
   parts.push(code(d.signature), ...relations(file, [d], d.name), definedAt(file, [d]));
   if (d.fields.length) {
-    parts.push(heading('##', 'Field Documentation', 'field-documentation'));
+    parts.push(heading('##', 'Fields in detail', 'fields-in-detail'));
     d.fields.forEach((f, i) => parts.push([heading('###', md(f.name), fieldIds[i]), code(f.type), linkNames(f.doc, game, d.name)].filter(Boolean).join('\n\n')));
   }
   page(`${url.slice(1)}.md`, { title: `${d.kind} ${d.name}`, description: plainText(b), source: file.path }, parts.join('\n\n'));
@@ -990,7 +990,7 @@ function dirPageWrite(dir: string, dirs: string[], files: SourceFile[], guide: P
   page(`${dirPage(dir).slice(1)}/index.mdx`, { title: rel(dir), description: '', source: dir }, parts.join('\n\n'));
 }
 
-// The indexes, as Doxygen's: Data Structures, Data Fields and File Members
+// The index of structures, by first letter; once also Doxygen's Data Fields and File Members
 // (all, functions, variables, typedefs, enumerations, enumerators, macros),
 // each name with the pages it has an entry on. An index longer than
 // INDEX_SPLIT names has a page for each first letter.
@@ -1066,71 +1066,21 @@ function referencePages(game: Game, files: SourceFile[], guides: Map<string, Pla
   for (const { file, d } of structs) structPage(file, d);
   structs.sort((a, b) => a.d.name.localeCompare(b.d.name, 'en', { sensitivity: 'base' }));
   const structEntry = ({ d }: { d: Decl }) => ({ key: d.name, name: `[${code(d.name)}](${structPages.get(d)})`, links: [], brief: linkNames(brief(d.doc), game, d.name) });
-  indexPages(`${root}/structs`, 'Data Structures', `Every structure and union of ${GAME_TITLE[game]}, with its brief`, structs.map(structEntry));
+  indexPages(`${root}/structs`, 'Structures', `Every structure and union of ${GAME_TITLE[game]}, with its brief`, structs.map(structEntry));
   const byLetter = new Map<string, typeof structs>();
   for (const s of structs) byLetter.set(letterOf(s.d.name), [...(byLetter.get(letterOf(s.d.name)) ?? []), s]);
   const letters = [...byLetter.keys()].sort((a, b) => (a === '_' ? 1 : b === '_' ? -1 : a < b ? -1 : 1));
   for (const l of letters) {
     const url = `${root}/structs/${letterSlug(l)}`;
-    page(`${url.slice(1)}/index.md`, { title: `Data Structures: ${letterTitle(l)}`, description: `The structures and unions of ${GAME_TITLE[game]} from ${letterTitle(l)}, with their briefs.` }, indexLines(byLetter.get(l)!.map(structEntry)));
+    page(`${url.slice(1)}/index.md`, { title: `Structures: ${letterTitle(l)}`, description: `The structures and unions of ${GAME_TITLE[game]} from ${letterTitle(l)}, with their briefs.` }, indexLines(byLetter.get(l)!.map(structEntry)));
     meta(url, { title: letterTitle(l), pages: byLetter.get(l)!.map(({ d }) => `[${d.name}](${structPages.get(d)})`) });
   }
-  meta(`${root}/structs`, { title: 'Data Structures', pages: letters.map(letterSlug) });
+  meta(`${root}/structs`, { title: 'Structures', pages: letters.map(letterSlug) });
   // The index of them all is this folder's own page: written beside the
   // folder it would be no part of the sidebar, and open with none.
   const whole = join(content, `${root.slice(1)}/structs.md`);
   if (existsSync(whole)) renameSync(whole, join(content, `${root.slice(1)}/structs/index.md`));
 
-  // Data Fields: every field name, with the structures that have it.
-  const fields = new Map<string, string[]>();
-  for (const { d } of structs) {
-    const used = new Set(RESERVED);
-    for (const f of d.fields) {
-      const base = anchor(f.name.split(', ')[0]) || 'field';
-      let id = base;
-      for (let n = 2; used.has(id); n++) id = `${base}-${n}`;
-      used.add(id);
-      for (const n of f.name.split(', ')) fields.set(n, [...(fields.get(n) ?? []), `[${code(d.name)}](${structPages.get(d)}#${id})`]);
-    }
-  }
-  indexPages(
-    `${root}/fields`,
-    'Data Fields',
-    `Every field of ${GAME_TITLE[game]}'s structures and unions, with the types that have it`,
-    [...fields].map(([n, links]) => ({ key: n, name: code(n), links })),
-  );
-
-  // File Members, by kind: each name with the files it has an entry in.
-  type Kind = 'all' | 'functions' | 'variables' | 'typedefs' | 'enums' | 'enumerators' | 'macros';
-  const members = new Map<Kind, Map<string, string[]>>();
-  const add = (kind: Kind, name: string, link: string) => {
-    for (const k of [kind, 'all'] as Kind[]) {
-      const m = members.get(k) ?? new Map<string, string[]>();
-      m.set(name, [...(m.get(name) ?? []), link]);
-      members.set(k, m);
-    }
-  };
-  const KIND_OF: Partial<Record<Decl['kind'], Kind>> = { function: 'functions', prototype: 'functions', variable: 'variables', typedef: 'typedefs', enum: 'enums', macro: 'macros' };
-  for (const f of files)
-    for (const decls of membersOf(f).values()) {
-      const d = decls[0];
-      if (!hasEntry(f, decls)) continue;
-      const link = `[${code(basename(f.path))}](${urlOf(f, d)})`;
-      if (!d.anon && KIND_OF[d.kind]) add(KIND_OF[d.kind]!, code(d.kind === 'function' || d.kind === 'prototype' ? `${d.name}()` : d.name), link);
-      if (d.kind === 'enum') for (const x of d.fields) add('enumerators', code(x.name), link);
-    }
-  const KINDS: [Kind, string, string][] = [
-    ['all', 'All', 'Every name the files declare'],
-    ['functions', 'Functions', 'Every function'],
-    ['variables', 'Variables', 'Every global and table'],
-    ['typedefs', 'Typedefs', 'Every typedef'],
-    ['enums', 'Enumerations', 'Every named enum'],
-    ['enumerators', 'Enumerators', 'Every enumerator'],
-    ['macros', 'Macros', 'Every macro'],
-  ];
-  for (const [kind, title, what] of KINDS) indexPages(`${root}/globals/${kind}`, title, `${what} of ${GAME_TITLE[game]}, with the files it is in`, [...(members.get(kind) ?? [])].map(([name, links]) => ({ key: name.replace(/[`()]/g, ''), name, links })));
-  page(`${root.slice(1)}/globals/index.md`, { title: 'File Members', description: `Every name the files of ${GAME_TITLE[game]} declare, by kind.` }, KINDS.map(([kind, title]) => `- [${title}](${root}/globals/${kind}): ${members.get(kind)?.size ?? 0} names`).join('\n'));
-  meta(`${root}/globals`, { title: 'File Members', pages: KINDS.map(([kind]) => kind) });
 
   // The File List: every folder and file as a tree, each file with its brief.
   const tree = (dir: string, depth: number): string[] => {
@@ -1150,7 +1100,7 @@ function referencePages(game: Game, files: SourceFile[], guides: Map<string, Pla
   if (sourceGuide && existsSync(readme)) for (const m of readFileSync(readme, 'utf8').matchAll(/^#{2,6} (.+?)(?: \{#[\w-]+\})?$/gm)) moved[headingSlug(m[1].replace(/[`*]/g, ''))] = `${sourceGuide.url}#${headingSlug(m[1].replace(/[`*]/g, ''))}`;
   page(
     `${root.slice(1)}/index.mdx`,
-    { title: 'File List', description: `Every folder and file of ${GAME_TITLE[game]}'s source, with each file's brief.` },
+    { title: 'Files', description: `Every folder and file of ${GAME_TITLE[game]}'s source, with each file's brief.` },
     [
       sourceGuide ? `[${headingOf(`${sourceGuide.key}/README.md`) ?? 'The source'}](${sourceGuide.url}) explains how the folders divide the program.` : '',
       tops.flatMap((d) => tree(d, 0)).join('\n'),
@@ -1160,11 +1110,11 @@ function referencePages(game: Game, files: SourceFile[], guides: Map<string, Pla
       .join('\n\n'),
   );
   meta(root, {
-    title: 'Reference',
+    title: 'Source',
     description: `${GAME_TITLE[game]}'s files, structures and members`,
     root: true,
     pagesIndex: 'index',
-    pages: [`[File List](${root})`, ...tops.map((d) => basename(d)), 'structs', 'fields', 'globals'],
+    pages: [`[Files](${root})`, ...tops.map((d) => basename(d)), 'structs'],
   });
 }
 
@@ -1645,7 +1595,21 @@ function places(files: SourceFile[]) {
     return `## ${md(heading)}\n\n${cards.join('\n')}`;
   });
   page(`${GUIDE}/tbs/places/index.md`, { title: 'Places', description: 'Every place the party can walk around in, and what happens there.' }, `Every place the party can walk around in, in the order the story reaches it, each with a page of its own holding its map and its events. A scene's overlay holds one place or a few that share it; the [Scenes](${siteLink(existsSync(join(repo, 'games/tbs/src/scene/README.md')) ? 'games/tbs/src/scene/README.md' : 'games/tbs/src/map/README.md')}) guide explains how a scene runs and how to find an event in it.\n\n${sections.join('\n\n')}`);
-  write(join(content, GUIDE, 'tbs/places/meta.json'), JSON.stringify({ title: 'Places', pages: pages.map((p) => p.slug) }, null, 2) + '\n');
+  // The sidebar: a town or dungeon of several rooms is a folder of them,
+  // named as its section here is, and a place alone is its page. The folder's
+  // name is in parentheses, which keeps it out of its pages' addresses.
+  const dir = join(content, GUIDE, 'tbs/places');
+  const listed = runs.map((run, i) => {
+    // Two scenes of one overlay may share a page.
+    const slugs = [...new Set(run.map((p) => p.slug))];
+    if (slugs.length === 1) return slugs[0];
+    const folder = `(${String(i).padStart(3, '0')}-${headingOfRun(run).toLowerCase().replace(/[^a-z0-9]+/g, '-')})`;
+    mkdirSync(join(dir, folder), { recursive: true });
+    for (const slug of slugs) renameSync(join(dir, `${slug}.md`), join(dir, folder, `${slug}.md`));
+    write(join(dir, folder, 'meta.json'), JSON.stringify({ title: headingOfRun(run), pages: slugs }, null, 2) + '\n');
+    return folder;
+  });
+  write(join(dir, 'meta.json'), JSON.stringify({ title: 'Places', pages: listed }, null, 2) + '\n');
 }
 
 // The English catalog's messages by symbol, each as the pages the player

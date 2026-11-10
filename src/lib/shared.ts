@@ -28,7 +28,7 @@ export function getPageMarkdownUrl(page: { slugs: string[]; locale?: string }) {
 // by their titles and the names they document.
 const LISTS = /^\/(tbs|tla)\/source(\/|#|$)/;
 // The reference's indexes, which only repeat the names other pages document.
-const INDEXES = /^\/(tbs|tla)\/source\/(structs(\/([a-z]|other))?\/?$|fields(\/|$)|globals(\/|$))/;
+const INDEXES = /^\/(tbs|tla)\/source\/structs(\/([a-z]|other))?\/?$/;
 
 export function isList(url: string) {
   return LISTS.test(url);

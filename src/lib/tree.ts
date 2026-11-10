@@ -1,13 +1,18 @@
 import type { Folder, Item, Node, Root, Separator } from 'fumadocs-core/page-tree';
-import { isIndex, isList } from './shared';
+import { isList } from './shared';
 
-// The sidebar, shaped as Fumadocs' own docs shape theirs. scripts/content.ts
-// writes the guide and each game's reference as root folders, the shape
-// Doxygen gives them; here each game is a tab of its own instead (The Broken
-// Seal, and The Lost Age once it has pages), and in a tab its pages are short
-// lists under headings: the pages about the whole project, the game's
-// systems and places, its source, and the indexes. Every folder opens where
-// it is, and stays closed until a reader is in it.
+// The sidebar, shaped as Fumadocs' own docs shape theirs: a few tabs, and in
+// each a short list under headings. scripts/content.ts writes the guide and
+// each game's reference as root folders; here a game's pages become three
+// tabs. Guide holds the pages about the project and the game's four
+// divisions, every page in view under its division's heading. Places holds
+// the rooms, a folder for each town or dungeon in the order the story
+// reaches it. Source holds the files and structures. A page is in one tab
+// only, as fumadocs finds the open page by its address alone.
+//
+// With one game the tabs are the whole switcher. A second game's tabs would
+// repeat these three: give each game's folder a root type of its own then
+// (`root: 'game'`), which fumadocs draws as a second dropdown.
 
 // Only what the sidebar draws, as every page carries the whole tree: a page
 // needs no $id, which fumadocs reads only of folders.
@@ -46,34 +51,43 @@ function tabs(tree: Root): Node[] {
     return reference ? [{ game: node, reference }] : [];
   });
   if (!games.length) return guide.children;
-  // The pages about the whole project, the introduction and building
-  // Alchemy, are in every game's tab.
+  // The pages about the whole project: the introduction and building Alchemy.
   const project = guide.children.filter((n) => !games.some((g) => g.game === n));
-  return games.map(({ game, reference }) => {
+  return games.flatMap(({ game, reference }, at) => {
     const front = game.index!.url;
+    const isAt = (n: Node, url: string) => (n.type === 'page' ? n.url : n.type === 'folder' ? n.index?.url : undefined) === url;
     // The source's own guide, its README, is at /<game>/code
-    // (scripts/content.ts), and opens the game's Source.
-    const code = game.children.filter((n) => n.type === 'page' && n.url === `${front}/code`);
-    const own = game.children.filter((n) => !code.includes(n));
-    const indexes = reference.children.filter((n) => n.type === 'folder' && n.index && isIndex(n.index.url));
-    const files = reference.children.filter((n) => !indexes.includes(n));
-    return {
-      ...game,
+    // (scripts/content.ts), and opens the Source tab.
+    const code = game.children.filter((n) => isAt(n, `${front}/code`));
+    const places = game.children.find((n): n is Folder => n.type === 'folder' && isAt(n, `${front}/places`));
+    // A division is a folder with a page of its own and its folders' guides
+    // inside; what is left are the pages every division shares.
+    const divisions = game.children.filter((n): n is Folder => n.type === 'folder' && n !== places && !!n.index);
+    const shared = game.children.filter((n) => n !== places && !code.includes(n) && !divisions.includes(n as Folder));
+    const guideTab: Folder = {
+      ...guide,
+      $id: `${game.$id}:guide`,
       root: true,
+      name: 'Guide',
+      description: 'How the game works, division by division',
       children: [
-        heading('Introduction'),
-        ...project.slice(0, 1),
+        // The project's pages only once, in the first game's tab.
+        ...(at === 0 ? project.slice(0, 1) : []),
         game.index!,
-        ...project.slice(1),
-        heading('The game'),
-        ...own,
-        heading('Source'),
-        ...code,
-        ...files,
-        heading('Indexes'),
-        ...indexes,
+        ...(at === 0 ? project.slice(1) : []),
+        ...divisions.flatMap((d) => [heading(String(d.name)), { ...d.index!, name: 'Overview' }, ...d.children]),
+        ...(shared.length ? [heading('Reference'), ...shared] : []),
       ],
-    } satisfies Folder;
+    };
+    const placesTab: Folder[] = places ? [{ ...places, root: true, description: 'Every town and dungeon, room by room' }] : [];
+    const sourceTab: Folder = {
+      ...reference,
+      root: true,
+      name: 'Source',
+      description: 'The files and structures, with their comments',
+      children: [...code, ...reference.children],
+    };
+    return [guideTab, ...placesTab, sourceTab];
   });
 }
 
@@ -82,9 +96,9 @@ const made = new WeakMap<Root, Root>();
 
 export function sidebarTree(tree: Root): Root {
   let out = made.get(tree);
-  // The reference lists its files, structures and index pages by name, as
-  // links, which leaves their pages out of the tree: fumadocs keeps those in
-  // a fallback tree, which no page needs sent.
+  // The reference lists its files and structures by name, as links, which
+  // leaves their pages out of the tree: fumadocs keeps those in a fallback
+  // tree, which no page needs sent.
   if (!out) made.set(tree, (out = { type: 'root', $id: tree.$id, name: tree.name, children: slim(tabs(tree)) }));
   return out;
 }
