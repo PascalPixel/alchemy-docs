@@ -11,11 +11,6 @@
     { "source": "/tbs/source/globals", "destination": "/tbs/source", "permanent": true },
     { "source": "/tbs/source/globals/:path*", "destination": "/tbs/source", "permanent": true },
     {
-      "source": "/tla",
-      "destination": "/",
-      "permanent": false
-    },
-    {
       "source": "/tbs/user_interface",
       "destination": "/tbs/interface",
       "permanent": true

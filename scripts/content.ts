@@ -51,9 +51,10 @@ const sceneIds = new Map(
 const sceneSymbol = (name: string) => (sceneTable('tbs').endsWith('scenes.s') ? `SceneId_${name}` : `MapId_${name}`);
 
 type Game = 'tbs' | 'tla';
-// The games with pages. The Lost Age is still being decompiled: it has one
-// page saying so (content/docs/tla/index.mdx) until it is done.
-const GAMES: Game[] = ['tbs'];
+// The games with pages. The Lost Age has no front page or division pages of
+// its own yet: its front page is written here (frontPageStub) and its folder
+// guides sit under it, until Alchemy has games/tla/README.md.
+const GAMES: Game[] = ['tbs', 'tla'];
 const ROOTS = ['src', 'include'];
 // A folder whose C was larger than this once had a page per file, and a
 // smaller one a single page for all its files, whose old anchors still lead
@@ -116,7 +117,12 @@ const ICONS: Record<string, string> = {
   '/tbs/glossary': 'BookA',
   '/start': 'Hammer',
   '/tbs/source': 'Braces',
+  '/tla': 'Anchor',
+  '/tla/source': 'Braces',
 };
+// A folder guide of a game without division pages (/tla/battle) takes the
+// icon of the same folder's guide in The Broken Seal.
+const folderIcon = (url: string) => Object.entries(ICONS).find(([k]) => /^\/tbs\/\w+\/\w+$/.test(k) && k.endsWith(`/${url.split('/')[2]}`))?.[1];
 const INTRODUCTION_ICON = 'House';
 const GUIDE_ICON = 'BookOpen';
 // The pictures a section page's card shows where its first recording would
@@ -155,11 +161,13 @@ function still(body: string): string | undefined {
 // first recording's.
 function page(path: string, front: Record<string, string>, body: string) {
   if (front.description) front = { ...front, description: gameNames(front.description) };
-  body = gameNames(openQuestions(body));
+  // A C `!` before a name that became a link (!GameFlag_Test) is not an image.
+  body = gameNames(openQuestions(body)).replace(/(?<!\\)!(?=\[`)/g, '\\!');
   const url = `/${path.replace(/^\([^/)]*\)\//, '').replace(/\.mdx?$/, '').replace(/(^|\/)index$/, '')}`.replace(/(.)\/$/, '$1');
   if (path.startsWith(`${GUIDE}/`)) front = { ...front, image: card(url) || front.image || still(body) || '' };
   pagesWritten.add(url);
-  if (ICONS[url]) front = { ...front, icon: ICONS[url] };
+  const icon = ICONS[url] ?? (path.startsWith(`${GUIDE}/`) && /^\/(?!tbs\/)\w+\/\w+$/.test(url) ? folderIcon(url) : undefined);
+  if (icon) front = { ...front, icon };
   if (front.source && changed.has(front.source)) front = { ...front, lastModified: changed.get(front.source)! };
   const head = Object.entries(front)
     .filter(([, v]) => v)
@@ -558,7 +566,9 @@ function placeStructs(game: Game, files: SourceFile[]) {
     if (slugs.has(d)) continue;
     const own = `${base}-${kebab(basename(f.path).replace(/\.\w+$/, ''))}`;
     let slug = own;
-    for (let n = 2; used.has(slug); n++) slug = `${own}-${n}`;
+    // Lettered, not numbered: the search index numbers a page's sections as
+    // <page>-<n>, which a page named <page>-2 would collide with.
+    for (let n = 2; used.has(slug); n++) slug = `${own}-${n.toString(36).replace(/\d/g, (c) => 'abcdefghij'[+c])}`;
     used.add(slug);
     slugs.set(d, slug);
   }
@@ -767,6 +777,9 @@ function reachedIds(d: Decl, at: string): { ids: number[]; field: number[] } {
 // The recordings a declaration's reach line names, in its order, each
 // captioned by the ability's name.
 function recordingsOf(file: SourceFile, d: Decl): string {
+  // The recordings and the ability table they are matched against are The
+  // Broken Seal's.
+  if (file.game !== 'tbs') return '';
   if (where.get(file.game)!.get(d.name)?.decl !== d) return '';
   const { ids, field } = reachedIds(d, `${file.path}:${d.line} ${d.name}`);
   for (const id of [...ids, ...field]) if (!handlerOf.has(id)) handlerOf.set(id, urlOf(file, d));
@@ -1249,14 +1262,17 @@ function arrange(): Placed {
   const rootWants = [...GAMES.map((g) => `games/${g}/README.md`), 'INSTALL.md'];
   const rootLinks = linksOf('games/README.md', 'last').filter((k) => rootWants.includes(k));
   for (const k of rootWants) if (!rootLinks.includes(k) && existsSync(join(repo, k))) notes.push(`games/README.md doesn't link ${k}: placed after its links`);
-  for (const k of [...rootLinks, ...rootWants.filter((k) => !rootLinks.includes(k) && existsSync(join(repo, k)))]) {
+  // A game with no front page in Alchemy still has its place (frontPageStub).
+  for (const k of [...rootLinks, ...rootWants.filter((k) => !rootLinks.includes(k) && (isFrontPage(k) || existsSync(join(repo, k))))]) {
     add(root, k, isFrontPage(k) ? 'game' : 'fixed', fixedUrl(k) ?? `/${k.split('/')[1]}`);
   }
   // What each front page places: its section pages, places and source.
   for (const game of root.children.filter((n) => n.kind === 'game')) {
     const g = game.key.split('/')[1] as Game;
-    const wants = [...sectionPages(g), sceneTable(g), `games/${g}/unused`, `games/${g}/src`];
-    const links = linksOf(game.key, 'last').filter((k) => wants.includes(k));
+    // The places, the Unused page and the source's guide only where the game
+    // has them: a fixed address, or a README for its src folder.
+    const wants = [...sectionPages(g), sceneTable(g), `games/${g}/unused`, `games/${g}/src`].filter((k) => k.endsWith('.md') || fixedUrl(k) || existsSync(join(repo, k, 'README.md')));
+    const links = existsSync(join(repo, game.key)) ? linksOf(game.key, 'last').filter((k) => wants.includes(k)) : [];
     for (const k of wants) if (!links.includes(k) && (fixedUrl(k) || existsSync(join(repo, k)))) notes.push(`${game.key} doesn't link ${k}: placed after its links`);
     for (const k of [...links, ...wants.filter((k) => !links.includes(k) && (fixedUrl(k) || existsSync(join(repo, k))))]) {
       if (fixedUrl(k)) add(game, k, 'fixed', fixedUrl(k)!);
@@ -1272,13 +1288,20 @@ function arrange(): Placed {
     for (const whole of [true, false])
       for (const section of sections)
         for (const k of linksOf(section.key, 'first', whole)) if (guides.includes(k) && !placed.has(k)) add(section, k, 'guide', `${section.url}/${basename(dirname(k))}`);
+    // A game with no division pages has its folder guides under its front
+    // page, in the order the games before it arranged the same folders.
+    if (!sections.length) {
+      const order = [...placed.values()].filter((p) => p.kind === 'guide').map((p) => basename(dirname(p.key)));
+      const at = (k: string) => order.indexOf(basename(dirname(k))) + 1 || order.length + 1;
+      for (const k of [...guides].sort((a, b) => at(a) - at(b))) add(game, k, 'guide', `${game.url}/${basename(dirname(k))}`);
+    }
   }
   return root;
 }
 
 // The derived tree, as the build prints it.
 function printTree(node: Placed, depth = 0): string[] {
-  const title = node.kind === 'root' ? ROOT_LABEL : (headingOf(node.key) ?? headingOf(`${node.key}/README.md`) ?? (/(?:scenes|map_headers)\.s$/.test(node.key) ? 'Places' : node.key.endsWith('/unused') ? 'Unused' : node.key));
+  const title = node.kind === 'root' ? ROOT_LABEL : (headingOf(node.key) ?? headingOf(`${node.key}/README.md`) ?? (node.kind === 'game' ? GAME_TITLE[node.key.split('/')[1] as Game] : undefined) ?? (/(?:scenes|map_headers)\.s$/.test(node.key) ? 'Places' : node.key.endsWith('/unused') ? 'Unused' : node.key));
   return [`${'  '.repeat(depth)}${title}  ${node.url}`, ...node.children.flatMap((c) => printTree(c, depth + 1))];
 }
 function headingOf(key: string): string | undefined {
@@ -1345,7 +1368,9 @@ function prose(source: string, target: string, extra = '') {
     return `![${alt}](${src.replace(/^https:\/\/alchemy\.pascalpixel\.com\//, '/')})`;
   });
   const description = firstSentence(text);
-  text = linkProse(codeProse(text, 'tbs'), 'tbs');
+  // A page's code names link within its own game.
+  const game = GAMES.find((g) => source.startsWith(`games/${g}/`)) ?? 'tbs';
+  text = linkProse(codeProse(text, game), game);
   // A Markdown image of the site's own is served from its root too, so the
   // build reads it from public/ rather than from the live site.
   text = text.replace(/(!\[[^\]]*\]\()https:\/\/alchemy\.pascalpixel\.com\//g, '$1/');
@@ -1490,10 +1515,27 @@ function arrangedPages(root: Placed, files: Map<Game, SourceFile[]>) {
   const walkTree = (n: Placed): Placed[] => [n, ...n.children.flatMap(walkTree)];
   for (const node of walkTree(root)) {
     const source = /^games\/\w+\/src$/.test(node.key) ? `${node.key}/README.md` : node.key;
+    if (node.kind === 'game' && !existsSync(join(repo, source))) frontPageStub(node);
     if (!source.endsWith('.md') || !existsSync(join(repo, source))) continue;
     const extra = node.kind === 'guide' ? guideFiles(node.key, files.get(node.key.split('/')[1] as Game) ?? []) : '';
     prose(source, fileOf(node), extra);
   }
+}
+
+// The front page of a game that has none in Alchemy yet: what the game is,
+// and where its pages are.
+function frontPageStub(node: Placed) {
+  const game = node.key.split('/')[1] as Game;
+  const first = placed.get(`games/${GAMES[0]}/README.md`);
+  const body = [
+    `Golden Sun: ${GAME_TITLE[game]} builds byte for byte from the source here, in all six languages.`,
+    `Its guide is not written yet. Each folder of its code has a short page saying what it holds and what differs from ${first ? `[${GAME_TITLE[GAMES[0]]}](${first.url})` : GAME_TITLE[GAMES[0]]}, whose guide explains how the code the two games share works. Every file and structure is in [Source](${reference(game)}).`,
+    node.children
+      .filter((c) => c.kind === 'guide')
+      .map((c) => `- [${headingOf(c.key) ?? basename(dirname(c.key))}](${c.url})`)
+      .join('\n'),
+  ];
+  page(fileOf(node), { title: GAME_TITLE[game], description: body[0] }, body.filter(Boolean).join('\n\n'));
 }
 
 // The sidebar: the guide's tab, a meta.json for every folder the arrangement
@@ -1521,6 +1563,7 @@ function checkArrangement() {
     for (const k of guideReadmes(game)) {
       const node = placed.get(k);
       if (!node) failures.push(`${k} is placed nowhere: no section page of ${game} links it`);
+      else if (node.parent?.kind === 'game' && node.parent.key.startsWith(`games/${game}/`) && !sectionPages(game).length) continue;
       else if (node.parent?.kind !== 'section' || !node.parent.key.startsWith(`games/${game}/`)) failures.push(`${k} sits under ${node.parent?.key}, not a section page of ${game}`);
     }
   for (const url of Object.keys(CARDS)) if (!pagesWritten.has(url)) failures.push(`the card for ${url} names a page the build doesn't write`);

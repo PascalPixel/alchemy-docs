@@ -12,9 +12,11 @@ import { isList } from './shared';
 // reaches it. Source holds the files and structures. A page is in one tab
 // only, as fumadocs finds the open page by its address alone.
 //
-// With one game the tabs are the whole switcher. A second game's tabs would
-// repeat these three: give each game's folder a root type of its own then
-// (`root: 'game'`), which fumadocs draws as a second dropdown.
+// With one game the tabs are the whole switcher. With two, each game is a
+// root folder holding its tabs, which are root folders of a type of their
+// own (`root: 'tab'`): fumadocs draws the two as one control, the game above
+// its tabs, and flips a page to the same page of the other game where that
+// game has it.
 
 // Only what the sidebar draws, as every page carries the whole tree: a page
 // needs no $id, which fumadocs reads only of folders.
@@ -31,7 +33,7 @@ function slim(nodes: Node[]): Node[] {
       icon: node.icon,
       // A key left undefined would still be sent, so only a tab has the
       // tab switcher's name, icon and description.
-      ...(node.root && { root: true, description: node.description }),
+      ...(node.root && { root: node.root, description: node.description }),
       index: node.index && item(node.index),
       children: slim(node.children),
     } satisfies Folder;
@@ -39,6 +41,10 @@ function slim(nodes: Node[]): Node[] {
 }
 
 const heading = (name: string): Separator => ({ type: 'separator', name });
+// The type of a game's tabs when the games are roots themselves.
+const TAB = 'tab';
+// What the switcher says under each game's name, by its front page.
+const GAME_NOTE: Record<string, string> = { '/tbs': 'The first game', '/tla': 'Its sequel' };
 
 // Every item has an icon. The guide's pages are named theirs in
 // scripts/content.ts; the places and the source give each item without one
@@ -77,7 +83,9 @@ function tabs(tree: Root): Node[] {
   if (!games.length) return guide.children;
   // The pages about the whole project: the introduction and building Alchemy.
   const project = guide.children.filter((n) => !games.some((g) => g.game === n));
-  return games.flatMap(({ game, reference }, at) => {
+  // A game's tabs are roots of their own type inside the game's root.
+  const root = games.length > 1 ? TAB : true;
+  const made = games.map(({ game, reference }, at) => {
     const front = game.index!.url;
     const isAt = (n: Node, url: string) => (n.type === 'page' ? n.url : n.type === 'folder' ? n.index?.url : undefined) === url;
     // The source's own guide, its README, is at /<game>/code
@@ -91,7 +99,10 @@ function tabs(tree: Root): Node[] {
     const guideTab: Folder = {
       ...guide,
       $id: `${game.$id}:guide`,
-      root: true,
+      root,
+      // The tab, and the game in the switcher, open at the game's front
+      // page, which is also in the list below.
+      index: game.index,
       name: 'Guide',
       description: 'How the game works, division by division',
       children: [
@@ -100,19 +111,32 @@ function tabs(tree: Root): Node[] {
         game.index!,
         ...(at === 0 ? project.slice(1) : []),
         ...divisions.flatMap((d) => [heading(String(d.name)), { ...d.index!, name: 'Overview' }, ...d.children]),
-        ...(shared.length ? [heading('Reference'), ...shared] : []),
+        // A game with no divisions yet lists its pages as they are.
+        ...(shared.length ? [...(divisions.length ? [heading('Reference')] : []), ...shared] : []),
       ],
     };
-    const placesTab: Folder[] = places ? [{ ...places, root: true, description: 'Every town and dungeon, room by room', children: withIcons(places.children, placeKind) }] : [];
+    const placesTab: Folder[] = places ? [{ ...places, root, description: 'Every town and dungeon, room by room', children: withIcons(places.children, placeKind) }] : [];
     const sourceTab: Folder = {
       ...reference,
-      root: true,
+      root,
       name: 'Source',
       description: 'The files and structures, with their comments',
       children: [...code, ...withIcons(reference.children, sourceKind)],
     };
-    return [guideTab, ...placesTab, sourceTab];
+    return { game, tabs: [guideTab, ...placesTab, sourceTab] };
   });
+  if (made.length === 1) return made[0].tabs;
+  return made.map(
+    ({ game, tabs }): Folder => ({
+      type: 'folder',
+      $id: `${game.$id}:game`,
+      root: true,
+      name: game.name,
+      icon: game.icon ?? game.index?.icon,
+      description: GAME_NOTE[game.index!.url],
+      children: tabs,
+    }),
+  );
 }
 
 // Every page is sent the same sidebar, made once.
