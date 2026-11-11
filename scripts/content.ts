@@ -26,6 +26,7 @@ import { basename, dirname, join, normalize, relative } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { Language, type Node, Parser } from 'web-tree-sitter';
+import { icons } from 'lucide-react';
 import { readFetched, readManifest, renderPath, stillPath, type Entry } from '../src/lib/renders';
 import { makeStills } from '../src/lib/stills';
 
@@ -84,15 +85,31 @@ const changed = (() => {
 })();
 // The URL of every page written, for the redirects' check.
 const pagesWritten = new Set<string>();
-// The sidebar's icons (lucide's names) for the top pages and the tabs; a
-// folder takes its index page's. checkArrangement fails the build when a
-// page here is no longer written, so a renamed page cannot lose its icon.
+// The sidebar's icons (lucide's names) for the top pages, the tabs and the
+// guide's pages; a folder takes its index page's, and the places' rooms and
+// the source's files take theirs by kind (src/lib/tree.ts). checkArrangement
+// fails the build when a page here is no longer written, so a renamed page
+// cannot lose its icon.
 const ICONS: Record<string, string> = {
   '/tbs': 'Sun',
   '/tbs/system': 'Cpu',
+  '/tbs/system/system': 'Settings2',
+  '/tbs/system/gamepak': 'Gamepad2',
+  '/tbs/system/sound': 'EighthNotes',
+  '/tbs/system/graphics': 'Image',
+  '/tbs/system/debug': 'Bug',
   '/tbs/battle': 'Swords',
+  '/tbs/battle/battle': 'Sword',
+  '/tbs/battle/game': 'Scale',
+  '/tbs/battle/battle_effect': 'Sparkles',
   '/tbs/field': 'Map',
+  '/tbs/field/field': 'Footprints',
+  '/tbs/field/scene': 'Clapperboard',
+  '/tbs/field/map': 'Grid3x3',
   '/tbs/interface': 'AppWindow',
+  '/tbs/interface/window': 'PanelsTopLeft',
+  '/tbs/interface/menu': 'List',
+  '/tbs/interface/shop': 'Store',
   '/tbs/places': 'MapPin',
   '/tbs/unused': 'Archive',
   '/tbs/code': 'FileCode',
@@ -1496,7 +1513,7 @@ function arrangedSidebar(root: Placed) {
 
 // The checks the build fails on: every folder README of a game with pages
 // sits under one of that game's section pages, every sidebar icon names a
-// page the build writes, and every redirect leads to a page the build writes,
+// page the build writes and is one of lucide's, and every redirect leads to a page the build writes,
 // which no redirect leaves from.
 function checkArrangement() {
   const failures: string[] = [];
@@ -1508,6 +1525,9 @@ function checkArrangement() {
     }
   for (const url of Object.keys(CARDS)) if (!pagesWritten.has(url)) failures.push(`the card for ${url} names a page the build doesn't write`);
   for (const url of Object.keys(ICONS)) if (!pagesWritten.has(url)) failures.push(`the sidebar icon for ${url} names a page the build doesn't write`);
+  // fumadocs finds an icon by its name in lucide's map, which leaves out the
+  // old names lucide still exports (Music, now EighthNotes).
+  for (const [url, name] of [...Object.entries(ICONS), ['/', INTRODUCTION_ICON], ['the guide', GUIDE_ICON]]) if (!(name in icons)) failures.push(`the sidebar icon for ${url}, ${name}, is not a lucide icon`);
   for (const r of redirects) {
     const to = r.destination.replace(/#.*$/, '');
     // A redirect between renders (an old folder name) leads into the store.

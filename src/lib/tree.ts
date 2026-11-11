@@ -1,4 +1,6 @@
 import type { Folder, Item, Node, Root, Separator } from 'fumadocs-core/page-tree';
+import { createElement } from 'react';
+import { TreeIcon, type TreeIconKind } from '@/components/tree-icon';
 import { isList } from './shared';
 
 // The sidebar, shaped as Fumadocs' own docs shape theirs: a few tabs, and in
@@ -37,6 +39,28 @@ function slim(nodes: Node[]): Node[] {
 }
 
 const heading = (name: string): Separator => ({ type: 'separator', name });
+
+// Every item has an icon. The guide's pages are named theirs in
+// scripts/content.ts; the places and the source give each item without one
+// the icon of its kind, drawn in the browser (src/components/tree-icon.tsx).
+function withIcons(nodes: Node[], kind: (node: Item | Folder, depth: number) => TreeIconKind, depth = 0): Node[] {
+  return nodes.map((node) => {
+    if (node.type === 'separator') return node;
+    const icon = node.icon ?? createElement(TreeIcon, { kind: kind(node, depth) });
+    return node.type === 'folder' ? { ...node, icon, children: withIcons(node.children, kind, depth + 1) } : { ...node, icon };
+  });
+}
+// A place is a town or dungeon, a folder of rooms, or a single room of its own.
+const placeKind = (node: Item | Folder, depth: number): TreeIconKind => (node.type === 'folder' || depth === 0 ? 'place' : 'room');
+// The source's pages are named for their files (motion-c, battle-h) or are
+// structures; the list of files leads it.
+function sourceKind(node: Item | Folder): TreeIconKind {
+  if (node.type === 'folder') return 'folder';
+  if (node.url.endsWith('-c')) return 'c';
+  if (node.url.endsWith('-h')) return 'h';
+  if (/\/structs\//.test(node.url)) return 'structure';
+  return 'list';
+}
 
 function tabs(tree: Root): Node[] {
   const roots = tree.children.filter((n): n is Folder => n.type === 'folder' && !!n.root);
@@ -79,13 +103,13 @@ function tabs(tree: Root): Node[] {
         ...(shared.length ? [heading('Reference'), ...shared] : []),
       ],
     };
-    const placesTab: Folder[] = places ? [{ ...places, root: true, description: 'Every town and dungeon, room by room' }] : [];
+    const placesTab: Folder[] = places ? [{ ...places, root: true, description: 'Every town and dungeon, room by room', children: withIcons(places.children, placeKind) }] : [];
     const sourceTab: Folder = {
       ...reference,
       root: true,
       name: 'Source',
       description: 'The files and structures, with their comments',
-      children: [...code, ...reference.children],
+      children: [...code, ...withIcons(reference.children, sourceKind)],
     };
     return [guideTab, ...placesTab, sourceTab];
   });
