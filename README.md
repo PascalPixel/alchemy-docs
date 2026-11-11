@@ -2,7 +2,7 @@
 
 The documentation site for [Alchemy](https://github.com/PascalPixel/alchemy), [alchemy.pascalpixel.com](https://alchemy.pascalpixel.com), built with [Fumadocs](https://fumadocs.dev) on [Waku](https://waku.gg). Its pages are written from Alchemy's own READMEs and the `///` comments in its C, and its recordings of the game are kept in a Vercel Blob store.
 
-![The Battle effects page: Isaac summons Judgment above the page's map of the three functions that play an effect, beside the guide's sidebar](.github/screenshot.png)
+![The Interface page: Isaac talks to Garet's sister in Vale above the page's map of what each button opens, beside the guide's sidebar](.github/screenshot.png)
 
 ## Build
 
