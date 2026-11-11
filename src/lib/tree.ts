@@ -78,7 +78,8 @@ function tabs(tree: Root): Node[] {
   const games = guide.children.flatMap((node) => {
     if (node.type !== 'folder' || !node.index) return [];
     const reference = references.find((r) => r.index?.url === `${node.index!.url}/source`);
-    return reference ? [{ game: node, reference }] : [];
+    // A game whose source has no pages yet has no Source tab.
+    return [{ game: node, reference }];
   });
   if (!games.length) return guide.children;
   // The pages about the whole project: the introduction and building Alchemy.
@@ -116,14 +117,10 @@ function tabs(tree: Root): Node[] {
       ],
     };
     const placesTab: Folder[] = places ? [{ ...places, root, description: 'Every town and dungeon, room by room', children: withIcons(places.children, placeKind) }] : [];
-    const sourceTab: Folder = {
-      ...reference,
-      root,
-      name: 'Source',
-      description: 'The files and structures, with their comments',
-      children: [...code, ...withIcons(reference.children, sourceKind)],
-    };
-    return { game, tabs: [guideTab, ...placesTab, sourceTab] };
+    const sourceTab: Folder[] = reference
+      ? [{ ...reference, root, name: 'Source', description: 'The files and structures, with their comments', children: [...code, ...withIcons(reference.children, sourceKind)] }]
+      : [];
+    return { game, tabs: [guideTab, ...placesTab, ...sourceTab] };
   });
   if (made.length === 1) return made[0].tabs;
   return made.map(

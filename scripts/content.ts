@@ -55,6 +55,11 @@ type Game = 'tbs' | 'tla';
 // its own yet: its front page is written here (frontPageStub) and its folder
 // guides sit under it, until Alchemy has games/tla/README.md.
 const GAMES: Game[] = ['tbs', 'tla'];
+// The games whose source has pages of its own (/tbs/source). The Lost Age's
+// code is still one small file a routine, which would be eight thousand
+// pages, more than the site's build has memory for: its guides link its
+// files on GitHub until they are gathered as The Broken Seal's are.
+const REFERENCED: Game[] = ['tbs'];
 const ROOTS = ['src', 'include'];
 // A folder whose C was larger than this once had a page per file, and a
 // smaller one a single page for all its files, whose old anchors still lead
@@ -118,7 +123,6 @@ const ICONS: Record<string, string> = {
   '/start': 'Hammer',
   '/tbs/source': 'Braces',
   '/tla': 'Anchor',
-  '/tla/source': 'Braces',
 };
 // A folder guide of a game without division pages (/tla/battle) takes the
 // icon of the same folder's guide in The Broken Seal.
@@ -1325,7 +1329,7 @@ function siteLink(path: string): string {
   const node = placed.get(clean);
   if (node) return node.url;
   const m = clean.match(/^games\/(tbs|tla)\/((?:src|include)(?:\/.*)?)$/);
-  if (m && GAMES.includes(m[1] as Game) && existsSync(join(repo, clean))) {
+  if (m && REFERENCED.includes(m[1] as Game) && existsSync(join(repo, clean))) {
     if (/\.[ch]$/.test(clean)) return pageOf(clean);
     if (statSync(join(repo, clean)).isDirectory() && walk(clean).length) return `/${m[1]}/source/${m[2]}`;
   }
@@ -1529,7 +1533,7 @@ function frontPageStub(node: Placed) {
   const first = placed.get(`games/${GAMES[0]}/README.md`);
   const body = [
     `Golden Sun: ${GAME_TITLE[game]} builds byte for byte from the source here, in all six languages.`,
-    `Its guide is not written yet. Each folder of its code has a short page saying what it holds and what differs from ${first ? `[${GAME_TITLE[GAMES[0]]}](${first.url})` : GAME_TITLE[GAMES[0]]}, whose guide explains how the code the two games share works. Every file and structure is in [Source](${reference(game)}).`,
+    `Its guide is not written yet. Each folder of its code has a short page saying what it holds and what differs from ${first ? `[${GAME_TITLE[GAMES[0]]}](${first.url})` : GAME_TITLE[GAMES[0]]}, whose guide explains how the code the two games share works. Its files are in [the source on GitHub](${github}/games/${game}/src).`,
     node.children
       .filter((c) => c.kind === 'guide')
       .map((c) => `- [${headingOf(c.key) ?? basename(dirname(c.key))}](${c.url})`)
@@ -1544,7 +1548,7 @@ function frontPageStub(node: Placed) {
 function arrangedSidebar(root: Placed) {
   const meta = (folder: string, data: object) => write(join(content, folder, 'meta.json'), JSON.stringify(data, null, 2) + '\n');
   const pagesOf = (node: Placed) => node.children.map((c) => relativeTo(folderOf(node), fileOf(c).replace(/(\/index)?\.md$/, '')));
-  meta('.', { pages: [GUIDE, ...GAMES.map((g) => reference(g).slice(1))] });
+  meta('.', { pages: [GUIDE, ...REFERENCED.map((g) => reference(g).slice(1))] });
   meta(GUIDE, { title: 'Guide', icon: GUIDE_ICON, description: 'How the games work, system by system and place by place', root: true, pagesIndex: 'index', pages: [`[${INTRODUCTION_ICON}][${ROOT_LABEL}](/)`, ...pagesOf(root)] });
   const walkTree = (n: Placed): Placed[] => [n, ...n.children.flatMap(walkTree)];
   for (const node of walkTree(root)) {
@@ -2580,7 +2584,7 @@ rmSync(content, { recursive: true, force: true });
 
 const all = new Map<Game, SourceFile[]>();
 for (const game of GAMES) {
-  const files = ROOTS.flatMap((r) => walk(`games/${game}/${r}`)).map((p) => readFile(p, game));
+  const files = REFERENCED.includes(game) ? ROOTS.flatMap((r) => walk(`games/${game}/${r}`)).map((p) => readFile(p, game)) : [];
   all.set(game, files);
   filesOf.set(game, files);
   // The folders that once had a page per file, for the old anchors of the
@@ -2645,7 +2649,7 @@ console.log(`arrangement:\n${printTree(site).map((l) => `  ${l}`).join('\n')}`);
 for (const n of notes) console.log(`  ${n}`);
 arrangedPages(site, all);
 recordings.load();
-for (const game of GAMES) referencePages(game, all.get(game)!, placed);
+for (const game of REFERENCED) referencePages(game, all.get(game)!, placed);
 // What the reach lines leave out: recordings no line names, and names or
 // groups that match no row.
 const orphans = recordings.get().filter((r) => !placedRecordings.has(int(r.ability)));
