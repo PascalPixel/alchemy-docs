@@ -175,15 +175,26 @@ img.render {
     background: var(--color-fd-muted);
     image-rendering: pixelated;
 }
+/* A render is framed as the site frames its page, lighter: a rounded band of
+   pink-orange around it, drawn outside it so the picture keeps its size and
+   its pixels stay whole. */
+img.render {
+    border-radius: 8px;
+    outline: 5px solid hsl(6, 66%, 83%);
+}
+.dark img.render {
+    outline-color: hsl(6, 40%, 24%);
+}
 /* The take-apart pictures with white canvases glare on the dark theme: there
-   they are framed and dimmed a little. */
+   they are dimmed a little. */
 .dark img.render[src*="/guides/"][src*=".png"] {
-    border: 1px solid var(--color-fd-border);
     filter: url(#alchemy-lit) brightness(0.88);
 }
-/* The enlarged picture (fumadocs' Lightbox) keeps hard pixels too. */
+/* The enlarged picture (fumadocs' Lightbox) keeps hard pixels too, and
+   needs no frame. */
 dialog img.render {
     image-rendering: pixelated;
+    outline: none;
 }
 
 /* The code's names run long (Event_LeaveToValeInteriorsShopsWestBySecondDoor).
