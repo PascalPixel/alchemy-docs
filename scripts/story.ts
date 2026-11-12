@@ -572,16 +572,37 @@ for (const line of readFileSync(gamePath(SCENE_TABLE), 'utf8').split('\n')) {
 }
 sceneIdByName = new Map(scenes.filter((s) => s.name).map((s) => [s.name, s.id]));
 
-// Each overlay's own C file: the first object of its rows in objects.tsv
-// that is neither its entry nor its import table.
-const overlayFile = new Map<number, string>();
-for (const line of readFileSync(gamePath('objects.tsv'), 'utf8').split('\n').slice(1)) {
-  const [image, place, object, , editions] = line.split('\t');
-  if (!/^[0-9a-f]+$/.test(image ?? '') || place !== 'text' || !object || /\/(entry|import)\//.test(object)) continue;
-  if (editions && !editions.split(/\s+/).includes('en')) continue;
-  const overlay = parseInt(image, 16);
-  if (!overlayFile.has(overlay) && existsSync(join(repo, `${object}.c`))) overlayFile.set(overlay, `${object}.c`);
+// Each overlay's own C file: the first C object its .text lists that is
+// neither its entry nor its import table (DIR/entry/NAME or DIR/entry in The
+// Broken Seal, DIR/NAME/entry in The Lost Age). The tracked overlay linker
+// script lists them, one `#if`/`#elif OVERLAY == 0x…` block an overlay; the
+// site builds from a clone that was never built, so out/*/objects.mk is not
+// there. Sources from before that script have objects.tsv instead.
+function overlayFiles(game: string): Map<number, string> {
+  const files = new Map<number, string>();
+  const take = (overlay: number, object: string) => {
+    if (!/\/(entry|import)(\/|$)/.test(object) && !files.has(overlay) && existsSync(join(repo, `${object}.c`))) files.set(overlay, `${object}.c`);
+  };
+  const script = join(repo, game, 'src/system/overlay/overlay.ld');
+  if (existsSync(script)) {
+    let overlay = -1;
+    for (const line of readFileSync(script, 'utf8').split('\n')) {
+      const block = line.match(/^\s*#\s*(?:el)?if\s+OVERLAY\s*==\s*(\w+)/);
+      if (block) overlay = Number(block[1]);
+      const object = line.match(/^\s*"\*\/(games\/[^"]+)\.o"\s*\(([^)]*)\)/);
+      if (object && overlay >= 0 && /(^|\s)\.text(\s|$)/.test(object[2])) take(overlay, object[1]);
+    }
+    return files;
+  }
+  for (const line of readFileSync(join(repo, game, 'objects.tsv'), 'utf8').split('\n').slice(1)) {
+    const [image, place, object, , editions] = line.split('\t');
+    if (!/^[0-9a-f]+$/.test(image ?? '') || place !== 'text' || !object) continue;
+    if (editions && !editions.split(/\s+/).includes('en')) continue;
+    take(parseInt(image, 16), object);
+  }
+  return files;
 }
+const overlayFile = overlayFiles(GAME);
 for (const s of scenes) s.file = overlayFile.get(s.overlay) ?? '';
 const scenesOfFile = new Map<string, number[]>();
 for (const s of scenes) if (s.file) scenesOfFile.set(s.file, [...(scenesOfFile.get(s.file) ?? []), s.id]);
