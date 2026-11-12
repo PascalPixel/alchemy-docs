@@ -14,3 +14,7 @@ bun run build
 ```
 
 The site is in `dist/public`, and `bun run dev` serves it while you edit. To read an Alchemy somewhere else, set `ALCHEMY=/path/to/alchemy`. Vercel builds and publishes the site on every push here, and whenever Alchemy's main branch passes its checks.
+
+## Credits
+
+The site documents Alchemy, whose [acknowledgements](https://github.com/PascalPixel/alchemy#acknowledgements) name the work it builds on.
