@@ -6,14 +6,11 @@ dist
 src/pages.gen.ts
 
 # made by `bun run content` (scripts/content.ts) from Alchemy, and by
-# scripts/renders.ts and scripts/figures.ts from the Blob store and its release
+# scripts/renders.ts from the Blob store
 /content/docs/
 /build/
 /public/pictures/
 /public/stills/
-/public/PROGRESS_CHART.png
-/public/history.tsv
-/public/source.tsv
 
 .env*
 .vercel

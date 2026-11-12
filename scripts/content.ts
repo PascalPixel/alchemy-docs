@@ -83,7 +83,7 @@ const changed = (() => {
   const out = new Map<string, string>();
   const git = (...args: string[]) => execFileSync('git', ['-C', repo, ...args], { encoding: 'utf8', maxBuffer: 1 << 30 });
   if (git('rev-parse', '--is-shallow-repository').trim() === 'true') return out;
-  for (const commit of git('log', '--format=%x00%cs', '--name-only', '--no-renames', '--', 'games', 'README.md', 'INSTALL.md').split('\0')) {
+  for (const commit of git('log', '--format=%x00%cs', '--name-only', '--no-renames', '--', 'games', 'README.md').split('\0')) {
     const [date, ...paths] = commit.trim().split('\n');
     for (const path of paths) for (let p = path; p !== '.' && !out.has(p); p = dirname(p)) out.set(p, date);
   }
@@ -120,7 +120,6 @@ const ICONS: Record<string, string> = {
   '/tbs/unused': 'Archive',
   '/tbs/code': 'FileCode',
   '/tbs/glossary': 'BookA',
-  '/start': 'Hammer',
   '/tbs/source': 'Braces',
   '/tla': 'Anchor',
 };
@@ -1168,12 +1167,12 @@ function guideFiles(key: string, files: SourceFile[]): string {
 }
 
 // ---------------------------------------------------------------------------
-// The prose pages: the README, INSTALL, the front page, the section pages and
+// The prose pages: the README, the front page, the section pages and
 // the folder guides, without their first heading (the page's title) and with
 // their repository links resolved.
 
 // The site's arrangement comes from Alchemy's own links. README.md is the
-// root; it places the games' front pages and INSTALL.md. A
+// root; it places the games' front pages. A
 // game's front page places its section pages (the other
 // Markdown files beside it), its places and the guide to its source. Both
 // order what they place by their last link to each: a front page tells the
@@ -1196,7 +1195,6 @@ const SITE = 'https://alchemy.pascalpixel.com';
 // that explain them.
 const FIXED: [string, string][] = [
   ['games/README.md', '/'],
-  ['INSTALL.md', '/start'],
   ['games/tbs/glossary.md', '/tbs/glossary'],
   [sceneTable('tbs'), '/tbs/places'],
   // The Unused page, which unusedPage() writes from the source's comments; a
@@ -1262,8 +1260,8 @@ function arrange(): Placed {
     placed.set(key, node);
     return node;
   };
-  // What the root places: the front pages and INSTALL.md.
-  const rootWants = [...GAMES.map((g) => `games/${g}/README.md`), 'INSTALL.md'];
+  // What the root places: the front pages.
+  const rootWants = GAMES.map((g) => `games/${g}/README.md`);
   const rootLinks = linksOf('games/README.md', 'last').filter((k) => rootWants.includes(k));
   for (const k of rootWants) if (!rootLinks.includes(k) && existsSync(join(repo, k))) notes.push(`games/README.md doesn't link ${k}: placed after its links`);
   // A game with no front page in Alchemy still has its place (frontPageStub).

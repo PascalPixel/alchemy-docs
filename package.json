@@ -6,7 +6,7 @@
   "scripts": {
     "content": "bun scripts/renders.ts fetch && bun scripts/story.ts > /dev/null && bun scripts/content.ts",
     "dev": "bun run content && bun --bun waku dev",
-    "build": "bun run content && bun scripts/figures.ts && bun --bun waku build && bun scripts/links.ts",
+    "build": "bun run content && bun --bun waku build && bun scripts/links.ts",
     "start": "waku start",
     "types:check": "tsc --noEmit"
   },
