@@ -1202,8 +1202,9 @@ const FIXED: [string, string][] = [
   ['games/tbs/unused', '/tbs/unused'],
   ['games/tbs/src', '/tbs/code'],
 ];
-// The root's sidebar label: the README's own heading is the site's name.
-const ROOT_LABEL = 'Introduction';
+// The root's sidebar label and title: the page that welcomes a reader to the
+// whole site, before either game's own introduction.
+const ROOT_LABEL = 'Welcome';
 
 type Placed = { key: string; url: string; children: Placed[]; parent?: Placed; kind: 'root' | 'game' | 'section' | 'guide' | 'fixed' };
 const placed = new Map<string, Placed>();
@@ -1313,7 +1314,7 @@ function headingOf(key: string): string | undefined {
   return h === undefined ? undefined : siteTitle(key, h);
 }
 
-// A page's title on the site: the front page is the guide's Introduction,
+// A page's title on the site: the front page is the site's Welcome,
 // and a game's page is titled by its name alone, without the source's emoji.
 function siteTitle(key: string, heading: string): string {
   if (key === 'games/README.md') return ROOT_LABEL;

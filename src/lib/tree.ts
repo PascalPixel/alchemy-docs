@@ -82,7 +82,7 @@ function tabs(tree: Root): Node[] {
     return [{ game: node, reference }];
   });
   if (!games.length) return guide.children;
-  // The pages about the whole project: the introduction and building Alchemy.
+  // The pages about the whole project: the welcome page.
   const project = guide.children.filter((n) => !games.some((g) => g.game === n));
   // A game's tabs are roots of their own type inside the game's root.
   const root = games.length > 1 ? TAB : true;
@@ -109,7 +109,9 @@ function tabs(tree: Root): Node[] {
       children: [
         // The project's pages only once, in the first game's tab.
         ...(at === 0 ? project.slice(0, 1) : []),
-        game.index!,
+        // Under the game's name in the switcher, its front page is the
+        // introduction to its guide.
+        { ...game.index!, name: 'Introduction' },
         ...(at === 0 ? project.slice(1) : []),
         ...divisions.flatMap((d) => [heading(String(d.name)), { ...d.index!, name: 'Overview' }, ...d.children]),
         // A game with no divisions yet lists its pages as they are.
