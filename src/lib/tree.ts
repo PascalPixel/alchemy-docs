@@ -107,8 +107,10 @@ function tabs(tree: Root): Node[] {
       name: 'Guide',
       description: 'How the game works, division by division',
       children: [
-        // The project's pages only once, in the first game's tab.
-        ...(at === 0 ? project.slice(0, 1) : []),
+        // The welcome page leads every game's guide: it is the way back to
+        // the site's front page from either. Opened, it shows in the first
+        // game's tab, as fumadocs finds a page's tab by its address alone.
+        ...project.slice(0, 1),
         // Under the game's name in the switcher, its front page is the
         // introduction to its guide.
         { ...game.index!, name: 'Introduction' },
