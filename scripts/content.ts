@@ -241,10 +241,29 @@ const parser = await (async () => {
   return p;
 })();
 
+// A comment's lines without the evidence for a name ("★ Named from ...", in
+// sources from before it moved to alchemy-devtools), which runs from its star
+// to the end of its paragraph or list item.
+function withoutEvidence(body: string[]): string[] {
+  const out: string[] = [];
+  let skipping = false;
+  for (const l of body) {
+    if (skipping && (/^\s*$/.test(l) || /^\s*- /.test(l))) skipping = false;
+    if (skipping) continue;
+    const at = l.indexOf('★');
+    if (at < 0) out.push(l);
+    else {
+      skipping = true;
+      if (l.slice(0, at).trim()) out.push(l.slice(0, at).trimEnd());
+    }
+  }
+  return out;
+}
+
 // A /// block's text: the prefix gone, a laid-out paragraph (a line indented
 // past "/// ") kept as a code block, the rest as Markdown.
 function docText(lines: string[]): string {
-  const body = lines.map((l) => l.replace(/^\s*\/\/\/<?\s?/, ''));
+  const body = withoutEvidence(lines.map((l) => l.replace(/^\s*\/\/\/<?\s?/, '')));
   const out: string[] = [];
   let para: string[] = [];
   const flush = () => {
@@ -1906,8 +1925,8 @@ function placeSentence(text: string | undefined): string {
 
 // A place's title: its symbol split into words, each run of them spelled as
 // the evidence for the map spells it, so that Kraden's cottage keeps its
-// apostrophe. The names the game gives the map (its area name, as its ★ line
-// and the renders give it, and its debug list entry) come first, possessive
+// apostrophe. The names the game gives the map (its area name, as its area
+// name rules and the renders give it) come first, possessive
 // included: `BabiPalace` is Babi's Palace, and `McCoyPalaceGrounds`, under the
 // area name McCoy's Palace, is McCoy's Palace Grounds. Then the map's own
 // comment and its overlay's, where a run of words is spelled with an
@@ -1917,6 +1936,28 @@ function placeSentence(text: string | undefined): string {
 const SMALL_WORDS = new Set(['a', 'an', 'and', 'at', 'for', 'in', 'of', 'on', 'or', 'the', 'to']);
 let mapDocs: Map<string, string> | undefined;
 let gameText: string | undefined;
+let areaNames: Map<string, string> | undefined;
+// The area name the game shows on arriving at each scene: the first of
+// gArea_NameRules (field/scene_rules.s) for any entrance that names the scene
+// or its area (its row of gScenes, field/scenes.s), an offset from
+// MsgDebugAreaName in the English text.
+function sceneAreaNames(): Map<string, string> {
+  const out = new Map<string, string>();
+  const read = (path: string) => (existsSync(join(repo, path)) ? readFileSync(join(repo, path), 'utf8') : '');
+  const scenes = read('games/tbs/src/field/scenes.s');
+  const rules = read('games/tbs/src/field/scene_rules.s').split(/^gArea_NameRules:/m)[1]?.split(/^\t\.global /m)[0] ?? '';
+  const po = read('games/tbs/text/en.po');
+  const base = po.match(/msgctxt "MsgDebugAreaName"\nmsgid "(\d+)"/);
+  if (!base) return out;
+  const text = new Map([...po.matchAll(/^msgid "(\d+)"\nmsgstr "((?:[^"\\]|\\.)*)"/gm)].map((m) => [Number(m[1]), m[2]]));
+  const areaOf = new Map([...scenes.matchAll(/^\tscene (\w+), \d+, (\d+),/gm)].map((m) => [m[1], Number(m[2])]));
+  const named = [...rules.matchAll(/^\t(scene|area)_name (\w+), -1, (\d+)/gm)].map((m) => ({ scene: m[1] === 'scene' ? m[2] : '', area: m[1] === 'area' ? Number(m[2]) : -1, name: text.get(Number(base[1]) + Number(m[3])) }));
+  for (const [scene, area] of areaOf) {
+    const rule = named.find((r) => r.scene === scene || r.area === area);
+    if (rule?.name) out.set(scene, rule.name);
+  }
+  return out;
+}
 function placeTitle(scene: string, overlay = '', area = ''): string {
   if (!mapDocs) {
     mapDocs = new Map();
@@ -1926,12 +1967,13 @@ function placeTitle(scene: string, overlay = '', area = ''): string {
       if (m) mapDocs.set(m[1], doc.join(' '));
       doc = /^\/\/\//.test(line) ? [...doc, line.replace(/^\/\/\/\s?/, '')] : [];
     }
+    areaNames = sceneAreaNames();
     gameText = [...readFileSync(join(repo, 'games/tbs/text/en.po'), 'utf8').matchAll(/^msgstr "((?:[^"\\]|\\.)*)"/gm)].map((m) => m[1].replace(/\\n/g, ' ')).join('\n');
   }
   const doc = mapDocs.get(scene) ?? '';
-  // The names the game gives the map itself: its area name and its debug list
-  // entry, which may add a possessive the symbol leaves out.
-  const names = [...doc.matchAll(/★ Named from its area name: ([^★]+?)\s*$/g), ...doc.matchAll(/★ Named from the game: "([^"]+)" \(MsgDebugEntryName\)/g)].map((m) => m[1]).concat(area ? [area] : []);
+  // The name the game gives the map itself, its area name, which may add a
+  // possessive the symbol leaves out.
+  const names = [areaNames!.get(scene), area].filter((n): n is string => !!n);
   // Prose only: code names (a map's own symbol among them) spell nothing.
   const local = [doc, overlay]
     .join('\n')
@@ -1946,6 +1988,9 @@ function placeTitle(scene: string, overlay = '', area = ''): string {
   // capitalized as a title (Kraden's Cottage).
   const spelled = (run: string[], text: string, possessive: boolean) => {
     const letters = [...run.join('')];
+    // A word the text also spells as the symbol does keeps that spelling:
+    // Vale Cave's logs are Logs, though its comment speaks of a log's part.
+    if (run.length === 1 && new RegExp(`(?<![A-Za-z'])${esc(run[0])}(?![A-Za-z'])`, 'i').test(text)) return run[0];
     const gap = possessive ? "((?:'s)?[' ]?)" : "([' ]?)";
     const m = text.match(new RegExp(`(?<![A-Za-z'])${letters.map(esc).join(gap)}${possessive ? "((?:'s)?)" : ''}(?![A-Za-z'])`, 'i'));
     return m ? letters.map((c, j) => c + (m[j + 1] ?? '')).join('') : undefined;
