@@ -51,9 +51,8 @@ const sceneIds = new Map(
 const sceneSymbol = (name: string) => (sceneTable('tbs').endsWith('scenes.s') ? `SceneId_${name}` : `MapId_${name}`);
 
 type Game = 'tbs' | 'tla';
-// The games with pages. The Lost Age has no front page or division pages of
-// its own yet: its front page is written here (frontPageStub) and its folder
-// guides sit under it, until Alchemy has games/tla/README.md.
+// The games with pages, each a front page, its division pages and their
+// folder guides in Alchemy (games/<game>/README.md).
 const GAMES: Game[] = ['tbs', 'tla'];
 // The games whose source has pages of its own (/tbs/source). The Lost Age's
 // code is still one small file a routine, which would be eight thousand
@@ -122,10 +121,26 @@ const ICONS: Record<string, string> = {
   '/tbs/glossary': 'BookA',
   '/tbs/source': 'Braces',
   '/tla': 'Anchor',
+  '/tla/system': 'Cpu',
+  '/tla/system/system': 'Settings2',
+  '/tla/system/gamepak': 'Gamepad2',
+  '/tla/system/sound': 'EighthNotes',
+  '/tla/system/graphics': 'Image',
+  '/tla/system/debug': 'Bug',
+  '/tla/battle': 'Swords',
+  '/tla/battle/battle': 'Sword',
+  '/tla/battle/game': 'Scale',
+  '/tla/battle/battle_effect': 'Sparkles',
+  '/tla/field': 'Map',
+  '/tla/field/field': 'Footprints',
+  '/tla/field/scene': 'Clapperboard',
+  '/tla/field/map': 'Grid3x3',
+  '/tla/interface': 'AppWindow',
+  '/tla/interface/window': 'PanelsTopLeft',
+  '/tla/interface/menu': 'List',
+  '/tla/interface/shop': 'Store',
+  '/tla/glossary': 'BookA',
 };
-// A folder guide of a game without division pages (/tla/battle) takes the
-// icon of the same folder's guide in The Broken Seal.
-const folderIcon = (url: string) => Object.entries(ICONS).find(([k]) => /^\/tbs\/\w+\/\w+$/.test(k) && k.endsWith(`/${url.split('/')[2]}`))?.[1];
 const INTRODUCTION_ICON = 'House';
 const GUIDE_ICON = 'BookOpen';
 // The pictures a section page's card shows where its first recording would
@@ -169,7 +184,7 @@ function page(path: string, front: Record<string, string>, body: string) {
   const url = `/${path.replace(/^\([^/)]*\)\//, '').replace(/\.mdx?$/, '').replace(/(^|\/)index$/, '')}`.replace(/(.)\/$/, '$1');
   if (path.startsWith(`${GUIDE}/`)) front = { ...front, image: card(url) || front.image || still(body) || '' };
   pagesWritten.add(url);
-  const icon = ICONS[url] ?? (path.startsWith(`${GUIDE}/`) && /^\/(?!tbs\/)\w+\/\w+$/.test(url) ? folderIcon(url) : undefined);
+  const icon = ICONS[url];
   if (icon) front = { ...front, icon };
   if (front.source && changed.has(front.source)) front = { ...front, lastModified: changed.get(front.source)! };
   const head = Object.entries(front)
@@ -1196,6 +1211,7 @@ const SITE = 'https://alchemy.pascalpixel.com';
 const FIXED: [string, string][] = [
   ['games/README.md', '/'],
   ['games/tbs/glossary.md', '/tbs/glossary'],
+  ['games/tla/glossary.md', '/tla/glossary'],
   [sceneTable('tbs'), '/tbs/places'],
   // The Unused page, which unusedPage() writes from the source's comments; a
   // README links it by its address on the site.
@@ -1265,8 +1281,7 @@ function arrange(): Placed {
   const rootWants = GAMES.map((g) => `games/${g}/README.md`);
   const rootLinks = linksOf('games/README.md', 'last').filter((k) => rootWants.includes(k));
   for (const k of rootWants) if (!rootLinks.includes(k) && existsSync(join(repo, k))) notes.push(`games/README.md doesn't link ${k}: placed after its links`);
-  // A game with no front page in Alchemy still has its place (frontPageStub).
-  for (const k of [...rootLinks, ...rootWants.filter((k) => !rootLinks.includes(k) && (isFrontPage(k) || existsSync(join(repo, k))))]) {
+  for (const k of [...rootLinks, ...rootWants.filter((k) => !rootLinks.includes(k) && existsSync(join(repo, k)))]) {
     add(root, k, isFrontPage(k) ? 'game' : 'fixed', fixedUrl(k) ?? `/${k.split('/')[1]}`);
   }
   // What each front page places: its section pages, places and source.
@@ -1275,7 +1290,7 @@ function arrange(): Placed {
     // The places, the Unused page and the source's guide only where the game
     // has them: a fixed address, or a README for its src folder.
     const wants = [...sectionPages(g), sceneTable(g), `games/${g}/unused`, `games/${g}/src`].filter((k) => k.endsWith('.md') || fixedUrl(k) || existsSync(join(repo, k, 'README.md')));
-    const links = existsSync(join(repo, game.key)) ? linksOf(game.key, 'last').filter((k) => wants.includes(k)) : [];
+    const links = linksOf(game.key, 'last').filter((k) => wants.includes(k));
     for (const k of wants) if (!links.includes(k) && (fixedUrl(k) || existsSync(join(repo, k)))) notes.push(`${game.key} doesn't link ${k}: placed after its links`);
     for (const k of [...links, ...wants.filter((k) => !links.includes(k) && (fixedUrl(k) || existsSync(join(repo, k))))]) {
       if (fixedUrl(k)) add(game, k, 'fixed', fixedUrl(k)!);
@@ -1291,13 +1306,6 @@ function arrange(): Placed {
     for (const whole of [true, false])
       for (const section of sections)
         for (const k of linksOf(section.key, 'first', whole)) if (guides.includes(k) && !placed.has(k)) add(section, k, 'guide', `${section.url}/${basename(dirname(k))}`);
-    // A game with no division pages has its folder guides under its front
-    // page, in the order the games before it arranged the same folders.
-    if (!sections.length) {
-      const order = [...placed.values()].filter((p) => p.kind === 'guide').map((p) => basename(dirname(p.key)));
-      const at = (k: string) => order.indexOf(basename(dirname(k))) + 1 || order.length + 1;
-      for (const k of [...guides].sort((a, b) => at(a) - at(b))) add(game, k, 'guide', `${game.url}/${basename(dirname(k))}`);
-    }
   }
   return root;
 }
@@ -1518,27 +1526,10 @@ function arrangedPages(root: Placed, files: Map<Game, SourceFile[]>) {
   const walkTree = (n: Placed): Placed[] => [n, ...n.children.flatMap(walkTree)];
   for (const node of walkTree(root)) {
     const source = /^games\/\w+\/src$/.test(node.key) ? `${node.key}/README.md` : node.key;
-    if (node.kind === 'game' && !existsSync(join(repo, source))) frontPageStub(node);
     if (!source.endsWith('.md') || !existsSync(join(repo, source))) continue;
     const extra = node.kind === 'guide' ? guideFiles(node.key, files.get(node.key.split('/')[1] as Game) ?? []) : '';
     prose(source, fileOf(node), extra);
   }
-}
-
-// The front page of a game that has none in Alchemy yet: what the game is,
-// and where its pages are.
-function frontPageStub(node: Placed) {
-  const game = node.key.split('/')[1] as Game;
-  const first = placed.get(`games/${GAMES[0]}/README.md`);
-  const body = [
-    `Golden Sun: ${GAME_TITLE[game]} builds byte for byte from the source here, in all six languages.`,
-    `Its guide is not written yet. Each folder of its code has a short page saying what it holds and what differs from ${first ? `[${GAME_TITLE[GAMES[0]]}](${first.url})` : GAME_TITLE[GAMES[0]]}, whose guide explains how the code the two games share works. Its files are in [the source on GitHub](${github}/games/${game}/src).`,
-    node.children
-      .filter((c) => c.kind === 'guide')
-      .map((c) => `- [${headingOf(c.key) ?? basename(dirname(c.key))}](${c.url})`)
-      .join('\n'),
-  ];
-  page(fileOf(node), { title: GAME_TITLE[game], description: body[0] }, body.filter(Boolean).join('\n\n'));
 }
 
 // The sidebar: the guide's tab, a meta.json for every folder the arrangement
@@ -1566,7 +1557,6 @@ function checkArrangement() {
     for (const k of guideReadmes(game)) {
       const node = placed.get(k);
       if (!node) failures.push(`${k} is placed nowhere: no section page of ${game} links it`);
-      else if (node.parent?.kind === 'game' && node.parent.key.startsWith(`games/${game}/`) && !sectionPages(game).length) continue;
       else if (node.parent?.kind !== 'section' || !node.parent.key.startsWith(`games/${game}/`)) failures.push(`${k} sits under ${node.parent?.key}, not a section page of ${game}`);
     }
   for (const url of Object.keys(CARDS)) if (!pagesWritten.has(url)) failures.push(`the card for ${url} names a page the build doesn't write`);

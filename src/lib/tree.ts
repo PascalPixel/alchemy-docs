@@ -114,8 +114,7 @@ function tabs(tree: Root): Node[] {
         { ...game.index!, name: 'Introduction' },
         ...(at === 0 ? project.slice(1) : []),
         ...divisions.flatMap((d) => [heading(String(d.name)), { ...d.index!, name: 'Overview' }, ...d.children]),
-        // A game with no divisions yet lists its pages as they are.
-        ...(shared.length ? [...(divisions.length ? [heading('Reference')] : []), ...shared] : []),
+        ...(shared.length ? [heading('Reference'), ...shared] : []),
       ],
     };
     const placesTab: Folder[] = places ? [{ ...places, root, description: 'Every town and dungeon, room by room', children: withIcons(places.children, placeKind) }] : [];
