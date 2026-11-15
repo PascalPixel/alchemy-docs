@@ -2072,8 +2072,13 @@ function placePages(scenes: SourceFile[]): Place[] {
     // name, else, from renders made before the rows were named, its table and
     // index (`gValeStormyNight_Events[26]`, now `_Triggers`) or a function's name since renamed,
     // matched by the first message it showed.
+    // An event its rows list in several of the overlay's scenes is recorded
+    // once, in one of them: the others show that recording.
+    const siblings = new Set(out.filter((q) => q.file === p.file && q.id !== p.id).map((q) => q.id));
+    const near = renders.filter((r) => siblings.has(r.number) && stored.has(`places/${r.file}`));
+    const recorded = [...mine, ...near];
     const aliases = new Map<string, string[]>();
-    for (const n of new Set(mine.filter((r) => r.kind === 'event-gif' || r.kind === 'event-segment').map((r) => r.event))) {
+    for (const n of new Set(recorded.filter((r) => r.kind === 'event-gif' || r.kind === 'event-segment').map((r) => r.event))) {
       if (events.some((e) => e.event === n)) continue;
       // A name recorded in the words The Broken Seal took from pret before it
       // named its own (a WarpToVale event, now ExitToVale).
@@ -2090,14 +2095,10 @@ function placePages(scenes: SourceFile[]): Place[] {
         aliases.set(renamed[0].event, [...(aliases.get(renamed[0].event) ?? []), n]);
         continue;
       }
-      const first = Number(mine.find((r) => r.event === n && r.messages)?.messages.split(',')[0]);
+      const first = Number(recorded.find((r) => r.event === n && r.messages)?.messages.split(',')[0]);
       const owner = events.find((e) => (words2.symbol.get(first) && e.event === words2.symbol.get(first)) || e.messages[0] === first);
       if (owner) aliases.set(owner.event, [...(aliases.get(owner.event) ?? []), n]);
     }
-    // An event its rows list in several of the overlay's scenes is recorded
-    // once, in one of them: the others show that recording.
-    const siblings = new Set(out.filter((q) => q.file === p.file && q.id !== p.id).map((q) => q.id));
-    const near = renders.filter((r) => siblings.has(r.number) && stored.has(`places/${r.file}`));
     const recording = (name: string) => {
       const names = [name, ...(aliases.get(name) ?? [])];
       for (const rows of [mine, near]) {

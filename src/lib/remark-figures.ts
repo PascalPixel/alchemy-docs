@@ -31,7 +31,7 @@ const words = (s: string) => s.replace(/[`*_]/g, '').replace(/\s+/g, ' ').trim()
 // 240-pixel GBA screen is shown three times over on a wide column (up to
 // SCALED_MAX), and as wide as the column on a phone. Any other picture is
 // shown at its own width, or the column's if that is narrower.
-const RENDER = /^\/(places|abilities|guides|story)\//;
+const RENDER = /^\/(tla\/)?(places|abilities|guides|story)\//;
 const SCALED_MAX = 720;
 export const isRender = (url: string) => RENDER.test(url) && !/\.svg(?:$|[?#])/.test(url);
 const shownWidth = (url: string, width: number) => (isRender(url) ? width * Math.max(1, Math.min(3, Math.floor(SCALED_MAX / width))) : width);

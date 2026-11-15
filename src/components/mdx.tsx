@@ -12,7 +12,7 @@ import { Field, FieldTable } from './field-table';
 const DefaultImage = defaultMdxComponents.img;
 
 // A render of the game is pixel art (lib/remark-figures.ts sizes its figure).
-const RENDER = /^\/(places|abilities|guides|story)\//;
+const RENDER = /^\/(tla\/)?(places|abilities|guides|story)\//;
 
 // A picture from public/ or the renders, with its width and height from the
 // build so its room is kept while it loads, and enlarged when tapped, with its

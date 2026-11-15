@@ -591,6 +591,10 @@ function overlayFiles(game: string): Map<number, string> {
       if (block) overlay = Number(block[1]);
       const object = line.match(/^\s*"\*\/(games\/[^"]+)\.o"\s*\(([^)]*)\)/);
       if (object && overlay >= 0 && /(^|\s)\.text(\s|$)/.test(object[2])) take(overlay, object[1]);
+      // A block written through the script's macros: SCENE(name) and its kin
+      // are src/scene/NAME, DEBUG_ROOM(name) src/debug/NAME.
+      const macro = line.match(/^\s*(SCENE(?:_WITH_BSS|_AND)?|DEBUG_ROOM)\((\w+)/);
+      if (macro && overlay >= 0) take(overlay, `${game}/src/${macro[1] === 'DEBUG_ROOM' ? 'debug' : 'scene'}/${macro[2]}`);
     }
     return files;
   }
@@ -831,7 +835,9 @@ function buildTU(file: string): TU {
     }
   };
   visit(file);
-  const entryPath = gamePath(`src/${SCENES}/entry`, `${basename(file, '.c')}.s`);
+  // A scene's own entry table, else the one every scene links (src/scene/entry.s).
+  const ownEntry = gamePath(`src/${SCENES}/entry`, `${basename(file, '.c')}.s`);
+  const entryPath = existsSync(ownEntry) ? ownEntry : gamePath(`src/${SCENES}/entry.s`);
   const entry = existsSync(entryPath) ? [...readFileSync(entryPath, 'utf8').matchAll(/^\s*overlay_veneer\s+(\w+)/gm)].map((m) => m[1]) : [];
   return { file, scope, fns, tables, scenes: scenesOfFile.get(file) ?? [], entry };
 }
