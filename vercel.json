@@ -36,11 +36,15 @@
     {
       "source": "/story/:path*",
       "destination": "https://n2k4znkfbewwaw0l.public.blob.vercel-storage.com/story/:path*"
+    },
+    {
+      "source": "/tla/:kind(places|abilities|guides|story)/:path*",
+      "destination": "https://n2k4znkfbewwaw0l.public.blob.vercel-storage.com/tla/:kind/:path*"
     }
   ],
   "headers": [
     {
-      "source": "/(places|abilities|guides|story)/:path*",
+      "source": "/(tla/)?(places|abilities|guides|story)/:path*",
       "headers": [
         {
           "key": "x-vercel-enable-rewrite-caching",
@@ -49,7 +53,7 @@
       ]
     },
     {
-      "source": "/(places|abilities|guides|story)/:path*",
+      "source": "/(tla/)?(places|abilities|guides|story)/:path*",
       "missing": [
         {
           "type": "query",

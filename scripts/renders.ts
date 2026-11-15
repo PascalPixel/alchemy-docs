@@ -7,7 +7,8 @@
 //   bun scripts/renders.ts check [OUT]
 //
 // publish uploads every picture under FOLDER to PREFIX/ in the store (places,
-// abilities, guides or story), at the pathname its site URL has, public, with
+// abilities, guides or story, or tla for The Lost Age's, whose FOLDER holds
+// those folders), at the pathname its site URL has, public, with
 // no random suffix and a year's cache: pages ask for each picture with its
 // hash as a query (src/lib/renders.ts), so a re-render is a new URL. A picture
 // whose hash and size the manifest already lists is skipped. --prune deletes
@@ -38,7 +39,7 @@ import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, extname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { FETCHED, fetchRecords, fetchStored, formatManifest, MANIFEST_BLOB, parseManifest, PREFIXES, renderPath, storeUrl, type Entry } from '../src/lib/renders';
+import { FETCHED, fetchRecords, fetchStored, formatManifest, MANIFEST_BLOB, parseManifest, GAME_PREFIXES, PREFIXES, renderPath, storeUrl, type Entry } from '../src/lib/renders';
 
 const docs = fileURLToPath(new URL('..', import.meta.url));
 const YEAR = 365 * 24 * 60 * 60;
@@ -126,7 +127,8 @@ function keep(pathname: string, data: string | Buffer) {
 }
 
 async function publish(folder: string, prefix: string, prune: boolean, dry: boolean) {
-  if (!PREFIXES.includes(prefix as never)) throw new Error(`${prefix}: not one of ${PREFIXES.join(', ')}`);
+  const prefixes: string[] = [...PREFIXES, ...GAME_PREFIXES];
+  if (!prefixes.includes(prefix)) throw new Error(`${prefix}: not one of ${prefixes.join(', ')}`);
   if (!dry && !process.env.BLOB_READ_WRITE_TOKEN) throw new Error('BLOB_READ_WRITE_TOKEN is not set (vercel env pull .env.local)');
   const manifest = await storeManifest();
   const files = walk(folder).sort();

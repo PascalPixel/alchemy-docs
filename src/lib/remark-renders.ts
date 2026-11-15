@@ -28,6 +28,6 @@ export function remarkRenders() {
 
 // remark-image's error for a render, whose file is not in public/ by design.
 export function onImageError(e: Error) {
-  if (/Failed obtain image size for \/(places|abilities|guides|story)\//.test(e.message)) return;
+  if (/Failed obtain image size for \/(tla\/)?(places|abilities|guides|story)\//.test(e.message)) return;
   throw e;
 }

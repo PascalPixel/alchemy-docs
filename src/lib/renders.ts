@@ -11,6 +11,9 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 
 export const PREFIXES = ['places', 'abilities', 'guides', 'story'] as const;
+// The Lost Age's renders keep the same paths under tla/ (/tla/guides/battle/opening.gif):
+// the unprefixed ones are The Broken Seal's.
+export const GAME_PREFIXES = ['tla'] as const;
 export type Prefix = (typeof PREFIXES)[number];
 
 // frame, on a still only: the recording's picture a card shows (CARDS in
@@ -27,7 +30,8 @@ export const FETCHED = 'build/renders';
 // A picture's site path (`/places/vale-storm/map-0.png`) when it is a render.
 export const renderPath = (src: string): string | undefined => {
   const path = src.split(/[?#]/)[0].replace(/^\//, '');
-  return PREFIXES.some((p) => path.startsWith(`${p}/`)) && !path.endsWith('.tsv') ? path : undefined;
+  const own = GAME_PREFIXES.reduce((p, g) => (p.startsWith(`${g}/`) ? p.slice(g.length + 1) : p), path);
+  return PREFIXES.some((p) => own.startsWith(`${p}/`)) && !path.endsWith('.tsv') ? path : undefined;
 };
 
 export function parseManifest(text: string): Map<string, Entry> {
