@@ -27,7 +27,7 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { Language, type Node, Parser } from 'web-tree-sitter';
 import { icons } from 'lucide-react';
-import { readFetched, readManifest, renderPath, stillPath, type Entry } from '../src/lib/renders';
+import { FETCHED, readFetched, readManifest, renderPath, stillPath, type Entry } from '../src/lib/renders';
 import { makeStills } from '../src/lib/stills';
 
 const docs = fileURLToPath(new URL('..', import.meta.url));
@@ -43,12 +43,19 @@ const stored = readManifest(docs);
 // before the scenes were named.
 const sceneTable = (game: string) =>
   existsSync(join(repo, `games/${game}/src/field/scenes.s`)) ? `games/${game}/src/field/scenes.s` : `games/${game}/src/field/map_headers.s`;
-// The Broken Seal's scenes by symbol, numbered as its scene table lists them.
-const sceneIds = new Map(
-  [...readFileSync(join(repo, sceneTable('tbs')), 'utf8').matchAll(/^\t(?:scene|map_header) (\w*),/gm)].map((m, i) => [m[1], i] as const),
-);
+// A game's scenes by symbol, numbered as its scene table lists them; none
+// where the game has no scene table.
+const sceneIdsByGame = new Map<Game, Map<string, number>>();
+function sceneIds(game: Game): Map<string, number> {
+  if (!sceneIdsByGame.has(game)) {
+    const table = join(repo, sceneTable(game));
+    const rows = existsSync(table) ? [...readFileSync(table, 'utf8').matchAll(/^\t(?:scene|map_header) (\w*),/gm)] : [];
+    sceneIdsByGame.set(game, new Map(rows.map((m, i) => [m[1], i] as const)));
+  }
+  return sceneIdsByGame.get(game)!;
+}
 // A scene's symbol as the sources write it: SceneId_, or MapId_ before.
-const sceneSymbol = (name: string) => (sceneTable('tbs').endsWith('scenes.s') ? `SceneId_${name}` : `MapId_${name}`);
+const sceneSymbol = (game: Game, name: string) => (sceneTable(game).endsWith('scenes.s') ? `SceneId_${name}` : `MapId_${name}`);
 
 type Game = 'tbs' | 'tla';
 // The games with pages, each a front page, its division pages and their
@@ -136,6 +143,7 @@ const ICONS: Record<string, string> = {
   '/tla/interface/window': 'PanelsTopLeft',
   '/tla/interface/menu': 'List',
   '/tla/interface/shop': 'Store',
+  '/tla/places': 'MapPin',
   '/tla/glossary': 'BookA',
 };
 const INTRODUCTION_ICON = 'House';
@@ -644,7 +652,7 @@ const lookup = (game: Game, name: string) => where.get(game)!.get(name) ?? enume
 // the scene table gives it (KalayTunnelTreasureRoom).
 function codeDeclared(text: string, game: Game): string {
   const index = where.get(game)!;
-  const known = (name: string) => name.length > 3 && (index.has(name) || (sceneIds.has(name) && index.has(sceneSymbol(name)))) && ((/[a-z0-9][A-Z]/.test(name) && /[a-z]/.test(name)) || /^[A-Z][A-Z0-9]+$/.test(name));
+  const known = (name: string) => name.length > 3 && (index.has(name) || (sceneIds(game).has(name) && index.has(sceneSymbol(game, name)))) && ((/[a-z0-9][A-Z]/.test(name) && /[a-z]/.test(name)) || /^[A-Z][A-Z0-9]+$/.test(name));
   return text
     .split(/(```[\s\S]*?```|`[^`]*`|\]\([^)]*\))/)
     .map((part, i) => (i % 2 ? part : part.replace(/(?<![\w`\\.])([A-Za-z][A-Za-z0-9]*)((?:(?:\.|-\\?>)[a-z][A-Za-z0-9]*)*)(\(\))?(?![\w`])/g, (all, name: string, chain: string, call = '') => (known(name) ? `\`${name}${chain.replace(/\\/g, '')}${call}\`` : all))))
@@ -682,7 +690,7 @@ function codeTarget(span: string, game: Game, self: string): { url: string } | u
   }
   const m = span.match(/^`(\w+)(?:(?:\.|->)(\w+))?(?:(?:\.|->)\w+)*(?:\(\))?`$/);
   if (!m || m[1] === self) return undefined;
-  const hit = lookup(game, m[1]) ?? (sceneIds.has(m[1]) ? where.get(game)!.get(sceneSymbol(m[1])) : undefined);
+  const hit = lookup(game, m[1]) ?? (sceneIds(game).has(m[1]) ? where.get(game)!.get(sceneSymbol(game, m[1])) : undefined);
   if (hit && m[2] && structPages.get(hit.decl) === hit.url && hit.decl.fields.some((f) => f.name.split(', ')[0] === m[2])) return { ...hit, url: `${hit.url}#${anchor(m[2])}` };
   return hit;
 }
@@ -1229,6 +1237,7 @@ const FIXED: [string, string][] = [
   ['games/tbs/glossary.md', '/tbs/glossary'],
   ['games/tla/glossary.md', '/tla/glossary'],
   [sceneTable('tbs'), '/tbs/places'],
+  [sceneTable('tla'), '/tla/places'],
   // The Unused page, which unusedPage() writes from the source's comments; a
   // README links it by its address on the site.
   ['games/tbs/unused', '/tbs/unused'],
@@ -1607,19 +1616,26 @@ function checkArrangement() {
 // ---------------------------------------------------------------------------
 // Finding code by what the player sees: the places, by each map overlay's summary.
 
-// The renders, by scene number: the store's places/index.tsv lists every map,
-// entrance shot and recording with the scene it was made in and the way the
-// place was drawn (cursed, cured, or a story moment and the flags it set), so
-// a scene renamed since keeps its renders.
+// The renders, by scene number: the store's places/index.tsv (tla/places/ for
+// The Lost Age) lists every map, entrance shot and recording with the scene
+// it was made in and the way the place was drawn (cursed, cured, or a story
+// moment and the flags it set), so a scene renamed since keeps its renders.
+// A game whose index the store doesn't hold has none, and its places are
+// written without pictures.
 type Render = { number: number; scene: string; area: string; variant: string; kind: string; event: string; messages: string; file: string };
-let placeRows: Render[] | undefined;
-function placeRenders(): Render[] {
-  if (!placeRows) {
-    const [head, ...lines] = readFetched(docs, 'places/index.tsv').trim().split('\n').map((l) => l.split('\t'));
+// Where a game's renders are in the store, and so on the site: The Broken
+// Seal's at the top, The Lost Age's under tla/.
+const renderRoot = (game: Game) => (game === 'tbs' ? '' : `${game}/`);
+const placeRows = new Map<Game, Render[]>();
+function placeRenders(game: Game): Render[] {
+  if (!placeRows.has(game)) {
+    const index = `${renderRoot(game)}places/index.tsv`;
+    const fetched = game === 'tbs' || existsSync(join(docs, FETCHED, index)) ? readFetched(docs, index) : '';
+    const [head = [], ...lines] = fetched.trim().split('\n').filter(Boolean).map((l) => l.split('\t'));
     const col = (name: string) => head.indexOf(name);
-    placeRows = lines.map((r) => ({ number: +r[col('number')], scene: r[col('scene')], area: r[col('area')] ?? '', variant: r[col('variant')] ?? '', kind: r[col('kind')], event: r[col('event')], messages: r[col('messages')] ?? '', file: r[col('file')] }) as Render);
+    placeRows.set(game, lines.map((r) => ({ number: +r[col('number')], scene: r[col('scene')], area: r[col('area')] ?? '', variant: r[col('variant')] ?? '', kind: r[col('kind')], event: r[col('event')], messages: r[col('messages')] ?? '', file: r[col('file')] }) as Render));
   }
-  return placeRows;
+  return placeRows.get(game)!;
 }
 
 // The places page: every place as a card (src/components/page-cards.tsx) with
@@ -1630,9 +1646,9 @@ function placeRenders(): Render[] {
 // for the village, its bridge and the forest past it), so the page reads as the journey does and its
 // table of contents jumps between towns and dungeons. A town the story
 // returns to has a section each time.
-function places(files: SourceFile[]) {
-  const scenes = files.filter((f) => /^games\/tbs\/src\/(?:scene|map)\/[^/]+\.c$/.test(f.path));
-  const pages = placePages(scenes);
+function places(files: SourceFile[], game: Game) {
+  const scenes = files.filter((f) => new RegExp(`^games/${game}/src/(?:scene|map)/[^/]+\\.c$`).test(f.path));
+  const pages = placePages(scenes, game);
   const lead = (title: string) => title.split(' ')[0].replace(/'s$/, '');
   const runs: Place[][] = [];
   for (const p of pages) {
@@ -1663,14 +1679,14 @@ function places(files: SourceFile[]) {
   const sections = runs.map((run) => {
     const heading = headingOfRun(run);
     const lines = run.map((p) => lineOf(p, heading));
-    const cards = run.map((p, i) => `- [${md(p.title)}](/tbs/places/${p.slug})${lines[i] && lines[i] !== lines[i - 1] ? `: ${md(lines[i])}` : ':'}`);
+    const cards = run.map((p, i) => `- [${md(p.title)}](/${game}/places/${p.slug})${lines[i] && lines[i] !== lines[i - 1] ? `: ${md(lines[i])}` : ':'}`);
     return `## ${md(heading)}\n\n${cards.join('\n')}`;
   });
-  page(`${GUIDE}/tbs/places/index.md`, { title: 'Places', description: 'Every place the party can walk around in, and what happens there.' }, `Every place the party can walk around in, in the order the story reaches it, each with a page of its own holding its map and its events. A scene's overlay holds one place or a few that share it; the [Scenes](${siteLink(existsSync(join(repo, 'games/tbs/src/scene/README.md')) ? 'games/tbs/src/scene/README.md' : 'games/tbs/src/map/README.md')}) guide explains how a scene runs and how to find an event in it.\n\n${sections.join('\n\n')}`);
+  page(`${GUIDE}/${game}/places/index.md`, { title: 'Places', description: 'Every place the party can walk around in, and what happens there.' }, `Every place the party can walk around in, in the order the story reaches it, each with a page of its own holding its map and its events. A scene's overlay holds one place or a few that share it; the [Scenes](${siteLink(existsSync(join(repo, `games/${game}/src/scene/README.md`)) ? `games/${game}/src/scene/README.md` : `games/${game}/src/map/README.md`)}) guide explains how a scene runs and how to find an event in it.\n\n${sections.join('\n\n')}`);
   // The sidebar: a town or dungeon of several rooms is a folder of them,
   // named as its section here is, and a place alone is its page. The folder's
   // name is in parentheses, which keeps it out of its pages' addresses.
-  const dir = join(content, GUIDE, 'tbs/places');
+  const dir = join(content, GUIDE, `${game}/places`);
   const listed = runs.map((run, i) => {
     // Two scenes of one overlay may share a page.
     const slugs = [...new Set(run.map((p) => p.slug))];
@@ -1684,17 +1700,27 @@ function places(files: SourceFile[]) {
   write(join(dir, 'meta.json'), JSON.stringify({ title: 'Places', pages: listed }, null, 2) + '\n');
 }
 
+// The playable characters' names as the source writes them (ISAAC), in
+// their numbers' order: the rows of enum CharacterId, or the plain names
+// character_ids.h defines to a number where it has no enum (The Lost Age).
+function characterNames(game: Game): string[] {
+  const src = text(`games/${game}/include/game/character_ids.h`);
+  const rows = src.match(/enum CharacterId \{([\s\S]*?)\};/)?.[1];
+  if (rows !== undefined) return [...rows.matchAll(/^\s*([A-Z]+)\b/gm)].map((m) => m[1]);
+  const out: string[] = [];
+  for (const m of src.matchAll(/^#define ([A-Z]+) (\d+)\b/gm)) out[Number(m[2])] = m[1];
+  return out.filter(Boolean);
+}
+
 // The English catalog's messages by symbol, each as the pages the player
 // reads: line breaks as spaces, the names it prints in place of their codes
 // ({actor_name:n} is character n - 1, {protagonist_name} Isaac by default)
 // and its other codes gone; and each number's symbol.
-function catalog() {
-  // The characters are the rows of enum CharacterId, in order.
-  const src = text('games/tbs/include/game/character_ids.h');
-  const characters = [...(src.match(/enum CharacterId \{([\s\S]*?)\};/)?.[1] ?? '').matchAll(/^\s*([A-Z]+)\b/gm)].map((m) => m[1]).map((n) => n[0] + n.slice(1).toLowerCase());
+function catalog(game: Game) {
+  const characters = characterNames(game).map((n) => n[0] + n.slice(1).toLowerCase());
   const pages = new Map<string, string[]>();
   const symbol = new Map<number, string>();
-  for (const m of text('games/tbs/text/en.po').matchAll(/msgctxt "(\w+)"\nmsgid "(\d+)"\nmsgstr ((?:"(?:[^"\\]|\\.)*"\n?)+)/g)) {
+  for (const m of text(`games/${game}/text/en.po`).matchAll(/msgctxt "(\w+)"\nmsgid "(\d+)"\nmsgstr ((?:"(?:[^"\\]|\\.)*"\n?)+)/g)) {
     if (m[1] === 'message') continue;
     const raw = [...m[3].matchAll(/"((?:[^"\\]|\\.)*)"/g)].map((x) => x[1]).join('').replace(/\\n/g, ' ').replace(/\\(.)/g, '$1');
     const shown = raw
@@ -1852,7 +1878,7 @@ function plainSentence(text: string): string {
 // are missing"), else the actor's name as words, its enum's shared prefix
 // left out (ACTOR_SECOND_GUIDE, LOCALID_ in older sources, is the second guide).
 type ActorInfo = { doc: string; prefix: string };
-function actorHeading(name: string, info: ActorInfo | undefined): string {
+function actorHeading(name: string, info: ActorInfo | undefined, game: Game): string {
   let s = plainSentence((info?.doc ?? '').split(/\s*★/)[0]);
   if (/^["“]/.test(s)) s = '';
   if (s.length > 60) {
@@ -1862,8 +1888,8 @@ function actorHeading(name: string, info: ActorInfo | undefined): string {
   }
   if (!s || /[`_]/.test(s)) {
     const words = name.slice(info?.prefix.length ?? 0).replace(/^(?:ACTOR|LOCALID|OBJ_EVENT)_/, '').toLowerCase().split('_').filter(Boolean);
-    const phrase = words.map((w) => (properNoun(w) ? w.charAt(0).toUpperCase() + w.slice(1) : w)).join(' ');
-    s = properNoun(words[0] ?? '') ? phrase : `the ${phrase}`;
+    const phrase = words.map((w) => (properNoun(game, w) ? w.charAt(0).toUpperCase() + w.slice(1) : w)).join(' ');
+    s = properNoun(game, words[0] ?? '') ? phrase : `the ${phrase}`;
   }
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
@@ -1931,51 +1957,53 @@ function placeSentence(text: string | undefined): string {
 // words, the game's text (Dragon's Eye). A run nothing spells stays as the
 // symbol splits it. Every word but a short joining one opens with a capital.
 const SMALL_WORDS = new Set(['a', 'an', 'and', 'at', 'for', 'in', 'of', 'on', 'or', 'the', 'to']);
-let mapDocs: Map<string, string> | undefined;
-let gameText: string | undefined;
-let areaNames: Map<string, string> | undefined;
-// The area name the game shows on arriving at each scene: the first of
-// gArea_NameRules (field/scene_rules.s) for any entrance that names the scene
-// or its area (its row of gScenes, field/scenes.s), an offset from
-// MsgDebugAreaName in the English text.
-function sceneAreaNames(): Map<string, string> {
+// What each game's titles are spelled from: its maps' comments, its area
+// names and the whole of its English text.
+const titleSources = new Map<Game, { mapDocs: Map<string, string>; areaNames: Map<string, string>; gameText: string }>();
+// The area name the game shows on arriving at each scene: the first of its
+// area name rules (gArea_NameRules in field/scene_rules.s; The Lost Age's
+// gScene_AreaNameRules, field/area_name_rules.s) for any entrance that names
+// the scene or its area (its row of gScenes, field/scenes.s, an area's number
+// or its AREA_ name), an offset from MsgDebugAreaName in the English text.
+function sceneAreaNames(game: Game): Map<string, string> {
   const out = new Map<string, string>();
   const read = (path: string) => (existsSync(join(repo, path)) ? readFileSync(join(repo, path), 'utf8') : '');
-  const scenes = read('games/tbs/src/field/scenes.s');
-  const rules = read('games/tbs/src/field/scene_rules.s').split(/^gArea_NameRules:/m)[1]?.split(/^\t\.global /m)[0] ?? '';
-  const po = read('games/tbs/text/en.po');
+  const scenes = read(`games/${game}/src/field/scenes.s`);
+  const rules = (read(`games/${game}/src/field/scene_rules.s`) + read(`games/${game}/src/field/area_name_rules.s`)).split(/^g(?:Area_Name|Scene_AreaName)Rules:/m)[1]?.split(/^\t\.global /m)[0] ?? '';
+  const po = read(`games/${game}/text/en.po`);
   const base = po.match(/msgctxt "MsgDebugAreaName"\nmsgid "(\d+)"/);
   if (!base) return out;
   const text = new Map([...po.matchAll(/^msgid "(\d+)"\nmsgstr "((?:[^"\\]|\\.)*)"/gm)].map((m) => [Number(m[1]), m[2]]));
-  const areaOf = new Map([...scenes.matchAll(/^\tscene (\w+), \d+, (\d+),/gm)].map((m) => [m[1], Number(m[2])]));
-  const named = [...rules.matchAll(/^\t(scene|area)_name (\w+), -1, (\d+)/gm)].map((m) => ({ scene: m[1] === 'scene' ? m[2] : '', area: m[1] === 'area' ? Number(m[2]) : -1, name: text.get(Number(base[1]) + Number(m[3])) }));
+  const areaOf = new Map([...scenes.matchAll(/^\tscene (\w+), \w+, (\w+),/gm)].map((m) => [m[1], m[2]]));
+  const named = [...rules.matchAll(/^\t(scene|area)_name (\w+), -1, (\d+)/gm)].map((m) => ({ scene: m[1] === 'scene' ? m[2] : '', area: m[1] === 'area' ? m[2] : '', name: text.get(Number(base[1]) + Number(m[3])) }));
   for (const [scene, area] of areaOf) {
     const rule = named.find((r) => r.scene === scene || r.area === area);
     if (rule?.name) out.set(scene, rule.name);
   }
   return out;
 }
-function placeTitle(scene: string, overlay = '', area = ''): string {
-  if (!mapDocs) {
-    mapDocs = new Map();
+function placeTitle(game: Game, scene: string, overlay = '', area = ''): string {
+  if (!titleSources.has(game)) {
+    const mapDocs = new Map<string, string>();
     let doc: string[] = [];
-    for (const line of readFileSync(join(repo, existsSync(join(repo, 'games/tbs/include/scene_ids.h')) ? 'games/tbs/include/scene_ids.h' : 'games/tbs/include/map_ids.h'), 'utf8').split('\n')) {
+    for (const line of readFileSync(join(repo, existsSync(join(repo, `games/${game}/include/scene_ids.h`)) ? `games/${game}/include/scene_ids.h` : `games/${game}/include/map_ids.h`), 'utf8').split('\n')) {
       const m = line.match(/^extern char (?:Scene|Map)Id_(\w+);/);
       if (m) mapDocs.set(m[1], doc.join(' '));
       doc = /^\/\/\//.test(line) ? [...doc, line.replace(/^\/\/\/\s?/, '')] : [];
     }
-    areaNames = sceneAreaNames();
-    gameText = [...readFileSync(join(repo, 'games/tbs/text/en.po'), 'utf8').matchAll(/^msgstr "((?:[^"\\]|\\.)*)"/gm)].map((m) => m[1].replace(/\\n/g, ' ')).join('\n');
+    const gameText = [...readFileSync(join(repo, `games/${game}/text/en.po`), 'utf8').matchAll(/^msgstr "((?:[^"\\]|\\.)*)"/gm)].map((m) => m[1].replace(/\\n/g, ' ')).join('\n');
+    titleSources.set(game, { mapDocs, areaNames: sceneAreaNames(game), gameText });
   }
+  const { mapDocs, areaNames, gameText } = titleSources.get(game)!;
   const doc = mapDocs.get(scene) ?? '';
   // The name the game gives the map itself, its area name, which may add a
   // possessive the symbol leaves out.
-  const names = [areaNames!.get(scene), area].filter((n): n is string => !!n);
+  const names = [areaNames.get(scene), area].filter((n): n is string => !!n);
   // Prose only: code names (a map's own symbol among them) spell nothing.
   const local = [doc, overlay]
     .join('\n')
     .replace(/`[^`]*`/g, ' ')
-    .replace(/\b\w+\b/g, (w) => (w.includes('_') || sceneIds.has(w) ? ' ' : w));
+    .replace(/\b\w+\b/g, (w) => (w.includes('_') || sceneIds(game).has(w) ? ' ' : w));
   const words = scene.replace(/([a-z])([A-Z0-9])/g, '$1 $2').replace(/([0-9])([A-Z])/g, '$1 $2').split(' ');
   const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   // The text's spelling of a run of words: the same letters as whole words,
@@ -1998,13 +2026,29 @@ function placeTitle(scene: string, overlay = '', area = ''): string {
     let k = words.length - i;
     for (; k > 0 && !found; k--) {
       const run = words.slice(i, i + k);
-      found = names.map((n) => spelled(run, n, true)).find(Boolean) ?? spelled(run, local, false) ?? (k > 1 ? spelled(run, gameText!, false) : undefined);
+      found = names.map((n) => spelled(run, n, true)).find(Boolean) ?? spelled(run, local, false) ?? (k > 1 ? spelled(run, gameText, false) : undefined);
     }
     k++;
     out.push(...(found ?? words.slice(i, i + k).join(' ')).split(' '));
     i += k;
   }
   return out.map((w, j) => (j > 0 && SMALL_WORDS.has(w.toLowerCase()) ? w.toLowerCase() : w.charAt(0).toUpperCase() + w.slice(1))).join(' ');
+}
+
+// A place's events where the game has no story index (The Lost Age): those
+// its recordings name, in the order its scene file defines them, each with
+// the messages its recording showed. An event it never recorded is not on
+// its page.
+function recordedEvents(p: Place, path: string, mine: Render[], symbol: Map<number, string>): StoryEvent[] {
+  const line = (name: string) => p.file.decls.find((d) => d.kind === 'function' && d.name === name)?.line ?? Infinity;
+  const names = [...new Set(mine.filter((r) => (r.kind === 'event-gif' || r.kind === 'event-segment') && r.event).map((r) => r.event))];
+  return names
+    .map((event) => {
+      const messages = mine.find((r) => r.event === event && r.messages)?.messages.split(',').map((n) => parseInt(n, 10)).filter((n) => symbol.has(n)) ?? [];
+      return { file: path, scenes: [p.id], event, trigger: '', messages, order: line(event), index: 0 };
+    })
+    .sort((a, b) => a.order - b.order || a.event.localeCompare(b.event))
+    .map((e, index) => ({ ...e, index }));
 }
 
 // A page for each place, each map its overlay's exit tables are for (its
@@ -2016,55 +2060,73 @@ function placeTitle(scene: string, overlay = '', area = ''): string {
 // recording, the first lines the player reads and the code that plays it.
 // The pages follow the map numbers, which run in story order.
 type Place = { file: SourceFile; scene: string; id: number; slug: string; title: string; area: string; description: string; image: string };
-function placePages(scenes: SourceFile[]): Place[] {
+function placePages(scenes: SourceFile[], game: Game): Place[] {
   const kebab = (s: string) => s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
   const words = (s: string) => s.replace(/([a-z])([A-Z0-9])/g, '$1 $2').replace(/([0-9])([A-Z])/g, '$1 $2');
-  const renders = placeRenders();
+  const renders = placeRenders(game);
+  // Where the game's place pictures are, in the store and on the site.
+  const root = `${renderRoot(game)}places`;
+  // A place's area name: the one its renders give (which may name an area's
+  // entrances apart), or, where the game's index gives none, the one its
+  // area name rules show.
+  const ruleAreas = renders.some((r) => r.area) ? undefined : sceneAreaNames(game);
+  const areaOf = (id: number, scene: string) => (ruleAreas ? (ruleAreas.get(scene) ?? '') : (renders.find((r) => r.number === id && r.area)?.area ?? ''));
   const out: Place[] = [];
   for (const f of scenes) {
     const own = [...new Set([...readFileSync(join(repo, f.path), 'utf8').matchAll(/\b(?:SCENE_EXITS|MAP_WARPS)\((\w+)\)/g)].map((m) => m[1]))];
     for (const s of own) {
-      const id = sceneIds.get(s);
-      if (id !== undefined) out.push({ file: f, scene: s, id, slug: kebab(s), title: placeTitle(s, f.doc, renders.find((r) => r.number === id && r.area)?.area ?? ''), area: '', description: '', image: '' });
+      const id = sceneIds(game).get(s);
+      if (id !== undefined) out.push({ file: f, scene: s, id, slug: kebab(s), title: placeTitle(game, s, f.doc, areaOf(id, s)), area: '', description: '', image: '' });
     }
   }
+  // A scene whose exits more than one overlay lists (The Lost Age's star
+  // room in Mars Lighthouse, which its entrance's overlay also leads into)
+  // has one page, from the overlay named after it, else the first.
+  const ownOverlay = (p: Place) => basename(p.file.path, '.c') === kebab(p.scene).replace(/-/g, '_');
+  for (const p of [...out]) {
+    const same = out.filter((q) => q.scene === p.scene);
+    if (same.length > 1 && same[0] === p) for (const q of same.filter((q) => q !== (same.find(ownOverlay) ?? same[0]))) out.splice(out.indexOf(q), 1);
+  }
   out.sort((a, b) => a.id - b.id);
-  const words2 = catalog();
-  const story = storyEvents();
+  const words2 = catalog(game);
+  // The story index is The Broken Seal's alone: another game's events are
+  // the ones its recordings name (recordedEvents).
+  const story = game === 'tbs' ? storyEvents() : [];
   const actor = actorIndex(scenes);
-  const index2 = where.get('tbs')!;
+  const index2 = where.get(game)!;
   const rowsOfFile = new Map<string, ReturnType<typeof messageRows>>();
   for (const p of out) {
-    const path = p.file.path.replace(/^games\/tbs\/src\//, '');
-    const mine = renders.filter((r) => r.number === p.id && stored.has(`places/${r.file}`));
-    const area = renders.find((r) => r.number === p.id && r.area)?.area ?? '';
+    const path = p.file.path.replace(`games/${game}/src/`, '');
+    const mine = renders.filter((r) => r.number === p.id && stored.has(`${root}/${r.file}`));
+    const area = areaOf(p.id, p.scene);
     const alone = out.filter((q) => q.file === p.file).length === 1;
     const block = alone ? undefined : placeBlock(p.file.doc, p.scene, [p.title, area]);
-    const body: string[] = [linkNames(block ?? p.file.doc, 'tbs', '')];
+    const body: string[] = [linkNames(block ?? p.file.doc, game, '')];
     // Its cover: the place's story set piece in the Doll House recorder, the
     // whole map from the story's start to its end there, when one is made
     // (alchemy-devtools render guide), above everything else.
     const folder = mine[0]?.file.split('/')[0].split('_')[0] ?? p.slug;
-    const cover = `places/${folder}/story-dollhouse.gif`;
+    const cover = `${root}/${folder}/story-dollhouse.gif`;
     if (stored.has(cover)) body.unshift(`![The story at ${md(p.title)}, the whole of it in every frame, from the party's arrival to the end of what happens there](/${cover})`);
     // The world map has no map render of its own: it is the whole world laid
     // flat, which the front page shows.
-    if (p.scene === 'WorldMap') body.push('![The whole world map of The Broken Seal, laid out flat](/story/world.png)');
+    const world = `${renderRoot(game)}story/world.png`;
+    if (p.scene === 'WorldMap' && stored.has(world)) body.push(`![The whole world map of ${GAME_TITLE[game]}, laid out flat](/${world})`);
     // Its maps, a place drawn more than one way (Kolima Forest before and
     // after Tret lifts the curse, Vale on the stormy night as each rock falls)
     // once for each way, captioned with the moment: as the game first draws
     // it, then the moments in the order their flags pile up.
-    const maps = mine.filter((r) => r.kind === 'map').map((r) => ({ ...r, moment: moment(r.variant, r.scene) }));
+    const maps = mine.filter((r) => r.kind === 'map').map((r) => ({ ...r, moment: moment(r.variant, r.scene, game) }));
     maps.sort((a, b) => a.moment.order - b.moment.order || (a.moment.caption < b.moment.caption ? -1 : a.moment.caption > b.moment.caption ? 1 : 0) || a.file.localeCompare(b.file, 'en', { numeric: true }));
     for (const m of maps) {
       const alt = `The whole of ${p.title}${m.moment.caption ? `, ${m.moment.caption},` : ''} as the game draws it`;
       const caption = m.moment.caption ? md(m.moment.caption.charAt(0).toUpperCase() + m.moment.caption.slice(1)) : '';
-      body.push(`![${md(alt)}](/places/${m.file})${caption ? `\\\n${caption}` : ''}`);
+      body.push(`![${md(alt)}](/${root}/${m.file})${caption ? `\\\n${caption}` : ''}`);
     }
 
     // Its events: those the story index finds playing in this map, but for
     // the setting up on entry and the callbacks that show nothing.
-    const events = story.filter((e) => e.file === path && e.scenes.includes(p.id) && !/^entry\b/.test(e.trigger) && !(/^callback\b/.test(e.trigger) && !e.messages.length));
+    const events = game === 'tbs' ? story.filter((e) => e.file === path && e.scenes.includes(p.id) && !/^entry\b/.test(e.trigger) && !(/^callback\b/.test(e.trigger) && !e.messages.length)) : recordedEvents(p, path, mine, words2.symbol);
     // An event's recordings, by the names it was recorded under: its own
     // name, else, from renders made before the rows were named, its table and
     // index (`gValeStormyNight_Events[26]`, now `_Triggers`) or a function's name since renamed,
@@ -2072,7 +2134,7 @@ function placePages(scenes: SourceFile[]): Place[] {
     // An event its rows list in several of the overlay's scenes is recorded
     // once, in one of them: the others show that recording.
     const siblings = new Set(out.filter((q) => q.file === p.file && q.id !== p.id).map((q) => q.id));
-    const near = renders.filter((r) => siblings.has(r.number) && stored.has(`places/${r.file}`));
+    const near = renders.filter((r) => siblings.has(r.number) && stored.has(`${root}/${r.file}`));
     const recorded = [...mine, ...near];
     const aliases = new Map<string, string[]>();
     for (const n of new Set(recorded.filter((r) => r.kind === 'event-gif' || r.kind === 'event-segment').map((r) => r.event))) {
@@ -2151,7 +2213,7 @@ function placePages(scenes: SourceFile[]): Place[] {
         .replace(/\s+/g, ' ')
         .trim()
         .replace(/[.!?]$/, '');
-      let heading = plain.replace(/`([A-Z][A-Za-z0-9]*)`/g, (m, n: string) => (sceneIds.has(n) ? (out.find((q) => q.scene === n)?.title ?? placeTitle(n)) : m)).replace(/\s*\([^()]*\)/g, '');
+      let heading = plain.replace(/`([A-Z][A-Za-z0-9]*)`/g, (m, n: string) => (sceneIds(game).has(n) ? (out.find((q) => q.scene === n)?.title ?? placeTitle(game, n)) : m)).replace(/\s*\([^()]*\)/g, '');
       let rest = '';
       let colon = heading.search(/[:;]\s/);
       // Before the colon may be only where and when (`In Imil, until Saturos
@@ -2195,7 +2257,7 @@ function placePages(scenes: SourceFile[]): Place[] {
       // Code the game never plays has no recording here: started with nothing
       // staged, it shows the wrong moment. The Unused page shows the staged ones.
       const gifs = h.unused ? [] : recording(d.name);
-      const prose = linkNames(h.prose, 'tbs', d.name);
+      const prose = linkNames(h.prose, game, d.name);
       if (quote || gifs.length || prose) s.items.push({ label: '', gifs, quote, prose });
       sections.push(s);
       return s;
@@ -2221,7 +2283,7 @@ function placePages(scenes: SourceFile[]): Place[] {
       const about = who
         ? /^\d+$/.test(who)
           ? `Someone in ${p.title}`
-          : actorHeading(who, actor(p.file.path, who))
+          : actorHeading(who, actor(p.file.path, who), game)
         : /^search /.test(e.trigger)
           ? `Searching ${searched(rows[0])}`
           : (console.log(`  ${p.slug}: ${e.event} (${e.trigger}) has nothing to head it`), '');
@@ -2267,7 +2329,7 @@ function placePages(scenes: SourceFile[]): Place[] {
         const alt = s.heading.replace(/[`[\]\\]/g, '');
         for (const item of s.items) {
           if (item.label) parts.push(`*${item.label}*`);
-          for (const g of item.gifs) parts.push(`![${alt}${item.label ? `, ${item.label}` : ''}, as it plays](/places/${g})`);
+          for (const g of item.gifs) parts.push(`![${alt}${item.label ? `, ${item.label}` : ''}, as it plays](/${root}/${g})`);
           if (item.quote) parts.push(item.quote);
           if (item.prose) parts.push(item.prose);
         }
@@ -2280,13 +2342,13 @@ function placePages(scenes: SourceFile[]): Place[] {
     // Its card's picture: the shot of the party arriving, as the place
     // first looks, else the still of its first recording.
     const entrances = mine.filter((r) => r.kind === 'entrance').sort((a, b) => Number(!!a.variant) - Number(!!b.variant) || a.file.localeCompare(b.file, 'en', { numeric: true }));
-    const entrance = entrances.length ? stored.get(`places/${entrances[0].file}`) : undefined;
+    const entrance = entrances.length ? stored.get(`${root}/${entrances[0].file}`) : undefined;
     if (entrance) stills.set(entrance.pathname, entrance);
     // Its area, for the gallery's sections: the name the game shows on
     // arrival, the default of a rule that names some entrances apart
     // ("2=Lunpa; *=Vault" is Vault).
     Object.assign(p, { area: area.match(/(?:^|; )\*=([^;]+)/)?.[1] ?? (area.includes('=') ? '' : area), description, image: entrance ? stillPath(entrance) : '' });
-    page(`${GUIDE}/tbs/places/${p.slug}.md`, { title: p.title, description, source: p.file.path, image: p.image }, body.join('\n\n'));
+    page(`${GUIDE}/${game}/places/${p.slug}.md`, { title: p.title, description, source: p.file.path, image: p.image }, body.join('\n\n'));
   }
   return out;
 }
@@ -2308,23 +2370,23 @@ const ADJECTIVES = new Set(['open', 'over', 'shining', 'in', 'one', 'on']);
 // drain, Bane's last escape).
 const ORDINALS = new Set(['first', 'second', 'third', 'fourth', 'last']);
 const EVENTS = new Set(['drain', 'escape', 'path']);
-let proper: { words: Set<string>; pairs: Set<string> } | undefined;
-function names() {
-  if (!proper) {
+const proper = new Map<Game, { words: Set<string>; pairs: Set<string> }>();
+function names(game: Game) {
+  if (!proper.has(game)) {
     // A word the catalog writes capitalized inside a sentence and never in
     // lower case, the playable characters, whom it mostly prints by code, and
     // the pairs it writes capitalized together (Venus Lighthouse).
-    const all = [...text('games/tbs/text/en.po').matchAll(/msgstr ((?:"(?:[^"\\]|\\.)*"\n?)+)/g)].map((m) => m[1].replace(/"\n?"/g, '').replace(/\{[^}]*\}/g, ' ')).join(' ');
+    const all = [...text(`games/${game}/text/en.po`).matchAll(/msgstr ((?:"(?:[^"\\]|\\.)*"\n?)+)/g)].map((m) => m[1].replace(/"\n?"/g, '').replace(/\{[^}]*\}/g, ' ')).join(' ');
     const lower = new Set([...all.matchAll(/\b([a-z]+)\b/g)].map((m) => m[1]));
     const words = new Set([...all.matchAll(/[a-z,] ([A-Z][a-z]+)\b/g)].map((m) => m[1].toLowerCase()).filter((w) => !lower.has(w)));
-    for (const m of (text('games/tbs/include/game/character_ids.h').match(/enum CharacterId \{([\s\S]*?)\};/)?.[1] ?? '').matchAll(/^\s*([A-Z]+)\b/gm)) words.add(m[1].toLowerCase());
+    for (const name of characterNames(game)) words.add(name.toLowerCase());
     const pairs = new Set([...all.matchAll(/\b(?=([A-Z][a-z]+\.? [A-Z][a-z]+)\b)/g)].map((m) => m[1].replace('.', '').toLowerCase()));
-    proper = { words, pairs };
+    proper.set(game, { words, pairs });
   }
-  return proper;
+  return proper.get(game)!;
 }
-const properNoun = (word: string) => names().words.has(word);
-function moment(variant: string, scene: string): { caption: string; order: number } {
+const properNoun = (game: Game, word: string) => names(game).words.has(word);
+function moment(variant: string, scene: string, game: Game): { caption: string; order: number } {
   if (!variant) return { caption: '', order: -1 };
   const [name, flags = ''] = variant.split(/: (.*)/);
   const order = flags.split(';')[0].split(',').filter((f) => f.trim()).length;
@@ -2341,9 +2403,9 @@ function moment(variant: string, scene: string): { caption: string; order: numbe
   if (shared && verb(words[shared]) && !words.slice(shared + 1).some(verb)) shared--;
   words = words.slice(shared);
   const cap = (w: string, i: number, ws: string[]) =>
-    properNoun(w) || (i > 0 && names().pairs.has(`${ws[i - 1]} ${w}`) && properNoun(ws[i - 1])) || w.length === 1 ? w.charAt(0).toUpperCase() + w.slice(1) : w;
+    properNoun(game, w) || (i > 0 && names(game).pairs.has(`${ws[i - 1]} ${w}`) && properNoun(game, ws[i - 1])) || w.length === 1 ? w.charAt(0).toUpperCase() + w.slice(1) : w;
   const phrase = (ws: string[]) => ws.map(cap).join(' ').replace(/(^|[^e]) party\b/, '$1 the party').trim();
-  const the = (ws: string[]) => (ws.length && properNoun(ws[0]) ? phrase(ws) : `the ${phrase(ws)}`);
+  const the = (ws: string[]) => (ws.length && properNoun(game, ws[0]) ? phrase(ws) : `the ${phrase(ws)}`);
   const at = words.findIndex((w, i) => i > 0 && verb(w));
   const last = words.length - 1;
   let caption: string;
@@ -2352,11 +2414,11 @@ function moment(variant: string, scene: string): { caption: string; order: numbe
   else if (words[0] === 'at') caption = `at ${the(words.slice(1))}`;
   else if (EVENTS.has(words[last]) && ORDINALS.has(words[last - 1])) {
     const who = words.slice(0, last - 1);
-    caption = `after ${who.length === 1 && properNoun(who[0]) ? `${phrase(who)}'s` : 'the'} ${words[last - 1]} ${words[last]}`;
+    caption = `after ${who.length === 1 && properNoun(game, who[0]) ? `${phrase(who)}'s` : 'the'} ${words[last - 1]} ${words[last]}`;
   } else if (at > 0) {
     const subject = words.slice(0, at);
     const rest = words.slice(at);
-    const plural = /[^s]s$/.test(subject[subject.length - 1]) && !properNoun(subject[subject.length - 1]);
+    const plural = /[^s]s$/.test(subject[subject.length - 1]) && !properNoun(game, subject[subject.length - 1]);
     const be = PERFECT.has(rest[0]) ? 'had' : plural ? 'were' : 'was';
     caption = ACTIVE.has(rest[0]) ? `after ${the(subject)} ${phrase(rest)}` : `after ${the(subject)} ${be} ${phrase(rest)}`;
   } else if (ACTIVE.has(words[0])) caption = `after the party ${phrase(words)}`;
@@ -2689,7 +2751,7 @@ console.log(`recordings: ${placedRecordings.size} of ${recordings.get().length} 
 for (const r of orphans) console.log(`  no reach line names ${r.name} (${r.ability}, ${r.file})`);
 for (const [id, at] of placedRecordings) if (at.length > 1) console.log(`  ability ${id} is shown ${at.length} times: ${at.join(', ')}`);
 for (const p of reachProblems) console.log(`  ${p}`);
-places(all.get('tbs')!);
+for (const game of GAMES) places(all.get(game)!, game);
 unusedPage(all.get('tbs')!, site);
 arrangedSidebar(site);
 const failures = checkArrangement();

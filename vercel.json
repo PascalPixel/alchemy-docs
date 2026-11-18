@@ -38,8 +38,8 @@
       "destination": "https://n2k4znkfbewwaw0l.public.blob.vercel-storage.com/story/:path*"
     },
     {
-      "source": "/tla/:kind(places|abilities|guides|story)/:path*",
-      "destination": "https://n2k4znkfbewwaw0l.public.blob.vercel-storage.com/tla/:kind/:path*"
+      "source": "/tla/:kind(places|abilities|guides|story)/:path(.*\\.(?:png|gif|tsv))",
+      "destination": "https://n2k4znkfbewwaw0l.public.blob.vercel-storage.com/tla/:kind/:path"
     }
   ],
   "headers": [

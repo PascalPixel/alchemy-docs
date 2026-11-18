@@ -7,7 +7,7 @@
 // abilities/index.tsv) say what each picture shows. The build fetches the
 // manifest and the records it reads into build/renders (fetchRecords) before
 // it reads them.
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 
 export const PREFIXES = ['places', 'abilities', 'guides', 'story'] as const;
@@ -24,13 +24,19 @@ export const MANIFEST_BLOB = 'renders-manifest.tsv';
 export const MANIFEST_HEAD = ['pathname', 'sha256', 'bytes', 'width', 'height'];
 // The records the build reads, by their pathname in the store.
 export const RECORDS = ['places/index.tsv', 'abilities/index.tsv'];
+// The records the build reads where the store holds them: The Lost Age's
+// places are written without pictures until its index is published.
+export const OPTIONAL_RECORDS = ['tla/places/index.tsv'];
 // Where the build keeps what it fetched from the store; git ignores build/.
 export const FETCHED = 'build/renders';
 
 // A picture's site path (`/places/vale-storm/map-0.png`) when it is a render.
+// A game's own pages share a folder with its renders (/tla/places/daila), so
+// under a game's prefix only a picture file is one.
 export const renderPath = (src: string): string | undefined => {
   const path = src.split(/[?#]/)[0].replace(/^\//, '');
   const own = GAME_PREFIXES.reduce((p, g) => (p.startsWith(`${g}/`) ? p.slice(g.length + 1) : p), path);
+  if (own !== path && !/\.(?:png|gif)$/i.test(path)) return undefined;
   return PREFIXES.some((p) => own.startsWith(`${p}/`)) && !path.endsWith('.tsv') ? path : undefined;
 };
 
@@ -76,10 +82,15 @@ export async function fetchStored(docs: string, pathname: string): Promise<strin
 // Fetches the manifest and the records the build reads into build/renders.
 // The store is public, so a build needs no token.
 export async function fetchRecords(docs: string) {
-  for (const pathname of [MANIFEST_BLOB, ...RECORDS]) {
+  for (const pathname of [MANIFEST_BLOB, ...RECORDS, ...OPTIONAL_RECORDS]) {
     const text = await fetchStored(docs, pathname);
-    if (text === undefined) throw new Error(`${pathname}: the store doesn't hold it`);
     const file = join(docs, FETCHED, pathname);
+    // An optional record the store doesn't hold leaves no copy behind.
+    if (text === undefined && OPTIONAL_RECORDS.includes(pathname)) {
+      rmSync(file, { force: true });
+      continue;
+    }
+    if (text === undefined) throw new Error(`${pathname}: the store doesn't hold it`);
     mkdirSync(dirname(file), { recursive: true });
     writeFileSync(file, text);
   }
