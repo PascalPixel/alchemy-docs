@@ -554,8 +554,10 @@ const GUIDE = '(guide)';
 
 const gameOf = (path: string) => path.split('/')[1] as Game;
 const reference = (game: Game) => `/${game}/source`;
-const dirPage = (dir: string) => `${reference(gameOf(dir))}/${rel(dir)}`;
-const pageOf = (path: string) => `${dirPage(dirname(path))}/${fileSlug(path)}`;
+const dirPage = (dir: string) => (unreferenced(`${dir}/`) ? `${github.replace('/blob/', '/tree/')}/${dir}` : `${reference(gameOf(dir))}/${rel(dir)}`);
+// A file's page; a game without source pages has its files on GitHub.
+const unreferenced = (path: string) => !REFERENCED.some((g) => path.startsWith(`games/${g}/`));
+const pageOf = (path: string) => (unreferenced(path) ? `${github}/${path}` : `${dirPage(dirname(path))}/${fileSlug(path)}`);
 
 // The headings of a file or structure page, whose ids no member may take.
 const SECTIONS = {
@@ -621,6 +623,7 @@ function placeStructs(game: Game, files: SourceFile[]) {
 }
 
 function urlOf(file: SourceFile, d: Decl): string {
+  if (unreferenced(file.path)) return `${github}/${file.path}#L${d.line}`;
   return structPages.get(d) ?? `${pageOf(file.path)}#${idsOf(file).get(memberKey(d))}`;
 }
 
@@ -2681,7 +2684,9 @@ rmSync(content, { recursive: true, force: true });
 
 const all = new Map<Game, SourceFile[]>();
 for (const game of GAMES) {
-  const files = REFERENCED.includes(game) ? ROOTS.flatMap((r) => walk(`games/${game}/${r}`)).map((p) => readFile(p, game)) : [];
+  // Every game's source is read, for its places; only a referenced game's
+  // gets pages of its own.
+  const files = ROOTS.flatMap((r) => walk(`games/${game}/${r}`)).map((p) => readFile(p, game));
   all.set(game, files);
   filesOf.set(game, files);
   // The folders that once had a page per file, for the old anchors of the
