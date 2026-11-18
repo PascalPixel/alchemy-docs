@@ -54,11 +54,8 @@ type Game = 'tbs' | 'tla';
 // The games with pages, each a front page, its division pages and their
 // folder guides in Alchemy (games/<game>/README.md).
 const GAMES: Game[] = ['tbs', 'tla'];
-// The games whose source has pages of its own (/tbs/source). The Lost Age's
-// code is still one small file a routine, which would be eight thousand
-// pages, more than the site's build has memory for: its guides link its
-// files on GitHub until they are gathered as The Broken Seal's are.
-const REFERENCED: Game[] = ['tbs'];
+// The games whose source has pages of its own (/tbs/source, /tla/source).
+const REFERENCED: Game[] = ['tbs', 'tla'];
 const ROOTS = ['src', 'include'];
 // A folder whose C was larger than this once had a page per file, and a
 // smaller one a single page for all its files, whose old anchors still lead
