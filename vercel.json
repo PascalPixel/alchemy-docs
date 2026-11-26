@@ -19,6 +19,10 @@
   ],
   "rewrites": [
     {
+      "source": "/js/script.js",
+      "destination": "https://plausible.io/js/pa-ty9InC-b0Id53R_QoQuJ1.js"
+    },
+    {
       "source": "/:path(.*)\\.md",
       "destination": "/llms.mdx/:path.md"
     },
