@@ -1,11 +1,5 @@
-import { source } from '@/lib/source';
-import { DocsLayout } from 'fumadocs-ui/layouts/spacious';
-import { baseOptions } from '@/lib/layout.shared';
+import { Sidebar } from '@/components/sidebar';
 
 export default function Layout({ children }: LayoutProps<'/'>) {
-  return (
-    <DocsLayout tree={source.getPageTree()} {...baseOptions()}>
-      {children}
-    </DocsLayout>
-  );
+  return <Sidebar>{children}</Sidebar>;
 }
