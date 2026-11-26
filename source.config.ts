@@ -3,6 +3,7 @@ import { metaSchema, pageSchema } from 'fumadocs-core/source/schema';
 import { remarkMdxMermaid } from 'fumadocs-core/mdx-plugins';
 import type { Root, RootContent } from 'mdast';
 import { readManifest } from './scripts/store';
+import { remarkFigures } from './src/lib/remark-figures';
 
 // The renders are in the Blob store, which refuses a request for every picture's size: the sizes come from its manifest.
 // A render is pixel art, shown at a whole multiple of its size: a 240-pixel screen three times over, or as wide as a phone.
@@ -28,7 +29,7 @@ export const docs = defineDocs({
     dynamic: true,
     // lead: 'body' when the page's text opens with its description, which is then not shown twice.
     schema: pageSchema.extend({ lead: pageSchema.shape.icon }),
-    mdxOptions: applyMdxPreset({ remarkImageOptions: { external: false }, remarkPlugins: [remarkRenderSizes, remarkMdxMermaid] }),
+    mdxOptions: applyMdxPreset({ remarkImageOptions: { external: false }, remarkPlugins: [remarkRenderSizes, remarkFigures, remarkMdxMermaid] }),
     postprocess: {
       // As text: the default is a component, which dynamic mode writes out as its tag.
       includeProcessedMarkdown: { output: 'string' },

@@ -86,3 +86,33 @@ img.render {
 .dark img.render {
     outline-color: hsl(6, 40%, 24%);
 }
+
+/* Figures (lib/remark-figures.ts): each picture centred over its caption, several side by side where they fit. */
+.figures {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem 1.5rem;
+    margin: 1.5rem 0;
+}
+.figures figure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 100%;
+    margin: 0;
+}
+.figures figure[style] :is(span, img) {
+    width: 100%;
+}
+.figures figure img {
+    margin: 0;
+}
+.figures figcaption {
+    margin-top: 0.5rem;
+    max-width: 40rem;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    text-align: center;
+    color: var(--color-fd-muted-foreground);
+}
