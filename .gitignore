@@ -24,6 +24,9 @@ yarn-error.log*
 .env*.local
 .vercel
 next-env.d.ts
-# made by scripts/renders.ts from the Blob store
+# made by `bun run content` (scripts/content.ts) from Alchemy, and by
+# scripts/renders.ts from the Blob store
+/content/docs/
 /build/
+/public/pictures/
 /public/stills/

@@ -25,7 +25,8 @@ export const docs = defineDocs({
   docs: {
     // Each page is compiled when it is written: the bundled build runs out of memory.
     dynamic: true,
-    schema: pageSchema,
+    // lead: 'body' when the page's text opens with its description, which is then not shown twice.
+    schema: pageSchema.extend({ lead: pageSchema.shape.icon }),
     mdxOptions: applyMdxPreset({ remarkImageOptions: { external: false }, remarkPlugins: [remarkRenderSizes] }),
     postprocess: {
       // As text: the default is a component, which dynamic mode writes out as its tag.

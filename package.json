@@ -3,8 +3,9 @@
   "version": "0.0.69",
   "private": true,
   "scripts": {
-    "build": "next build --webpack",
-    "dev": "next dev",
+    "content": "bun scripts/renders.ts fetch && bun scripts/story.ts > /dev/null && bun scripts/content.ts",
+    "build": "bun run content && next build --webpack",
+    "dev": "bun run content && next dev",
     "start": "serve out",
     "types:check": "next typegen && tsc --noEmit"
   },
