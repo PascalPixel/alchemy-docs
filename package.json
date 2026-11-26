@@ -2,6 +2,7 @@
   "name": "alchemy-docs",
   "version": "0.0.69",
   "private": true,
+  "type": "module",
   "scripts": {
     "content": "bun scripts/renders.ts fetch && bun scripts/story.ts > /dev/null && bun scripts/content.ts && fumadocs-mdx && bun scripts/sidebar.ts",
     "build": "bun run content && next build --webpack && bun scripts/links.ts",
