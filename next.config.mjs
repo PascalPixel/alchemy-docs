@@ -9,6 +9,8 @@ if (process.env.IS_NEXT_WORKER !== 'true' && process.argv.includes('build')) pro
 const config = {
   output: 'export',
   reactStrictMode: true,
+  // A static export has no image server.
+  images: { unoptimized: true },
   // fumadocs-mdx's dynamic mode compiles pages with esbuild, a native program.
   serverExternalPackages: ['esbuild'],
   experimental: { cpus: 4 },

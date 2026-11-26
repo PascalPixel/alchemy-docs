@@ -86,6 +86,9 @@ img.render {
 .dark img.render {
     outline-color: hsl(6, 40%, 24%);
 }
+dialog img.render {
+    outline: none;
+}
 
 /* Figures (lib/remark-figures.ts): each picture centred over its caption, several side by side where they fit. */
 .figures {
