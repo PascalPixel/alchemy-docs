@@ -1,7 +1,7 @@
 import { createGetUrl } from 'fumadocs-core/source';
 
 export const appName = 'Alchemy';
-export const docsRoute = '/docs';
+export const docsRoute = '/';
 export const docsImageRoute = '/og/docs';
 export const siteUrl = 'https://alchemy.pascalpixel.com';
 
