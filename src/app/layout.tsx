@@ -9,7 +9,7 @@ const inter = Inter({
   subsets: ['latin'],
 });
 
-export const metadata: Metadata = { metadataBase: new URL(siteUrl), icons: '/icon.svg' };
+export const metadata: Metadata = { metadataBase: new URL(siteUrl), icons: { icon: '/icon.svg', apple: '/home-icon/180.png' } };
 
 export default function Layout({ children }: LayoutProps<'/'>) {
   return (
