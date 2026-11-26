@@ -1,47 +1,24 @@
-# alchemy-docs
+# 🌋 Alchemy Docs
 
-This is a Next.js application generated with
-[Create Fumadocs](https://github.com/fuma-nama/fumadocs).
+The documentation site for [Alchemy](https://github.com/PascalPixel/alchemy), [alchemy.pascalpixel.com](https://alchemy.pascalpixel.com), built with [Fumadocs](https://fumadocs.dev) on [Next.js](https://nextjs.org). Its pages are written from Alchemy's own READMEs and the `///` comments in its C, and its recordings of the game are kept in a Vercel Blob store.
 
-It is a Next.js app with [Static Export](https://nextjs.org/docs/app/guides/static-exports) configured.
+![The Interface page: Isaac talks to Garet's sister in Vale above the page's map of what each button opens, beside the guide's sidebar](.github/screenshot.png)
 
-Run development server:
+## Build
+
+With [Bun](https://bun.sh), and Alchemy checked out beside this folder:
 
 ```bash
-npm run dev
-# or
-pnpm dev
-# or
-yarn dev
+bun install
+bun run build
 ```
 
-Open http://localhost:3000 with your browser to see the result.
+The site is in `out`, and `bun run dev` serves it while you edit. To read an Alchemy somewhere else, set `ALCHEMY=/path/to/alchemy`. Vercel builds and publishes the site on every push here, and once a day, at midnight UTC, when Alchemy's main branch changed that day.
 
-## Explore
+The app is Fumadocs' Next.js template (`create-fumadocs-app`, static export) with the site's colours, logo, robots and sitemap; the docs are at the site's root rather than under `/docs`. The generator writes the sidebar's tabs and order as `meta.json` files.
 
-In the project, you can see:
+To build on a machine of 4 cores and 8 GB, three things differ from the template: each page is compiled when it is written (`source.config.ts`, `patches/`, four workers with a 512 MB heap in `next.config.mjs`), the sidebar is written once before the build (`scripts/sidebar.ts`) rather than into every page, and the search loads one file of the pages' text (`src/app/search.json`) rather than an index.
 
-- `lib/source.ts`: Code for content source adapter, [`loader()`](https://fumadocs.dev/docs/headless/source-api) provides the interface to access your content.
-- `lib/layout.shared.tsx`: Shared options for layouts, optional but preferred to keep.
+## Credits
 
-| Route                     | Description                                            |
-| ------------------------- | ------------------------------------------------------ |
-| `app/(home)`              | The route group for your landing page and other pages. |
-| `app/docs`                | The documentation layout and pages.                    |
-| `app/api/search/route.ts` | The Route Handler for search.                          |
-
-### Fumadocs MDX
-
-Collections are defined with the [Macro API](https://fumadocs.dev/docs/mdx/macro) in `lib/source.ts`.
-
-Read the [Introduction](https://fumadocs.dev/docs/mdx) for further details.
-
-## Learn More
-
-To learn more about Next.js and Fumadocs, take a look at the following
-resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js
-  features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [Fumadocs](https://fumadocs.dev) - learn about Fumadocs
+The site documents Alchemy, whose [acknowledgements](https://github.com/PascalPixel/alchemy#acknowledgements) name the work it builds on.
