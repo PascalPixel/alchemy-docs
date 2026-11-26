@@ -28,7 +28,9 @@
     "postcss": "^8.5.32",
     "serve": "^14.2.7",
     "tailwindcss": "^4.3.5",
-    "typescript": "^7.0.2"
+    "tree-sitter-c": "0.24.1",
+    "typescript": "^7.0.2",
+    "web-tree-sitter": "0.25.10"
   },
   "patchedDependencies": {
     "fumadocs-mdx@15.6.4": "patches/fumadocs-mdx@15.6.4.patch"
