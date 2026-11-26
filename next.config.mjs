@@ -13,6 +13,8 @@ const config = {
   images: { unoptimized: true },
   // fumadocs-mdx's dynamic mode compiles pages with esbuild, a native program.
   serverExternalPackages: ['esbuild'],
+  // search.json reads every page, which takes longer than Next's default minute.
+  staticPageGenerationTimeout: 600,
   experimental: { cpus: 4 },
   webpack: (config) => {
     // fumadocs-mdx's other compiler, which is not installed.
