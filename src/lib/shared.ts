@@ -1,13 +1,14 @@
 import { createGetUrl } from 'fumadocs-core/source';
 
-export const appName = 'My App';
+export const appName = 'Alchemy';
 export const docsRoute = '/docs';
 export const docsImageRoute = '/og/docs';
+export const siteUrl = 'https://alchemy.pascalpixel.com';
 
 // fill this with your actual GitHub info, for example:
 export const gitConfig = {
-  user: 'fuma-nama',
-  repo: 'fumadocs',
+  user: 'PascalPixel',
+  repo: 'alchemy',
   branch: 'main',
 };
 
