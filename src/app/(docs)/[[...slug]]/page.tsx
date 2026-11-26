@@ -18,11 +18,11 @@ export default async function Page(props: PageProps<'/[[...slug]]'>) {
   const page = source.getPage(params.slug);
   if (!page) notFound();
 
-  const MDX = page.data.body;
+  const { body: MDX, toc } = await page.data.load();
   const markdownUrl = `/llms.mdx${page.url}.md`;
 
   return (
-    <DocsPage toc={page.data.toc} full={page.data.full}>
+    <DocsPage toc={toc} full={page.data.full}>
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription className="mb-0">{page.data.description}</DocsDescription>
       <div className="flex flex-row gap-2 items-center border-b pb-6">

@@ -1,0 +1,50 @@
+diff --git a/dist/runtime/dynamic.js b/dist/runtime/dynamic.js
+index 4655c96ae5a466b888c03bc9e789b901516eea85..f24b610531d597c82cd68418fabac838646b0d13 100644
+--- a/dist/runtime/dynamic.js
++++ b/dist/runtime/dynamic.js
+@@ -53,8 +53,13 @@ async function dynamic(configExports, coreOptions) {
+ 		}
+ 		for (const entry of entries) {
+ 			head[entry.info.path] = () => entry.data;
+-			let cachedResult;
+-			body[entry.info.path] = () => cachedResult ??= compile(entry);
++			// A page is compiled each time it is asked for, and only one compile
++			// of it runs at a time: a site of thousands of pages would otherwise
++			// keep every compiled page in memory for as long as the process runs.
++			let pending;
++			body[entry.info.path] = () => pending ??= compile(entry).finally(() => {
++				pending = void 0;
++			});
+ 		}
+ 		return {
+ 			head,
+diff --git a/dist/runtime/server.js b/dist/runtime/server.js
+index b71c90bc0ed619e64b4b48314dd1059c142d5f9e..12ac9dd697bf84af6bb37def16a39b3b38a64293 100644
+--- a/dist/runtime/server.js
++++ b/dist/runtime/server.js
+@@ -121,16 +121,21 @@ function createDocAt(doc, props, base) {
+ 		const exports = doc._exports;
+ 		return merge(base, toDocData(exports, props), createDocMethods(info, () => exports, props));
+ 	}
+-	let exports;
++	// The page's compiled exports are held only while they are asked for, and
++	// released after: a site of thousands of pages would otherwise keep every
++	// compiled page in memory for as long as the process runs.
+ 	let loading;
+-	const load = () => loading ??= track(content().then((v) => toDocData(exports = v, props)));
++	const loadExports = () => loading ??= content().then((v) => [v, toDocData(v, props)]).finally(() => {
++		loading = void 0;
++	});
++	const load = () => track(loadExports().then(([, data]) => data));
+ 	return {
+ 		...base,
+-		...createDocMethods(info, () => load().then(() => exports), props),
++		...createDocMethods(info, () => loadExports().then(([exports]) => exports), props),
+ 		_content: content,
+ 		load,
+ 		async structuredData() {
+-			await load();
++			const [exports] = await loadExports();
+ 			const { structuredData } = exports;
+ 			return typeof structuredData === "function" ? renderStructuredData(structuredData, props ?? {}) : structuredData;
+ 		},
