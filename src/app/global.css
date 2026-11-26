@@ -73,3 +73,16 @@ html > body[data-scroll-locked] {
     --color-fd-border: hsla(20, 40%, 14%, 0.22);
     color: var(--color-fd-foreground);
 }
+
+/* A render of the game: hard pixels, centred, in a rounded band drawn outside it. */
+img.render {
+    height: auto;
+    margin-inline: auto;
+    image-rendering: pixelated;
+    border-radius: 8px;
+    outline: 5px solid hsl(6, 66%, 83%);
+    background: var(--color-fd-muted);
+}
+.dark img.render {
+    outline-color: hsl(6, 40%, 24%);
+}
