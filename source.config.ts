@@ -1,5 +1,6 @@
 import { applyMdxPreset, defineConfig, defineDocs } from 'fumadocs-mdx/config';
 import { metaSchema, pageSchema } from 'fumadocs-core/source/schema';
+import { remarkMdxMermaid } from 'fumadocs-core/mdx-plugins';
 import type { Root, RootContent } from 'mdast';
 import { readManifest } from './scripts/store';
 
@@ -27,7 +28,7 @@ export const docs = defineDocs({
     dynamic: true,
     // lead: 'body' when the page's text opens with its description, which is then not shown twice.
     schema: pageSchema.extend({ lead: pageSchema.shape.icon }),
-    mdxOptions: applyMdxPreset({ remarkImageOptions: { external: false }, remarkPlugins: [remarkRenderSizes] }),
+    mdxOptions: applyMdxPreset({ remarkImageOptions: { external: false }, remarkPlugins: [remarkRenderSizes, remarkMdxMermaid] }),
     postprocess: {
       // As text: the default is a component, which dynamic mode writes out as its tag.
       includeProcessedMarkdown: { output: 'string' },
