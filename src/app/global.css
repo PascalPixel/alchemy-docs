@@ -86,6 +86,13 @@ img.render {
 .dark img.render {
     outline-color: hsl(6, 40%, 24%);
 }
+img.render {
+    filter: url(#alchemy-lit);
+}
+/* The take-apart pictures' white canvases glare on the dark theme. */
+.dark img.render[src*="/guides/"][src*=".png"] {
+    filter: url(#alchemy-lit) brightness(0.88);
+}
 dialog img.render {
     outline: none;
 }
