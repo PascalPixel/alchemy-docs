@@ -4,5 +4,53 @@
   "installCommand": "bun install --frozen-lockfile",
   "outputDirectory": "out",
   "trailingSlash": false,
-  "cleanUrls": true
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/places/:path*",
+      "destination": "https://n2k4znkfbewwaw0l.public.blob.vercel-storage.com/places/:path*"
+    },
+    {
+      "source": "/abilities/:path*",
+      "destination": "https://n2k4znkfbewwaw0l.public.blob.vercel-storage.com/abilities/:path*"
+    },
+    {
+      "source": "/guides/:path*",
+      "destination": "https://n2k4znkfbewwaw0l.public.blob.vercel-storage.com/guides/:path*"
+    },
+    {
+      "source": "/story/:path*",
+      "destination": "https://n2k4znkfbewwaw0l.public.blob.vercel-storage.com/story/:path*"
+    },
+    {
+      "source": "/tla/:kind(places|abilities|guides|story)/:path(.*\\.(?:png|gif|tsv))",
+      "destination": "https://n2k4znkfbewwaw0l.public.blob.vercel-storage.com/tla/:kind/:path"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(tla/)?(places|abilities|guides|story)/:path*",
+      "headers": [
+        {
+          "key": "x-vercel-enable-rewrite-caching",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "source": "/(tla/)?(places|abilities|guides|story)/:path*",
+      "missing": [
+        {
+          "type": "query",
+          "key": "v"
+        }
+      ],
+      "headers": [
+        {
+          "key": "CDN-Cache-Control",
+          "value": "max-age=3600"
+        }
+      ]
+    }
+  ]
 }

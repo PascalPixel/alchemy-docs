@@ -9,6 +9,7 @@
     "types:check": "next typegen && tsc --noEmit"
   },
   "dependencies": {
+    "@vercel/blob": "^2.9.0",
     "cn": "^0.5.2",
     "fumadocs-core": "16.19.7",
     "fumadocs-mdx": "15.6.4",
