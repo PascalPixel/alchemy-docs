@@ -27,6 +27,7 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { Language, type Node, Parser } from 'web-tree-sitter';
 import { icons } from 'lucide-react';
+import { blankComments, commentAbove, commentLines, noteOn, rowsOf, type CommentRow } from './comments';
 import { FETCHED, readFetched, readManifest, renderPath, storeUrl, versioned, type Entry } from './store';
 
 const docs = fileURLToPath(new URL('..', import.meta.url));
@@ -51,7 +52,7 @@ const sceneIdsByGame = new Map<Game, Map<string, number>>();
 function sceneIds(game: Game): Map<string, number> {
   if (!sceneIdsByGame.has(game)) {
     const table = join(repo, sceneTable(game));
-    const rows = existsSync(table) ? [...readFileSync(table, 'utf8').matchAll(/^\tscene (\w*),/gm)] : [];
+    const rows = existsSync(table) ? [...readFileSync(table, 'utf8').matchAll(/^[ \t]+scene (\w*),/gm)] : [];
     sceneIdsByGame.set(game, new Map(rows.map((m, i) => [m[1], i] as const)));
   }
   return sceneIdsByGame.get(game)!;
@@ -249,14 +250,6 @@ function withoutEvidence(body: string[]): string[] {
   return out;
 }
 
-// A comment's lines as written: `/*` and `*/` gone, and the indentation of a
-// later line up to the three columns it starts in under the text, so that a
-// line indented further is still indented.
-function commentLines(text: string): string[] {
-  const inner = text.replace(/^\/\*[ \t]?/, '').replace(/\s*\*\/$/, '');
-  return inner.split('\n').map((l, i) => (i ? l.replace(/^\t*/, '').replace(/^ {0,3}/, '') : l));
-}
-
 // A comment's text: a laid-out paragraph (a line indented past the text)
 // kept as a code block, the rest as Markdown.
 function docText(lines: string[]): string {
@@ -267,7 +260,19 @@ function docText(lines: string[]): string {
     if (!para.length) return;
     // Laid out: columns (a run of spaces inside a line), deep indentation or
     // box drawing. Prose indented two spaces continues the list item above it.
-    const laidOut = !/^\s*- /.test(para[0]) && para.some((l) => /\S {2,}\S/.test(l.trim()) || /^ {4,}\S/.test(l) || /[│┌└├┐┘┤─]/.test(l));
+    // Where the source's tabs became spaces (eight columns, less the `// `),
+    // prose is indented six columns: a list item's later lines and the items
+    // under it, and lines of a paragraph with no columns. That is shown as
+    // Markdown indents it, two spaces under an item.
+    const inList: boolean[] = [];
+    for (let i = 0, list = false; i < para.length; i++) {
+      list = /^\s*- /.test(para[i]) || (list && /^\s/.test(para[i]));
+      inList.push(list);
+    }
+    const columns = para.some((l) => /\S {2,}\S/.test(l.trim()) || /[│┌└├┐┘┤─]/.test(l));
+    const prose = para.map((l, i) => /^ {4,}\S/.test(l) && (inList[i] || (!columns && /^ {6}\S/.test(l))));
+    const laidOut = !/^\s*- /.test(para[0]) && (columns || para.some((l, i) => /^ {4,}\S/.test(l) && !prose[i]));
+    if (!laidOut) para = para.map((l, i) => (prose[i] ? (inList[i] ? '  ' : '') + l.trimStart() : l));
     out.push(laidOut ? '```text\n' + para.join('\n') + '\n```' : md(para.join('\n')));
     para = [];
   };
@@ -282,39 +287,34 @@ function docText(lines: string[]): string {
 // The row a node's text ends on: a directive's node takes in its newline.
 const endRow = (n: Node) => (n.endPosition.column === 0 && n.endPosition.row > n.startPosition.row ? n.endPosition.row - 1 : n.endPosition.row);
 
-// The source writes every comment as a block comment. Where it stands says
-// what it is: one after code on the same line is that code's note; the one on
-// the lines directly above a declaration is its comment; the file's own
-// comment is its first, set off by a blank line or an #include.
+// The source writes every comment as a run of `//` lines (comments.ts reads
+// them). Where it stands says what it is: one after code on the same line is
+// that code's note, with the lines that continue it; the run directly above
+// a declaration is its comment; the file's own comment is its first, set off
+// by a blank line or an #include.
 const isComment = (n: Node | null): n is Node => !!n && n.type === 'comment';
-const isTrailing = (c: Node) => {
-  const p = c.previousNamedSibling;
-  return !!p && p.type !== 'comment' && endRow(p) === c.startPosition.row;
-};
 
-// clang-format reads its switches as comments of their own, so a table's
-// comment sits above its `/* clang-format off */`.
-const isFormatSwitch = (n: Node) => /^\/[/*] clang-format (off|on)\s*(\*\/)?$/.test(n.text);
+// The file being read, line by line, and the first row of its own comment,
+// which no declaration takes as its own.
+let fileLines: string[] = [];
+let fileRows: CommentRow[] = [];
+let fileCommentRow = -1;
 
-// The file's own comment, which no declaration takes as its own.
-let fileComment = -1;
-
-// The comment directly above a node, with no blank line between, past a
-// clang-format switch. A comment above that one heads what follows it.
-function docAbove(node: Node): string {
-  let row = node.startPosition.row;
-  for (let c = node.previousNamedSibling; isComment(c) && !isTrailing(c) && endRow(c) === row - 1; c = c.previousNamedSibling) {
-    if (c.startIndex === fileComment) break;
-    if (!isFormatSwitch(c)) return docText(commentLines(c.text));
-    row = c.startPosition.row;
-  }
-  return '';
+// The comment directly above a row, with no blank line between, past a
+// clang-format switch.
+function commentBefore(row: number): string {
+  const c = commentAbove(fileLines, fileRows, row);
+  return c && c.start !== fileCommentRow ? docText(commentLines(c.text)) : '';
 }
+const docAbove = (node: Node) => commentBefore(node.startPosition.row);
+
+// A comment node's text: a note after code with the lines that continue it.
+const noteText = (c: Node) => (c.text.startsWith('//') ? noteOn(fileLines, fileRows, c.startPosition.row) || c.text : c.text);
 
 // The note after a node, on its own last line.
 function docAfter(node: Node): string {
   const c = node.nextNamedSibling;
-  return isComment(c) && c.startPosition.row === endRow(node) ? docText(commentLines(c.text)) : '';
+  return isComment(c) && c.startPosition.row === endRow(node) ? docText(commentLines(noteText(c))) : '';
 }
 
 function identifiers(node: Node, into: Set<string>) {
@@ -343,7 +343,7 @@ function fieldsOf(body: Node | null): Field[] {
       // name is inside the field's node.
       const inside = c.descendantsOfType('comment').filter((n): n is Node => !!n);
       const type = c.type === 'enumerator' ? oneLine(c.childForFieldName('value')?.text ?? '') : oneLine(inside.reduce((t, n) => t.replace(n.text, ' '), c.text).replace(/;\s*$/, ''));
-      fields.push({ name, type, doc: [docAbove(c), ...inside.map((n) => docText(commentLines(n.text))), docAfter(c)].filter(Boolean).join('\n\n') });
+      fields.push({ name, type, doc: [docAbove(c), ...inside.map((n) => docText(commentLines(noteText(n)))), docAfter(c)].filter(Boolean).join('\n\n') });
     } else if (/^preproc_(if|ifdef|else|elif)$/.test(c.type)) {
       fields.push(...fieldsOf(c));
     }
@@ -360,7 +360,7 @@ function isGuard(node: Node, name: string): boolean {
     !node.childForFieldName('value') &&
     ifndef?.type === 'preproc_ifdef' &&
     ifndef.parent?.type === 'translation_unit' &&
-    ifndef.text.startsWith('#ifndef') &&
+    /^#\s*ifndef\b/.test(ifndef.text) &&
     ifndef.childForFieldName('name')?.text === name
   );
 }
@@ -394,10 +394,13 @@ function declsOf(parent: Node, out: Decl[]) {
     } else if (node.type === 'preproc_def' || node.type === 'preproc_function_def') {
       const name = node.childForFieldName('name')?.text ?? '';
       if (/^ALCHEMY_\w+_H$/.test(name) || isGuard(node, name)) continue;
-      // A note on the #define's line is a comment inside the directive's node.
-      const first = node.text.split('\n')[0].split(/\s*(?=\/\*)/)[0];
-      const notes = node.namedChildren.filter(isComment).map((c) => docText(commentLines(c.text)));
-      add({ kind: 'macro', name, signature: first.replace(/\\$/, '').trim(), doc: [docAbove(node), ...notes, docAfter(node)].filter(Boolean).join('\n\n') });
+      // A note on the #define's line is on its first row (tree-sitter reads a
+      // `//` note as part of the value) or a comment inside the directive's
+      // node. The signature is shown with the runs of spaces that line the
+      // macros up, and the indentation after the #, collapsed.
+      const first = node.text.split('\n')[0].split(/\s*(?=\/[*/])/)[0];
+      const notes = [...new Set([noteOn(fileLines, fileRows, node.startPosition.row), ...node.namedChildren.filter(isComment).map(noteText)])].filter(Boolean).map((t) => docText(commentLines(t)));
+      add({ kind: 'macro', name, signature: oneLine(first.replace(/\\$/, '')).replace(/^#\s*/, '#'), doc: [docAbove(node), ...notes, docAfter(node)].filter(Boolean).join('\n\n') });
     } else if (node.type === 'type_definition' || node.type === 'struct_specifier' || node.type === 'union_specifier' || node.type === 'enum_specifier' || node.type === 'declaration') {
       const spec = node.type.endsWith('_specifier') ? node : node.childForFieldName('type');
       const body = spec?.childForFieldName('body') ?? null;
@@ -480,7 +483,7 @@ function firstBranches(text: string): string {
 // The text with every UNUSED outside comments, strings and #define lines
 // blanked, in place.
 function blankUnused(text: string): string {
-  return text.replace(/\/\*[\s\S]*?\*\/|"(?:[^"\\\n]|\\.)*"|^[ \t]*#[^\n]*(?:\\\n[^\n]*)*|\bUNUSED\b/gm, (m) => (m === 'UNUSED' ? '      ' : m));
+  return text.replace(/\/\*[\s\S]*?\*\/|\/\/[^\n]*|"(?:[^"\\\n]|\\.)*"|^[ \t]*#[^\n]*(?:\\\n[^\n]*)*|\bUNUSED\b/gm, (m) => (m === 'UNUSED' ? '      ' : m));
 }
 
 function readFile(path: string, game: Game): SourceFile {
@@ -492,24 +495,23 @@ function readFile(path: string, game: Game): SourceFile {
   written = text;
   const tree = parser.parse(blankUnused(firstBranches(text)))!;
   const root = tree.rootNode;
+  fileLines = text.split('\n');
+  fileRows = rowsOf(text);
   // The file's summary: its first comment, before any code but the header's
   // guard and the file's #includes, and set off from what follows by a blank
   // line, an #include or the guard.
   let doc = '';
-  fileComment = -1;
-  const top = root.namedChildren.flatMap((c) => (c?.type === 'preproc_ifdef' ? [c, ...c.namedChildren] : [c]));
-  for (const c of top) {
-    if (!c) continue;
-    if (c.type === 'comment') {
-      const next = c.nextNamedSibling;
-      if (!next || next.type === 'preproc_include' || next.type === 'preproc_ifdef' || next.startPosition.row > endRow(c) + 1) {
-        fileComment = c.startIndex;
-        doc = docText(commentLines(c.text));
-      }
-      break;
+  fileCommentRow = -1;
+  let row = 0;
+  while (row < fileRows.length && (fileRows[row].kind === 'blank' || /^#\s*(?:(?:ifndef|ifdef|define)\s+\w+\s*$|include\b)/.test(fileLines[row]))) row++;
+  const first = fileRows[row];
+  if (first?.kind === 'comment' || first?.kind === 'block') {
+    let end = first.kind === 'block' ? first.end : row;
+    while (first.kind === 'comment' && fileRows[end + 1]?.kind === 'comment') end++;
+    if (end + 1 >= fileRows.length || fileRows[end + 1].kind === 'blank' || /^#\s*(?:include|ifn?def)\b/.test(fileLines[end + 1])) {
+      fileCommentRow = row;
+      doc = docText(commentLines(fileLines.slice(row, end + 1).join('\n')));
     }
-    const guard = c.type === 'preproc_ifdef' || c.type === 'identifier' || c.type === 'preproc_include' || (c.type === 'preproc_def' && !c.childForFieldName('value'));
-    if (!guard) break;
   }
   const decls: Decl[] = [];
   declsOf(root, decls);
@@ -518,30 +520,17 @@ function readFile(path: string, game: Game): SourceFile {
   // DailaParchFirstPuddle, 10, 19, 11, ...)`, one event for each row of a
   // family): the call's first argument is its name, and the comment directly
   // above the call is its comment.
-  for (const m of text.matchAll(/^((?:\/\*(?:(?!\*\/)[\s\S])*\*\/\n)?)(DEFINE_[A-Z0-9_]+\(\s*([A-Za-z][A-Za-z0-9_]*[a-z][A-Za-z0-9_]*)\s*[,)][^;{}]*?\))[ \t]*$/gm)) {
-    if (decls.some((d) => d.kind === 'function' && d.name === m[3])) continue;
-    const line = text.slice(0, m.index + m[1].length).split('\n').length;
-    const own = m[1] && m.index !== fileComment;
-    decls.push({ kind: 'function', name: m[3], signature: oneLine(m[2]), doc: own ? docText(commentLines(m[1].trim())) : '', line, fields: [], refs: new Set(), lines: m[2].split('\n').length });
+  for (const m of text.matchAll(/^(DEFINE_[A-Z0-9_]+\(\s*([A-Za-z][A-Za-z0-9_]*[a-z][A-Za-z0-9_]*)\s*[,)][^;{}]*?\))[ \t]*$/gm)) {
+    if (decls.some((d) => d.kind === 'function' && d.name === m[2])) continue;
+    const line = text.slice(0, m.index).split('\n').length;
+    decls.push({ kind: 'function', name: m[2], signature: oneLine(m[1]), doc: commentBefore(line - 1), line, fields: [], refs: new Set(), lines: m[1].split('\n').length });
   }
   decls.sort((a, b) => a.line - b.line);
   // A function that follows such a call: tree-sitter reads the call, which
   // ends in no semicolon, as a statement running on through the comment, so
-  // the function's comment is not its sibling. It is read as written.
-  const rows = text.split('\n');
-  const fileCommentRow = fileComment < 0 ? -1 : text.slice(0, fileComment).split('\n').length - 1;
-  for (const d of decls) {
-    if (d.kind !== 'function' || d.doc) continue;
-    // The row above must close a comment that starts a line of its own: a
-    // note after code on that row is the code's.
-    const end = d.line - 2;
-    if (end < 0 || !/\*\/\s*$/.test(rows[end])) continue;
-    let i = end;
-    if (/\/\*/.test(rows[i]) && !/^\s*\/\*/.test(rows[i])) continue;
-    while (i >= 0 && !/^\s*\/\*/.test(rows[i])) i--;
-    if (i < 0 || i === fileCommentRow || rows.slice(i + 1, end).some((r) => /\*\//.test(r))) continue;
-    d.doc = docText(commentLines(rows.slice(i, end + 1).join('\n').trim()));
-  }
+  // the function's node may not start on its own row. Its comment is read
+  // above the row it is written on.
+  for (const d of decls) if (d.kind === 'function' && !d.doc) d.doc = commentBefore(d.line - 1);
   const summary = doc.split(/(?<=[.!?])\s/)[0]?.replace(/\n/g, ' ') ?? '';
   return { path, game, summary, doc, decls, size: text.length };
 }
@@ -1753,10 +1742,10 @@ function places(files: SourceFile[], game: Game) {
 // character_ids.h defines to a number where it has no enum (The Lost Age).
 function characterNames(game: Game): string[] {
   const src = text(`games/${game}/include/game/character_ids.h`);
-  const rows = src.match(/enum CHARACTER_ID \{([\s\S]*?)\}/)?.[1];
+  const rows = blankComments(src).match(/enum CHARACTER_ID\s*\{([\s\S]*?)\}/)?.[1];
   if (rows !== undefined) return [...rows.matchAll(/^\s*([A-Z]+)\b/gm)].map((m) => m[1]);
   const out: string[] = [];
-  for (const m of src.matchAll(/^#define ([A-Z]+) (\d+)\b/gm)) out[Number(m[2])] = m[1];
+  for (const m of src.matchAll(/^#\s*define\s+([A-Z]+)\s+(\d+)\b/gm)) out[Number(m[2])] = m[1];
   return out.filter(Boolean);
 }
 
@@ -1817,11 +1806,11 @@ function passage(symbols: string[], pages: Map<string, string[]>): string {
 type MessageRow = { table: string; line: number; control: string; trigger: string };
 const sceneMacrosByGame = new Map<Game, Map<string, string>>();
 function sceneMacros(game: Game): Map<string, string> {
-  if (!sceneMacrosByGame.has(game)) sceneMacrosByGame.set(game, new Map([...text(`games/${game}/include/scene_ids.h`).matchAll(/^#define (SCENE_\w+)(?:\s|\\\n)+\(\(Sint32\)&SceneId(\w+)\)/gm)].map((m) => [m[1], m[2]])));
+  if (!sceneMacrosByGame.has(game)) sceneMacrosByGame.set(game, new Map([...text(`games/${game}/include/scene_ids.h`).matchAll(/^#\s*define\s+(SCENE_\w+)(?:\s|\\\n)+\(\(Sint32\)&SceneId(\w+)\)/gm)].map((m) => [m[1], m[2]])));
   return sceneMacrosByGame.get(game)!;
 }
 function messageRows(path: string): { rows: Map<string, MessageRow[]>; tablesOf: Map<string, Set<string>> } {
-  const source = readFileSync(join(repo, path), 'utf8').replace(/\/\*[\s\S]*?\*\//g, (c) => c.replace(/[^\n]/g, ' '));
+  const source = blankComments(readFileSync(join(repo, path), 'utf8'));
   const splitTop = (s: string) => {
     const parts = [''];
     let depth = 0;
@@ -1842,12 +1831,12 @@ function messageRows(path: string): { rows: Map<string, MessageRow[]>; tablesOf:
     rows.set(msg[1], [...(rows.get(msg[1]) ?? []), { table, line: source.slice(0, at).split('\n').length, control: parts[0], trigger: parts[1] }]);
   };
   for (const m of source.matchAll(/\{([^{}]*)\}/g)) add(splitTop(m[1]), m.index!);
-  for (const d of source.matchAll(/^#define (\w+)\(([\w\s,]*)\)((?:[^\n]*\\\n)*[^\n]*)/gm)) {
+  for (const d of source.matchAll(/^#\s*define\s+(\w+)\(([\w\s,]*)\)((?:[^\n]*\\\n)*[^\n]*)/gm)) {
     const body = d[3].replace(/\\\n/g, ' ').trim().match(/^\{([^{}]*)\}$/);
     if (!body) continue;
     const params = d[2].split(',').map((p) => p.trim());
     const shape = splitTop(body[1]);
-    for (const call of source.matchAll(new RegExp(`(?<!#define )\\b${d[1]}\\s*\\(`, 'g'))) {
+    for (const call of source.matchAll(new RegExp(`(?<!#\\s*define\\s+)\\b${d[1]}\\s*\\(`, 'g'))) {
       let depth = 0;
       let end = call.index! + call[0].length - 1;
       for (; end < source.length; end++) {
@@ -2025,13 +2014,13 @@ function sceneAreaNames(game: Game): Map<string, string> {
   const out = new Map<string, string>();
   const read = (path: string) => (existsSync(join(repo, path)) ? readFileSync(join(repo, path), 'utf8') : '');
   const scenes = read(`games/${game}/src/field/scenes.s`);
-  const rules = read(`games/${game}/src/field/area_name_rules.s`).split(/^AreaNameRules:/m)[1]?.split(/^\t\.global /m)[0] ?? '';
+  const rules = read(`games/${game}/src/field/area_name_rules.s`).split(/^AreaNameRules:/m)[1]?.split(/^[ \t]+\.global /m)[0] ?? '';
   const po = read(`games/${game}/text/en.po`);
   const base = po.match(/msgctxt "MsgDebugAreaName"\nmsgid "(\d+)"/);
   if (!base) return out;
   const text = new Map([...po.matchAll(/^msgid "(\d+)"\nmsgstr "((?:[^"\\]|\\.)*)"/gm)].map((m) => [Number(m[1]), m[2]]));
-  const areaOf = new Map([...scenes.matchAll(/^\tscene (\w+), \w+, (\w+),/gm)].map((m) => [m[1], m[2]]));
-  const named = [...rules.matchAll(/^\t(scene|area)_name (\w+), -1, (\d+)/gm)].map((m) => ({ scene: m[1] === 'scene' ? m[2] : '', area: m[1] === 'area' ? m[2] : '', name: text.get(Number(base[1]) + Number(m[3])) }));
+  const areaOf = new Map([...scenes.matchAll(/^[ \t]+scene (\w+), \w+, (\w+),/gm)].map((m) => [m[1], m[2]]));
+  const named = [...rules.matchAll(/^[ \t]+(scene|area)_name (\w+), -1, (\d+)/gm)].map((m) => ({ scene: m[1] === 'scene' ? m[2] : '', area: m[1] === 'area' ? m[2] : '', name: text.get(Number(base[1]) + Number(m[3])) }));
   for (const [scene, area] of areaOf) {
     const rule = named.find((r) => r.scene === scene || r.area === area);
     if (rule?.name) out.set(scene, rule.name);
@@ -2042,17 +2031,14 @@ function placeTitle(game: Game, scene: string, overlay = '', area = ''): string 
   if (!titleSources.has(game)) {
     // A scene's comment in scene_ids.h, directly above its SceneId symbol.
     const mapDocs = new Map<string, string>();
-    let doc: string[] = [];
-    let open = false;
-    for (const line of readFileSync(join(repo, `games/${game}/include/scene_ids.h`), 'utf8').split('\n')) {
-      const m = line.match(/^extern char SceneId(\w+);/);
-      if (m) mapDocs.set(m[1], doc.join(' '));
-      if (open || /^\s*\/\*/.test(line)) {
-        if (!open) doc = [];
-        doc.push(line.replace(/^\s*\/\*\s?/, '').replace(/\s*\*\/\s*$/, '').trim());
-        open = !line.includes('*/');
-      } else doc = [];
-    }
+    const ids = readFileSync(join(repo, `games/${game}/include/scene_ids.h`), 'utf8');
+    const lines = ids.split('\n');
+    const rows = rowsOf(ids);
+    lines.forEach((line, i) => {
+      const m = line.match(/^extern\s+char\s+SceneId(\w+)\s*;/);
+      const c = m && commentAbove(lines, rows, i);
+      if (m) mapDocs.set(m[1], c ? commentLines(c.text).map((l) => l.trim()).join(' ') : '');
+    });
     const gameText = [...readFileSync(join(repo, `games/${game}/text/en.po`), 'utf8').matchAll(/^msgstr "((?:[^"\\]|\\.)*)"/gm)].map((m) => m[1].replace(/\\n/g, ' ')).join('\n');
     titleSources.set(game, { mapDocs, areaNames: sceneAreaNames(game), gameText });
   }
@@ -2688,17 +2674,20 @@ function unusedPage(files: SourceFile[], root: Placed) {
     add(at?.file ?? f, d.name, d.doc, `<small>In [\`${basename((at?.file ?? f).path)}\`, line ${(at?.decl ?? d).line}](${at?.url ?? urlOf(f, d)})</small>`);
   };
   for (const f of files) {
-    const lines = readFileSync(join(repo, f.path), 'utf8').split('\n');
+    const source = readFileSync(join(repo, f.path), 'utf8');
+    const lines = source.split('\n');
+    const rows = rowsOf(source);
     // Before the file's own comment come only its guard and blank lines.
     let code = false;
     for (let i = 0; i < lines.length; i++) {
       // A comment on lines of its own: a note after code is the code's.
-      if (!/^\s*\/\*/.test(lines[i])) {
-        if (!/^\s*$|^#(?:ifndef|define) \w+\s*$/.test(lines[i])) code = true;
+      const r = rows[i];
+      if (r.kind !== 'comment' && r.kind !== 'block') {
+        if (!/^\s*$|^#\s*(?:ifndef|define)\s+\w+\s*$/.test(lines[i])) code = true;
         continue;
       }
-      let j = i;
-      while (j + 1 < lines.length && !lines[j].includes('*/')) j++;
+      let j = r.kind === 'block' ? r.end : i;
+      while (r.kind === 'comment' && rows[j + 1]?.kind === 'comment') j++;
       const block = lines.slice(i, j + 1);
       const start = i + 1;
       const first = !code;

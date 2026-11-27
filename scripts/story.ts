@@ -41,6 +41,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { basename, dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Language, type Node, Parser, type Tree } from 'web-tree-sitter';
+import { blankComments, commentLines, noteOn, rowsOf } from './comments';
 
 const docs = fileURLToPath(new URL('..', import.meta.url));
 const repo = process.env.ALCHEMY ?? join(docs, '../alchemy');
@@ -570,7 +571,7 @@ type SceneRow = { id: number; name: string; overlay: number; group: number; kind
 // MapsWork (map/resources.s).
 const enumNames = (path: string, pattern: RegExp) => new Map(existsSync(path) ? [...readFileSync(path, 'utf8').matchAll(pattern)].map((m, i) => [m[1], i] as const) : []);
 const areaIds = enumNames(gamePath('include/area_ids.h'), /^\s*(AREA_\w+)\s*,/gm);
-const mapIndices = enumNames(gamePath('src/map/resources.s'), /^\tmap\s+(\w+)\s*,/gm);
+const mapIndices = enumNames(gamePath('src/map/resources.s'), /^[ \t]+map\s+(\w+)\s*,/gm);
 const overlayIds = new Map<string, number>();
 const overlayId = (name: string) => overlayIds.get(name) ?? overlayIds.set(name, overlayIds.size).get(name)!;
 const numbered = (text: string, names: Map<string, number>) => (/^-?\d/.test(text) ? Number(text) : (names.get(text) ?? NaN));
@@ -750,51 +751,52 @@ const characters: string[] = [];
   if (existsSync(ids)) {
     // The characters are the rows of enum CHARACTER_ID, in order.
     const src = readFileSync(ids, 'utf8');
-    for (const [i, name] of [...(src.match(/enum CHARACTER_ID \{([\s\S]*?)\}/)?.[1] ?? '').matchAll(/^\s*([A-Z]+)\b/gm)].map((m) => m[1]).entries()) characters[i] = name[0] + name.slice(1).toLowerCase();
+    for (const [i, name] of [...(blankComments(src).match(/enum CHARACTER_ID\s*\{([\s\S]*?)\}/)?.[1] ?? '').matchAll(/^\s*([A-Z]+)\b/gm)].map((m) => m[1]).entries()) characters[i] = name[0] + name.slice(1).toLowerCase();
   }
 }
 
 // Flag names and notes from flags.h: each FLAG_ macro's value, its comment
-// and the heading of its section. Every comment is a block comment: the one
-// directly above a #define is its comment, and a note after the value on its
-// line is the value's; any other comment but the file's own heads a section
-// when it is one line ("Altin"), and a longer one is a note that ends the
-// section before it.
+// and the heading of its section. Every comment is a run of `//` lines
+// (comments.ts): the one directly above a #define is its comment, and a note
+// after the value on its line, with the lines that continue it, is the
+// value's; any other comment but the file's own heads a section when it is
+// one line and no sentence ("Altin"), and anything else is a note that ends
+// the section before it.
 type FlagDoc = { names: string[]; doc: string; section: string };
 const flagDocs = new Map<number, FlagDoc>();
 {
   let section = '';
   let fileComment = true;
-  const lines = readFileSync(gamePath('include/flags.h'), 'utf8').split('\n');
+  const source = readFileSync(gamePath('include/flags.h'), 'utf8');
+  const lines = source.split('\n');
+  const rows = rowsOf(source);
+  const words = (text: string) => commentLines(text).join(' ').replace(/\s+/g, ' ').trim();
   for (let i = 0; i < lines.length; i++) {
     let doc = '';
-    if (/^\s*\/\*/.test(lines[i])) {
+    const r = rows[i];
+    if (r.kind === 'comment' || r.kind === 'block') {
       const start = i;
-      while (i < lines.length - 1 && !lines[i].includes('*/')) i++;
-      const text = lines
-        .slice(start, i + 1)
-        .join('\n')
-        .replace(/^\s*\/\*\s?|\s*\*\/\s*$/g, '')
-        .replace(/\n\s*/g, ' ')
-        .trim();
+      if (r.kind === 'block') i = r.end;
+      else while (rows[i + 1]?.kind === 'comment') i++;
+      const text = words(lines.slice(start, i + 1).join('\n'));
       if (fileComment) {
         fileComment = false;
         continue;
       }
-      if (!/^#define\b/.test(lines[i + 1] ?? '')) {
-        section = start === i ? text : '';
+      if (!/^#\s*define\b/.test(lines[i + 1] ?? '')) {
+        section = start === i && !/[.!?]$/.test(text) ? text : '';
         continue;
       }
       doc = text;
       i++;
     }
-    const m = lines[i].match(/^#define (FLAG_\w+)(\([^)]*\))?\s+(.*?)\s*(?:\/\*\s*(.*?)\s*\*\/)?\s*$/);
+    const m = lines[i].match(/^#\s*define\s+(FLAG_\w+)(\([^)]*\))?\s/);
     if (m && !m[2]) {
       const v = constEval(m[1], globalScope);
       if (v !== undefined) {
         const f = flagDocs.get(v) ?? { names: [], doc: '', section };
         f.names.push(m[1]);
-        f.doc = [f.doc, doc, m[4] ?? ''].filter(Boolean).join(' ');
+        f.doc = [f.doc, doc, words(noteOn(lines, rows, i))].filter(Boolean).join(' ');
         flagDocs.set(v, f);
       }
     }
