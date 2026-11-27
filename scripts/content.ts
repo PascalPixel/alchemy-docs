@@ -6,10 +6,10 @@
 // runs it first.
 //
 // The reference has a page for every file: its brief (the first sentence of
-// its /// @file comment), its includes, a summary table for each kind of
+// its file comment), its includes, a summary table for each kind of
 // member, the whole comment, and an entry for every function, macro, type,
 // enum and global it defines, with or without a comment: its declaration,
-// its /// comment, its enumerators, what it refers to and what refers to it,
+// its comment, its enumerators, what it refers to and what refers to it,
 // and its line on GitHub. Every structure and union has a page with its
 // fields; every folder a page with its folders and files. Search finds a
 // name; there are no pages listing names by letter and kind, as Doxygen has. Names in comments, and code names in the guide,
@@ -19,7 +19,7 @@
 //
 // Every title is Alchemy's: a Markdown page's # heading, a reference page's
 // path in its game or a type's name. Every description is a first sentence
-// Alchemy wrote: a page's opening sentence, a file's /// @file brief.
+// Alchemy wrote: a page's opening sentence, a file's comment's brief.
 
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, normalize, relative } from 'node:path';
@@ -43,23 +43,21 @@ const github = 'https://github.com/PascalPixel/alchemy/blob/main';
 // picture an index lists is shown only when the store has it.
 const stored = readManifest(docs);
 const store = storeUrl(docs);
-// A game's scene table: field/scenes.s, or field/map_headers.s in sources from
-// before the scenes were named.
-const sceneTable = (game: string) =>
-  existsSync(join(repo, `games/${game}/src/field/scenes.s`)) ? `games/${game}/src/field/scenes.s` : `games/${game}/src/field/map_headers.s`;
+// A game's scene table, ScenesWork.
+const sceneTable = (game: string) => `games/${game}/src/field/scenes.s`;
 // A game's scenes by symbol, numbered as its scene table lists them; none
 // where the game has no scene table.
 const sceneIdsByGame = new Map<Game, Map<string, number>>();
 function sceneIds(game: Game): Map<string, number> {
   if (!sceneIdsByGame.has(game)) {
     const table = join(repo, sceneTable(game));
-    const rows = existsSync(table) ? [...readFileSync(table, 'utf8').matchAll(/^\t(?:scene|map_header) (\w*),/gm)] : [];
+    const rows = existsSync(table) ? [...readFileSync(table, 'utf8').matchAll(/^\tscene (\w*),/gm)] : [];
     sceneIdsByGame.set(game, new Map(rows.map((m, i) => [m[1], i] as const)));
   }
   return sceneIdsByGame.get(game)!;
 }
-// A scene's symbol as the sources write it: SceneId_, or MapId_ before.
-const sceneSymbol = (game: Game, name: string) => (sceneTable(game).endsWith('scenes.s') ? `SceneId_${name}` : `MapId_${name}`);
+// A scene's symbol as the sources write it (SceneIdKalay).
+const sceneSymbol = (name: string) => `SceneId${name}`;
 
 type Game = 'tbs' | 'tla';
 // The games with pages, each a front page, its division pages and their
@@ -107,7 +105,6 @@ const ICONS: Record<string, string> = {
   '/tbs': 'Sun',
   '/tbs/system': 'Cpu',
   '/tbs/system/system': 'Settings2',
-  '/tbs/system/gamepak': 'Gamepad2',
   '/tbs/system/sound': 'EighthNotes',
   '/tbs/system/graphics': 'Image',
   '/tbs/system/debug': 'Bug',
@@ -131,7 +128,6 @@ const ICONS: Record<string, string> = {
   '/tla': 'Anchor',
   '/tla/system': 'Cpu',
   '/tla/system/system': 'Settings2',
-  '/tla/system/gamepak': 'Gamepad2',
   '/tla/system/sound': 'EighthNotes',
   '/tla/system/graphics': 'Image',
   '/tla/system/debug': 'Bug',
@@ -157,7 +153,7 @@ const GUIDE_ICON = 'BookOpen';
 // (gameNames); its title keeps what the source wrote.
 function page(path: string, front: Record<string, string>, body: string) {
   if (front.description) front = { ...front, description: gameNames(front.description) };
-  // A C `!` before a name that became a link (!GameFlag_Test) is not an image.
+  // A C `!` before a name that became a link (!gmFlagGet) is not an image.
   body = gameNames(openQuestions(body)).replace(/(?<!\\)!(?=\[`)/g, '\\!');
   // The renders are served from the Blob store, with their hash so a re-render is a new address.
   body = body.replace(/(!\[(?:[^\]\\]|\\.)*\]\()(\/[^)\s]+)/g, (m, before: string, src: string) => {
@@ -189,12 +185,13 @@ function page(path: string, front: Record<string, string>, body: string) {
 // Text from the source, safe in Markdown outside code: the characters MDX
 // and Markdown would read as syntax are escaped, code spans kept as written.
 // A name the code uses, written bare in a comment: anything with an
-// underscore (KALAY_TO_WORLD_MAP, SceneId_Kalay, Scene_TakeExit), a global
-// and the fields it is read through (gSaveBlock.mapId), a message
-// (MsgKalayWelcomeInPeace) or a file name (kalay_interiors.c). Prose shows it
-// as code, which linkNames links; codeDeclared catches the other names the
-// code declares once every file is read.
-const CODE_NAME = /(?<![\w`\\])((?:[a-z][a-z0-9_]*\.(?:c|h|s|S|tsv|po|png|md)|[A-Za-z][A-Za-z0-9]*_[A-Za-z0-9_]*[A-Za-z0-9]|g[A-Z][A-Za-z0-9]*(?:(?:\.|->)[a-z][A-Za-z0-9]*)*|Msg[A-Z][A-Za-z0-9]*)(?:\(\))?)(?![\w`])/g;
+// underscore (KALAY_TO_WORLD_MAP), a function by its owner's prefix
+// (fdActorGetById, scKalayTakeExit), a message (MsgKalayWelcomeInPeace) or a
+// file name (kalay_interiors.c). Prose shows it as code, which linkNames
+// links; codeDeclared catches the other names the code declares once every
+// file is read, the globals (FieldStateWork->msg) and types among them.
+const OWNED = '(?:sy|bt|fd|mn|gm|sc|db|sl)[A-Z][A-Za-z0-9]*';
+const CODE_NAME = new RegExp(`(?<![\\w\`\\\\])((?:[a-z][a-z0-9_]*\\.(?:c|h|s|S|tsv|po|png|md)|[A-Za-z][A-Za-z0-9]*_[A-Za-z0-9_]*[A-Za-z0-9]|${OWNED}|Msg[A-Z][A-Za-z0-9]*)(?:\\(\\))?)(?![\\w\`])`, 'g');
 function md(text: string): string {
   return text
     .split(/(`[^`]*`)/)
@@ -252,10 +249,18 @@ function withoutEvidence(body: string[]): string[] {
   return out;
 }
 
-// A /// block's text: the prefix gone, a laid-out paragraph (a line indented
-// past "/// ") kept as a code block, the rest as Markdown.
+// A comment's lines as written: `/*` and `*/` gone, and the indentation of a
+// later line up to the three columns it starts in under the text, so that a
+// line indented further is still indented.
+function commentLines(text: string): string[] {
+  const inner = text.replace(/^\/\*[ \t]?/, '').replace(/\s*\*\/$/, '');
+  return inner.split('\n').map((l, i) => (i ? l.replace(/^\t*/, '').replace(/^ {0,3}/, '') : l));
+}
+
+// A comment's text: a laid-out paragraph (a line indented past the text)
+// kept as a code block, the rest as Markdown.
 function docText(lines: string[]): string {
-  const body = withoutEvidence(lines.map((l) => l.replace(/^\s*\/\/\/<?\s?/, '')));
+  const body = withoutEvidence(lines);
   const out: string[] = [];
   let para: string[] = [];
   const flush = () => {
@@ -274,34 +279,42 @@ function docText(lines: string[]): string {
   return out.join('\n\n');
 }
 
-const isDoc = (n: Node | null) => !!n && n.type === 'comment' && /^\/\/\/(?!<)/.test(n.text);
-const isTrailing = (n: Node | null) => !!n && n.type === 'comment' && n.text.startsWith('///<');
+// The row a node's text ends on: a directive's node takes in its newline.
+const endRow = (n: Node) => (n.endPosition.column === 0 && n.endPosition.row > n.startPosition.row ? n.endPosition.row - 1 : n.endPosition.row);
 
-// clang-format reads its switches only as plain comments, so a table's ///
-// comment sits above its `// clang-format off`.
-const isFormatSwitch = (n: Node | null) => !!n && n.type === 'comment' && /^\/\/ clang-format (off|on)\s*$/.test(n.text);
+// The source writes every comment as a block comment. Where it stands says
+// what it is: one after code on the same line is that code's note; the one on
+// the lines directly above a declaration is its comment; the file's own
+// comment is its first, set off by a blank line or an #include.
+const isComment = (n: Node | null): n is Node => !!n && n.type === 'comment';
+const isTrailing = (c: Node) => {
+  const p = c.previousNamedSibling;
+  return !!p && p.type !== 'comment' && endRow(p) === c.startPosition.row;
+};
 
-// The /// lines directly above a node, with no blank line between.
+// clang-format reads its switches as comments of their own, so a table's
+// comment sits above its `/* clang-format off */`.
+const isFormatSwitch = (n: Node) => /^\/[/*] clang-format (off|on)\s*(\*\/)?$/.test(n.text);
+
+// The file's own comment, which no declaration takes as its own.
+let fileComment = -1;
+
+// The comment directly above a node, with no blank line between, past a
+// clang-format switch. A comment above that one heads what follows it.
 function docAbove(node: Node): string {
-  const lines: string[] = [];
   let row = node.startPosition.row;
-  for (let c = node.previousNamedSibling; (isDoc(c) || isFormatSwitch(c)) && c!.endPosition.row === row - 1; c = c!.previousNamedSibling) {
-    if (/^\/\/\/\s*@file/.test(c!.text)) break;
-    if (isDoc(c)) lines.unshift(c!.text);
-    row = c!.startPosition.row;
+  for (let c = node.previousNamedSibling; isComment(c) && !isTrailing(c) && endRow(c) === row - 1; c = c.previousNamedSibling) {
+    if (c.startIndex === fileComment) break;
+    if (!isFormatSwitch(c)) return docText(commentLines(c.text));
+    row = c.startPosition.row;
   }
-  return docText(lines);
+  return '';
 }
 
-// A ///< note on the node's own line, and its continuation lines.
+// The note after a node, on its own last line.
 function docAfter(node: Node): string {
-  const lines: string[] = [];
-  let row = node.endPosition.row;
-  for (let c = node.nextNamedSibling; isTrailing(c) && (c!.startPosition.row === row || c!.startPosition.row === row + 1); c = c!.nextNamedSibling) {
-    lines.push(c!.text);
-    row = c!.endPosition.row;
-  }
-  return docText(lines);
+  const c = node.nextNamedSibling;
+  return isComment(c) && c.startPosition.row === endRow(node) ? docText(commentLines(c.text)) : '';
 }
 
 function identifiers(node: Node, into: Set<string>) {
@@ -326,8 +339,11 @@ function fieldsOf(body: Node | null): Field[] {
     if (!c) continue;
     if (c.type === 'field_declaration' || c.type === 'enumerator') {
       const name = c.type === 'enumerator' ? c.childForFieldName('name')!.text : c.descendantsOfType('field_identifier').map((n) => n!.text).join(', ');
-      const type = c.type === 'enumerator' ? oneLine(c.childForFieldName('value')?.text ?? '') : oneLine(c.text.replace(/;\s*$/, ''));
-      fields.push({ name, type, doc: [docAbove(c), docAfter(c)].filter(Boolean).join('\n\n') });
+      // A note clang-format has wrapped in between a field's type and its
+      // name is inside the field's node.
+      const inside = c.descendantsOfType('comment').filter((n): n is Node => !!n);
+      const type = c.type === 'enumerator' ? oneLine(c.childForFieldName('value')?.text ?? '') : oneLine(inside.reduce((t, n) => t.replace(n.text, ' '), c.text).replace(/;\s*$/, ''));
+      fields.push({ name, type, doc: [docAbove(c), ...inside.map((n) => docText(commentLines(n.text))), docAfter(c)].filter(Boolean).join('\n\n') });
     } else if (/^preproc_(if|ifdef|else|elif)$/.test(c.type)) {
       fields.push(...fieldsOf(c));
     }
@@ -378,9 +394,10 @@ function declsOf(parent: Node, out: Decl[]) {
     } else if (node.type === 'preproc_def' || node.type === 'preproc_function_def') {
       const name = node.childForFieldName('name')?.text ?? '';
       if (/^ALCHEMY_\w+_H$/.test(name) || isGuard(node, name)) continue;
-      // tree-sitter reads a ///< note on the #define's line as part of its value.
-      const [first, note] = node.text.split('\n')[0].split(/\s*(?=\/\/\/<)/);
-      add({ kind: 'macro', name, signature: first.replace(/\\$/, '').trim(), doc: [docAbove(node), note ? docText([note]) : '', docAfter(node)].filter(Boolean).join('\n\n') });
+      // A note on the #define's line is a comment inside the directive's node.
+      const first = node.text.split('\n')[0].split(/\s*(?=\/\*)/)[0];
+      const notes = node.namedChildren.filter(isComment).map((c) => docText(commentLines(c.text)));
+      add({ kind: 'macro', name, signature: first.replace(/\\$/, '').trim(), doc: [docAbove(node), ...notes, docAfter(node)].filter(Boolean).join('\n\n') });
     } else if (node.type === 'type_definition' || node.type === 'struct_specifier' || node.type === 'union_specifier' || node.type === 'enum_specifier' || node.type === 'declaration') {
       const spec = node.type.endsWith('_specifier') ? node : node.childForFieldName('type');
       const body = spec?.childForFieldName('body') ?? null;
@@ -460,6 +477,12 @@ function firstBranches(text: string): string {
   return lines.join('\n');
 }
 
+// The text with every UNUSED outside comments, strings and #define lines
+// blanked, in place.
+function blankUnused(text: string): string {
+  return text.replace(/\/\*[\s\S]*?\*\/|"(?:[^"\\\n]|\\.)*"|^[ \t]*#[^\n]*(?:\\\n[^\n]*)*|\bUNUSED\b/gm, (m) => (m === 'UNUSED' ? '      ' : m));
+}
+
 function readFile(path: string, game: Game): SourceFile {
   const text = readFileSync(join(repo, path), 'utf8');
   // tree-sitter reads `static void UNUSED Name(void)` as a declaration of
@@ -467,46 +490,57 @@ function readFile(path: string, game: Game): SourceFile {
   // outside comments and #define lines; signatures are cut from the file as
   // written.
   written = text;
-  const tree = parser.parse(firstBranches(text).replace(/^(?!\s*#)([^/\n]*?)\bUNUSED\b/gm, (_, before: string) => before + '      '))!;
+  const tree = parser.parse(blankUnused(firstBranches(text)))!;
   const root = tree.rootNode;
-  // The file's summary: its /// @file block, which a header may hold inside
-  // its guard.
+  // The file's summary: its first comment, before any code but the header's
+  // guard and the file's #includes, and set off from what follows by a blank
+  // line, an #include or the guard.
   let doc = '';
+  fileComment = -1;
   const top = root.namedChildren.flatMap((c) => (c?.type === 'preproc_ifdef' ? [c, ...c.namedChildren] : [c]));
   for (const c of top) {
-    if (c && isDoc(c) && /^\/\/\/\s*@file/.test(c.text)) {
-      const lines: string[] = [];
-      let row = c.startPosition.row - 1;
-      for (let n: Node | null = c.nextNamedSibling; isDoc(n) && n!.startPosition.row === row + 2; n = n!.nextNamedSibling) {
-        lines.push(n!.text);
-        row = n!.startPosition.row - 1;
+    if (!c) continue;
+    if (c.type === 'comment') {
+      const next = c.nextNamedSibling;
+      if (!next || next.type === 'preproc_include' || next.type === 'preproc_ifdef' || next.startPosition.row > endRow(c) + 1) {
+        fileComment = c.startIndex;
+        doc = docText(commentLines(c.text));
       }
-      doc = docText(lines);
       break;
     }
+    const guard = c.type === 'preproc_ifdef' || c.type === 'identifier' || c.type === 'preproc_include' || (c.type === 'preproc_def' && !c.childForFieldName('value'));
+    if (!guard) break;
   }
   const decls: Decl[] = [];
   declsOf(root, decls);
   tree.delete();
   // A function a macro of the file defines (`DEFINE_DAILA_PARCH_PUDDLE(
-  // Daila_ParchFirstPuddle, 10, 19, 11, ...)`, one event for each row of a
-  // family): the call's first argument is its name, and the /// lines above
-  // the call are its comment.
-  for (const m of text.matchAll(/^((?:\/\/\/[^\n]*\n)*)(DEFINE_[A-Z0-9_]+\(\s*([A-Z][A-Za-z0-9]*_[A-Za-z0-9_]*[a-z][A-Za-z0-9_]*)\s*[,)][^;{}]*?\))[ \t]*$/gm)) {
+  // DailaParchFirstPuddle, 10, 19, 11, ...)`, one event for each row of a
+  // family): the call's first argument is its name, and the comment directly
+  // above the call is its comment.
+  for (const m of text.matchAll(/^((?:\/\*(?:(?!\*\/)[\s\S])*\*\/\n)?)(DEFINE_[A-Z0-9_]+\(\s*([A-Za-z][A-Za-z0-9_]*[a-z][A-Za-z0-9_]*)\s*[,)][^;{}]*?\))[ \t]*$/gm)) {
     if (decls.some((d) => d.kind === 'function' && d.name === m[3])) continue;
     const line = text.slice(0, m.index + m[1].length).split('\n').length;
-    decls.push({ kind: 'function', name: m[3], signature: oneLine(m[2]), doc: docText(m[1].split('\n').filter(Boolean)), line, fields: [], refs: new Set(), lines: m[2].split('\n').length });
+    const own = m[1] && m.index !== fileComment;
+    decls.push({ kind: 'function', name: m[3], signature: oneLine(m[2]), doc: own ? docText(commentLines(m[1].trim())) : '', line, fields: [], refs: new Set(), lines: m[2].split('\n').length });
   }
   decls.sort((a, b) => a.line - b.line);
   // A function that follows such a call: tree-sitter reads the call, which
   // ends in no semicolon, as a statement running on through the comment, so
-  // the function's /// lines are not its siblings. They are read as written.
+  // the function's comment is not its sibling. It is read as written.
   const rows = text.split('\n');
+  const fileCommentRow = fileComment < 0 ? -1 : text.slice(0, fileComment).split('\n').length - 1;
   for (const d of decls) {
     if (d.kind !== 'function' || d.doc) continue;
-    const above: string[] = [];
-    for (let i = d.line - 2; i >= 0 && /^\s*\/\/\/(?!<)/.test(rows[i]); i--) above.unshift(rows[i]);
-    if (above.length && !above.some((l) => /^\s*\/\/\/\s*@file/.test(l))) d.doc = docText(above);
+    // The row above must close a comment that starts a line of its own: a
+    // note after code on that row is the code's.
+    const end = d.line - 2;
+    if (end < 0 || !/\*\/\s*$/.test(rows[end])) continue;
+    let i = end;
+    if (/\/\*/.test(rows[i]) && !/^\s*\/\*/.test(rows[i])) continue;
+    while (i >= 0 && !/^\s*\/\*/.test(rows[i])) i--;
+    if (i < 0 || i === fileCommentRow || rows.slice(i + 1, end).some((r) => /\*\//.test(r))) continue;
+    d.doc = docText(commentLines(rows.slice(i, end + 1).join('\n').trim()));
   }
   const summary = doc.split(/(?<=[.!?])\s/)[0]?.replace(/\n/g, ' ') ?? '';
   return { path, game, summary, doc, decls, size: text.length };
@@ -662,7 +696,7 @@ const lookup = (game: Game, name: string) => where.get(game)!.get(name) ?? enume
 // the scene table gives it (KalayTunnelTreasureRoom).
 function codeDeclared(text: string, game: Game): string {
   const index = where.get(game)!;
-  const known = (name: string) => name.length > 3 && (index.has(name) || (sceneIds(game).has(name) && index.has(sceneSymbol(game, name)))) && ((/[a-z0-9][A-Z]/.test(name) && /[a-z]/.test(name)) || /^[A-Z][A-Z0-9]+$/.test(name));
+  const known = (name: string) => name.length > 3 && (index.has(name) || (sceneIds(game).has(name) && index.has(sceneSymbol(name)))) && ((/[a-z0-9][A-Z]/.test(name) && /[a-z]/.test(name)) || /^[A-Z][A-Z0-9]+$/.test(name));
   return text
     .split(/(```[\s\S]*?```|`[^`]*`|\]\([^)]*\))/)
     .map((part, i) => (i % 2 ? part : part.replace(/(?<![\w`\\.])([A-Za-z][A-Za-z0-9]*)((?:(?:\.|-\\?>)[a-z][A-Za-z0-9]*)*)(\(\))?(?![\w`])/g, (all, name: string, chain: string, call = '') => (known(name) ? `\`${name}${chain.replace(/\\/g, '')}${call}\`` : all))))
@@ -671,8 +705,9 @@ function codeDeclared(text: string, game: Game): string {
 
 // Alchemy's Markdown with the code names it writes bare shown as code, as
 // md() and codeDeclared show a comment's: outside code, link targets,
-// pictures, HTML and headings, a name with an underscore, a file name or a
-// name the game declares.
+// pictures, HTML and headings, a name with an underscore, a file name, a
+// function by its owner's prefix or a name the game declares.
+const PROSE_NAME = new RegExp(`(?<![\\w\`\\\\/.-])((?:[a-z][a-z0-9_]*\\.(?:c|h|s|S|tsv|po|png|md)|[A-Za-z][A-Za-z0-9]*_[A-Za-z0-9_]*[A-Za-z0-9]|${OWNED})(?:\\(\\))?)(?![\\w\`/])`, 'g');
 function codeProse(text: string, game: Game): string {
   return text
     .split(/(```[\s\S]*?```|`[^`]*`|!\[[^\]]*\]\([^)]*\)|\]\([^)]*\)|<[^>\n]*>|^#[^\n]*$)/m)
@@ -680,14 +715,14 @@ function codeProse(text: string, game: Game): string {
       i % 2
         ? part
         : codeDeclared(
-            part.replace(/(?<![\w`\\/.-])((?:[a-z][a-z0-9_]*\.(?:c|h|s|S|tsv|po|png|md)|[A-Za-z][A-Za-z0-9]*_[A-Za-z0-9_]*[A-Za-z0-9])(?:\(\))?)(?![\w`/])/g, '`$1`'),
+            part.replace(PROSE_NAME, '`$1`'),
             game,
           ),
     )
     .join('');
 }
 
-// The entry a code span names: `Name`, `Name()`, `gName.field`, a
+// The entry a code span names: `Name`, `Name()`, `Name.field`, a
 // structure's field on its structure's page (`BattleWork.enemyIds`), and a
 // file by a name or path that only one file ends with (`encounter.c`,
 // `game/units.c`), as Doxygen links a file's name.
@@ -700,7 +735,7 @@ function codeTarget(span: string, game: Game, self: string): { url: string } | u
   }
   const m = span.match(/^`(\w+)(?:(?:\.|->)(\w+))?(?:(?:\.|->)\w+)*(?:\(\))?`$/);
   if (!m || m[1] === self) return undefined;
-  const hit = lookup(game, m[1]) ?? (sceneIds(game).has(m[1]) ? where.get(game)!.get(sceneSymbol(game, m[1])) : undefined);
+  const hit = lookup(game, m[1]) ?? (sceneIds(game).has(m[1]) ? where.get(game)!.get(sceneSymbol(m[1])) : undefined);
   if (hit && m[2] && structPages.get(hit.decl) === hit.url && hit.decl.fields.some((f) => f.name.split(', ')[0] === m[2])) return { ...hit, url: `${hit.url}#${anchor(m[2])}` };
   return hit;
 }
@@ -752,7 +787,7 @@ const includedBy = new Map<SourceFile, SourceFile[]>();
 // Bolt, Blue Bolt.`), and the store's abilities/index.tsv holds the casts recorded from the
 // game by ability id. A name is matched against the abilities' names
 // (abilityTables) and, where several share it, to the abilities whose
-// gAbilityAnimations word dispatches to the group's effect: kind in bits 0
+// AbilityBattleEffects word dispatches to the group's effect: kind in bits 0
 // to 11, bit 15 for a summon's scene, bit 14 for the effects dispatched by
 // id range, the casting impacts among them at kind 100 and up. A field
 // Psynergy group is matched by the abilities' fieldPsynergy. A recording
@@ -777,12 +812,10 @@ const reachProblems: string[] = [];
 // The enum each reach-line prefix names, and whether an ability row reaches
 // one of its values.
 const REACH: [string, string, (value: number, act: Ability, word: number) => boolean][] = [
-  ['BATTLE_EFFECT_', 'BattleEffectId', (v, _, w) => !(w & 0xc000) && (w & 0xfff) === v],
-  ['SUMMON_EFFECT_', 'SummonEffectId', (v, _, w) => !!(w & 0x8000) && (w & 0xfff) === v],
-  ['BATTLE_ANIM_', 'BattleAnimId', (v, _, w) => !(w & 0xc000) && (w & 0xfff) === v],
-  ['SUMMON_ANIM_', 'SummonAnimId', (v, _, w) => !!(w & 0x8000) && (w & 0xfff) === v],
-  ['CASTING_IMPACT_', 'CastingImpact', (v, _, w) => (w & 0xc000) === 0x4000 && (w & 0xfff) === v + 100],
-  ['FIELD_PSYNERGY_', 'FieldPsynergy', (v, act) => act.fieldPsynergy === v],
+  ['BATTLE_EFFECT_', 'BATTLE_EFFECT_ID', (v, _, w) => !(w & 0xc000) && (w & 0xfff) === v],
+  ['SUMMON_EFFECT_', 'SUMMON_EFFECT_ID', (v, _, w) => !!(w & 0x8000) && (w & 0xfff) === v],
+  ['CASTING_IMPACT_', 'CASTING_IMPACT', (v, _, w) => (w & 0xc000) === 0x4000 && (w & 0xfff) === v + 100],
+  ['FIELD_PSYNERGY_', 'FIELD_PSY', (v, act) => act.fieldPsynergy === v],
 ];
 
 let abilityRows: { acts: Ability[]; words: number[] } | undefined;
@@ -810,7 +843,7 @@ function reachedIds(d: Decl, at: string): { ids: number[]; field: number[] } {
     if (name === 'none') continue;
     const rows = acts.flatMap((a, id) => (a.name === name ? [id] : []));
     const hit = reaches.length ? rows.filter((id) => reaches.some((r) => r(id))) : rows;
-    if (!rows.length) reachProblems.push(`${at}: “${name}” is no ability in gAbilityDefinitions`);
+    if (!rows.length) reachProblems.push(`${at}: “${name}” is no ability in AbilityDefinitions`);
     else if (!hit.length) reachProblems.push(`${at}: no row of “${name}” (${rows.join(', ')}) reaches this handler's effect`);
     ids.push(...hit);
   }
@@ -1332,7 +1365,7 @@ function arrange(): Placed {
 
 // The derived tree, as the build prints it.
 function printTree(node: Placed, depth = 0): string[] {
-  const title = node.kind === 'root' ? ROOT_LABEL : (headingOf(node.key) ?? headingOf(`${node.key}/README.md`) ?? (node.kind === 'game' ? GAME_TITLE[node.key.split('/')[1] as Game] : undefined) ?? (/(?:scenes|map_headers)\.s$/.test(node.key) ? 'Places' : node.key.endsWith('/unused') ? 'Unused' : node.key));
+  const title = node.kind === 'root' ? ROOT_LABEL : (headingOf(node.key) ?? headingOf(`${node.key}/README.md`) ?? (node.kind === 'game' ? GAME_TITLE[node.key.split('/')[1] as Game] : undefined) ?? (/scenes\.s$/.test(node.key) ? 'Places' : node.key.endsWith('/unused') ? 'Unused' : node.key));
   return [`${'  '.repeat(depth)}${title}  ${node.url}`, ...node.children.flatMap((c) => printTree(c, depth + 1))];
 }
 function headingOf(key: string): string | undefined {
@@ -1535,7 +1568,7 @@ function openQuestions(text: string): string {
 // Where an arranged page's file goes: its URL as a path under the guide's
 // folder group, a folder with an index for every page that holds others (and
 // for the places, which places() fills).
-const fileOf = (node: Placed) => `${GUIDE}/${node.children.length || node.kind === 'root' || /\/field\/maps\.s$/.test(node.key) ? `${node.url.slice(1) || '.'}/index.md`.replace(/^\.\//, '') : `${node.url.slice(1)}.md`}`;
+const fileOf = (node: Placed) => `${GUIDE}/${node.children.length || node.kind === 'root' || /\/field\/scenes\.s$/.test(node.key) ? `${node.url.slice(1) || '.'}/index.md`.replace(/^\.\//, '') : `${node.url.slice(1)}.md`}`;
 const folderOf = (node: Placed) => dirname(fileOf(node));
 const relativeTo = (from: string, to: string) => relative(from === '.' ? '' : from, to) || '.';
 
@@ -1662,7 +1695,7 @@ function placeRenders(game: Game): Render[] {
 // table of contents jumps between towns and dungeons. A town the story
 // returns to has a section each time.
 function places(files: SourceFile[], game: Game) {
-  const scenes = files.filter((f) => new RegExp(`^games/${game}/src/(?:scene|map)/[^/]+\\.c$`).test(f.path));
+  const scenes = files.filter((f) => new RegExp(`^games/${game}/src/scene/[^/]+\\.c$`).test(f.path));
   const pages = placePages(scenes, game);
   const lead = (title: string) => title.split(' ')[0].replace(/'s$/, '');
   const runs: Place[][] = [];
@@ -1697,7 +1730,7 @@ function places(files: SourceFile[], game: Game) {
     const cards = run.map((p, i) => `- [${md(p.title)}](/${game}/places/${p.slug})${lines[i] && lines[i] !== lines[i - 1] ? `: ${md(lines[i])}` : ':'}`);
     return `## ${md(heading)}\n\n${cards.join('\n')}`;
   });
-  page(`${GUIDE}/${game}/places/index.md`, { title: 'Places', description: 'Every place the party can walk around in, and what happens there.' }, `Every place the party can walk around in, in the order the story reaches it, each with a page of its own holding its map and its events. A scene's overlay holds one place or a few that share it; the [Scenes](${siteLink(existsSync(join(repo, `games/${game}/src/scene/README.md`)) ? `games/${game}/src/scene/README.md` : `games/${game}/src/map/README.md`)}) guide explains how a scene runs and how to find an event in it.\n\n${sections.join('\n\n')}`);
+  page(`${GUIDE}/${game}/places/index.md`, { title: 'Places', description: 'Every place the party can walk around in, and what happens there.' }, `Every place the party can walk around in, in the order the story reaches it, each with a page of its own holding its map and its events. A scene's overlay holds one place or a few that share it; the [Scenes](${siteLink(`games/${game}/src/scene/README.md`)}) guide explains how a scene runs and how to find an event in it.\n\n${sections.join('\n\n')}`);
   // The sidebar: a town or dungeon of several rooms is a folder of them,
   // named as its section here is, and a place alone is its page. The folder's
   // name is in parentheses, which keeps it out of its pages' addresses.
@@ -1716,11 +1749,11 @@ function places(files: SourceFile[], game: Game) {
 }
 
 // The playable characters' names as the source writes them (ISAAC), in
-// their numbers' order: the rows of enum CharacterId, or the plain names
+// their numbers' order: the rows of enum CHARACTER_ID, or the plain names
 // character_ids.h defines to a number where it has no enum (The Lost Age).
 function characterNames(game: Game): string[] {
   const src = text(`games/${game}/include/game/character_ids.h`);
-  const rows = src.match(/enum CharacterId \{([\s\S]*?)\};/)?.[1];
+  const rows = src.match(/enum CHARACTER_ID \{([\s\S]*?)\}/)?.[1];
   if (rows !== undefined) return [...rows.matchAll(/^\s*([A-Z]+)\b/gm)].map((m) => m[1]);
   const out: string[] = [];
   for (const m of src.matchAll(/^#define ([A-Z]+) (\d+)\b/gm)) out[Number(m[2])] = m[1];
@@ -1774,16 +1807,21 @@ function passage(symbols: string[], pages: Map<string, string[]>): string {
   return out.join('\n>\n');
 }
 
-// The rows of a map overlay's trigger tables that show a message, by the
+// The rows of a scene overlay's cue tables that show a message, by the
 // message's symbol: each row's table, line, kind and subject as written,
 // with the rows a macro of the file writes (lunpa.c's TALK and MIND_READ);
-// and the tables its trigger getter returns for a map it names
-// (`if (sceneId == (s32)&SceneId_BilibinBarricade) { return gBilibinBarricadeTriggers; }`).
-// A table is a struct Trigger array, or struct MapEvent in sources from
-// before the triggers were named.
+// and the tables its cue getter returns for a scene it names
+// (`if(sceneId == SCENE_BILIBIN_BARRICADE) { return BilibinBarricadeCues; }`),
+// by the scene's macro in scene_ids.h or its SceneId symbol. A table is a CUE
+// array.
 type MessageRow = { table: string; line: number; control: string; trigger: string };
+const sceneMacrosByGame = new Map<Game, Map<string, string>>();
+function sceneMacros(game: Game): Map<string, string> {
+  if (!sceneMacrosByGame.has(game)) sceneMacrosByGame.set(game, new Map([...text(`games/${game}/include/scene_ids.h`).matchAll(/^#define (SCENE_\w+)(?:\s|\\\n)+\(\(Sint32\)&SceneId(\w+)\)/gm)].map((m) => [m[1], m[2]])));
+  return sceneMacrosByGame.get(game)!;
+}
 function messageRows(path: string): { rows: Map<string, MessageRow[]>; tablesOf: Map<string, Set<string>> } {
-  const source = readFileSync(join(repo, path), 'utf8').replace(/\/\*[\s\S]*?\*\/|\/\/[^\n]*/g, (c) => c.replace(/[^\n]/g, ' '));
+  const source = readFileSync(join(repo, path), 'utf8').replace(/\/\*[\s\S]*?\*\//g, (c) => c.replace(/[^\n]/g, ' '));
   const splitTop = (s: string) => {
     const parts = [''];
     let depth = 0;
@@ -1795,10 +1833,10 @@ function messageRows(path: string): { rows: Map<string, MessageRow[]>; tablesOf:
     }
     return parts.map((p) => oneLine(p).replace(/^\(\s*([\s\S]*?)\s*\)$/, '$1')).filter(Boolean);
   };
-  const tables = [...source.matchAll(/struct (?:Trigger|MapEvent)\s+(\w+)\s*\[\s*\]\s*=\s*\{/g)].map((m) => ({ name: m[1], start: m.index!, end: source.indexOf('\n};', m.index!) }));
+  const tables = [...source.matchAll(/\bCUE\s+(\w+)\s*\[\s*\]\s*=\s*\{/g)].map((m) => ({ name: m[1], start: m.index!, end: source.indexOf('\n};', m.index!) }));
   const rows = new Map<string, MessageRow[]>();
   const add = (parts: string[], at: number) => {
-    const msg = parts.length === 4 && /^(TRIGGER_|STEP_TRIGGER_|EXAMINE_TRIGGER\(|MAP_EVENT_|COORD_EVENT_|BG_EVENT\(|PSYNERGY|USE_ITEM|0x[0-9a-f]+$|\d+$)/i.test(parts[0]) ? parts[3].match(/\b(Msg\w+)\b/) : null;
+    const msg = parts.length === 4 && /^(CUE_|STEP_CUE_|EXAMINE_CUE\(|PSYNERGY|USE_ITEM|0x[0-9a-f]+$|\d+$)/i.test(parts[0]) ? parts[3].match(/\b(Msg\w+)\b/) : null;
     if (!msg) return;
     const table = tables.find((t) => t.start < at && at < t.end)?.name ?? '';
     rows.set(msg[1], [...(rows.get(msg[1]) ?? []), { table, line: source.slice(0, at).split('\n').length, control: parts[0], trigger: parts[1] }]);
@@ -1821,7 +1859,8 @@ function messageRows(path: string): { rows: Map<string, MessageRow[]>; tablesOf:
     }
   }
   const tablesOf = new Map<string, Set<string>>();
-  for (const getter of source.matchAll(/struct (?:Trigger|MapEvent)\s*\*\s*\w+\s*\(\s*void\s*\)\s*\{/g)) {
+  const game = gameOf(path);
+  for (const getter of source.matchAll(/\bCUE\s*\*\s*\w+\s*\(\s*void\s*\)\s*\{/g)) {
     const start = getter.index! + getter[0].length;
     const body = source.slice(start, source.indexOf('\n}', start));
     for (const m of body.matchAll(/\bif\s*\(/g)) {
@@ -1831,19 +1870,21 @@ function messageRows(path: string): { rows: Map<string, MessageRow[]>; tablesOf:
       const condition = body.slice(m.index! + m[0].length, i - 1);
       const table = body.slice(i).match(/^\s*\{?\s*return\s+(\w+)\s*;/)?.[1];
       if (!table || condition.includes('!=')) continue;
-      for (const s of condition.matchAll(/(?:Scene|Map)Id_(\w+)/g)) tablesOf.set(s[1], new Set([...(tablesOf.get(s[1]) ?? []), table]));
+      for (const s of condition.matchAll(/\b(SCENE_\w+|SceneId\w+)\b/g)) {
+        const scene = s[1].startsWith('SceneId') ? s[1].slice('SceneId'.length) : sceneMacros(game).get(s[1]);
+        if (scene) tablesOf.set(scene, new Set([...(tablesOf.get(scene) ?? []), table]));
+      }
     }
   }
   return { rows, tablesOf };
 }
 
-// What a search row searches, by its ExamineTarget (control bits 8..4;
-// BgEventTarget in older sources): "a bookcase", "a spot".
+// What a search row searches, by its EXAMINE target (control bits 8..4):
+// "a bookcase", "a spot".
 function searched(row: MessageRow | undefined): string {
   const value = row && /^(0x[0-9a-f]+|\d+)$/i.test(row.control) ? Number(row.control) : undefined;
-  const targets = enumOf('ExamineTarget').length ? enumOf('ExamineTarget') : enumOf('BgEventTarget');
-  const target = row?.control.match(/^(?:EXAMINE_TRIGGER|BG_EVENT)\(\s*(\w+)\s*\)$/)?.[1] ?? (value !== undefined && (value & 0xf) === 3 ? targets.find((e) => e.value === ((value >> 4) & 0x1f))?.name : undefined);
-  const thing = !target || /^(?:EXAMINE|BG_EVENT)_SILENT$/.test(target) ? 'spot' : target.replace(/^(?:EXAMINE|BG_EVENT)_/, '').toLowerCase().replace(/_/g, ' ');
+  const target = row?.control.match(/^EXAMINE_CUE\(\s*(\w+)\s*\)$/)?.[1] ?? (value !== undefined && (value & 0xf) === 3 ? enumOf('EXAMINE').find((e) => e.value === ((value >> 4) & 0x1f))?.name : undefined);
+  const thing = !target || target === 'EXAMINE_SILENT' ? 'spot' : target.replace(/^EXAMINE_/, '').toLowerCase().replace(/_/g, ' ');
   return `${/^[aeiou]/.test(thing) ? 'an' : 'a'} ${thing}`;
 }
 
@@ -1928,7 +1969,7 @@ function actorIndex(files: SourceFile[]) {
 }
 
 // A place's own part of its overlay's opening comment: the list item or
-// paragraph that opens by naming it, as "- Kalay (`SceneId_Kalay`), a
+// paragraph that opens by naming it, as "- Kalay (`SceneIdKalay`), a
 // town…" or "The Bilibin Treasury (`BilibinTreasury`) is…", with the
 // indented paragraphs that continue it; else the one for its title or its
 // area name.
@@ -1942,7 +1983,7 @@ function placeBlock(doc: string, scene: string, names: string[]): string | undef
   const texts = blocks.map((b) => b.join('\n').trim());
   const head = (t: string) => t.replace(/^- /, '').replace(/^The /, '').replace(/\\/g, '');
   const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const bySymbol = new RegExp(`^[^(\\n]{1,60}\\(\`?(?:(?:Scene|Map)Id_)?${scene}\`?[\\s),]`);
+  const bySymbol = new RegExp(`^[^(\\n]{1,60}\\(\`?(?:SceneId)?${scene}\`?[\\s),]`);
   const found = texts.find((t) => bySymbol.test(head(t))) ?? names.map((n) => texts.find((t) => new RegExp(`^${esc(n)} \\(`).test(head(t)))).find(Boolean);
   return found
     ?.replace(/^- /, '')
@@ -1976,15 +2017,15 @@ const SMALL_WORDS = new Set(['a', 'an', 'and', 'at', 'for', 'in', 'of', 'on', 'o
 // names and the whole of its English text.
 const titleSources = new Map<Game, { mapDocs: Map<string, string>; areaNames: Map<string, string>; gameText: string }>();
 // The area name the game shows on arriving at each scene: the first of its
-// area name rules (gArea_NameRules in field/scene_rules.s; The Lost Age's
-// gScene_AreaNameRules, field/area_name_rules.s) for any entrance that names
-// the scene or its area (its row of gScenes, field/scenes.s, an area's number
-// or its AREA_ name), an offset from MsgDebugAreaName in the English text.
+// area name rules (AreaNameRules, field/area_name_rules.s) for any entrance
+// that names the scene or its area (its row of ScenesWork, field/scenes.s, an
+// area's number or its AREA_ name), an offset from MsgDebugAreaName in the
+// English text.
 function sceneAreaNames(game: Game): Map<string, string> {
   const out = new Map<string, string>();
   const read = (path: string) => (existsSync(join(repo, path)) ? readFileSync(join(repo, path), 'utf8') : '');
   const scenes = read(`games/${game}/src/field/scenes.s`);
-  const rules = (read(`games/${game}/src/field/scene_rules.s`) + read(`games/${game}/src/field/area_name_rules.s`)).split(/^g(?:Area_Name|Scene_AreaName)Rules:/m)[1]?.split(/^\t\.global /m)[0] ?? '';
+  const rules = read(`games/${game}/src/field/area_name_rules.s`).split(/^AreaNameRules:/m)[1]?.split(/^\t\.global /m)[0] ?? '';
   const po = read(`games/${game}/text/en.po`);
   const base = po.match(/msgctxt "MsgDebugAreaName"\nmsgid "(\d+)"/);
   if (!base) return out;
@@ -1999,12 +2040,18 @@ function sceneAreaNames(game: Game): Map<string, string> {
 }
 function placeTitle(game: Game, scene: string, overlay = '', area = ''): string {
   if (!titleSources.has(game)) {
+    // A scene's comment in scene_ids.h, directly above its SceneId symbol.
     const mapDocs = new Map<string, string>();
     let doc: string[] = [];
-    for (const line of readFileSync(join(repo, existsSync(join(repo, `games/${game}/include/scene_ids.h`)) ? `games/${game}/include/scene_ids.h` : `games/${game}/include/map_ids.h`), 'utf8').split('\n')) {
-      const m = line.match(/^extern char (?:Scene|Map)Id_(\w+);/);
+    let open = false;
+    for (const line of readFileSync(join(repo, `games/${game}/include/scene_ids.h`), 'utf8').split('\n')) {
+      const m = line.match(/^extern char SceneId(\w+);/);
       if (m) mapDocs.set(m[1], doc.join(' '));
-      doc = /^\/\/\//.test(line) ? [...doc, line.replace(/^\/\/\/\s?/, '')] : [];
+      if (open || /^\s*\/\*/.test(line)) {
+        if (!open) doc = [];
+        doc.push(line.replace(/^\s*\/\*\s?/, '').replace(/\s*\*\/\s*$/, '').trim());
+        open = !line.includes('*/');
+      } else doc = [];
     }
     const gameText = [...readFileSync(join(repo, `games/${game}/text/en.po`), 'utf8').matchAll(/^msgstr "((?:[^"\\]|\\.)*)"/gm)].map((m) => m[1].replace(/\\n/g, ' ')).join('\n');
     titleSources.set(game, { mapDocs, areaNames: sceneAreaNames(game), gameText });
@@ -2050,16 +2097,43 @@ function placeTitle(game: Game, scene: string, overlay = '', area = ''): string 
   return out.map((w, j) => (j > 0 && SMALL_WORDS.has(w.toLowerCase()) ? w.toLowerCase() : w.charAt(0).toUpperCase() + w.slice(1))).join(' ');
 }
 
+// The words The Broken Seal took from pret before it named its own, in its
+// own words (a WarpToVale event, now an exit).
+const pretWords = (name: string) => name.replace(/WarpDest/g, 'Entrance').replace(/Warp/g, 'Exit').replace(/ObjectEvent/g, 'Actor').replace(/LocalId/g, 'ActorId').replace(/MapSec/g, 'Area').replace(/MapEvent/g, 'Trigger');
+// The name an event recorded under an older name has now, where `has` knows
+// one: in its own words (pretWords), and from the names before Alchemy took
+// SGL's, a scene's (Vale_ExitToPlaza, now scValeExitToPlaza; Scene_LeaveByExit,
+// now scLeaveByExit), the field engine's (Whirlwind_CarryLeader, now
+// fdWhirlwindCarryLeader) or one a macro of the file defines
+// (Daila_ParchFirstPuddle, now DailaParchFirstPuddle), with the words renamed
+// since (Cell, now Metatile; Trigger, now Cue; DoNothing, now NoOperation).
+function currentName(recorded: string, has: (name: string) => boolean): string | undefined {
+  const pret = pretWords(recorded);
+  const candidates = [recorded, pret].flatMap((n) => {
+    const m = n.match(/^([A-Z][A-Za-z0-9]*)_([A-Z][A-Za-z0-9]*(?:_[A-Z][A-Za-z0-9]*)*)$/);
+    if (!m) return [n];
+    const rest = m[2].replace(/_/g, '');
+    return [n, ...(m[1] === 'Scene' ? [`sc${rest}`] : []), `sc${m[1]}${rest}`, `fd${m[1]}${rest}`, `${m[1]}${rest}`];
+  });
+  return [...candidates, ...candidates.map((n) => n.replace(/Cell/g, 'Metatile').replace(/Trigger/g, 'Cue').replace(/DoNothing/g, 'NoOperation'))].find(has);
+}
+
 // A place's events where the game has no story index (The Lost Age): those
 // its recordings name, in the order its scene file defines them, each with
-// the messages its recording showed. An event it never recorded is not on
-// its page.
+// the messages its recording showed, by its name now. An event it never
+// recorded is not on its page.
 function recordedEvents(p: Place, path: string, mine: Render[], symbol: Map<number, string>): StoryEvent[] {
-  const line = (name: string) => p.file.decls.find((d) => d.kind === 'function' && d.name === name)?.line ?? Infinity;
-  const names = [...new Set(mine.filter((r) => (r.kind === 'event-gif' || r.kind === 'event-segment') && r.event).map((r) => r.event))];
+  const fn = (name: string) => p.file.decls.find((d) => d.kind === 'function' && d.name === name);
+  const line = (name: string) => fn(name)?.line ?? Infinity;
+  const recorded = [...new Set(mine.filter((r) => (r.kind === 'event-gif' || r.kind === 'event-segment') && r.event).map((r) => r.event))];
+  // A function of the file, or of a header its scene includes (scene/shared's
+  // scLeaderSinkAway), as placePages finds an event's function.
+  const known = (n: string) => !!fn(n) || where.get(p.file.game)!.get(n)?.decl.kind === 'function';
+  const now = (name: string) => currentName(name, known) ?? name;
+  const names = [...new Set(recorded.map(now))];
   return names
     .map((event) => {
-      const messages = mine.find((r) => r.event === event && r.messages)?.messages.split(',').map((n) => parseInt(n, 10)).filter((n) => symbol.has(n)) ?? [];
+      const messages = mine.find((r) => now(r.event) === event && r.messages)?.messages.split(',').map((n) => parseInt(n, 10)).filter((n) => symbol.has(n)) ?? [];
       return { file: path, scenes: [p.id], event, trigger: '', messages, order: line(event), index: 0 };
     })
     .sort((a, b) => a.order - b.order || a.event.localeCompare(b.event))
@@ -2139,13 +2213,16 @@ function placePages(scenes: SourceFile[], game: Game): Place[] {
       body.push(`![${md(alt)}](/${root}/${m.file})${caption ? `\\\n${caption}` : ''}`);
     }
 
-    // Its events: those the story index finds playing in this map, but for
-    // the setting up on entry and the callbacks that show nothing.
-    const events = game === 'tbs' ? story.filter((e) => e.file === path && e.scenes.includes(p.id) && !/^entry\b/.test(e.trigger) && !(/^callback\b/.test(e.trigger) && !e.messages.length)) : recordedEvents(p, path, mine, words2.symbol);
+    // Its events: those the story index finds playing in this map, in its
+    // overlay's file or a shared one the overlay includes (scene/shared's
+    // vault_doors.c), but for the setting up on entry and the callbacks that
+    // show nothing.
+    const events = game === 'tbs' ? story.filter((e) => (e.file === path || e.file.startsWith('scene/shared/')) && e.scenes.includes(p.id) && !/^entry\b/.test(e.trigger) && !(/^callback\b/.test(e.trigger) && !e.messages.length)) : recordedEvents(p, path, mine, words2.symbol);
     // An event's recordings, by the names it was recorded under: its own
     // name, else, from renders made before the rows were named, its table and
-    // index (`gValeStormyNight_Events[26]`, now `_Triggers`) or a function's name since renamed,
-    // matched by the first message it showed.
+    // index (`gValeStormyNight_Events[26]`, now `ValeStormyNightCues`) or a
+    // function's name since renamed (currentName), else matched by the first
+    // message it showed.
     // An event its rows list in several of the overlay's scenes is recorded
     // once, in one of them: the others show that recording.
     const siblings = new Set(out.filter((q) => q.file === p.file && q.id !== p.id).map((q) => q.id));
@@ -2154,17 +2231,17 @@ function placePages(scenes: SourceFile[], game: Game): Place[] {
     const aliases = new Map<string, string[]>();
     for (const n of new Set(recorded.filter((r) => r.kind === 'event-gif' || r.kind === 'event-segment').map((r) => r.event))) {
       if (events.some((e) => e.event === n)) continue;
-      // A name recorded in the words The Broken Seal took from pret before it
-      // named its own (a WarpToVale event, now ExitToVale).
-      const reworded = n.replace(/WarpDest/g, 'Entrance').replace(/Warp/g, 'Exit').replace(/ObjectEvent/g, 'Actor').replace(/LocalId/g, 'ActorId').replace(/MapSec/g, 'Area').replace(/MapEvent/g, 'Trigger');
-      if (reworded !== n && events.some((e) => e.event === reworded)) {
-        aliases.set(reworded, [...(aliases.get(reworded) ?? []), n]);
+      // Its own name before the renames comes first, as the name itself did.
+      const now = currentName(n, (x) => events.some((e) => e.event === x));
+      if (now) {
+        aliases.set(now, [n, ...(aliases.get(now) ?? [])]);
         continue;
       }
       // A published recording named before events took their scene's prefix:
-      // its old prefix and the same words after it, matched within this file.
-      const words = reworded.match(/^(?:Event|EventScript)_(\w+)$/)?.[1];
-      const renamed = words ? events.filter((e) => e.event.endsWith(`_${words}`) && !e.event.startsWith('Event_')) : [];
+      // its old prefix and the same words after it (the scene's name before
+      // them now), matched within this file.
+      const words = pretWords(n).match(/^(?:Event|EventScript)_(\w+)$/)?.[1]?.replace(/Cell/g, 'Metatile').replace(/Trigger/g, 'Cue');
+      const renamed = words ? events.filter((e) => /^sc[A-Z]/.test(e.event) && e.event.endsWith(words)) : [];
       if (renamed.length === 1) {
         aliases.set(renamed[0].event, [...(aliases.get(renamed[0].event) ?? []), n]);
         continue;
@@ -2186,7 +2263,7 @@ function placePages(scenes: SourceFile[], game: Game): Place[] {
     if (!rowsOfFile.has(p.file.path)) rowsOfFile.set(p.file.path, messageRows(p.file.path));
     const file = rowsOfFile.get(p.file.path)!;
     // A message's rows in the place's own tables: the ones its getter returns
-    // for it, else the ones named after it (gValeStormyNight_Triggers), else all.
+    // for it, else the ones named after it (ValeStormyNightCues), else all.
     const rowsOf = (symbol: string) => {
       const all = file.rows.get(symbol) ?? [];
       const own = file.tablesOf.get(p.scene);
@@ -2269,7 +2346,9 @@ function placePages(scenes: SourceFile[], game: Game): Place[] {
     };
     const sectionFor = (d: Decl, order: number, messages: string[]) => {
       const h = headingOf(d.doc);
-      const s: Section = { name: d.name, heading: h.heading, unused: h.unused, order, items: [], link: `[\`${basename(p.file.path)}\`, line ${d.line}](${index2.get(d.name)?.url ?? `${github}/${p.file.path}#L${d.line}`})`, symbols: messages.slice(0, 1) };
+      // The file that defines it: the overlay's, or a shared one it includes.
+      const own = p.file.decls.includes(d) ? p.file : (index2.get(d.name)?.file ?? p.file);
+      const s: Section = { name: d.name, heading: h.heading, unused: h.unused, order, items: [], link: `[\`${basename(own.path)}\`, line ${d.line}](${index2.get(d.name)?.url ?? `${github}/${own.path}#L${d.line}`})`, symbols: messages.slice(0, 1) };
       const quote = passage(messages, words2.pages);
       // Code the game never plays has no recording here: started with nothing
       // staged, it shows the wrong moment. The Unused page shows the staged ones.
@@ -2298,9 +2377,9 @@ function placePages(scenes: SourceFile[], game: Game): Place[] {
     const triggerOfRow = (row: MessageRow | undefined) => {
       if (!row) return '';
       const subject = /^\d+$/.test(row.trigger) ? row.trigger : /^\w+$/.test(row.trigger) ? `${row.trigger}=0` : '';
-      if (/^(?:EXAMINE_TRIGGER|BG_EVENT)\(/.test(row.control)) return `search ${row.trigger}`;
+      if (/^EXAMINE_CUE\(/.test(row.control)) return `search ${row.trigger}`;
       if (!subject) return '';
-      if (/^(?:TRIGGER_TALK$|TALK_TRIGGER_FACING\()/.test(row.control)) return `talk ${subject}`;
+      if (/^(?:CUE_TALK$|TALK_CUE_FACING\()/.test(row.control)) return `talk ${subject}`;
       const ability = row.control.match(/^PSYNERGY_ON_ACTOR\(\s*ABILITY_(\w+)\s*\)$/)?.[1];
       return ability ? `${ability.toLowerCase().replace(/_/g, ' ')} on ${subject}` : '';
     };
@@ -2462,15 +2541,15 @@ const int = (v: string | undefined) => Number(v ?? 0) || 0;
 const text = (path: string) => (existsSync(join(repo, path)) ? readFileSync(join(repo, path), 'utf8') : '');
 
 // The abilities as the source's tables give them: each one's name (message
-// MsgAbilityName plus its id), its field Psynergy (gAbilityDefinitions'
-// fieldPsynergy) and the effect its gAbilityBattleEffects (once gAbilityAnimations) word dispatches to (the
-// word's low half).
+// MsgAbilityName plus its id), its field Psynergy (AbilityDefinitions'
+// fieldPsynergy) and the effect its AbilityBattleEffects word dispatches to
+// (the word's low half).
 type Ability = { name: string; fieldPsynergy: number };
 function abilityTables(): { acts: Ability[]; words: number[] } {
-  const rows = initializers(['games/tbs/src/game/ability_table.c', 'games/tbs/src/game/abilities.c'].find((p) => existsSync(join(repo, p)))!, 'gAbilityDefinitions');
+  const rows = initializers('games/tbs/src/game/ability_table.c', 'AbilityDefinitions');
   const names = messagesFrom('MsgAbilityName', rows.length);
   const acts = rows.map((row, id) => ({ name: names[id], fieldPsynergy: constant(row.match(/\.fieldPsynergy\s*=\s*([^,}]+)/)?.[1] ?? '0') }));
-  const words = initializers('games/tbs/src/battle/ability_staging.c', text('games/tbs/src/battle/ability_staging.c').includes('gAbilityBattleEffects') ? 'gAbilityBattleEffects' : 'gAbilityAnimations').map((e) => constant(e) & 0xffff);
+  const words = initializers('games/tbs/src/battle/ability_staging.c', 'AbilityBattleEffects').map((e) => constant(e) & 0xffff);
   return { acts, words };
 }
 
@@ -2585,7 +2664,7 @@ function enumOf(name: string) {
 // section of its own made from its own comment. The source marks it in four
 // ways: a comment that says `Unused:` above a declaration, inside a table (a
 // row no lookup reaches) or in a file's summary (a map nothing leads to); a
-// function declared UNUSED; and a name that carries Unused after its prefix.
+// function declared UNUSED; and a name that carries Unused as one of its words.
 // The sections are grouped by the folder guide that explains their code, in
 // the guide's order, and each follows the source's order. The page opens
 // with the glossary's entry for the word.
@@ -2610,15 +2689,23 @@ function unusedPage(files: SourceFile[], root: Placed) {
   };
   for (const f of files) {
     const lines = readFileSync(join(repo, f.path), 'utf8').split('\n');
+    // Before the file's own comment come only its guard and blank lines.
+    let code = false;
     for (let i = 0; i < lines.length; i++) {
-      if (!/^\s*\/\//.test(lines[i])) continue;
+      // A comment on lines of its own: a note after code is the code's.
+      if (!/^\s*\/\*/.test(lines[i])) {
+        if (!/^\s*$|^#(?:ifndef|define) \w+\s*$/.test(lines[i])) code = true;
+        continue;
+      }
       let j = i;
-      while (j + 1 < lines.length && /^\s*\/\//.test(lines[j + 1])) j++;
+      while (j + 1 < lines.length && !lines[j].includes('*/')) j++;
       const block = lines.slice(i, j + 1);
       const start = i + 1;
+      const first = !code;
+      code = true;
       i = j;
       if (!block.some((l) => /\bUnused:/.test(l))) continue;
-      if (block.some((l) => /^\s*\/\/\/\s*@file/.test(l))) {
+      if (first && f.doc) {
         const para = f.doc.split(/\n\n/).find((x) => /\bUnused:/.test(x));
         if (para) add(f, basename(f.path), para, `<small>In [\`${basename(f.path)}\`](${pageOf(f.path)})</small>`);
         continue;
@@ -2629,19 +2716,23 @@ function unusedPage(files: SourceFile[], root: Placed) {
         continue;
       }
       const around = f.decls.filter((d) => !d.anon && d.line <= start && start < d.line + d.lines).pop();
-      const text = codeDeclared(md(block.map((l) => l.replace(/^\s*\/\/\/?<?\s?/, '')).join('\n')), 'tbs');
+      const text = codeDeclared(md(commentLines(block.join('\n').trim()).join('\n')), 'tbs');
       add(f, around ? `${around.name}, line ${start}` : `${basename(f.path)}, line ${start}`, text, lineLink(f, start));
     }
   }
+  // A name that carries Unused as one of its words, after its owner's
+  // (BattleUnusedCounting, scColosseumNavampaMatchUnusedAskToControlCharacter).
   for (const f of files)
     for (const d of f.decls) {
       if (d.anon || index.get(d.name)?.decl !== d) continue;
-      if ((d.kind === 'function' && /\bUNUSED\b/.test(d.signature)) || /(?:^|_)Unused[A-Z]/.test(d.name)) declItem(f, d);
+      if ((d.kind === 'function' && /\bUNUSED\b/.test(d.signature)) || /(?:^|[a-z0-9])Unused[A-Z]/.test(d.name)) declItem(f, d);
     }
 
   // A recording only where one was staged by hand and checked against what
-  // the function says (alchemy-devtools' guide_unused.rs).
-  for (const it of items) if (stored.has(`guides/unused/${it.name}.gif`)) it.gif = `guides/unused/${it.name}.gif`;
+  // the function says (alchemy-devtools' guide_unused.rs), under the name it
+  // had then (currentName).
+  const staged = [...stored.keys()].filter((p) => /^guides\/unused\/[^/]+\.gif$/.test(p));
+  for (const it of items) it.gif = staged.find((p) => p === `guides/unused/${it.name}.gif` || currentName(basename(p, '.gif'), (n) => n === it.name));
 
   // The folders in the guide's order.
   const walkTree = (n: Placed): Placed[] => [n, ...n.children.flatMap(walkTree)];
@@ -2749,10 +2840,12 @@ for (const game of GAMES) {
     }
   users.set(game, u);
   // The includes, found as the compilers find them: beside the file, then in
-  // the folders the Makefile's INCLUDES name.
+  // the folders the Makefile's INCLUDES name (the game's include, then
+  // games/common, whose files have no pages).
   const byPath = new Map(files.map((f) => [f.path, f]));
   const makefile = text('Makefile');
-  const searched = [`games/${game}/include`, ...(makefile.match(/addprefix -Igames\/\$\(GAME\)\/include\/,([\w ]+)\)/)?.[1].trim().split(/\s+/) ?? []).map((d) => `games/${game}/include/${d}`)];
+  const searched = [...(makefile.match(/^INCLUDES\s*:=([^\n]*)/m)?.[1].matchAll(/-I(\S+)/g) ?? [])].map((m) => m[1].replace(/\$\(GAME\)/g, game));
+  if (!searched.includes(`games/${game}/include`)) searched.unshift(`games/${game}/include`);
   for (const f of files) {
     const found: { file?: SourceFile; as: string }[] = [];
     for (const m of readFileSync(join(repo, f.path), 'utf8').matchAll(/^\s*#\s*include\s+["<]([^">]+)[">]/gm)) {

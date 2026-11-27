@@ -20,7 +20,7 @@
 //   it. Flags 0x200 to 0x2ff belong to one scene and 0x300 to 0x3ff to one
 //   place group, so those are keyed by their scene or group.
 // - events.tsv: every scene event: its name (its function, or the message a
-//   table row shows), its trigger and table condition, the flags all it does
+//   cue row shows), its trigger and table condition, the flags all it does
 //   requires, the flags it tests, sets and clears, and the messages it shows.
 // - places.tsv (only without a place table): each scene's area name and exits.
 // - glossary.tsv: the proper nouns and game terms of the text, each with its
@@ -28,10 +28,10 @@
 //   messages that use it.
 // - beats.tsv: a first story order of the events, by their flag dependencies.
 //
-// How messages are found. A scene's event sets the current message
-// (MESSAGE_SET) and each "show" command shows it and moves on to the next
-// (MESSAGE_PUT, Event_ShowMessage, Event_AskYesNo shows three); a trigger table
-// row can show one message itself. Each event is followed through its
+// How messages are found. A scene's script sets the current message
+// (fdScriptSetMessageId) and each "show" command shows it and moves on to the
+// next (fdScriptShowMessage; fdScriptAskYesNo shows three); a cue table row can
+// show one message itself. Each event is followed through its
 // statements with the current message's possible values, each value with the
 // flags its path has tested, and through the scene's own helper functions it
 // calls. The C is parsed with tree-sitter, as scripts/content.ts does, after
@@ -48,10 +48,9 @@ const out = process.argv[2] ?? process.env.STORY_OUT ?? join(docs, 'build/story'
 const placesTable = process.env.PLACES ?? join(out, '../places/places.tsv');
 const GAME = 'games/tbs';
 const gamePath = (...p: string[]) => join(repo, GAME, ...p);
-// The overlays' folder and the scene table: src/scene and scenes.s, or src/map
-// and map_headers.s in sources from before the scenes were named.
-const SCENES = existsSync(gamePath('src/field/scenes.s')) ? 'scene' : 'map';
-const SCENE_TABLE = SCENES === 'scene' ? 'src/field/scenes.s' : 'src/field/map_headers.s';
+// The overlays' folder and the scene table.
+const SCENES = 'scene';
+const SCENE_TABLE = 'src/field/scenes.s';
 const started = Date.now();
 
 const parser = await (async () => {
@@ -214,9 +213,7 @@ function preprocess(text: string, base: Defines): { text: string; defs: Defines 
 // The English edition's macros, from the headers that choose them.
 const englishDefines: Defines = (() => {
   let defs: Defines = new Map([['TBS_EDITION_EN', '1']]);
-  for (const h of ['include/edition.h', 'include/version.h']) {
-    if (existsSync(gamePath(h))) defs = preprocess(readFileSync(gamePath(h), 'utf8'), defs).defs;
-  }
+  if (existsSync(gamePath('include/edition.h'))) defs = preprocess(readFileSync(gamePath('include/edition.h'), 'utf8'), defs).defs;
   return defs;
 })();
 
@@ -267,7 +264,8 @@ function tokenize(text: string): string[] {
 }
 
 const isIdent = (t: string | undefined) => !!t && /^[A-Za-z_]\w*$/.test(t);
-const TYPE_WORDS = new Set(['s8', 'u8', 's16', 'u16', 's32', 'u32', 's64', 'u64', 'vu8', 'vu16', 'vu32', 'vs8', 'vs16', 'vs32', 'int', 'unsigned', 'signed', 'char', 'short', 'long', 'void', 'const', 'volatile', 'struct', 'union', 'enum', 'bool8', 'bool16', 'bool32', 'size_t', 'uintptr_t', 'intptr_t', 'f32']);
+// SGL's integer types, and the development kit's names for them.
+const TYPE_WORDS = new Set(['Sint8', 'Uint8', 'Sint16', 'Uint16', 'Sint32', 'Uint32', 'Sint64', 'Uint64', 'Bool', 's8', 'u8', 's16', 'u16', 's32', 'u32', 'int', 'unsigned', 'signed', 'char', 'short', 'long', 'void', 'const', 'volatile', 'struct', 'union', 'enum', 'size_t', 'uintptr_t', 'intptr_t']);
 
 type Macro = { params?: string[]; body: string[] };
 
@@ -279,7 +277,7 @@ function builtinValue(name: string): number | undefined {
   const msg = messageBySymbol.get(name) ?? messageBySymbol.get(name.replace(/^TEXT_MESSAGE_NUMBER_/, ''));
   if (msg !== undefined) return msg;
   if (name === 'MsgEnd' || name === 'TEXT_MESSAGE_NUMBER_MsgEnd') return messages.length;
-  const id = name.match(/^(?:Scene|Map)Id_(\w+)$/);
+  const id = name.match(/^SceneId([A-Z]\w*)$/);
   const scene = id ? sceneIdByName.get(id[1]) : undefined;
   return scene;
 }
@@ -399,12 +397,12 @@ function evalTokens(toks: string[], scope: Scope | undefined): number {
   const cast = (type: string[], v: number): number => {
     if (type.includes('*')) return v;
     const t = type.filter((w) => w !== 'const' && w !== 'volatile').join(' ');
-    if (t === 'u8' || t === 'unsigned char') return v & 0xff;
-    if (t === 's8' || t === 'char' || t === 'signed char') return (v << 24) >> 24;
-    if (t === 'u16' || t === 'unsigned short') return v & 0xffff;
-    if (t === 's16' || t === 'short') return (v << 16) >> 16;
-    if (t === 'u32' || t === 'unsigned' || t === 'unsigned int') return v >>> 0;
-    if (t === 's32' || t === 'int') return v | 0;
+    if (t === 'Uint8' || t === 'u8' || t === 'unsigned char') return v & 0xff;
+    if (t === 'Sint8' || t === 's8' || t === 'char' || t === 'signed char') return (v << 24) >> 24;
+    if (t === 'Uint16' || t === 'u16' || t === 'unsigned short') return v & 0xffff;
+    if (t === 'Sint16' || t === 's16' || t === 'short') return (v << 16) >> 16;
+    if (t === 'Uint32' || t === 'u32' || t === 'unsigned' || t === 'unsigned int') return v >>> 0;
+    if (t === 'Sint32' || t === 's32' || t === 'Bool' || t === 'int') return v | 0;
     return v;
   };
   function unary(): number {
@@ -568,8 +566,8 @@ type SceneRow = { id: number; name: string; overlay: number; group: number; kind
 // A row gives its overlay, area and map as numbers, or by name in sources
 // that link them: the overlay as overlay.ld's block of that name (numbered
 // here in the order the rows first name them, only to join the two), the
-// area as enum AreaId (include/area_ids.h) and the map as its row of gMaps
-// (map/resources.s).
+// area as enum AREA_ID (include/area_ids.h) and the map as its row of
+// MapsWork (map/resources.s).
 const enumNames = (path: string, pattern: RegExp) => new Map(existsSync(path) ? [...readFileSync(path, 'utf8').matchAll(pattern)].map((m, i) => [m[1], i] as const) : []);
 const areaIds = enumNames(gamePath('include/area_ids.h'), /^\s*(AREA_\w+)\s*,/gm);
 const mapIndices = enumNames(gamePath('src/map/resources.s'), /^\tmap\s+(\w+)\s*,/gm);
@@ -627,16 +625,15 @@ for (const s of scenes) if (s.file) scenesOfFile.set(s.file, [...(scenesOfFile.g
 const sceneLabel = (id: number) => `${id}${scenes[id]?.name ? ` ${scenes[id].name}` : ''}`;
 const shortFile = (f: string) => f.replace(/^games\/tbs\/src\//, '');
 
-// Area names, as Area_GetNameIndex resolves them: the first rule of
-// gArea_NameRules for the scene (scene_name) or its area (area_name) and the
-// entrance (-1 for any), added to MsgDebugAreaName (once MsgDebugEntryName). Sources from before the
-// areas were named spell them MapSec_GetNameIndex, gMapSec_NameRules,
-// map_name and group_name.
+// Area names, as fdAreaGetNameIndex resolves them: the first rule of
+// AreaNameRules for the scene (scene_name) or its area (area_name) and the
+// entrance (-1 for any), added to MsgDebugAreaName. The rules' .if blocks
+// test the assembler's edition switches, which include/edition.inc sets.
 type AreaNames = { byEntrance: [number, string][]; fallback: string; messages: number[] };
 
 function deriveAreas(): Map<number, AreaNames> {
   const asmDefs = new Map<string, number>();
-  const ed = [gamePath('include/ed_asm.h'), gamePath('include/game/ed_asm.h')].find(existsSync) ?? '';
+  const ed = gamePath('include/edition.inc');
   if (existsSync(ed)) {
     // The English block's .set lines win; its nested .if blocks are its own.
     let depth = 0;
@@ -657,8 +654,8 @@ function deriveAreas(): Map<number, AreaNames> {
   const rules: Rule[] = [];
   let inTable = false;
   const stack: boolean[] = [];
-  for (const line of readFileSync([gamePath('src/field/area_name_rules.s'), gamePath('src/field/scene_rules.s'), gamePath('src/overworld/scene_rules.s')].find(existsSync) ?? '', 'utf8').split('\n')) {
-    if (/^g(?:Area|MapSec)_NameRules:/.test(line)) inTable = true;
+  for (const line of readFileSync(gamePath('src/field/area_name_rules.s'), 'utf8').split('\n')) {
+    if (/^AreaNameRules:/.test(line)) inTable = true;
     else if (inTable && /^\w+:|^\s*\.global/.test(line)) inTable = false;
     if (!inTable) continue;
     const cond = line.match(/^\s*\.if\s+(\w+)/);
@@ -670,13 +667,13 @@ function deriveAreas(): Map<number, AreaNames> {
     else if (/^\s*\.else/.test(line)) stack.push(!stack.pop());
     else if (/^\s*\.endif/.test(line)) stack.pop();
     if (!stack.every(Boolean)) continue;
-    const m = line.match(/^\s*(scene|area|map|group)_name\s+(\w+)\s*,\s*(-?\w+)\s*,\s*(\w+)/);
+    const m = line.match(/^\s*(scene|area)_name\s+(\w+)\s*,\s*(-?\w+)\s*,\s*(\w+)/);
     if (!m) continue;
-    const scene = m[1] === 'scene' || m[1] === 'map';
+    const scene = m[1] === 'scene';
     const id = scene ? sceneIdByName.get(m[2]) : numbered(m[2], areaIds);
     if (id !== undefined) rules.push({ scene, id, entrance: Number(m[3]), index: Number(m[4]) });
   }
-  const base = messageBySymbol.get('MsgDebugAreaName') ?? messageBySymbol.get('MsgDebugEntryName') ?? 0;
+  const base = messageBySymbol.get('MsgDebugAreaName') ?? 0;
   const nameOf = (scene: SceneRow, entrance: number) => {
     const r = rules.find((r) => (r.scene ? r.id === scene.id : r.id === scene.group) && (r.entrance === -1 || r.entrance === entrance));
     return r ? base + r.index : base;
@@ -746,52 +743,61 @@ resolveEnums();
 
 // Character names, from character_ids.h (ISAAC 0 to PIERS 7): actors 0 to 7
 // are the party's characters, and {actor_name:n} is character n - 1's name
-// (UnitGetFar(argument - 1) in the window's decoder).
+// (gmUnitGetStub(argument - 1) in the window's decoder).
 const characters: string[] = [];
 {
   const ids = gamePath('include/game/character_ids.h');
   if (existsSync(ids)) {
-    // The characters are the rows of enum CharacterId, in order.
+    // The characters are the rows of enum CHARACTER_ID, in order.
     const src = readFileSync(ids, 'utf8');
-    for (const [i, name] of [...(src.match(/enum CharacterId \{([\s\S]*?)\};/)?.[1] ?? '').matchAll(/^\s*([A-Z]+)\b/gm)].map((m) => m[1]).entries()) characters[i] = name[0] + name.slice(1).toLowerCase();
+    for (const [i, name] of [...(src.match(/enum CHARACTER_ID \{([\s\S]*?)\}/)?.[1] ?? '').matchAll(/^\s*([A-Z]+)\b/gm)].map((m) => m[1]).entries()) characters[i] = name[0] + name.slice(1).toLowerCase();
   }
 }
 
-// Flag names and notes from flags.h: each FLAG_ macro's value, its ///
-// comment and the // heading of its section.
+// Flag names and notes from flags.h: each FLAG_ macro's value, its comment
+// and the heading of its section. Every comment is a block comment: the one
+// directly above a #define is its comment, and a note after the value on its
+// line is the value's; any other comment but the file's own heads a section
+// when it is one line ("Altin"), and a longer one is a note that ends the
+// section before it.
 type FlagDoc = { names: string[]; doc: string; section: string };
 const flagDocs = new Map<number, FlagDoc>();
 {
   let section = '';
-  let block: string[] = [];
-  let doc: string[] = [];
-  for (const line of readFileSync(gamePath('include/flags.h'), 'utf8').split('\n')) {
-    const d = line.match(/^\s*\/\/\/(?!<)\s?(.*)$/);
-    if (d) {
-      if (!/^@file/.test(d[1])) doc.push(d[1]);
-      continue;
+  let fileComment = true;
+  const lines = readFileSync(gamePath('include/flags.h'), 'utf8').split('\n');
+  for (let i = 0; i < lines.length; i++) {
+    let doc = '';
+    if (/^\s*\/\*/.test(lines[i])) {
+      const start = i;
+      while (i < lines.length - 1 && !lines[i].includes('*/')) i++;
+      const text = lines
+        .slice(start, i + 1)
+        .join('\n')
+        .replace(/^\s*\/\*\s?|\s*\*\/\s*$/g, '')
+        .replace(/\n\s*/g, ' ')
+        .trim();
+      if (fileComment) {
+        fileComment = false;
+        continue;
+      }
+      if (!/^#define\b/.test(lines[i + 1] ?? '')) {
+        section = start === i ? text : '';
+        continue;
+      }
+      doc = text;
+      i++;
     }
-    const s = line.match(/^\s*\/\/\s?(.*)$/);
-    if (s) {
-      block.push(s[1].trim());
-      doc = [];
-      continue;
-    }
-    // A one-line // comment heads a section ("// Altin"); a longer one is a
-    // note that ends the section before it.
-    if (block.length) section = block.length === 1 ? block[0] : '';
-    block = [];
-    const m = line.match(/^#define (FLAG_\w+)(\([^)]*\))?\s+(.*?)\s*(?:\/\/\/<\s*(.*))?$/);
+    const m = lines[i].match(/^#define (FLAG_\w+)(\([^)]*\))?\s+(.*?)\s*(?:\/\*\s*(.*?)\s*\*\/)?\s*$/);
     if (m && !m[2]) {
       const v = constEval(m[1], globalScope);
       if (v !== undefined) {
         const f = flagDocs.get(v) ?? { names: [], doc: '', section };
         f.names.push(m[1]);
-        f.doc = [f.doc, ...doc, m[4] ?? ''].filter(Boolean).join(' ');
+        f.doc = [f.doc, doc, m[4] ?? ''].filter(Boolean).join(' ');
         flagDocs.set(v, f);
       }
     }
-    doc = [];
   }
 }
 
@@ -805,7 +811,7 @@ type TU = { file: string; scope: Scope; fns: Map<string, Fn>; tables: Map<string
 
 const localFlagNames = new Map<string, Map<number, string>>();
 let globalFlagNamesCache: Map<number, string> | undefined;
-const ENTRY_SLOTS = ['initialize', 'entrances', 'exits', 'actors', 'triggers', 'regions'];
+const ENTRY_SLOTS = ['initialize', 'entrances', 'exits', 'actors', 'cues', 'regions'];
 
 function functionsOf(root: Node, file: string, into: Map<string, Fn>) {
   for (const n of root.namedChildren) {
@@ -853,10 +859,10 @@ function buildTU(file: string): TU {
     }
   };
   visit(file);
-  // A scene's own entry table, else the one every scene links (src/scene/entry.s).
-  const ownEntry = gamePath(`src/${SCENES}/entry`, `${basename(file, '.c')}.s`);
-  const entryPath = existsSync(ownEntry) ? ownEntry : gamePath(`src/${SCENES}/entry.s`);
-  const entry = existsSync(entryPath) ? [...readFileSync(entryPath, 'utf8').matchAll(/^\s*overlay_veneer\s+(\w+)/gm)].map((m) => m[1]) : [];
+  // The entry table every scene links (src/scene/entry.s): a stub for each of
+  // the six functions the main image calls the scene through.
+  const entryPath = gamePath(`src/${SCENES}/entry.s`);
+  const entry = existsSync(entryPath) ? [...readFileSync(entryPath, 'utf8').matchAll(/^\s*unnamed_stub\s+(\w+)/gm)].map((m) => m[1]) : [];
   return { file, scope, fns, tables, scenes: scenesOfFile.get(file) ?? [], entry };
 }
 
@@ -889,16 +895,18 @@ type Frame = {
 };
 
 const UNKNOWN: Val = { t: 'unknown' };
-const SET_MESSAGE = new Set(['MESSAGE_SET', 'Event_SetMessageId']);
-const SHOW_MESSAGE = new Set(['Event_ShowMessage', 'MESSAGE_PUT', 'Event_OpenMessage', 'MESSAGE_OPEN', 'FieldEvent_ShowMessageThenWait', 'Event_ShowMessageAndWait', 'Event_ShowMessageThenWait', 'FieldMessage_ShowAtActor', 'Event_ShowSpeakerMessage']);
-const ASK_MESSAGE = new Set(['Event_AskYesNo', 'Event_AskYesNoAndShowResponse']);
-const TWO_MESSAGES = new Set(['Import_EventShowTwoMessagesAndWait', 'FieldEvent_ShowTwoMessagesAndWait', 'Battle_ShowPairedUnitWorkAndWait']);
-const DIRECT_MESSAGE = new Set(['Message_ShowCentered', 'FieldMessage_ShowCentered', 'FieldMessage_Show', 'FieldMessage_ShowFar']);
-// The game flags' verbs, their far-call stubs and the event layer's inlines;
-// Import_GameFlagSet is the void import two maps match with.
-const FLAG_SET = new Set(['GameFlag_Set', 'GameFlag_SetFar', 'Event_SetFlag', 'Import_GameFlagSet']);
-const FLAG_CLEAR = new Set(['GameFlag_Clear', 'GameFlag_ClearFar', 'Event_ClearFlag']);
-const FLAG_TEST = new Set(['GameFlag_Get', 'GameFlag_GetFar', 'Event_GetFlag']);
+const SET_MESSAGE = new Set(['fdScriptSetMessageId']);
+const SHOW_MESSAGE = new Set(['fdScriptShowMessage', 'fdScriptOpenMessage', 'syFieldScriptShowMessageThenWait', 'fdScriptShowMessageAndWait', 'fdScriptShowMessageThenWait', 'fdMessageShowAtActor', 'fdScriptShowSpeakerMessage']);
+const ASK_MESSAGE = new Set(['fdScriptAskYesNo', 'fdScriptAskYesNoAndShowResponse']);
+const TWO_MESSAGES = new Set(['syImportScriptShowTwoMessagesAndWait', 'syFieldScriptShowTwoMessagesAndWait']);
+const DIRECT_MESSAGE = new Set(['mnMessageShowCentered', 'mnFieldMessageShowCentered', 'mnFieldMessageShow', 'mnFieldMessageShowStub']);
+// The game flags' verbs, their stubs and the script layer's inlines;
+// syImportGameFlagSet is the void import two scenes match with.
+const FLAG_SET = new Set(['gmFlagSet', 'gmFlagSetStub', 'fdScriptSetFlag', 'syImportGameFlagSet']);
+const FLAG_CLEAR = new Set(['gmFlagClear', 'gmFlagClearStub', 'fdScriptClearFlag']);
+const FLAG_TEST = new Set(['gmFlagGet', 'gmFlagGetStub', 'fdScriptGetFlag']);
+// The script's current message, FieldStateWork->msg.
+const CURRENT_MESSAGE = 'msg';
 const MAX_VALUES = 48;
 
 const litKey = (l: Lit) => `${l.pos ? '+' : '-'}${l.k}`;
@@ -986,10 +994,10 @@ function absEval(node: Node | null, st: State, fr: Frame): Val[] {
   if (!node) return [UNKNOWN];
   if (node.type === 'cast_expression') return absEval(node.childForFieldName('value'), st, fr);
   if (node.type === 'identifier' && st.env.has(node.text)) return st.env.get(node.text)!;
-  if (node.type === 'field_expression' && node.childForFieldName('field')?.text === 'message') return st.msg.map((m) => m.v);
+  if (node.type === 'field_expression' && node.childForFieldName('field')?.text === CURRENT_MESSAGE) return st.msg.map((m) => m.v);
   if (node.type === 'binary_expression') {
     const op = node.childForFieldName('operator')?.text;
-    const usesState = node.descendantsOfType(['identifier', 'field_identifier']).some((i) => i && (st.env.has(i.text) || i.text === 'message'));
+    const usesState = node.descendantsOfType(['identifier', 'field_identifier']).some((i) => i && (st.env.has(i.text) || i.text === CURRENT_MESSAGE));
     if (usesState && (op === '+' || op === '-')) {
       const sign = op === '+' ? 1 : -1;
       const left = absEval(node.childForFieldName('left'), st, fr);
@@ -1064,6 +1072,10 @@ function flagOp(op: FlagOp['op'], arg: Node | undefined, st: State, fr: Frame) {
   }
 }
 
+// Whether an expression names a scene's number: it expands to a SceneId
+// symbol's address.
+const isSceneId = (text: string, scope: Scope) => expand(tokenize(text), scope).some((t) => /^SceneId[A-Z]/.test(t));
+
 // The literals a condition gives its true and false branches, and the sense
 // in which it tests each flag.
 function conditionLits(node: Node | null, st: State, fr: Frame): { t: Lit[]; f: Lit[] } {
@@ -1073,20 +1085,6 @@ function conditionLits(node: Node | null, st: State, fr: Frame): { t: Lit[]; f: 
   if (node.type === 'unary_expression' && node.childForFieldName('operator')?.text === '!') {
     const inner = conditionLits(node.childForFieldName('argument'), st, fr);
     return { t: inner.f, f: inner.t };
-  }
-  // A scene test. The parser knows no typedefs, so it reads
-  // `sceneId == (s32)&SceneId_X` as `(sceneId == (s32)) & SceneId_X`: the
-  // comparison is matched in the text.
-  const text = node.text.replace(/\s+/g, ' ');
-  const scene = text.match(/^(?:[\w.>-]*\b(?:sceneId|mapId)\b)\s*(==|!=)\s*((?:\(\s*\w+\s*\)\s*)?&?\s*(?:Scene|Map)Id_\w+)$/) ?? text.match(/^((?:\(\s*\w+\s*\)\s*)?&?\s*(?:Scene|Map)Id_\w+)\s*(==|!=)\s*(?:[\w.>-]*\b(?:sceneId|mapId)\b)$/);
-  if (scene) {
-    const [op, side] = scene[1].startsWith('=') || scene[1].startsWith('!') ? [scene[1], scene[2]] : [scene[2], scene[1]];
-    const id = constEval(side, fr.tu.scope);
-    if (id !== undefined) {
-      const t = [{ k: `s${id}`, pos: true }];
-      const f = [{ k: `s${id}`, pos: false }];
-      return op === '==' ? { t, f } : { t: f, f: t };
-    }
   }
   if (node.type === 'binary_expression') {
     const op = node.childForFieldName('operator')?.text;
@@ -1106,7 +1104,9 @@ function conditionLits(node: Node | null, st: State, fr: Frame): { t: Lit[]; f: 
       const flip = (x: { t: Lit[]; f: Lit[] }) => (op === '==' ? { t: x.f, f: x.t } : x);
       for (const [a, b] of [[left, right], [right, left]] as [Node | null, Node | null][]) {
         if (!a || !b) continue;
-        if (/(?:Scene|Map)Id_\w+/.test(a.text) && /scene|map/i.test(b.text)) {
+        // A scene test: a scene's number (SCENE_BILIBIN, which is
+        // `(Sint32)&SceneIdBilibin`) against a scene variable.
+        if (isSceneId(a.text, fr.tu.scope) && /scene|map/i.test(b.text)) {
           const id = constEval(a.text, fr.tu.scope);
           if (id !== undefined) {
             const t = [{ k: `s${id}`, pos: true }];
@@ -1154,7 +1154,7 @@ function evalExpr(node: Node | null, st: State, fr: Frame): void {
     case 'update_expression': {
       const arg = strip(node.childForFieldName('argument'));
       const d = node.text.includes('++') ? 1 : -1;
-      if (arg?.type === 'field_expression' && arg.childForFieldName('field')?.text === 'message') shift(st, [{ t: 'num', n: d, tag: '' }]);
+      if (arg?.type === 'field_expression' && arg.childForFieldName('field')?.text === CURRENT_MESSAGE) shift(st, [{ t: 'num', n: d, tag: '' }]);
       else if (arg?.type === 'identifier' && st.env.has(arg.text)) st.env.set(arg.text, st.env.get(arg.text)!.map((v) => shiftVal(v, d)));
       else evalExpr(arg, st, fr);
       return;
@@ -1165,7 +1165,7 @@ function evalExpr(node: Node | null, st: State, fr: Frame): void {
       const op = node.childForFieldName('operator')?.text ?? '=';
       evalExpr(right, st, fr);
       const value = absEval(right, st, fr);
-      if (left?.type === 'field_expression' && left.childForFieldName('field')?.text === 'message') {
+      if (left?.type === 'field_expression' && left.childForFieldName('field')?.text === CURRENT_MESSAGE) {
         if (op === '=') st.msg = value.map((v) => ({ v, cond: [...st.pc] }));
         else if (op === '+=') shift(st, value);
         else if (op === '-=') shift(st, value.map((v) => (v.t === 'num' ? { ...v, n: -v.n } : UNKNOWN)));
@@ -1218,7 +1218,7 @@ function evalCall(node: Node, st: State, fr: Frame) {
     st.msg = absEval(a[0], st, fr).map((v) => ({ v, cond: [...st.pc] }));
     record(st, fr, 0, 'centered', '', node);
     st.msg = saved;
-  } else if (name === 'Event_SkipMessages') {
+  } else if (name === 'fdScriptSkipMessages') {
     shift(st, absEval(a[0], st, fr));
   } else if (FLAG_SET.has(name)) flagOp('set', a[0], st, fr);
   else if (FLAG_CLEAR.has(name)) flagOp('clear', a[0], st, fr);
@@ -1364,10 +1364,11 @@ type Row = {
   scenes: number[];
 };
 
+// A cue's kind (CUE_KIND), as the player meets it: CUE_STEP is a touch and
+// CUE_EXAMINE a search.
 const KIND_NAMES = ['talk', 'exit', 'touch', 'search', 'item', 'psynergy', 'raised'];
-// A trigger table's type: struct Trigger, or struct MapEvent in sources from
-// before the triggers were named.
-const TRIGGER_TABLE = /\b(?:Trigger|MapEvent)\b/;
+// A cue table's type.
+const TRIGGER_TABLE = /\bCUE\b/;
 const ability = (text: string) => text.match(/ABILITY_(\w+)/)?.[1]?.toLowerCase().replace(/_/g, ' ') ?? '';
 
 function conditionLit(v: number | undefined): Lit[] {
@@ -1473,7 +1474,7 @@ function eventRows(tu: TU, uses: Map<string, TableUse>): Row[] {
       const own = conditionLit(constEval(e[2], tu.scope));
       const key = `${control >>> 0}:${trigger}`;
       // A row is reached only when the earlier rows for the same trigger did
-      // not hold (Scene_FindTrigger takes the first); a search ignores them.
+      // not hold (fdFindCue takes the first); a search ignores them.
       const failed = kind === 3 ? [] : earlier.filter((x) => x.key === key).flatMap((x) => (x.lits.length === 1 ? [{ k: x.lits[0].k, pos: !x.lits[0].pos }] : []));
       earlier.push({ key, lits: own });
       const handler = (e[3].match(/\b[A-Za-z_]\w*\b/g) ?? []).find((n) => tu.fns.has(n));
@@ -1593,7 +1594,7 @@ for (const tu of tus) {
   for (const t of tu.tables.values()) {
     const use = uses.get(t.name);
     const tScenes = use ? uniq(use.flatMap((u) => u.scenes)) : tu.scenes;
-    if (/\b(?:ActorTemplate|ObjectEventTemplate)\b/.test(t.type)) {
+    if (/\bACTOR_PLACE\b/.test(t.type)) {
       tableRowTexts(t.init, tu.scope).forEach((e, i) => {
         if (e.length < 2) return;
         for (const l of conditionLit(constEval(e[1], tu.scope))) {
@@ -1602,7 +1603,7 @@ for (const tu of tus) {
           flagSites.push({ n, scenes: tScenes, global: false, op: 'test', site: `${file}:${t.name}[actor ${8 + i}]`, sense: l.pos ? 'set' : 'clear', written: '' });
         }
       });
-    } else if (/\b(?:SceneEntrance|MapWarpDest)\b/.test(t.type)) {
+    } else if (/\bSCENE_ENTRANCE\b/.test(t.type)) {
       tableRowTexts(t.init, tu.scope).forEach((e) => {
         const flag = e.length > 1 ? constEval(e[1], tu.scope) : undefined;
         if (flag !== undefined && flag !== -1 && (flag & 0xffff) !== 0xffff) flagSites.push({ n: flag & 0xffff, scenes: tScenes, global: false, op: 'test', site: `${file}:${t.name}[entrance ${e[0]}]`, sense: 'set', written: '' });
@@ -1680,7 +1681,7 @@ function flagKeys(n: number, sceneIds: number[], global = false): string[] {
 
 function flagLabel(n: number, tu?: TU): string {
   const global = flagDocs.get(n)?.names[0];
-  if (global && (n < 0x200 || n >= 0x400 || /^FLAG_(?:SCENE|MAP)_TEMP_[0-9A-F]{2}$/.test(global))) return global;
+  if (global && (n < 0x200 || n >= 0x400 || /^FLAG_SCENE_TEMP_[0-9A-F]{2}$/.test(global))) return global;
   if (tu) {
     let local = localFlagNames.get(tu.file);
     if (!local) {
@@ -1698,8 +1699,7 @@ function flagLabel(n: number, tu?: TU): string {
   return global ?? (n < 0x200 || n >= 0x400 ? globalFlagNames().get(n) : undefined) ?? hex(n);
 }
 
-// FLAG_ names the shared headers declare outside flags.h, as scene_tables.h
-// does FLAG_VALE_PARTY_LEFT.
+// FLAG_ names the shared headers declare outside flags.h.
 function globalFlagNames(): Map<number, string> {
   if (globalFlagNamesCache) return globalFlagNamesCache;
   const names = new Map<number, string>();
@@ -1803,7 +1803,7 @@ for (const m of messages) {
       siteText = uniq(rs.map((r) => `${r.file}:${r.where} ref`)).sort().join('; ');
       const scenesOfRefs = uniq(rs.flatMap((r) => scenesOfFile.get(`${GAME}/src/${r.file}`) ?? []));
       places = placeOfScenes(scenesOfRefs);
-      reason = rs.every((r) => !r.file.startsWith('map/')) ? 'named by code outside the scenes (the main program or a menu overlay), which shows it itself' : 'named in a scene, but not followed to a show command';
+      reason = rs.every((r) => !r.file.startsWith(`${SCENES}/`)) ? 'named by code outside the scenes (the main program or a menu overlay), which shows it itself' : 'named in a scene, but not followed to a show command';
     } else if (indexedBy.has(m.id) || (base && base.id !== m.id && indexedBy.has(base.id))) {
       // A name table and the like: the code adds a computed index.
       const first = indexedBy.has(m.id) ? m : base!;
@@ -1846,7 +1846,7 @@ tsv(
   flagList.map((r) => {
     const doc = flagDocs.get(r.n);
     const global = r.n < 0x200 || r.n >= 0x400;
-    const names = uniq([...(global || /^FLAG_(?:SCENE|MAP)_TEMP_[0-9A-F]{2}$/.test(doc?.names[0] ?? '') ? (doc?.names ?? []) : []), ...r.names]);
+    const names = uniq([...(global || /^FLAG_SCENE_TEMP_[0-9A-F]{2}$/.test(doc?.names[0] ?? '') ? (doc?.names ?? []) : []), ...r.names]);
     return [r.key, hex(r.n), names.join(', '), global && doc ? [doc.section, doc.doc].filter(Boolean).join(': ') : '', [...r.set].sort().join('; '), [...r.clear].sort().join('; '), [...r.test].sort().join('; ')];
   }),
 );
@@ -1868,7 +1868,7 @@ type EventRow = {
   line: number;
 };
 const events: EventRow[] = [];
-const isGetter = (r: Root) => r.kinds.every((k) => /^entry (entrances|exits|actors|triggers|regions)$/.test(k));
+const isGetter = (r: Root) => r.kinds.every((k) => /^entry (entrances|exits|actors|cues|regions)$/.test(k));
 const common = (lists: Lit[][]) => (lists.length ? lists[0].filter((l) => lists.every((x) => x.some((y) => litKey(y) === litKey(l)))) : []);
 for (const r of roots) {
   if (isGetter(r)) continue;
@@ -2132,8 +2132,8 @@ tsv('glossary.tsv', ['term', 'kind', 'name message', 'actors', 'first message', 
 // are the beats. A beat that needs a flag set comes after the beats that can
 // first set it; one that needs it clear comes before them. Only the party and
 // Djinn flags (below 0x100) and the story flags (0x800 to 0xdff) order beats,
-// as the maps README divides the flags: a map flag lasts one visit and a
-// map section flag one stay, so neither says what happened earlier in the story.
+// as flags.h divides the flags: a scene flag lasts one visit and an area
+// flag one stay, so neither says what happened earlier in the story.
 // Where the "before" orders of clear flags close a cycle with other orders
 // they are dropped, since an event that sets a flag in one answer and needs
 // it clear in another is read as one beat; a cycle left after that is broken
